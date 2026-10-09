@@ -1,5 +1,9 @@
 # Veasel Code website
 
+[![CI](https://github.com/veasel-labs/website/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/veasel-labs/website/actions/workflows/ci.yml)
+[![Deploy](https://github.com/veasel-labs/website/actions/workflows/deploy.yml/badge.svg?branch=main)](https://github.com/veasel-labs/website/actions/workflows/deploy.yml)
+[![Website](https://img.shields.io/badge/website-veasel.dev-3b6b54)](https://www.veasel.dev/)
+
 The official static website and field guide for Veasel Code.
 
 The architecture follows the inspected `HorneroOS/website` implementation:
@@ -8,6 +12,9 @@ npm lockfile, and build/check workflows. The visual identity and all copy are
 original. Pages are content-first; the only browser code is a small inline
 color-theme switcher (System, Light, Dark) that remembers the preference
 without adding a UI framework.
+The downloads page selects the latest complete preview release at runtime and
+keeps the last checksum-verified release as an offline/API-failure fallback;
+publishing a product release does not require a website commit.
 
 ## Develop
 
@@ -16,6 +23,7 @@ Requires Node 24 (see `.node-version`).
 ```sh
 npm ci
 npm run dev
+npm test
 npm run check
 npm run build
 ```
