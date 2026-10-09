@@ -30,9 +30,10 @@ const assetUrl = (name: string) =>
         </p>
         <div class="release-meta">
           <span class="release-pill">
-            <span aria-hidden="true">✳</span> {release}
+            <span aria-hidden="true">✳</span>
+            <span data-release-tag>{release}</span>
           </span>
-          <a href={releaseUrl}>
+          <a href={releaseUrl} data-release-page>
             Release notes <span aria-hidden="true">↗</span>
           </a>
           <span>Linux · macOS · Windows</span>
@@ -48,7 +49,9 @@ const assetUrl = (name: string) =>
         <div class="art-sticker">
           <span class="sticker-top">VEASEL CODE</span>
           <strong>NEXT</strong>
-          <span class="sticker-bottom">PREVIEW BUILD · {release}</span>
+          <span class="sticker-bottom">
+            PREVIEW BUILD · <span data-release-tag>{release}</span>
+          </span>
         </div>
         <span class="art-spark spark-a" aria-hidden="true">
           ✳
@@ -80,6 +83,7 @@ const assetUrl = (name: string) =>
         <a
           class="platform-download"
           href={assetUrl("veasel-Linux.tar.gz")}
+          data-release-asset="veasel-Linux.tar.gz"
           aria-label="Download the Linux x86_64 build"
         >
           Download archive <span aria-hidden="true">↓</span>
@@ -99,6 +103,7 @@ const assetUrl = (name: string) =>
         <a
           class="platform-download"
           href={assetUrl("veasel-macOS.tar.gz")}
+          data-release-asset="veasel-macOS.tar.gz"
           aria-label="Download the macOS Apple Silicon build"
         >
           Download archive <span aria-hidden="true">↓</span>
@@ -117,6 +122,7 @@ const assetUrl = (name: string) =>
         <a
           class="platform-download"
           href={assetUrl("veasel-Windows.zip")}
+          data-release-asset="veasel-Windows.zip"
           aria-label="Download the Windows x86_64 build"
         >
           Download archive <span aria-hidden="true">↓</span>
@@ -136,10 +142,18 @@ const assetUrl = (name: string) =>
           Download the checksum file beside your archive. Match its filename to
           the one you chose, then compare the SHA-256 digest before extracting.
         </p>
-        <a class="manifest-link" href={assetUrl("SHA256SUMS")}>
+        <a
+          class="manifest-link"
+          href={assetUrl("SHA256SUMS")}
+          data-release-asset="SHA256SUMS"
+        >
           Get SHA256SUMS <span aria-hidden="true">↗</span>
         </a>
-        <a class="manifest-link" href={assetUrl("release.json")}>
+        <a
+          class="manifest-link"
+          href={assetUrl("release.json")}
+          data-release-asset="release.json"
+        >
           View release manifest <span aria-hidden="true">↗</span>
         </a>
       </div>
@@ -214,12 +228,51 @@ if ($actual -ne $expected) &#123; throw 'Checksum mismatch' &#125;
     </section>
     <p class="release-footer">
       Checksums help detect damaged downloads. This preview is not code-signed.{" "}
-      <a href={releaseUrl}>
+      <a href={releaseUrl} data-release-page>
         See every asset and the source commit <span aria-hidden="true">↗</span>
       </a>
       .
     </p>
   </section>
+  <script>
+    import { newestPreviewRelease } from "../scripts/releases.js";
+
+    const releaseApi =
+      "https://api.github.com/repos/veasel-labs/veasel/releases?per_page=100";
+    const releaseRoot = "https://github.com/veasel-labs/veasel/releases";
+
+    try {
+      const response = await fetch(releaseApi, {
+        headers: {
+          Accept: "application/vnd.github+json",
+          "X-GitHub-Api-Version": "2026-03-10",
+        },
+      });
+      if (!response.ok) throw new Error("Release metadata is unavailable");
+
+      const release = newestPreviewRelease(await response.json());
+      if (!release) throw new Error("No complete preview release is available");
+
+      const tag = release.tag_name;
+      document.querySelectorAll("[data-release-tag]").forEach((element) => {
+        element.textContent = tag;
+      });
+      document.querySelectorAll("[data-release-page]").forEach((element) => {
+        element.setAttribute("href", `${releaseRoot}/tag/${tag}`);
+      });
+      document.querySelectorAll("[data-release-asset]").forEach((element) => {
+        const asset = element.getAttribute("data-release-asset");
+        if (asset) {
+          element.setAttribute(
+            "href",
+            `${releaseRoot}/download/${tag}/${asset}`,
+          );
+        }
+      });
+    } catch {
+      // The page keeps its last verified release links when the API is unavailable.
+    }
+  </script>
 </SiteLayout>
 <style>
   .downloads-shell {

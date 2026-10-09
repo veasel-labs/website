@@ -3,7 +3,7 @@
 ## Local development
 
 Use Node 24 from `.node-version`, then run `npm ci`, `npm run dev`,
-`npm run format:check`, `npm run check`, and `npm run build`.
+`npm run format:check`, `npm test`, `npm run check`, and `npm run build`.
 
 To verify the production host variants, run `npm run build` once normally for
 GitHub Pages and once with `VERCEL=1` for `www.veasel.dev`. Keep Astro routes
