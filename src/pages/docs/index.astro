@@ -15,8 +15,8 @@ import SiteLayout from "../../layouts/SiteLayout.astro";
     </h1>
     <p class="lede">
       Veasel is in active early development. Today you can run the V API, create
-      persistent sessions, inspect capabilities, and follow a replayable event
-      stream.
+      persistent sessions, chat with one of three provider families, reopen
+      conversation history, and follow a replayable event stream.
     </p>
     <div class="doc-panel">
       <h2>Run it from source</h2>
@@ -24,22 +24,25 @@ import SiteLayout from "../../layouts/SiteLayout.astro";
 cd veasel
 v run . serve</code></pre>
       <p>
-        Requires V 0.5.2 or newer and SQLite development files. The server
-        listens on <code>127.0.0.1:4097</code> by default.
+        Use the V compiler revision pinned in <code>.v-version</code>, plus
+        SQLite development files. Configure <code>VEASEL_MODEL_PROVIDER</code>,
+        <code>VEASEL_MODEL</code>, and the matching provider API key to enable
+        chat. The server listens on <code>127.0.0.1:4097</code> by default.
       </p>
     </div>
     <div class="doc-panel">
       <h2>Try the terminal client</h2>
       <pre><code>v run . tui</code></pre>
       <p>
-        The current OpenTUI client lists sessions and connects only to an
+        Start the server in one terminal, then launch this command in another.
+        The OpenTUI client lists sessions and sends chat turns to the
         unauthenticated loopback API. Bun is required for this command.
       </p>
     </div>
     <p class="callout">
-      <strong>Current boundary</strong> Model-provider calls, repository edits,
-      and shell tools are not available yet. Follow the implementation plan in
-      the source repository for verified progress.
+      <strong>Current boundary</strong> Provider chat works synchronously.
+      Streaming, repository edits, and shell tools are not available yet. Follow
+      the implementation plan in the source repository for verified progress.
     </p>
     <p class="callout mascot-terms">
       <strong>Mascot artwork</strong> Veasel is the V language mascot. This

@@ -26,6 +26,7 @@ repository is moved to a custom domain or another hosting base.
 
 ## Content boundary
 
-The site describes the current product honestly. The model runtime, repository
-editing, shell tools, and durable agent jobs remain in development and are not
-presented as shipped features.
+The site describes the current product honestly. Synchronous chat through
+OpenAI-compatible, Anthropic, and Gemini APIs is available in the source build,
+with session history stored locally. Streaming, repository editing, shell
+tools, and durable agent jobs remain in development.

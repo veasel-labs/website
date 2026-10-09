@@ -14,16 +14,17 @@ import SiteLayout from "../../layouts/SiteLayout.astro";
       <em>you want to work with.</em>
     </h1>
     <p class="lede">
-      Veasel Code is being designed around a small provider interface, so model
-      connections can grow without tying the session engine to one vendor. The
-      adapters are in development and are not yet available in a release.
+      Veasel Code keeps model connections behind a small V provider interface.
+      Configure one backend and use the same persistent session workflow across
+      OpenAI-compatible APIs, Anthropic, and Gemini.
     </p>
     <div class="doc-panel">
-      <h2>Provider work in progress</h2>
+      <h2>Available in the current source build</h2>
       <p>
-        Current work is wiring native request and response formats into the V
-        backend, validating errors and timeouts, and keeping credentials out of
-        session history and logs.
+        The V backend sends bounded synchronous completions, keeps credentials
+        server-side, and stores each successful user/assistant exchange in the
+        session database. Streaming, tool use, and repository edits are still
+        being built.
       </p>
       <div
         class="provider-table"
@@ -37,24 +38,41 @@ import SiteLayout from "../../layouts/SiteLayout.astro";
         </div>
         <div class="provider-table-row" role="row">
           <b role="cell">OpenAI-compatible</b>
-          <span role="cell">In development</span>
-          <span role="cell">Configurable endpoint shape</span>
+          <span role="cell">Available</span>
+          <span role="cell">
+            Default adapter; custom HTTPS or loopback endpoint
+          </span>
         </div>
         <div class="provider-table-row" role="row">
           <b role="cell">Anthropic</b>
-          <span role="cell">In development</span>
+          <span role="cell">Available</span>
           <span role="cell">Native Messages API</span>
         </div>
         <div class="provider-table-row" role="row">
           <b role="cell">Gemini</b>
-          <span role="cell">In development</span>
+          <span role="cell">Available</span>
           <span role="cell">Native generateContent API</span>
         </div>
       </div>
     </div>
+    <div class="doc-panel">
+      <h2>Choose a provider for the backend</h2>
+      <pre><code>export VEASEL_MODEL_PROVIDER=anthropic
+export VEASEL_MODEL=your-model-name
+export ANTHROPIC_API_KEY=your-api-key
+v run . serve</code></pre>
+      <p>
+        Use <code>OPENAI_API_KEY</code> with
+        <code>openai-compatible</code>, or <code>GEMINI_API_KEY</code> with
+        <code>gemini</code>. Set <code>VEASEL_MODEL_BASE_URL</code> for a
+        compatible endpoint; custom endpoints require HTTPS or loopback HTTP.
+        The TUI inherits provider configuration from the server process.
+      </p>
+    </div>
     <p class="callout">
-      <strong>Today:</strong> the server provides local session storage and an
-      event API. It does not send prompts to an AI provider yet. See the
+      <strong>Today:</strong> configured sessions can chat with a model and
+      restore recent history. Veasel cannot inspect files, apply patches, or run
+      commands yet. See the
       <a href="https://github.com/veasel-labs/veasel/blob/main/docs/IMPLEMENTATION_PLAN.md">
         implementation plan
       </a>
