@@ -1,0 +1,118 @@
+---
+import SiteLayout from "../../layouts/SiteLayout.astro";
+
+const basePath = import.meta.env.BASE_URL.replace(/\/$/, "");
+---
+
+<SiteLayout
+  title="Agent Plugins compatibility"
+  description="The Agent Plugins v1.0.0 compatibility target, current implementation status, and safety requirements for Veasel Code."
+>
+  <section class="doc-page page-grid">
+    <p class="kicker">EXTENSIBILITY / COMPATIBILITY</p>
+    <h1>
+      One portable format.
+      <br />
+      <em>A careful host.</em>
+    </h1>
+    <p class="lede">
+      Veasel Code targets the released Agent Plugins v1.0.0 specification. A
+      compatible host must understand packages, Skills, and MCP configuration,
+      then add its own clear trust and permission controls.
+    </p>
+    <div class="compatibility-banner">
+      <span class="compatibility-mark" aria-hidden="true">
+        ◌
+      </span>
+      <div>
+        <strong>In progress · no compatibility claim yet</strong>
+        <p>
+          The V code currently validates local manifests, discovers Agent
+          Skills, and parses MCP server configuration. It does not install or
+          run plugins, connect MCP servers, activate Skills in a model turn, or
+          ask for execution approval.
+        </p>
+      </div>
+    </div>
+    <div class="doc-panel">
+      <h2>What the format brings</h2>
+      <div class="guide-grid">
+        <article class="guide-card">
+          <span class="guide-card-mark">{}</span>
+          <h3>Plugin package</h3>
+          <p>
+            A portable directory starts with a versioned{" "}
+            <code>plugin.json</code> manifest.
+          </p>
+        </article>
+        <article class="guide-card">
+          <span class="guide-card-mark">✳</span>
+          <h3>Agent Skills</h3>
+          <p>
+            Discover skill descriptions first; load each instruction body only
+            when used.
+          </p>
+        </article>
+        <article class="guide-card">
+          <span class="guide-card-mark">⌘</span>
+          <h3>MCP servers</h3>
+          <p>
+            Declare stdio or Streamable HTTP connections in a package’s{" "}
+            <code>mcp.json</code>.
+          </p>
+        </article>
+      </div>
+    </div>
+    <div class="doc-panel">
+      <h2>What Veasel must add as the host</h2>
+      <ul class="guide-list">
+        <li>
+          A managed plugin registry with source, version, enabled state, and
+          persistent per-install data.
+        </li>
+        <li>
+          Isolated failure handling for malformed packages, unsupported
+          components, and disconnected servers.
+        </li>
+        <li>
+          Explicit trust decisions and exact tool approvals; plugin metadata
+          cannot grant itself authority.
+        </li>
+        <li>
+          Bounded MCP transports, cancellation, shutdown, and output limits.
+        </li>
+        <li>
+          Skills and MCP tools integrated into the model loop and reviewed in
+          the TUI.
+        </li>
+        <li>
+          Specification-derived fixtures and a published compatibility report
+          before claiming conformance.
+        </li>
+      </ul>
+      <p>
+        An <code>allowed-tools</code> hint in a Skill is advisory input. It must
+        never override user policy or Veasel’s permission checks.
+      </p>
+    </div>
+    <aside class="callout">
+      <strong>Why compatibility is more than parsing.</strong> A plugin may
+      start a local process or send data to a remote endpoint. Veasel must make
+      those effects visible and keep them inside user-approved boundaries.
+    </aside>
+    <p class="doc-next">
+      <a class="text-link" href="https://agent-plugins.org/specification">
+        Read the Agent Plugins specification <span aria-hidden="true">↗</span>
+      </a>
+      <a
+        class="text-link"
+        href="https://github.com/veasel-labs/veasel/blob/main/docs/compatibility/agent-plugins.md"
+      >
+        Review the conformance matrix <span aria-hidden="true">↗</span>
+      </a>
+      <a class="text-link" href={`${basePath}/docs/security/`}>
+        See the security boundary <span aria-hidden="true">→</span>
+      </a>
+    </p>
+  </section>
+</SiteLayout>

@@ -1,5 +1,7 @@
 ---
 import SiteLayout from "../../layouts/SiteLayout.astro";
+
+const basePath = import.meta.env.BASE_URL.replace(/\/$/, "");
 ---
 
 <SiteLayout
@@ -9,15 +11,92 @@ import SiteLayout from "../../layouts/SiteLayout.astro";
   <section class="doc-page page-grid">
     <p class="eyebrow">FIELD GUIDE / 01</p>
     <h1>
-      Start with the
+      Find your next
       <br />
-      <em>foundation.</em>
+      <em>good step.</em>
     </h1>
     <p class="lede">
-      Veasel is in active early development. Today you can run the V API, create
-      persistent sessions, chat with one of three provider families, reopen
-      conversation history, and follow a replayable event stream.
+      A practical guide to the current Veasel Code build: set it up, understand
+      what it sends, choose a provider, and follow the work that is still ahead.
     </p>
+    <nav class="guide-grid" aria-label="Veasel Code guides">
+      <a
+        class="guide-card guide-card-featured"
+        href={`${basePath}/docs/quickstart/`}
+      >
+        <span class="guide-card-mark">↗</span>
+        <h2>Run your first session</h2>
+        <p>Set up V, configure a provider, and open the terminal client.</p>
+        <span class="guide-card-link">
+          Quickstart <span aria-hidden="true">→</span>
+        </span>
+      </a>
+      <a class="guide-card" href={`${basePath}/docs/providers/`}>
+        <span class="guide-card-mark">◌</span>
+        <h2>Choose a model</h2>
+        <p>Compare the provider adapters and configure credentials safely.</p>
+        <span class="guide-card-link">
+          Providers <span aria-hidden="true">→</span>
+        </span>
+      </a>
+      <a class="guide-card" href={`${basePath}/docs/architecture/`}>
+        <span class="guide-card-mark">⌘</span>
+        <h2>Understand the shape</h2>
+        <p>
+          Follow requests from the terminal through the V runtime and SQLite.
+        </p>
+        <span class="guide-card-link">
+          Architecture <span aria-hidden="true">→</span>
+        </span>
+      </a>
+      <a class="guide-card" href={`${basePath}/docs/plugins/`}>
+        <span class="guide-card-mark">✳</span>
+        <h2>Explore Agent Plugins</h2>
+        <p>
+          See the v1.0.0 target and the work required for real compatibility.
+        </p>
+        <span class="guide-card-link">
+          Compatibility <span aria-hidden="true">→</span>
+        </span>
+      </a>
+      <a class="guide-card" href={`${basePath}/docs/security/`}>
+        <span class="guide-card-mark">⌂</span>
+        <h2>Follow your data</h2>
+        <p>
+          Know what stays local, what reaches providers, and what is not
+          sandboxed.
+        </p>
+        <span class="guide-card-link">
+          Privacy and security <span aria-hidden="true">→</span>
+        </span>
+      </a>
+      <a class="guide-card" href={`${basePath}/docs/roadmap/`}>
+        <span class="guide-card-mark">◎</span>
+        <h2>See what comes next</h2>
+        <p>Track verified foundations and the coding-agent milestones ahead.</p>
+        <span class="guide-card-link">
+          Roadmap <span aria-hidden="true">→</span>
+        </span>
+      </a>
+      <a class="guide-card" href={`${basePath}/docs/api/`}>
+        <span class="guide-card-mark">⇄</span>
+        <h2>Connect a client</h2>
+        <p>Browse the loopback HTTP routes and resume server events.</p>
+        <span class="guide-card-link">
+          API reference <span aria-hidden="true">→</span>
+        </span>
+      </a>
+      <a class="guide-card" href={`${basePath}/docs/faq/`}>
+        <span class="guide-card-mark">?</span>
+        <h2>Get a clear answer</h2>
+        <p>
+          Check common questions about the current build and its boundaries.
+        </p>
+        <span class="guide-card-link">
+          FAQ <span aria-hidden="true">→</span>
+        </span>
+      </a>
+    </nav>
     <div class="doc-panel">
       <h2>Run it from source</h2>
       <pre><code>git clone https://github.com/veasel-labs/veasel
@@ -35,8 +114,8 @@ v run . serve</code></pre>
       <pre><code>v run . tui</code></pre>
       <p>
         Start the server in one terminal, then launch this command in another.
-        The OpenTUI client lists sessions and sends chat turns to the
-        unauthenticated loopback API. Bun is required for this command.
+        The OpenTUI client lists sessions and sends chat turns to the local
+        loopback API. Bun is required for this command.
       </p>
     </div>
     <p class="callout">
@@ -50,10 +129,7 @@ v run . serve</code></pre>
       <a href="https://creativecommons.org/licenses/by-nc/4.0/">CC BY-NC 4.0</a>
       . Commercial use needs separate permission from the rights holder.
     </p>
-    <a
-      class="text-link"
-      href={`${import.meta.env.BASE_URL}/docs/architecture/`}
-    >
+    <a class="text-link" href={`${basePath}/docs/architecture/`}>
       Next: architecture notes <span aria-hidden="true">→</span>
     </a>
   </section>

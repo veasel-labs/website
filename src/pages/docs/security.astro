@@ -1,0 +1,110 @@
+---
+import SiteLayout from "../../layouts/SiteLayout.astro";
+
+const basePath = import.meta.env.BASE_URL.replace(/\/$/, "");
+---
+
+<SiteLayout
+  title="Privacy and security"
+  description="What stays on your machine, what leaves for your model provider, and the safety boundaries still being built in Veasel Code."
+>
+  <section class="doc-page page-grid">
+    <p class="kicker">TRUST / DATA FLOW</p>
+    <h1>
+      Know what moves.
+      <br />
+      <em>Keep the reins.</em>
+    </h1>
+    <p class="lede">
+      Veasel Code runs its server locally and stores session history in SQLite.
+      Model prompts are sent to the provider configured by the person running
+      the server. Local storage does not mean local inference.
+    </p>
+    <div class="data-flow" aria-label="Current message data flow">
+      <div>
+        <small>YOU</small>
+        <strong>Terminal client</strong>
+        <span>loopback HTTP</span>
+      </div>
+      <b aria-hidden="true">→</b>
+      <div>
+        <small>LOCAL MACHINE</small>
+        <strong>V server + SQLite</strong>
+        <span>session history</span>
+      </div>
+      <b aria-hidden="true">→</b>
+      <div>
+        <small>YOUR CONFIGURED PROVIDER</small>
+        <strong>Model API</strong>
+        <span>prompt and recent context</span>
+      </div>
+    </div>
+    <div class="doc-panel">
+      <h2>Current protections</h2>
+      <ul class="guide-list">
+        <li>
+          The backend binds to loopback; remote server binding is not
+          implemented.
+        </li>
+        <li>
+          Provider credentials stay in the backend environment and are not
+          returned by the API.
+        </li>
+        <li>
+          Remote model endpoints require HTTPS; local development endpoints may
+          use loopback HTTP.
+        </li>
+        <li>
+          Provider redirects are rejected, and response sizes and message counts
+          are bounded.
+        </li>
+        <li>
+          New sessions accept an existing workspace directory and store its
+          canonical path.
+        </li>
+      </ul>
+    </div>
+    <div class="doc-panel">
+      <h2>What to keep in mind</h2>
+      <ul class="guide-list">
+        <li>
+          Your model provider receives the prompt and conversation history
+          needed to answer.
+        </li>
+        <li>
+          The loopback API has no application token; other programs running as
+          your user may reach it.
+        </li>
+        <li>
+          The saved workspace path is not yet a file-access sandbox because file
+          tools are still in development.
+        </li>
+        <li>
+          Plugin package validation is experimental. MCP processes, plugin
+          approvals, and Skill execution are not available.
+        </li>
+        <li>
+          The official mascot artwork carries a noncommercial license;
+          commercial distribution needs separate permission.
+        </li>
+      </ul>
+    </div>
+    <aside class="callout">
+      <strong>Safe by default as the product grows.</strong> Repository content
+      and tool output will be treated as untrusted data. File changes, shell
+      execution, and plugin effects require explicit policy and approval before
+      they are enabled.
+    </aside>
+    <p class="doc-next">
+      <a
+        class="text-link"
+        href="https://github.com/veasel-labs/veasel/blob/main/docs/security/threat-model.md"
+      >
+        Read the threat model <span aria-hidden="true">↗</span>
+      </a>
+      <a class="text-link" href={`${basePath}/docs/plugins/`}>
+        Explore plugin safety <span aria-hidden="true">→</span>
+      </a>
+    </p>
+  </section>
+</SiteLayout>

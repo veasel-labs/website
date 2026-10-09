@@ -1,5 +1,7 @@
 ---
 import SiteLayout from "../layouts/SiteLayout.astro";
+
+const basePath = import.meta.env.BASE_URL.replace(/\/$/, "");
 ---
 
 <SiteLayout
@@ -21,7 +23,8 @@ import SiteLayout from "../layouts/SiteLayout.astro";
       <p class="hero-text">
         Meet <strong>Veasel Code</strong>, a coding agent built in V for people
         who like to stay close to the work. Bring your ideas, pick a supported
-        model provider, and keep each conversation on your machine.
+        model provider, and keep session history in a local SQLite database.
+        Prompts go to the provider you configure.
       </p>
       <div class="hero-actions">
         <a
@@ -30,10 +33,7 @@ import SiteLayout from "../layouts/SiteLayout.astro";
         >
           Follow the build <span aria-hidden="true">↗</span>
         </a>
-        <a
-          class="button button-quiet"
-          href={`${import.meta.env.BASE_URL}/docs/`}
-        >
+        <a class="button button-quiet" href={`${basePath}/docs/`}>
           Take a look around <span aria-hidden="true">↓</span>
         </a>
       </div>
@@ -53,7 +53,7 @@ import SiteLayout from "../layouts/SiteLayout.astro";
       <div class="spark spark-c">✧</div>
       <div class="sticker sticker-v">
         <img
-          src={`${import.meta.env.BASE_URL}/v-logo.png`}
+          src={`${basePath}/v-logo.png`}
           alt="V programming language logo"
           width="52"
           height="52"
@@ -66,7 +66,7 @@ import SiteLayout from "../layouts/SiteLayout.astro";
       </div>
       <div class="mascot-badge">
         <img
-          src={`${import.meta.env.BASE_URL}/veasel-pixel.svg`}
+          src={`${basePath}/veasel-pixel.svg`}
           alt="Pixel-art portrait of Veasel, the V language mascot"
           width="76"
           height="52"
@@ -321,7 +321,7 @@ import SiteLayout from "../layouts/SiteLayout.astro";
         Run the current foundation locally, peek at how it’s put together, or
         follow the next milestones on GitHub.
       </p>
-      <a class="button button-dark" href={`${import.meta.env.BASE_URL}/docs/`}>
+      <a class="button button-dark" href={`${basePath}/docs/`}>
         Read the getting-started guide <span>→</span>
       </a>
     </div>

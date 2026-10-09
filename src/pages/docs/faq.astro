@@ -1,0 +1,87 @@
+---
+import SiteLayout from "../../layouts/SiteLayout.astro";
+
+const basePath = import.meta.env.BASE_URL.replace(/\/$/, "");
+---
+
+<SiteLayout
+  title="Frequently asked questions"
+  description="Answers about what Veasel Code can do today, model providers, local data, the V language mascot, and contributing."
+>
+  <section class="doc-page page-grid">
+    <p class="kicker">FIELD GUIDE / COMMON QUESTIONS</p>
+    <h1>
+      Clear answers.
+      <br />
+      <em>Room to grow.</em>
+    </h1>
+    <p class="lede">
+      Veasel Code is being built in public. Here is what the current source
+      build does, what it does not do yet, and where to follow changes.
+    </p>
+    <div class="doc-panel faq-panel">
+      <h2>Can Veasel Code edit my repository?</h2>
+      <p>
+        Not yet. The current build can keep sessions and chat with a configured
+        model. It cannot read files, apply patches, or run shell commands.
+      </p>
+    </div>
+    <div class="doc-panel faq-panel">
+      <h2>Does my code stay on my machine?</h2>
+      <p>
+        Session history is stored locally. Prompts and recent conversation
+        context are sent to the model provider you configure. The current
+        product does not attach repository files because repository tools are
+        not implemented.
+      </p>
+    </div>
+    <div class="doc-panel faq-panel">
+      <h2>Which AI providers can I use?</h2>
+      <p>
+        The V backend has synchronous adapters for OpenAI-compatible APIs,
+        Anthropic, and Gemini. See{" "}
+        <a href={`${basePath}/docs/providers/`}>provider setup</a> and data
+        disclosure details.
+      </p>
+    </div>
+    <div class="doc-panel faq-panel">
+      <h2>Can I use Agent Plugins already?</h2>
+      <p>
+        No. Package, Skill, and MCP configuration validation is experimental.
+        Veasel cannot install plugins, run MCP servers, activate Skills in model
+        turns, or manage plugin approvals yet.
+      </p>
+    </div>
+    <div class="doc-panel faq-panel">
+      <h2>Why is the terminal client TypeScript?</h2>
+      <p>
+        The TUI uses OpenTUI for terminal rendering and talks to a versioned
+        API. The server, agent runtime, and persistence are V; the client
+        remains a separate API consumer.
+      </p>
+    </div>
+    <div class="doc-panel faq-panel">
+      <h2>Can I use the Veasel mascot commercially?</h2>
+      <p>
+        The official mascot and this pixel adaptation are under CC BY-NC 4.0.
+        Commercial use needs separate permission from the rights holder.
+      </p>
+    </div>
+    <div class="doc-panel faq-panel">
+      <h2>How do I follow the project or contribute?</h2>
+      <p>
+        Read the <a href={`${basePath}/docs/roadmap/`}>verified roadmap</a>,
+        open the repository, and use its issue or pull request templates to
+        propose focused work.
+      </p>
+    </div>
+    <p class="doc-next">
+      <a class="text-link" href="https://github.com/veasel-labs/veasel">
+        Open Veasel Code on GitHub <span aria-hidden="true">↗</span>
+      </a>
+      <a class="text-link" href={`${basePath}/docs/`}>
+        Back to the field guide <span aria-hidden="true">↑</span>
+      </a>
+    </p>
+  </section>
+</SiteLayout>

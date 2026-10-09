@@ -20,9 +20,11 @@ npm run check
 npm run build
 ```
 
-The project base path is `/website`, targeting GitHub Pages at
-`https://veasel-labs.github.io/website/`. Update `astro.config.mjs` if the
-repository is moved to a custom domain or another hosting base.
+Production is served at [`https://www.veasel.dev/`](https://www.veasel.dev/)
+through the existing Vercel domain. A separate build also publishes to GitHub
+Pages at `https://veasel-labs.github.io/website/`; `astro.config.mjs` selects
+the canonical URL and base path for each host so assets and links work in both
+deployments.
 
 ## Content boundary
 

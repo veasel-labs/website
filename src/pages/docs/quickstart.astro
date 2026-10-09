@@ -1,0 +1,80 @@
+---
+import SiteLayout from "../../layouts/SiteLayout.astro";
+
+const basePath = import.meta.env.BASE_URL.replace(/\/$/, "");
+---
+
+<SiteLayout
+  title="Run Veasel Code from source"
+  description="Set up the V backend, choose a model provider, and open the Veasel Code terminal client."
+>
+  <section class="doc-page page-grid">
+    <p class="kicker">FIELD GUIDE / FIRST SESSION</p>
+    <h1>
+      From clone to
+      <br />
+      <em>conversation.</em>
+    </h1>
+    <p class="lede">
+      Veasel Code is under active development and currently runs from source.
+      This guide starts the local V server and connects the terminal client to a
+      provider you choose.
+    </p>
+    <div class="doc-panel">
+      <h2>What you need</h2>
+      <ul class="guide-list">
+        <li>
+          The V compiler revision recorded in the repository’s{" "}
+          <code>.v-version</code>.
+        </li>
+        <li>SQLite development headers and library for the V SQLite module.</li>
+        <li>Bun 1.3.14 or newer to build and run the OpenTUI client.</li>
+        <li>An API key for OpenAI-compatible, Anthropic, or Gemini models.</li>
+      </ul>
+      <p>
+        The backend itself is V and does not need Bun. V builds the OpenTUI
+        terminal client on first use.
+      </p>
+    </div>
+    <div class="doc-panel">
+      <h2>Start the V server</h2>
+      <pre><code>git clone https://github.com/veasel-labs/veasel
+cd veasel
+export VEASEL_MODEL_PROVIDER=anthropic
+export VEASEL_MODEL=your-model-name
+export ANTHROPIC_API_KEY=your-api-key
+v run . serve</code></pre>
+      <p>
+        The server listens on <code>127.0.0.1:4097</code>. Keep your key in the
+        server environment. Veasel does not send it to the terminal client or
+        return it from the API.
+      </p>
+    </div>
+    <div class="doc-panel">
+      <h2>Open a session</h2>
+      <pre><code># In another terminal, from the repository
+v run . tui</code></pre>
+      <p>
+        Create a session by selecting an existing workspace directory. Ask a
+        question and the configured provider will answer. Messages and session
+        events are persisted locally in SQLite.
+      </p>
+    </div>
+    <aside class="callout">
+      <strong>Know the current boundary.</strong> Veasel stores conversation
+      history locally, but sends prompts to your configured model provider. The
+      current build cannot read repository files, apply edits, or execute
+      commands. See the{" "}
+      <a href={`${basePath}/docs/security/`}>security notes</a>
+      before using sensitive source code.
+    </aside>
+    <p class="doc-next">
+      <a class="text-link" href={`${basePath}/docs/providers/`}>
+        Configure another provider <span aria-hidden="true">→</span>
+      </a>
+      <a class="text-link" href={`${basePath}/docs/`}>
+        Back to the field guide <span aria-hidden="true">↑</span>
+      </a>
+    </p>
+  </section>
+</SiteLayout>
