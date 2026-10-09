@@ -7,7 +7,11 @@ interface Props {
 }
 
 const { title, description } = Astro.props;
-const currentPath = Astro.url.pathname.replace("/website", "") || "/";
+const basePath = import.meta.env.BASE_URL.replace(/\/$/, "");
+const currentPath = Astro.url.pathname.replace(basePath, "") || "/";
+const canonicalUrl = Astro.site
+  ? new URL(Astro.url.pathname, Astro.site).toString()
+  : undefined;
 const links = [
   { href: "/", label: "Overview" },
   { href: "/docs/", label: "Field guide" },
@@ -22,6 +26,10 @@ const links = [
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="description" content={description} />
     <meta name="theme-color" content="#f2efe5" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={`${title} · Veasel Code`} />
+    <meta property="og:description" content={description} />
+    <link rel="canonical" href={canonicalUrl} />
     <link
       rel="icon"
       type="image/svg+xml"
@@ -36,7 +44,7 @@ const links = [
     <header class="site-header">
       <a
         class="wordmark"
-        href={import.meta.env.BASE_URL}
+        href={`${import.meta.env.BASE_URL}/`}
         aria-label="Veasel Code home"
       >
         <span class="wordmark-mark" aria-hidden="true">
