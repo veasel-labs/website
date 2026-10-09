@@ -25,12 +25,14 @@ const basePath = import.meta.env.BASE_URL.replace(/\/$/, "");
         ◌
       </span>
       <div>
-        <strong>In progress · no compatibility claim yet</strong>
+        <strong>
+          Experimental Skills support · no compatibility claim yet
+        </strong>
         <p>
-          The V code currently validates local manifests, discovers Agent
-          Skills, and parses MCP server configuration. It does not install or
-          run plugins, connect MCP servers, activate Skills in a model turn, or
-          ask for execution approval.
+          Veasel discovers local packages and can activate validated Skills for
+          one session. Skill instructions are bounded, reloaded for each turn,
+          and treated as untrusted context. Veasel does not install packages,
+          launch MCP servers, or grant Skills tool permissions.
         </p>
       </div>
     </div>
@@ -49,8 +51,8 @@ const basePath = import.meta.env.BASE_URL.replace(/\/$/, "");
           <span class="guide-card-mark">✳</span>
           <h3>Agent Skills</h3>
           <p>
-            Discover skill descriptions first; load each instruction body only
-            when used.
+            Discover descriptions first; choose which bounded instruction body
+            to include in a session.
           </p>
         </article>
         <article class="guide-card">
@@ -62,6 +64,24 @@ const basePath = import.meta.env.BASE_URL.replace(/\/$/, "");
           </p>
         </article>
       </div>
+    </div>
+    <div class="doc-panel">
+      <h2>Try session Skills</h2>
+      <p>
+        Place a package directory containing <code>plugin.json</code> under
+        <code>$VEASEL_DATA_DIR/plugins</code>, or set
+        <code>VEASEL_PLUGIN_DIR</code> to another directory. Start the local
+        backend and open a session in the TUI.
+      </p>
+      <pre><code>/skills
+/skill on review-tools/review
+/skill off review-tools/review</code></pre>
+      <p>
+        The plugin and Skill names come from the validated package manifest and
+        directory. Selection persists with the session and is removed from the
+        next model turn when disabled. Skill text cannot authorize tools or
+        override Veasel’s security policy.
+      </p>
     </div>
     <div class="doc-panel">
       <h2>What Veasel must add as the host</h2>
