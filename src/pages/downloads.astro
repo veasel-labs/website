@@ -1,0 +1,722 @@
+---
+import SiteLayout from "../layouts/SiteLayout.astro";
+
+const basePath = import.meta.env.BASE_URL.replace(/\/$/, "");
+const release = "v0.2.1-next.0";
+const releaseUrl = `https://github.com/veasel-labs/veasel/releases/tag/${release}`;
+const assetUrl = (name: string) =>
+  `https://github.com/veasel-labs/veasel/releases/download/${release}/${name}`;
+---
+
+<SiteLayout
+  title="Downloads"
+  description="Download the Veasel Code preview for Linux, macOS, or Windows, and verify the archive before running it."
+>
+  <section class="downloads-shell">
+    <div class="download-hero">
+      <div class="hero-copy">
+        <p class="download-kicker">
+          <span aria-hidden="true">●</span> EARLY ACCESS / NEXT CHANNEL
+        </p>
+        <h1>
+          Made to build.
+          <br />
+          <em>Ready to explore.</em>
+        </h1>
+        <p class="download-lede">
+          Try Veasel Code on your own machine. This is an experimental preview
+          of a V-native coding-agent foundation, with a local session store and
+          multiple AI provider adapters.
+        </p>
+        <div class="release-meta">
+          <span class="release-pill">
+            <span aria-hidden="true">✳</span> {release}
+          </span>
+          <a href={releaseUrl}>
+            Release notes <span aria-hidden="true">↗</span>
+          </a>
+          <span>Linux · macOS · Windows</span>
+        </div>
+      </div>
+      <div
+        class="release-art"
+        role="img"
+        aria-label="Veasel Code next channel release badge"
+      >
+        <div class="art-orbit orbit-one"></div>
+        <div class="art-orbit orbit-two"></div>
+        <div class="art-sticker">
+          <span class="sticker-top">VEASEL CODE</span>
+          <strong>NEXT</strong>
+          <span class="sticker-bottom">PREVIEW BUILD · {release}</span>
+        </div>
+        <span class="art-spark spark-a" aria-hidden="true">
+          ✳
+        </span>
+        <span class="art-spark spark-b" aria-hidden="true">
+          ✦
+        </span>
+        <span class="art-chip chip-a">V / NATIVE</span>
+        <span class="art-chip chip-b">LOCAL FIRST</span>
+      </div>
+    </div>
+
+    <div class="download-section-heading">
+      <div>
+        <p class="section-index">01 / PICK YOUR PLATFORM</p>
+        <h2>Choose your build.</h2>
+      </div>
+      <p>Each archive includes the Veasel backend and terminal client.</p>
+    </div>
+
+    <div class="platform-grid">
+      <article class="platform-card linux-card">
+        <div class="platform-icon" aria-hidden="true">
+          ⌘
+        </div>
+        <p class="platform-label">LINUX / X86_64</p>
+        <h3>Linux</h3>
+        <p class="platform-detail">64-bit · GNU/Linux · tar.gz</p>
+        <a
+          class="platform-download"
+          href={assetUrl("veasel-Linux.tar.gz")}
+          aria-label="Download the Linux x86_64 build"
+        >
+          Download archive <span aria-hidden="true">↓</span>
+        </a>
+        <p class="platform-footnote">
+          SQLite development library required to build from source; bundled
+          binary is ready to run.
+        </p>
+      </article>
+      <article class="platform-card mac-card">
+        <div class="platform-icon" aria-hidden="true">
+          ◉
+        </div>
+        <p class="platform-label">MACOS / APPLE SILICON</p>
+        <h3>macOS</h3>
+        <p class="platform-detail">ARM64 · macOS · tar.gz</p>
+        <a
+          class="platform-download"
+          href={assetUrl("veasel-macOS.tar.gz")}
+          aria-label="Download the macOS Apple Silicon build"
+        >
+          Download archive <span aria-hidden="true">↓</span>
+        </a>
+        <p class="platform-footnote">
+          Apple Silicon build. This preview is not signed or notarized.
+        </p>
+      </article>
+      <article class="platform-card windows-card">
+        <div class="platform-icon" aria-hidden="true">
+          ▦
+        </div>
+        <p class="platform-label">WINDOWS / X86_64</p>
+        <h3>Windows</h3>
+        <p class="platform-detail">64-bit · Windows · zip</p>
+        <a
+          class="platform-download"
+          href={assetUrl("veasel-Windows.zip")}
+          aria-label="Download the Windows x86_64 build"
+        >
+          Download archive <span aria-hidden="true">↓</span>
+        </a>
+        <p class="platform-footnote">
+          Extract the ZIP, then run <code>veasel.exe --help</code> in
+          PowerShell.
+        </p>
+      </article>
+    </div>
+
+    <section class="verify-panel" aria-labelledby="verify-title">
+      <div class="verify-copy">
+        <p class="section-index">02 / CHECK YOUR DOWNLOAD</p>
+        <h2 id="verify-title">A tiny checksum check.</h2>
+        <p>
+          Download the checksum file beside your archive. Match its filename to
+          the one you chose, then compare the SHA-256 digest before extracting.
+        </p>
+        <a class="manifest-link" href={assetUrl("SHA256SUMS")}>
+          Get SHA256SUMS <span aria-hidden="true">↗</span>
+        </a>
+        <a class="manifest-link" href={assetUrl("release.json")}>
+          View release manifest <span aria-hidden="true">↗</span>
+        </a>
+      </div>
+      <div class="terminal-card">
+        <div class="terminal-title">
+          <span aria-hidden="true">● ● ●</span> VERIFY / UNIX
+        </div>
+        <pre><code># run from the folder with both files
+grep '  veasel-Linux.tar.gz$' SHA256SUMS | sha256sum --check
+
+# macOS uses shasum
+grep '  veasel-macOS.tar.gz$' SHA256SUMS | shasum -a 256 --check</code></pre>
+        <div class="terminal-title windows-title">
+          <span aria-hidden="true">›</span> VERIFY / WINDOWS POWERSHELL
+        </div>
+        <pre><code>$expected = ((Get-Content .\SHA256SUMS | Where-Object &#123; $_ -match '  veasel-Windows\.zip$' &#125;) -split '\s+')[0]
+$actual = (Get-FileHash .\veasel-Windows.zip -Algorithm SHA256).Hash.ToLowerInvariant()
+if ($actual -ne $expected) &#123; throw 'Checksum mismatch' &#125;
+'Checksum OK'</code></pre>
+      </div>
+    </section>
+
+    <section class="first-run">
+      <div class="first-run-mark" aria-hidden="true">
+        ↗
+      </div>
+      <div>
+        <p class="section-index">03 / TAKE YOUR FIRST STEP</p>
+        <h2>Unpack. Then say hello.</h2>
+        <p>
+          After extracting the archive, run the help command from its folder.
+          Bun 1.4 or newer is needed for the terminal interface; the backend
+          runs without Bun.
+        </p>
+      </div>
+      <div class="command-card">
+        <code>./veasel --help</code>
+        <span>backend · no Bun needed</span>
+        <code>./veasel tui</code>
+        <span>terminal client · Bun 1.4+</span>
+      </div>
+    </section>
+
+    <section class="honest-note">
+      <div class="note-mark" aria-hidden="true">
+        i
+      </div>
+      <div>
+        <p class="section-index">A PREVIEW, WITH THE EDGES SHOWN</p>
+        <h2>What works today.</h2>
+        <p>
+          This preview can store sessions locally and send synchronous chat
+          requests through supported provider adapters. It does not yet read or
+          edit your repository, run shell tools, stream responses, or implement
+          the full Agent Plugins runtime. It is not a finished coding agent.
+        </p>
+        <div class="note-links">
+          <a href={`${basePath}/docs/quickstart/`}>
+            Quickstart <span aria-hidden="true">→</span>
+          </a>
+          <a href={`${basePath}/docs/providers/`}>
+            Provider setup <span aria-hidden="true">→</span>
+          </a>
+          <a href={`${basePath}/docs/plugins/`}>
+            Agent Plugins roadmap <span aria-hidden="true">→</span>
+          </a>
+          <a href={`${basePath}/docs/security/`}>
+            Security notes <span aria-hidden="true">→</span>
+          </a>
+        </div>
+      </div>
+    </section>
+    <p class="release-footer">
+      Checksums help detect damaged downloads. This preview is not code-signed.{" "}
+      <a href={releaseUrl}>
+        See every asset and the source commit <span aria-hidden="true">↗</span>
+      </a>
+      .
+    </p>
+  </section>
+</SiteLayout>
+<style>
+  .downloads-shell {
+    width: min(1160px, calc(100% - 56px));
+    margin: auto;
+    padding: 76px 0 90px;
+  }
+  .download-hero {
+    min-height: 425px;
+    display: grid;
+    grid-template-columns: 1.1fr 0.9fr;
+    align-items: center;
+    gap: 4%;
+    padding-bottom: 62px;
+  }
+  .download-kicker,
+  .section-index,
+  .platform-label {
+    margin: 0;
+    color: var(--green-dark);
+    font: 500 0.68rem var(--mono);
+    letter-spacing: 0.11em;
+  }
+  .download-kicker span {
+    color: var(--green);
+    font-size: 0.75rem;
+    margin-right: 7px;
+  }
+  .hero-copy h1 {
+    margin: 25px 0 21px;
+    font: 600 clamp(3.6rem, 7.4vw, 6.45rem)/0.96 var(--display);
+    letter-spacing: -0.06em;
+  }
+  .hero-copy h1 em {
+    color: var(--green);
+    font-style: normal;
+  }
+  .download-lede {
+    max-width: 590px;
+    color: var(--muted);
+    font-size: 1.03rem;
+    line-height: 1.8;
+  }
+  .release-meta {
+    margin-top: 28px;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 17px;
+    color: var(--muted);
+    font: 0.68rem var(--mono);
+  }
+  .release-meta a {
+    color: var(--ink);
+    text-underline-offset: 3px;
+  }
+  .release-pill {
+    padding: 8px 12px;
+    border-radius: 99px;
+    background: var(--mint);
+    color: var(--green-dark);
+    font-weight: 500;
+  }
+  .release-pill span {
+    margin-right: 5px;
+  }
+  .release-art {
+    min-height: 360px;
+    position: relative;
+    display: grid;
+    place-items: center;
+    overflow: hidden;
+  }
+  .art-orbit {
+    position: absolute;
+    border: 1px solid var(--line);
+    border-radius: 50%;
+    transform: rotate(-19deg);
+  }
+  .orbit-one {
+    width: 330px;
+    height: 240px;
+  }
+  .orbit-two {
+    width: 260px;
+    height: 350px;
+    transform: rotate(36deg);
+  }
+  .art-sticker {
+    z-index: 1;
+    width: 240px;
+    height: 240px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 7px;
+    background: var(--yellow);
+    border: 2px solid var(--ink);
+    border-radius: 49% 51% 46% 54% / 51% 43% 57% 49%;
+    color: var(--ink);
+    box-shadow: 8px 9px 0 var(--ink);
+    transform: rotate(-7deg);
+  }
+  .sticker-top,
+  .sticker-bottom {
+    font: 500 0.58rem var(--mono);
+    letter-spacing: 0.13em;
+  }
+  .art-sticker strong {
+    font: 700 4.3rem/0.95 var(--display);
+    letter-spacing: -0.07em;
+  }
+  .art-spark {
+    position: absolute;
+    z-index: 2;
+    color: var(--green);
+    font-size: 2.1rem;
+  }
+  .spark-a {
+    top: 46px;
+    right: 16%;
+  }
+  .spark-b {
+    bottom: 49px;
+    left: 11%;
+    color: var(--coral);
+  }
+  .art-chip {
+    position: absolute;
+    padding: 8px 11px;
+    border: 1px solid var(--line);
+    border-radius: 5px;
+    background: var(--surface);
+    font: 0.55rem var(--mono);
+    letter-spacing: 0.08em;
+  }
+  .chip-a {
+    top: 60px;
+    left: 10%;
+    transform: rotate(-8deg);
+  }
+  .chip-b {
+    bottom: 59px;
+    right: 8%;
+    transform: rotate(6deg);
+  }
+  .download-section-heading {
+    display: flex;
+    justify-content: space-between;
+    align-items: end;
+    gap: 24px;
+    margin: 22px 0 24px;
+  }
+  .download-section-heading h2,
+  .verify-copy h2,
+  .first-run h2,
+  .honest-note h2 {
+    margin: 9px 0 0;
+    font: 600 clamp(2rem, 4vw, 3rem)/1.06 var(--display);
+    letter-spacing: -0.045em;
+  }
+  .download-section-heading > p {
+    max-width: 330px;
+    color: var(--muted);
+    font-size: 0.84rem;
+  }
+  .platform-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 15px;
+  }
+  .platform-card {
+    min-height: 315px;
+    padding: 25px;
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    border: 1px solid var(--line);
+    border-radius: 15px;
+    background: var(--surface);
+  }
+  .linux-card {
+    box-shadow: inset 0 4px var(--green);
+  }
+  .mac-card {
+    box-shadow: inset 0 4px var(--lilac);
+  }
+  .windows-card {
+    box-shadow: inset 0 4px var(--coral);
+  }
+  .platform-icon {
+    width: 44px;
+    height: 44px;
+    display: grid;
+    place-items: center;
+    margin: 5px 0 20px;
+    border-radius: 13px;
+    background: var(--surface-soft);
+    font: 1.6rem var(--mono);
+  }
+  .platform-label {
+    font-size: 0.58rem;
+  }
+  .platform-card h3 {
+    margin: 5px 0 0;
+    font: 600 1.8rem var(--display);
+  }
+  .platform-detail {
+    margin: 4px 0 17px;
+    color: var(--muted);
+    font: 0.66rem var(--mono);
+  }
+  .platform-download {
+    width: 100%;
+    min-height: 44px;
+    margin-top: auto;
+    padding: 0 14px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-radius: 7px;
+    background: var(--button-bg);
+    color: var(--button-fg);
+    text-decoration: none;
+    font-size: 0.77rem;
+    font-weight: 700;
+  }
+  .platform-download span {
+    color: var(--yellow);
+    font-size: 1.1rem;
+  }
+  .platform-download:hover,
+  .manifest-link:hover,
+  .note-links a:hover {
+    text-decoration: underline;
+    text-underline-offset: 4px;
+  }
+  .platform-footnote {
+    margin: 13px 0 0;
+    color: var(--muted);
+    font-size: 0.67rem;
+    line-height: 1.5;
+  }
+  .platform-footnote code {
+    font: 0.95em var(--mono);
+  }
+  .verify-panel {
+    margin-top: 68px;
+    padding: 34px;
+    display: grid;
+    grid-template-columns: 0.76fr 1.24fr;
+    gap: 35px;
+    align-items: center;
+    border-radius: 16px;
+    background: var(--mint);
+  }
+  .verify-copy h2 {
+    font-size: 2.4rem;
+  }
+  .verify-copy > p:not(.section-index) {
+    color: var(--muted);
+    font-size: 0.83rem;
+    line-height: 1.7;
+  }
+  .manifest-link {
+    display: inline-block;
+    margin: 8px 13px 0 0;
+    color: var(--green-dark);
+    font-size: 0.74rem;
+    font-weight: 700;
+  }
+  .terminal-card {
+    overflow: hidden;
+    border: 1px solid #30334a;
+    border-radius: 10px;
+    background: #202238;
+    color: #f7f5ed;
+    box-shadow: 0 8px 22px #20223818;
+  }
+  .terminal-title {
+    padding: 13px 16px;
+    border-bottom: 1px solid #ffffff20;
+    color: #d3d4dc;
+    font: 0.58rem var(--mono);
+    letter-spacing: 0.07em;
+  }
+  .windows-title {
+    border-top: 1px solid #ffffff20;
+  }
+  .terminal-title span {
+    margin-right: 9px;
+    color: var(--coral);
+    letter-spacing: 0.15em;
+  }
+  .terminal-card pre {
+    overflow-x: auto;
+    margin: 0;
+    padding: 19px 17px 21px;
+    color: #e8eddf;
+    font: 0.68rem/1.9 var(--mono);
+  }
+  .first-run {
+    margin-top: 58px;
+    padding: 30px 0;
+    display: grid;
+    grid-template-columns: 56px 1fr 1fr;
+    gap: 22px;
+    align-items: center;
+    border-bottom: 1px solid var(--line);
+  }
+  .first-run-mark {
+    width: 48px;
+    height: 48px;
+    display: grid;
+    place-items: center;
+    border-radius: 14px;
+    background: var(--lilac);
+    font: 1.5rem var(--mono);
+  }
+  .first-run h2 {
+    font-size: 2rem;
+  }
+  .first-run > div:nth-child(2) > p:not(.section-index) {
+    max-width: 470px;
+    color: var(--muted);
+    font-size: 0.79rem;
+    line-height: 1.7;
+  }
+  .command-card {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 5px;
+    padding: 15px 17px;
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    background: var(--surface);
+  }
+  .command-card code {
+    padding-top: 6px;
+    font: 0.78rem var(--mono);
+  }
+  .command-card span {
+    padding-bottom: 7px;
+    color: var(--muted);
+    font: 0.61rem var(--mono);
+  }
+  .honest-note {
+    margin-top: 46px;
+    padding: 28px;
+    display: grid;
+    grid-template-columns: 48px 1fr;
+    gap: 20px;
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    background: var(--surface-soft);
+  }
+  .note-mark {
+    width: 38px;
+    height: 38px;
+    display: grid;
+    place-items: center;
+    border: 1px solid var(--ink);
+    border-radius: 50%;
+    font: 600 1.1rem var(--display);
+  }
+  .honest-note h2 {
+    font-size: 2rem;
+  }
+  .honest-note > div:nth-child(2) > p:not(.section-index) {
+    max-width: 900px;
+    color: var(--muted);
+    font-size: 0.82rem;
+    line-height: 1.8;
+  }
+  .note-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px 21px;
+    margin-top: 18px;
+  }
+  .note-links a {
+    color: var(--green-dark);
+    font-size: 0.73rem;
+    font-weight: 700;
+  }
+  .release-footer {
+    margin-top: 23px;
+    color: var(--muted);
+    font-size: 0.68rem;
+    text-align: center;
+  }
+  .release-footer a {
+    color: var(--ink);
+  }
+  @media (max-width: 800px) {
+    .downloads-shell {
+      padding-top: 48px;
+    }
+    .download-hero {
+      grid-template-columns: 1fr;
+      gap: 0;
+    }
+    .release-art {
+      min-height: 310px;
+    }
+    .verify-panel {
+      grid-template-columns: 1fr;
+    }
+    .first-run {
+      grid-template-columns: 48px 1fr;
+    }
+    .command-card {
+      grid-column: 2;
+    }
+  }
+  @media (max-width: 640px) {
+    .downloads-shell {
+      width: min(100% - 34px, 520px);
+      padding: 38px 0 60px;
+    }
+    .download-hero {
+      padding-bottom: 30px;
+    }
+    .hero-copy h1 {
+      font-size: clamp(3.35rem, 15vw, 5rem);
+    }
+    .release-art {
+      min-height: 270px;
+    }
+    .art-sticker {
+      width: 195px;
+      height: 195px;
+    }
+    .art-sticker strong {
+      font-size: 3.5rem;
+    }
+    .orbit-one {
+      width: 270px;
+      height: 190px;
+    }
+    .orbit-two {
+      width: 220px;
+      height: 285px;
+    }
+    .download-section-heading {
+      display: block;
+    }
+    .download-section-heading > p {
+      margin-bottom: 0;
+    }
+    .platform-grid {
+      grid-template-columns: 1fr;
+    }
+    .platform-card {
+      min-height: 280px;
+    }
+    .verify-panel {
+      margin-top: 45px;
+      padding: 23px 17px;
+      gap: 21px;
+    }
+    .verify-copy h2 {
+      font-size: 2rem;
+    }
+    .terminal-card pre {
+      font-size: 0.57rem;
+    }
+    .first-run {
+      grid-template-columns: 1fr;
+      gap: 10px;
+    }
+    .first-run-mark {
+      margin-bottom: 8px;
+    }
+    .command-card {
+      grid-column: auto;
+    }
+    .honest-note {
+      padding: 20px 16px;
+      grid-template-columns: 1fr;
+      gap: 9px;
+    }
+    .site-header {
+      padding-inline: 17px;
+    }
+    .site-footer {
+      padding-inline: 17px;
+      flex-direction: column;
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      scroll-behavior: auto !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+</style>

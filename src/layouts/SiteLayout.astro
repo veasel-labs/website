@@ -15,6 +15,7 @@ const canonicalUrl = Astro.site
 const links = [
   { href: "/", label: "Overview" },
   { href: "/docs/", label: "Field guide" },
+  { href: "/downloads/", label: "Downloads" },
   { href: "/docs/architecture/", label: "Architecture" },
   { href: "/docs/providers/", label: "Providers" },
 ];
@@ -120,8 +121,8 @@ const links = [
           Dark
         </button>
       </div>
-      <a class="header-cta" href="https://github.com/veasel-labs/veasel">
-        View source <span aria-hidden="true">↗</span>
+      <a class="header-cta" href={`${basePath}/downloads/`}>
+        Get the preview <span aria-hidden="true">↓</span>
       </a>
     </header>
     <main id="main">
