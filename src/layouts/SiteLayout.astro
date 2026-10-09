@@ -33,6 +33,57 @@ const links = [
     <link rel="canonical" href={canonicalUrl} />
     <link rel="icon" type="image/svg+xml" href={`${basePath}/mark.svg`} />
     <title>{title} · Veasel Code</title>
+    <script is:inline>
+      const themeKey = "veasel-color-theme";
+      const themeQuery = window.matchMedia("(prefers-color-scheme: dark)");
+      let themeChoice = "system";
+      try {
+        const savedChoice = localStorage.getItem(themeKey);
+        if (["system", "light", "dark"].includes(savedChoice ?? "")) {
+          themeChoice = savedChoice;
+        }
+      } catch {}
+      const applyTheme = (choice) => {
+        themeChoice = choice;
+        document.documentElement.dataset.theme =
+          choice === "system"
+            ? themeQuery.matches
+              ? "dark"
+              : "light"
+            : choice;
+        document.documentElement.dataset.themeChoice = choice;
+        document
+          .querySelector('meta[name="theme-color"]')
+          ?.setAttribute(
+            "content",
+            choice === "dark" || (choice === "system" && themeQuery.matches)
+              ? "#141625"
+              : "#fbfaf6",
+          );
+        document.querySelectorAll("[data-theme-choice]").forEach((button) => {
+          button.setAttribute(
+            "aria-pressed",
+            String(button.dataset.themeChoice === choice),
+          );
+        });
+      };
+      applyTheme(themeChoice);
+      themeQuery.addEventListener("change", () => {
+        if (themeChoice === "system") applyTheme("system");
+      });
+      window.addEventListener("DOMContentLoaded", () => {
+        document.querySelectorAll("[data-theme-choice]").forEach((button) => {
+          button.addEventListener("click", () => {
+            const choice = button.dataset.themeChoice;
+            if (!choice) return;
+            try {
+              localStorage.setItem(themeKey, choice);
+            } catch {}
+            applyTheme(choice);
+          });
+        });
+      });
+    </script>
   </head>
   <body>
     <a class="skip-link" href="#main">
@@ -61,6 +112,17 @@ const links = [
           </a>
         ))}
       </nav>
+      <div class="theme-switch" role="group" aria-label="Color theme">
+        <button type="button" data-theme-choice="system" aria-pressed="true">
+          System
+        </button>
+        <button type="button" data-theme-choice="light" aria-pressed="false">
+          Light
+        </button>
+        <button type="button" data-theme-choice="dark" aria-pressed="false">
+          Dark
+        </button>
+      </div>
       <a class="header-cta" href="https://github.com/veasel-labs/veasel">
         View source <span aria-hidden="true">↗</span>
       </a>

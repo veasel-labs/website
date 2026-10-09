@@ -5,7 +5,9 @@ The official static website and field guide for Veasel Code.
 The architecture follows the inspected `HorneroOS/website` implementation:
 Astro static output, filesystem routes, a shared layout, pinned Node with an
 npm lockfile, and build/check workflows. The visual identity and all copy are
-original. Pages are content-first and ship no client-side JavaScript.
+original. Pages are content-first; the only browser code is a small inline
+color-theme switcher (System, Light, Dark) that remembers the preference
+without adding a UI framework.
 
 ## Develop
 
