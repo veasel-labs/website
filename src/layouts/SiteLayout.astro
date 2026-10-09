@@ -72,6 +72,7 @@ const links = [
         if (themeChoice === "system") applyTheme("system");
       });
       window.addEventListener("DOMContentLoaded", () => {
+        applyTheme(themeChoice);
         document.querySelectorAll("[data-theme-choice]").forEach((button) => {
           button.addEventListener("click", () => {
             const choice = button.dataset.themeChoice;
