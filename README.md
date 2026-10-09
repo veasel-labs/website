@@ -32,3 +32,9 @@ The site describes the current product honestly. Synchronous chat through
 OpenAI-compatible, Anthropic, and Gemini APIs is available in the source build,
 with session history stored locally. Streaming, repository editing, shell
 tools, and durable agent jobs remain in development.
+
+## Community
+
+See the [contribution guide](CONTRIBUTING.md), [security policy](SECURITY.md),
+and [support guide](SUPPORT.md). Shared community standards are maintained in
+[veasel-labs/.github](https://github.com/veasel-labs/.github).

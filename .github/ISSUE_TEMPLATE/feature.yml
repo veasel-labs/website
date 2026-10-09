@@ -1,0 +1,21 @@
+name: Content or design proposal
+description: Suggest useful documentation or a user experience improvement.
+labels: [enhancement]
+body:
+  - type: textarea
+    id: need
+    attributes:
+      label: Reader need
+      description: What is a visitor trying to learn or do?
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposed content or interaction
+    validations:
+      required: true
+  - type: textarea
+    id: references
+    attributes:
+      label: Supporting references
