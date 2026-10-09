@@ -85,12 +85,15 @@ p {
   height: 37px;
   display: grid;
   place-items: center;
-  color: white;
-  background: var(--green);
+  background: white;
   border-radius: 13px 13px 13px 5px;
-  font: 700 1.22rem var(--display);
-  transform: rotate(-4deg);
+  border: 1px solid #e8e7e1;
   box-shadow: 0 4px 0 #1763441f;
+}
+.wordmark-mark img {
+  width: 26px;
+  height: 26px;
+  object-fit: contain;
 }
 .wordmark-light {
   color: var(--green);
@@ -408,15 +411,14 @@ p {
   place-items: center;
   border: 5px solid white;
   border-radius: 50%;
-  background: var(--green);
-  color: white;
+  background: white;
   box-shadow: 0 4px 0 #17634433;
   transform: rotate(-11deg);
 }
-.sticker-v span {
-  font: 700 3.35rem/0.8 var(--display);
-  letter-spacing: -0.12em;
-  margin-right: 4px;
+.sticker-v img {
+  width: 49px;
+  height: 49px;
+  object-fit: contain;
 }
 .sticker-v small {
   position: absolute;
@@ -1226,9 +1228,6 @@ pre {
     top: 19px;
     width: 65px;
     height: 65px;
-  }
-  .sticker-v span {
-    font-size: 2.7rem;
   }
   .note-top {
     right: -5px;
