@@ -1310,7 +1310,7 @@ pre {
   color: var(--green-dark);
   font: 0.62rem var(--mono);
 }
-@media (max-width: 850px) {
+@media (max-width: 1050px) {
   .site-header {
     height: auto;
     min-height: 78px;
@@ -1326,6 +1326,8 @@ pre {
   .theme-switch {
     margin-left: auto;
   }
+}
+@media (max-width: 850px) {
   .wrap {
     width: min(100% - 48px, 700px);
   }
