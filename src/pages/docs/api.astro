@@ -13,12 +13,13 @@ const basePath = import.meta.env.BASE_URL.replace(/\/$/, "");
     <h1>
       A small local
       <br />
-      <em>conversation API.</em>
+      <em>workspace API.</em>
     </h1>
     <p class="lede">
       The versioned HTTP API connects the terminal client to the V server. It
       listens on loopback and currently covers health, capabilities, sessions,
-      synchronous chat, and replayable events.
+      bounded read-only workspace inspection, synchronous chat, and replayable
+      events.
     </p>
     <div class="doc-panel">
       <h2>Endpoints</h2>
@@ -74,6 +75,28 @@ const basePath = import.meta.env.BASE_URL.replace(/\/$/, "");
           </span>
         </div>
         <div class="provider-table-row" role="row">
+          <b role="cell">GET</b>
+          <code role="cell">{"/v1/sessions/{id}/workspace/files"}</code>
+          <span role="cell">
+            List up to 500 workspace files; generated directories and symlinks
+            are skipped.
+          </span>
+        </div>
+        <div class="provider-table-row" role="row">
+          <b role="cell">POST</b>
+          <code role="cell">{"/v1/sessions/{id}/workspace/file"}</code>
+          <span role="cell">
+            Read one UTF-8 text file up to 512 KB within the selected root.
+          </span>
+        </div>
+        <div class="provider-table-row" role="row">
+          <b role="cell">POST</b>
+          <code role="cell">{"/v1/sessions/{id}/workspace/search"}</code>
+          <span role="cell">
+            Search literal text with bounded file, byte, and result counts.
+          </span>
+        </div>
+        <div class="provider-table-row" role="row">
           <b role="cell">POST</b>
           <code role="cell">/v1/chat/completions</code>
           <span role="cell">
@@ -89,6 +112,12 @@ const basePath = import.meta.env.BASE_URL.replace(/\/$/, "");
         </div>
       </div>
     </div>
+    <aside class="callout">
+      <strong>Read-only, and client-only for now.</strong> These workspace
+      routes are available to local API clients. Provider tool calls do not use
+      them yet; file writes, shell execution, and approvals are still under
+      development.
+    </aside>
     <div class="doc-panel">
       <h2>Resume the event stream</h2>
       <p>
