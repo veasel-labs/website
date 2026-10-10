@@ -74,13 +74,28 @@ const basePath = import.meta.env.BASE_URL.replace(/\/$/, "");
           ✓
         </span>
       </article>
+      <article class="roadmap-item roadmap-done">
+        <span class="roadmap-status">WORKING FOUNDATION</span>
+        <div>
+          <h2>Review-gated file edits</h2>
+          <p>
+            Propose bounded single-file replacements, inspect persisted diffs,
+            and explicitly approve or reject changes in the TUI. Stale files are
+            rejected; interrupted writes are not replayed.
+          </p>
+        </div>
+        <span class="roadmap-symbol" aria-label="Complete">
+          ✓
+        </span>
+      </article>
       <article class="roadmap-item roadmap-active">
         <span class="roadmap-status">IN DEVELOPMENT</span>
         <div>
-          <h2>Real coding turns</h2>
+          <h2>Complete coding turns</h2>
           <p>
-            Reviewed patches, durable approvals, and a tested end-to-end coding
-            turn that can safely change files.
+            A verified end-to-end coding task across proposal, review, approval,
+            test execution, and outcome reporting. Shell execution, streaming,
+            and cancellation remain ahead.
           </p>
         </div>
         <span class="roadmap-symbol" aria-label="In progress">
@@ -117,10 +132,11 @@ const basePath = import.meta.env.BASE_URL.replace(/\/$/, "");
       <article class="roadmap-item roadmap-next">
         <span class="roadmap-status">PLANNED</span>
         <div>
-          <h2>A release-ready experience</h2>
+          <h2>Production distribution</h2>
           <p>
-            Cross-platform packaging, accessibility, measured performance, and
-            verified end-to-end coding tasks.
+            Linux, macOS, and Windows preview archives are published with
+            checksums. Code signing, native installers, broader accessibility,
+            measured performance baselines, and stable releases remain ahead.
           </p>
         </div>
         <span class="roadmap-symbol" aria-label="Planned">

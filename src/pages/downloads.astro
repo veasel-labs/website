@@ -2,7 +2,7 @@
 import SiteLayout from "../layouts/SiteLayout.astro";
 
 const basePath = import.meta.env.BASE_URL.replace(/\/$/, "");
-const release = "v0.3.0-next.0";
+const release = "v0.6.2-next.0";
 const releaseUrl = `https://github.com/veasel-labs/veasel/releases/tag/${release}`;
 const assetUrl = (name: string) =>
   `https://github.com/veasel-labs/veasel/releases/download/${release}/${name}`;
@@ -207,10 +207,13 @@ if ($actual -ne $expected) &#123; throw 'Checksum mismatch' &#125;
         <p>
           This preview can store sessions locally and send synchronous chat
           requests through supported provider adapters. It can inspect the
-          selected workspace with bounded, read-only tools; requested excerpts
-          go to your provider. It cannot edit files, run shell tools, stream
-          responses, or implement the full Agent Plugins runtime. It is not a
-          finished coding agent.
+          selected workspace and propose bounded, single-file edits. In the TUI,
+          you can open each saved diff and explicitly approve it before Veasel
+          writes. The loopback API has no application token, so same-user
+          processes can also call its review and approval routes. Requested
+          excerpts go to your provider. Shell tools, model response streaming,
+          and the full Agent Plugins runtime are not available. This is still an
+          early coding-agent preview.
         </p>
         <div class="note-links">
           <a href={`${basePath}/docs/quickstart/`}>

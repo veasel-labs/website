@@ -38,8 +38,12 @@ deployments.
 
 The site describes the current product honestly. Synchronous chat through
 OpenAI-compatible, Anthropic, and Gemini APIs is available in the source build,
-with session history stored locally. Streaming, repository editing, shell
-tools, and durable agent jobs remain in development.
+with session history stored in a local SQLite database. The agent can inspect a selected workspace
+and propose bounded, single-file edits. In the TUI, a user opens the saved diff
+and explicitly approves it before it is applied. The local API has no
+application token, so same-user processes can also access its review and
+approval routes. Model response streaming, shell tools, and durable background
+jobs remain in development.
 
 ## Community
 

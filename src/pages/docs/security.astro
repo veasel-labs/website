@@ -63,14 +63,16 @@ const basePath = import.meta.env.BASE_URL.replace(/\/$/, "");
           canonical path.
         </li>
         <li>
-          Read-only workspace listing, file reads, and literal search stay
-          inside that root, skip symlinks during traversal, and enforce file,
-          byte, and result limits.
+          Workspace listing, file reads, and literal search stay inside that
+          root, skip symlinks during traversal, and enforce file, byte, and
+          result limits.
         </li>
         <li>
           Provider tool calls are limited to 6 rounds and 12 calls per session
           turn, with caps on arguments, accumulated results, and context size.
-          No file-write or shell tool is exposed.
+          The model can propose a bounded replacement for one text file; the
+          normal TUI flow opens the saved diff before explicit approval and
+          writing. Shell execution is not available.
         </li>
       </ul>
     </div>
@@ -83,13 +85,15 @@ const basePath = import.meta.env.BASE_URL.replace(/\/$/, "");
         </li>
         <li>
           The loopback API has no application token; other programs running as
-          your user may reach it and read files beneath an active session root.
+          your user may reach it, read files beneath an active session root, and
+          call the diff and approval routes. TUI review is a workflow, not an
+          enforced caller-identity boundary.
         </li>
         <li>
-          The model may request reads from the selected workspace. Returned
-          excerpts and tool results are sent to your configured provider. These
-          tools do not provide a filesystem sandbox against other processes
-          running as your user.
+          The model may request reads from the selected workspace or propose an
+          edit. Returned excerpts and tool results are sent to your configured
+          provider. These tools do not provide a filesystem sandbox against
+          other processes running as your user.
         </li>
         <li>
           Plugin support remains partial: enabled Skill instructions can enter
@@ -103,10 +107,12 @@ const basePath = import.meta.env.BASE_URL.replace(/\/$/, "");
       </ul>
     </div>
     <aside class="callout">
-      <strong>Read-only by default as the product grows.</strong> Repository
-      content and tool output are treated as untrusted data. File changes, shell
-      execution, and plugin effects require explicit policy and approval before
-      they are enabled.
+      <strong>Review before a file changes.</strong> Repository content and tool
+      output are treated as untrusted data. A proposal alone does not write to
+      disk; a recorded diff view, explicit approval, and a matching file
+      snapshot are required. The unauthenticated loopback API allows same-user
+      processes to call those routes. Shell execution and plugin effects are not
+      available.
     </aside>
     <p class="doc-next">
       <a

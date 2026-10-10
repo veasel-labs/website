@@ -24,8 +24,12 @@ const basePath = import.meta.env.BASE_URL.replace(/\/$/, "");
         Meet <strong>Veasel Code</strong>, a coding agent built in V for people
         who like to stay close to the work. Bring your ideas, pick a supported
         model provider, and keep session history in a local SQLite database.
-        Veasel can inspect your selected workspace with read-only tools; prompts
-        and requested excerpts go to the provider you configure.
+        Veasel can inspect your selected workspace and propose bounded,
+        single-file edits. In the TUI, you can open the saved diff and
+        explicitly approve it before it is applied. The local API has no
+        application token, so same-user processes can also use its review and
+        approval routes. Prompts and requested excerpts go to the provider you
+        configure.
       </p>
       <div class="hero-actions">
         <a
@@ -240,7 +244,9 @@ const basePath = import.meta.env.BASE_URL.replace(/\/$/, "");
         <div>
           <small>02 · VEASEL</small>
           <h3>Keep a lasting session</h3>
-          <p>Local storage and a replayable event stream hold the thread.</p>
+          <p>
+            Local SQLite storage and a replayable event stream hold the thread.
+          </p>
         </div>
         <span class="flow-arrow">↓</span>
       </article>
@@ -250,8 +256,9 @@ const basePath = import.meta.env.BASE_URL.replace(/\/$/, "");
           <small>03 · TOGETHER</small>
           <h3>Choose how to build</h3>
           <p>
-            Veasel can inspect your selected workspace with read-only tools;
-            edits and command execution remain in development.
+            Veasel can inspect files and propose single-file edits for your
+            review. Shell execution and model response streaming remain in
+            development.
           </p>
         </div>
         <span class="flow-arrow">✦</span>
@@ -300,13 +307,13 @@ const basePath = import.meta.env.BASE_URL.replace(/\/$/, "");
         </div>
         <div class="status-row">
           <span class="status-symbol done">✓</span>
-          <b>Read-only workspace tools</b>
+          <b>Bounded workspace inspection</b>
           <small>READY</small>
         </div>
         <div class="status-row">
-          <span class="status-symbol later">·</span>
-          <b>Patch review + approvals</b>
-          <small>PLANNED</small>
+          <span class="status-symbol done">✓</span>
+          <b>Review-gated file edits</b>
+          <small>READY</small>
         </div>
         <a href="https://github.com/veasel-labs/veasel/blob/main/docs/IMPLEMENTATION_PLAN.md">
           See the honest roadmap <span>↗</span>

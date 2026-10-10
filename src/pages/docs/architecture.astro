@@ -56,10 +56,13 @@ import SiteLayout from "../../layouts/SiteLayout.astro";
     <div class="doc-panel">
       <h2>Permission before effect</h2>
       <p>
-        Repository writes, shell execution, network access, and tool effects
-        belong behind explicit policy checks. The current foundation does not
-        execute these actions, and the implementation plan requires approval
-        boundaries before adding them.
+        The model can propose a bounded replacement for one text file. Veasel
+        saves its diff without touching the workspace. In the normal TUI flow,
+        the user opens that diff before a one-time approval can apply it;
+        application verifies the reviewed file snapshot and uses an atomic
+        replacement. The loopback API has no application token, so same-user
+        processes can call those routes. Shell execution is not available, and
+        interrupted writes are not replayed automatically.
       </p>
     </div>
     <a

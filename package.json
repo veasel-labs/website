@@ -8,10 +8,10 @@
   },
   "scripts": {
     "dev": "astro dev",
-    "build": "astro build",
+    "build": "astro build && node scripts/check-links.mjs",
     "preview": "astro preview",
     "check": "astro check",
-    "test": "node --test src/scripts/releases.test.js",
+    "test": "node --test src/scripts/*.test.js",
     "format": "prettier --plugin prettier-plugin-astro --write .",
     "format:check": "prettier --plugin prettier-plugin-astro --check ."
   },

@@ -60,12 +60,29 @@ v run . tui</code></pre>
         events are persisted locally in SQLite.
       </p>
     </div>
+    <div class="doc-panel">
+      <h2>Review a proposed change</h2>
+      <p>
+        When Veasel proposes an edit, no workspace file changes. List proposals,
+        open the full diff, then choose whether to apply it:
+      </p>
+      <pre><code>/patches
+/patch show &lt;proposal-id&gt;
+/patch approve &lt;proposal-id&gt;
+# or: /patch reject &lt;proposal-id&gt;</code></pre>
+      <p>
+        Approval checks that the file still matches the reviewed version before
+        writing. Conflicting or interrupted edits are not applied again
+        automatically.
+      </p>
+    </div>
     <aside class="callout">
       <strong>Know the current boundary.</strong> Veasel stores conversation
       history locally, but sends prompts to your configured model provider. The
       model can request bounded, read-only listing, file reads, and literal
       search within the selected workspace; requested excerpts also go to that
-      provider. Veasel cannot apply edits or execute commands. See the{" "}
+      provider. It can propose bounded single-file edits, but cannot execute
+      commands. See the{" "}
       <a href={`${basePath}/docs/security/`}>security notes</a>
       before using sensitive source code.
     </aside>

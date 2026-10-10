@@ -18,8 +18,8 @@ const basePath = import.meta.env.BASE_URL.replace(/\/$/, "");
     <p class="lede">
       The versioned HTTP API connects the terminal client to the V server. It
       listens on loopback and currently covers health, capabilities, sessions,
-      bounded read-only workspace inspection, synchronous chat, and replayable
-      events.
+      bounded workspace inspection and reviewed edits, synchronous chat, and
+      replayable events.
     </p>
     <div class="doc-panel">
       <h2>Endpoints</h2>
@@ -97,6 +97,38 @@ const basePath = import.meta.env.BASE_URL.replace(/\/$/, "");
           </span>
         </div>
         <div class="provider-table-row" role="row">
+          <b role="cell">GET · POST</b>
+          <code role="cell">{"/v1/sessions/{id}/workspace/edits"}</code>
+          <span role="cell">
+            List saved proposals or save a bounded single-file diff for review.
+          </span>
+        </div>
+        <div class="provider-table-row" role="row">
+          <b role="cell">GET</b>
+          <code role="cell">
+            {"/v1/sessions/{id}/workspace/edits/{edit_id}"}
+          </code>
+          <span role="cell">
+            Open a proposal diff; this records that it was reviewed.
+          </span>
+        </div>
+        <div class="provider-table-row" role="row">
+          <b role="cell">POST</b>
+          <code role="cell">
+            {"/v1/sessions/{id}/workspace/edits/{edit_id}/approve"}
+          </code>
+          <span role="cell">
+            Apply the reviewed proposal if the file has not changed.
+          </span>
+        </div>
+        <div class="provider-table-row" role="row">
+          <b role="cell">POST</b>
+          <code role="cell">
+            {"/v1/sessions/{id}/workspace/edits/{edit_id}/reject"}
+          </code>
+          <span role="cell">Reject a pending proposal without writing.</span>
+        </div>
+        <div class="provider-table-row" role="row">
           <b role="cell">POST</b>
           <code role="cell">/v1/chat/completions</code>
           <span role="cell">
@@ -113,11 +145,13 @@ const basePath = import.meta.env.BASE_URL.replace(/\/$/, "");
       </div>
     </div>
     <aside class="callout">
-      <strong>Read-only workspace tools are active.</strong> Session chat can
-      let the configured provider request file listing, text reads, and literal
-      search through the same bounded workspace operations. The loop is limited
-      to 6 rounds and 12 calls per turn; requested content is sent to your
-      provider. File writes and shell execution are not available.
+      <strong>Proposals never write on their own.</strong> Session chat can let
+      the configured provider request bounded file listing, reads, and literal
+      search, or propose one text-file replacement. The normal TUI flow opens
+      the saved diff before approval. Veasel checks for file changes since
+      review. This loopback API has no application token, so same-user processes
+      can call its review and approval routes too. Shell execution is not
+      available; requested content is sent to your provider.
     </aside>
     <div class="doc-panel">
       <h2>Resume the event stream</h2>

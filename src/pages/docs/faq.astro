@@ -20,11 +20,13 @@ const basePath = import.meta.env.BASE_URL.replace(/\/$/, "");
       build does, what it does not do yet, and where to follow changes.
     </p>
     <div class="doc-panel faq-panel">
-      <h2>Can Veasel Code edit my repository?</h2>
+      <h2>Can Veasel Code change files in my repository?</h2>
       <p>
-        Not yet. Session chat can request bounded, read-only workspace listing,
-        file reads, and literal search, but it cannot apply patches or run shell
-        commands.
+        It can propose a bounded edit to one text file at a time. In the TUI,
+        inspect the saved diff with <code>/patch show &lt;id&gt;</code> and
+        explicitly approve it with <code>/patch approve &lt;id&gt;</code>. The
+        loopback API has no application token, so same-user processes can call
+        its review and approval routes. Veasel cannot run shell commands.
       </p>
     </div>
     <div class="doc-panel faq-panel">

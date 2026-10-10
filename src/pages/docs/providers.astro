@@ -26,9 +26,11 @@ const basePath = import.meta.env.BASE_URL.replace(/\/$/, "");
         The V backend sends bounded synchronous completions, keeps credentials
         server-side, and stores each successful user/assistant exchange in the
         session database. Provider-native tool calls can request bounded,
-        read-only workspace listing, file reads, and literal search. Results go
-        back to the configured provider. Streaming, repository edits, and shell
-        execution are still in development.
+        workspace listing, file reads, literal search, and a single-file edit
+        proposal. A proposal is a saved diff; it does not modify the workspace
+        until a person opens and approves it in the TUI. Requested file content
+        and tool results go back to the configured provider. Model response
+        streaming and shell execution are still in development.
       </p>
       <div
         class="provider-table"
@@ -75,9 +77,11 @@ v run . serve</code></pre>
     </div>
     <p class="callout">
       <strong>Today:</strong> configured sessions can inspect the selected
-      workspace through bounded read-only tools and restore recent history.
-      Veasel cannot apply patches or run commands. File excerpts requested by
-      the model are sent to your configured provider. See the
+      workspace through bounded tools, propose a single-file edit for review,
+      and restore recent history. Applying a proposal requires opening its diff
+      and explicitly approving it in the TUI. Veasel cannot run commands. File
+      excerpts requested by the model are sent to your configured provider. See
+      the
       <a href="https://github.com/veasel-labs/veasel/blob/main/docs/IMPLEMENTATION_PLAN.md">
         implementation plan
       </a>
