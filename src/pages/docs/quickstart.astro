@@ -63,8 +63,9 @@ v run . tui</code></pre>
     <aside class="callout">
       <strong>Know the current boundary.</strong> Veasel stores conversation
       history locally, but sends prompts to your configured model provider. The
-      current build cannot read repository files, apply edits, or execute
-      commands. See the{" "}
+      model can request bounded, read-only listing, file reads, and literal
+      search within the selected workspace; requested excerpts also go to that
+      provider. Veasel cannot apply edits or execute commands. See the{" "}
       <a href={`${basePath}/docs/security/`}>security notes</a>
       before using sensitive source code.
     </aside>

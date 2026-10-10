@@ -50,10 +50,24 @@ const basePath = import.meta.env.BASE_URL.replace(/\/$/, "");
       <article class="roadmap-item roadmap-done">
         <span class="roadmap-status">WORKING FOUNDATION</span>
         <div>
-          <h2>Read-only workspace API</h2>
+          <h2>Read-only workspace tools</h2>
           <p>
-            Bounded file listing, UTF-8 reads, and literal search scoped to a
-            session’s canonical workspace root.
+            Provider-native tool calls for bounded listing, UTF-8 reads, and
+            literal search within the session’s canonical workspace root.
+            Requested excerpts are sent to the configured provider.
+          </p>
+        </div>
+        <span class="roadmap-symbol" aria-label="Complete">
+          ✓
+        </span>
+      </article>
+      <article class="roadmap-item roadmap-done">
+        <span class="roadmap-status">WORKING FOUNDATION</span>
+        <div>
+          <h2>Local workspace API</h2>
+          <p>
+            Direct session-scoped file listing, reads, and literal search with
+            path containment and symlink-safe traversal.
           </p>
         </div>
         <span class="roadmap-symbol" aria-label="Complete">
@@ -65,8 +79,8 @@ const basePath = import.meta.env.BASE_URL.replace(/\/$/, "");
         <div>
           <h2>Real coding turns</h2>
           <p>
-            Provider-native tool calls, reviewed patches, durable approvals, and
-            a tested end-to-end coding turn.
+            Reviewed patches, durable approvals, and a tested end-to-end coding
+            turn that can safely change files.
           </p>
         </div>
         <span class="roadmap-symbol" aria-label="In progress">

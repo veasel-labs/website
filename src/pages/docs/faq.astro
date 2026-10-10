@@ -22,17 +22,18 @@ const basePath = import.meta.env.BASE_URL.replace(/\/$/, "");
     <div class="doc-panel faq-panel">
       <h2>Can Veasel Code edit my repository?</h2>
       <p>
-        Not yet. The current build can keep sessions and chat with a configured
-        model. It cannot read files, apply patches, or run shell commands.
+        Not yet. Session chat can request bounded, read-only workspace listing,
+        file reads, and literal search, but it cannot apply patches or run shell
+        commands.
       </p>
     </div>
     <div class="doc-panel faq-panel">
       <h2>Does my code stay on my machine?</h2>
       <p>
         Session history is stored locally. Prompts and recent conversation
-        context are sent to the model provider you configure. The current
-        product does not attach repository files because repository tools are
-        not implemented.
+        context are sent to the model provider you configure. If the model
+        requests workspace tools, the matching file excerpts and tool results
+        are sent to that provider too.
       </p>
     </div>
     <div class="doc-panel faq-panel">

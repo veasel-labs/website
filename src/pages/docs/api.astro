@@ -113,10 +113,11 @@ const basePath = import.meta.env.BASE_URL.replace(/\/$/, "");
       </div>
     </div>
     <aside class="callout">
-      <strong>Read-only, and client-only for now.</strong> These workspace
-      routes are available to local API clients. Provider tool calls do not use
-      them yet; file writes, shell execution, and approvals are still under
-      development.
+      <strong>Read-only workspace tools are active.</strong> Session chat can
+      let the configured provider request file listing, text reads, and literal
+      search through the same bounded workspace operations. The loop is limited
+      to 6 rounds and 12 calls per turn; requested content is sent to your
+      provider. File writes and shell execution are not available.
     </aside>
     <div class="doc-panel">
       <h2>Resume the event stream</h2>
