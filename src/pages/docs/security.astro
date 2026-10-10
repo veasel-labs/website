@@ -62,6 +62,11 @@ const basePath = import.meta.env.BASE_URL.replace(/\/$/, "");
           New sessions accept an existing workspace directory and store its
           canonical path.
         </li>
+        <li>
+          Read-only workspace listing, file reads, and literal search stay
+          inside that root, skip symlinks during traversal, and enforce file,
+          byte, and result limits.
+        </li>
       </ul>
     </div>
     <div class="doc-panel">
@@ -73,15 +78,17 @@ const basePath = import.meta.env.BASE_URL.replace(/\/$/, "");
         </li>
         <li>
           The loopback API has no application token; other programs running as
-          your user may reach it.
+          your user may reach it and read files beneath an active session root.
         </li>
         <li>
-          The saved workspace path is not yet a file-access sandbox because file
-          tools are still in development.
+          Workspace reads are exposed to API clients only. The model cannot
+          invoke them yet, and they do not provide a filesystem sandbox against
+          other processes running as your user.
         </li>
         <li>
-          Plugin package validation is experimental. MCP processes, plugin
-          approvals, and Skill execution are not available.
+          Plugin support remains partial: enabled Skill instructions can enter
+          model context, but MCP processes and plugin trust controls are not
+          available.
         </li>
         <li>
           The official mascot artwork carries a noncommercial license;
