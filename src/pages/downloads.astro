@@ -206,9 +206,11 @@ if ($actual -ne $expected) &#123; throw 'Checksum mismatch' &#125;
         <h2>What works today.</h2>
         <p>
           This preview can store sessions locally and send synchronous chat
-          requests through supported provider adapters. It does not yet read or
-          edit your repository, run shell tools, stream responses, or implement
-          the full Agent Plugins runtime. It is not a finished coding agent.
+          requests through supported provider adapters. It can inspect the
+          selected workspace with bounded, read-only tools; requested excerpts
+          go to your provider. It cannot edit files, run shell tools, stream
+          responses, or implement the full Agent Plugins runtime. It is not a
+          finished coding agent.
         </p>
         <div class="note-links">
           <a href={`${basePath}/docs/quickstart/`}>

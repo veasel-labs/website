@@ -15,13 +15,13 @@ import SiteLayout from "../../layouts/SiteLayout.astro";
     </h1>
     <p class="lede">
       Veasel is server-first. Clients use a versioned API; the V application
-      owns session state, storage, event history, and eventually agent
-      execution.
+      owns session state, storage, event history, bounded workspace tools, and
+      the provider loop.
     </p>
     <div
       class="architecture-map"
       role="img"
-      aria-label="Terminal client connects to the loopback API, which connects to session storage and the future V agent runtime"
+      aria-label="Terminal client connects to the loopback API, which connects to session storage, workspace tools, and the V agent runtime"
     >
       <div class="map-node">
         <small>CLIENT</small>
@@ -42,7 +42,7 @@ import SiteLayout from "../../layouts/SiteLayout.astro";
       <div class="map-node">
         <small>RUNTIME</small>
         <strong>V + SQLite</strong>
-        <span>sessions / events</span>
+        <span>sessions / events / tools</span>
       </div>
     </div>
     <div class="doc-panel">

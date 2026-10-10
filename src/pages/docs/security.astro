@@ -67,6 +67,11 @@ const basePath = import.meta.env.BASE_URL.replace(/\/$/, "");
           inside that root, skip symlinks during traversal, and enforce file,
           byte, and result limits.
         </li>
+        <li>
+          Provider tool calls are limited to 6 rounds and 12 calls per session
+          turn, with caps on arguments, accumulated results, and context size.
+          No file-write or shell tool is exposed.
+        </li>
       </ul>
     </div>
     <div class="doc-panel">
@@ -81,9 +86,10 @@ const basePath = import.meta.env.BASE_URL.replace(/\/$/, "");
           your user may reach it and read files beneath an active session root.
         </li>
         <li>
-          Workspace reads are exposed to API clients only. The model cannot
-          invoke them yet, and they do not provide a filesystem sandbox against
-          other processes running as your user.
+          The model may request reads from the selected workspace. Returned
+          excerpts and tool results are sent to your configured provider. These
+          tools do not provide a filesystem sandbox against other processes
+          running as your user.
         </li>
         <li>
           Plugin support remains partial: enabled Skill instructions can enter
@@ -97,8 +103,8 @@ const basePath = import.meta.env.BASE_URL.replace(/\/$/, "");
       </ul>
     </div>
     <aside class="callout">
-      <strong>Safe by default as the product grows.</strong> Repository content
-      and tool output will be treated as untrusted data. File changes, shell
+      <strong>Read-only by default as the product grows.</strong> Repository
+      content and tool output are treated as untrusted data. File changes, shell
       execution, and plugin effects require explicit policy and approval before
       they are enabled.
     </aside>

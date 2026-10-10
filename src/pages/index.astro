@@ -24,7 +24,8 @@ const basePath = import.meta.env.BASE_URL.replace(/\/$/, "");
         Meet <strong>Veasel Code</strong>, a coding agent built in V for people
         who like to stay close to the work. Bring your ideas, pick a supported
         model provider, and keep session history in a local SQLite database.
-        Prompts go to the provider you configure.
+        Veasel can inspect your selected workspace with read-only tools; prompts
+        and requested excerpts go to the provider you configure.
       </p>
       <div class="hero-actions">
         <a
@@ -249,8 +250,8 @@ const basePath = import.meta.env.BASE_URL.replace(/\/$/, "");
           <small>03 · TOGETHER</small>
           <h3>Choose how to build</h3>
           <p>
-            Provider support and careful tool permissions are part of the build
-            plan.
+            Veasel can inspect your selected workspace with read-only tools;
+            edits and command execution remain in development.
           </p>
         </div>
         <span class="flow-arrow">✦</span>
@@ -293,13 +294,18 @@ const basePath = import.meta.env.BASE_URL.replace(/\/$/, "");
           <small>EARLY</small>
         </div>
         <div class="status-row">
-          <span class="status-symbol next">◌</span>
+          <span class="status-symbol done">✓</span>
           <b>Multi-provider session chat</b>
           <small>READY</small>
         </div>
         <div class="status-row">
+          <span class="status-symbol done">✓</span>
+          <b>Read-only workspace tools</b>
+          <small>READY</small>
+        </div>
+        <div class="status-row">
           <span class="status-symbol later">·</span>
-          <b>Repository tools + approvals</b>
+          <b>Patch review + approvals</b>
           <small>PLANNED</small>
         </div>
         <a href="https://github.com/veasel-labs/veasel/blob/main/docs/IMPLEMENTATION_PLAN.md">
