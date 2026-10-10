@@ -32,10 +32,11 @@ const basePath = import.meta.env.BASE_URL.replace(/\/$/, "");
     <div class="doc-panel faq-panel">
       <h2>Does my code stay on my machine?</h2>
       <p>
-        Session history is stored locally. Prompts and recent conversation
-        context are sent to the model provider you configure. If the model
-        requests workspace tools, the matching file excerpts and tool results
-        are sent to that provider too.
+        Session history is stored in a local SQLite database managed by the
+        Veasel Code backend. Prompts and recent conversation context are sent to
+        the model provider you configure. If the model requests workspace tools,
+        the matching file excerpts and tool results are sent to that provider
+        too.
       </p>
     </div>
     <div class="doc-panel faq-panel">
