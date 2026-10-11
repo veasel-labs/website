@@ -81,10 +81,12 @@ const basePath = import.meta.env.BASE_URL.replace(/\/$/, "");
         </li>
         <li>
           Agent Plugins support is experimental. MCP servers require per-session
-          trust; stdio processes inherit the server user's permissions, and MCP
-          tool calls do not yet require a separate per-call approval. Streamable
-          HTTP refuses redirects and validates TLS, but configured headers and
-          tool requests are sent to the chosen server origin.
+          trust, and every model-requested MCP tool call requires separate
+          inspection and one-time approval before it reaches the server. A
+          rejection is not retried. Stdio processes inherit the server user's
+          permissions and have no OS sandbox. Streamable HTTP refuses redirects
+          and validates TLS, but configured headers and approved tool inputs are
+          sent to the chosen server origin.
         </li>
       </ul>
     </div>
@@ -123,9 +125,10 @@ const basePath = import.meta.env.BASE_URL.replace(/\/$/, "");
       disk; a recorded diff view, explicit approval, and a matching file
       snapshot are required. The unauthenticated loopback API allows same-user
       processes to call those routes. Shell commands are reviewed before
-      execution but are not sandboxed. Trusted MCP tool calls can cause effects
-      without a per-call approval prompt; only trust plugins whose effects you
-      accept.
+      execution but are not sandboxed. MCP calls are held before execution until
+      their exact arguments are inspected and approved; the unauthenticated
+      loopback API means same-user processes can also access those review and
+      approval routes. Trusted stdio servers still run without an OS sandbox.
     </aside>
     <p class="doc-next">
       <a
