@@ -23,14 +23,18 @@ const basePath = import.meta.env.BASE_URL.replace(/\/$/, "");
     <div class="doc-panel">
       <h2>Available in the current source build</h2>
       <p>
-        The V backend sends bounded synchronous completions, keeps credentials
-        server-side, and stores each successful user/assistant exchange in the
-        session database. Provider-native tool calls can request bounded,
-        workspace listing, file reads, literal search, and a single-file edit
-        proposal. A proposal is a saved diff; it does not modify the workspace
-        until a person opens and approves it in the TUI. Requested file content
-        and tool results go back to the configured provider. Model response
-        streaming and shell execution are still in development.
+        The V backend streams bounded responses, keeps credentials server-side,
+        and stores each successful user/assistant exchange in the session
+        database. Provider-native tool calls can request bounded, workspace
+        listing, file reads, literal search, and a single-file edit proposal. A
+        proposal is a saved diff; it does not modify the workspace until a
+        person opens and approves it in the TUI. Requested file content and tool
+        results go back to the configured provider. Model response Responses
+        stream through durable session events. A model can also propose a shell
+        command; the TUI requires opening the exact command, working directory,
+        and timeout before approval. Approved commands run as the server user
+        without an OS sandbox. Shell output and requested file content are
+        returned to the configured provider.
       </p>
       <div
         class="provider-table"
@@ -76,12 +80,13 @@ v run . serve</code></pre>
       </p>
     </div>
     <p class="callout">
-      <strong>Today:</strong> configured sessions can inspect the selected
-      workspace through bounded tools, propose a single-file edit for review,
-      and restore recent history. Applying a proposal requires opening its diff
-      and explicitly approving it in the TUI. Veasel cannot run commands. File
-      excerpts requested by the model are sent to your configured provider. See
-      the
+      <strong>Today:</strong> configured sessions can stream responses, inspect
+      the selected workspace through bounded tools, propose a single-file edit
+      for review, and restore recent history. Applying a proposal requires
+      opening its diff and explicitly approving it in the TUI. Proposed shell
+      commands require the same exact review and approval before running, but
+      have no OS sandbox. File excerpts and tool output are sent to your
+      configured provider. See the
       <a href="https://github.com/veasel-labs/veasel/blob/main/docs/IMPLEMENTATION_PLAN.md">
         implementation plan
       </a>

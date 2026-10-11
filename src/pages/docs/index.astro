@@ -119,10 +119,11 @@ v run . serve</code></pre>
       </p>
     </div>
     <p class="callout">
-      <strong>Current boundary</strong> Provider chat works synchronously.
-      Veasel can propose bounded, single-file edits; the TUI applies them only
-      after you inspect the saved diff and explicitly approve it. Shell tools
-      and streaming model responses are not available yet. Follow the
+      <strong>Current boundary</strong> Provider responses stream through
+      session events. Veasel can propose bounded, single-file edits; the TUI
+      applies them only after you inspect the saved diff and explicitly approve
+      it. Shell commands require review of the exact command, working directory,
+      and timeout before approval, and run without an OS sandbox. Follow the
       implementation plan in the source repository for verified progress.
     </p>
     <p class="callout mascot-terms">
