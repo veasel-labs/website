@@ -21,15 +21,14 @@ const basePath = import.meta.env.BASE_URL.replace(/\/$/, "");
         Working code.
       </h1>
       <p class="hero-text">
-        Meet <strong>Veasel Code</strong>, a coding agent built in V for people
-        who like to stay close to the work. Bring your ideas, pick a supported
-        model provider, and keep session history in a local SQLite database.
-        Veasel can inspect your selected workspace and propose bounded,
-        single-file edits. In the TUI, you can open the saved diff and
-        explicitly approve it before it is applied. The local API has no
-        application token, so same-user processes can also use its review and
-        approval routes. Prompts and requested excerpts go to the provider you
-        configure.
+        Meet <strong>Veasel Code</strong>, a coding agent built in V. Choose a
+        supported model provider and keep session history in local SQLite.
+        Veasel streams replies, inspects your workspace, and proposes bounded
+        file edits for review. Shell commands require approval after you review
+        their exact text, working directory, and timeout. They run without an OS
+        sandbox. Prompts, requested excerpts, and tool results go to your
+        provider. The loopback API has no application token, so same-user
+        processes can also use its review and approval routes.
       </p>
       <div class="hero-actions">
         <a
@@ -256,9 +255,9 @@ const basePath = import.meta.env.BASE_URL.replace(/\/$/, "");
           <small>03 · TOGETHER</small>
           <h3>Choose how to build</h3>
           <p>
-            Veasel can inspect files and propose single-file edits for your
-            review. Shell execution and model response streaming remain in
-            development.
+            Veasel streams responses, inspects files, and proposes single-file
+            edits. Shell commands require exact review and approval before they
+            run.
           </p>
         </div>
         <span class="flow-arrow">✦</span>
@@ -314,6 +313,21 @@ const basePath = import.meta.env.BASE_URL.replace(/\/$/, "");
           <span class="status-symbol done">✓</span>
           <b>Review-gated file edits</b>
           <small>READY</small>
+        </div>
+        <div class="status-row">
+          <span class="status-symbol done">✓</span>
+          <b>Streaming model responses</b>
+          <small>READY</small>
+        </div>
+        <div class="status-row">
+          <span class="status-symbol done">✓</span>
+          <b>Reviewed shell commands</b>
+          <small>PREVIEW</small>
+        </div>
+        <div class="status-row">
+          <span class="status-symbol done">✓</span>
+          <b>Experimental Agent Plugins</b>
+          <small>PARTIAL</small>
         </div>
         <a href="https://github.com/veasel-labs/veasel/blob/main/docs/IMPLEMENTATION_PLAN.md">
           See the honest roadmap <span>↗</span>

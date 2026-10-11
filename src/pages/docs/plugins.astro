@@ -26,13 +26,14 @@ const basePath = import.meta.env.BASE_URL.replace(/\/$/, "");
       </span>
       <div>
         <strong>
-          Experimental Skills support · no compatibility claim yet
+          Experimental Skills and MCP support · no compatibility claim yet
         </strong>
         <p>
-          Veasel discovers local packages and can activate validated Skills for
-          one session. Skill instructions are bounded, reloaded for each turn,
-          and treated as untrusted context. Veasel does not install packages,
-          launch MCP servers, or grant Skills tool permissions.
+          Veasel discovers local packages, can activate validated Skills per
+          session, and can expose trusted stdio or Streamable HTTP MCP servers
+          as model tools. Skill instructions are bounded, reloaded for each
+          turn, and treated as untrusted context. Veasel does not install
+          packages or claim full v1.0.0 conformance.
         </p>
       </div>
     </div>
@@ -66,7 +67,7 @@ const basePath = import.meta.env.BASE_URL.replace(/\/$/, "");
       </div>
     </div>
     <div class="doc-panel">
-      <h2>Try session Skills</h2>
+      <h2>Try session Skills and MCP servers</h2>
       <p>
         Place a package directory containing <code>plugin.json</code> under
         <code>$VEASEL_DATA_DIR/plugins</code>, or set
@@ -75,11 +76,16 @@ const basePath = import.meta.env.BASE_URL.replace(/\/$/, "");
       </p>
       <pre><code>/skills
 /skill on review-tools/review
-/skill off review-tools/review</code></pre>
+/skill off review-tools/review
+/mcp
+/mcp trust review-tools/local
+/mcp untrust review-tools/local</code></pre>
       <p>
         The plugin and Skill names come from the validated package manifest and
-        directory. Selection persists with the session and is removed from the
-        next model turn when disabled. Skill text cannot authorize tools or
+        directory. Skill selection and MCP trust persist with the session.
+        Disabling a Skill removes its instructions from the next model turn. MCP
+        tool calls from trusted servers are available to the model without
+        separate per-call approval. Skill text cannot authorize tools or
         override Veasel’s security policy.
       </p>
     </div>
@@ -87,16 +93,17 @@ const basePath = import.meta.env.BASE_URL.replace(/\/$/, "");
       <h2>What Veasel must add as the host</h2>
       <ul class="guide-list">
         <li>
-          A managed plugin registry with source, version, enabled state, and
-          persistent per-install data.
+          Managed installation and updates, a registry of source and version,
+          component-level enablement, and persistent per-install data.
         </li>
         <li>
           Isolated failure handling for malformed packages, unsupported
           components, and disconnected servers.
         </li>
         <li>
-          Explicit trust decisions and exact tool approvals; plugin metadata
-          cannot grant itself authority.
+          Per-call MCP effect review and approval; current trust applies at the
+          server level for one session. Plugin metadata cannot grant itself
+          authority.
         </li>
         <li>
           Bounded MCP transports, cancellation, shutdown, and output limits.

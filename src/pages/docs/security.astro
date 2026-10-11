@@ -6,7 +6,7 @@ const basePath = import.meta.env.BASE_URL.replace(/\/$/, "");
 
 <SiteLayout
   title="Privacy and security"
-  description="What stays on your machine, what leaves for your model provider, and the safety boundaries still being built in Veasel Code."
+  description="What stays on your machine, what leaves for your model provider, and the current safety boundaries in Veasel Code."
 >
   <section class="doc-page page-grid">
     <p class="kicker">TRUST / DATA FLOW</p>
@@ -68,11 +68,23 @@ const basePath = import.meta.env.BASE_URL.replace(/\/$/, "");
           result limits.
         </li>
         <li>
-          Provider tool calls are limited to 6 rounds and 12 calls per session
-          turn, with caps on arguments, accumulated results, and context size.
-          The model can propose a bounded replacement for one text file; the
-          normal TUI flow opens the saved diff before explicit approval and
-          writing. Shell execution is not available.
+          Provider tool calls are bounded by round, call, argument, and result
+          limits. The model can propose a bounded replacement for one text file;
+          the normal TUI flow opens the saved diff before explicit approval and
+          writing.
+        </li>
+        <li>
+          Shell commands are stored for review. The TUI shows the exact command,
+          working directory, and timeout before approval; execution is bounded
+          to 300 seconds and 64 KiB of captured output. Commands inherit the
+          server user's environment and permissions and have no OS sandbox.
+        </li>
+        <li>
+          Agent Plugins support is experimental. MCP servers require per-session
+          trust; stdio processes inherit the server user's permissions, and MCP
+          tool calls do not yet require a separate per-call approval. Streamable
+          HTTP refuses redirects and validates TLS, but configured headers and
+          tool requests are sent to the chosen server origin.
         </li>
       </ul>
     </div>
@@ -96,9 +108,8 @@ const basePath = import.meta.env.BASE_URL.replace(/\/$/, "");
           other processes running as your user.
         </li>
         <li>
-          Plugin support remains partial: enabled Skill instructions can enter
-          model context, but MCP processes and plugin trust controls are not
-          available.
+          Enabled Skill instructions, MCP tool arguments and results, and
+          approved shell output may be sent to your configured model provider.
         </li>
         <li>
           The official mascot artwork carries a noncommercial license;
@@ -111,8 +122,10 @@ const basePath = import.meta.env.BASE_URL.replace(/\/$/, "");
       output are treated as untrusted data. A proposal alone does not write to
       disk; a recorded diff view, explicit approval, and a matching file
       snapshot are required. The unauthenticated loopback API allows same-user
-      processes to call those routes. Shell execution and plugin effects are not
-      available.
+      processes to call those routes. Shell commands are reviewed before
+      execution but are not sandboxed. Trusted MCP tool calls can cause effects
+      without a per-call approval prompt; only trust plugins whose effects you
+      accept.
     </aside>
     <p class="doc-next">
       <a

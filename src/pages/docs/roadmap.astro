@@ -39,8 +39,8 @@ const basePath = import.meta.env.BASE_URL.replace(/\/$/, "");
         <div>
           <h2>Multiple provider families</h2>
           <p>
-            Bounded synchronous chat adapters for OpenAI-compatible APIs,
-            Anthropic, and Gemini.
+            Streaming chat adapters for OpenAI-compatible APIs, Anthropic, and
+            Gemini, with persisted assistant events.
           </p>
         </div>
         <span class="roadmap-symbol" aria-label="Complete">
@@ -88,14 +88,30 @@ const basePath = import.meta.env.BASE_URL.replace(/\/$/, "");
           ✓
         </span>
       </article>
+      <article class="roadmap-item roadmap-done">
+        <span class="roadmap-status">WORKING FOUNDATION</span>
+        <div>
+          <h2>Approved shell commands</h2>
+          <p>
+            Store each proposed command for review. The TUI exposes its exact
+            text, working directory, and timeout before explicit approval;
+            execution is bounded and never replayed after interruption. Commands
+            still run with the server user's permissions and without an OS
+            sandbox.
+          </p>
+        </div>
+        <span class="roadmap-symbol" aria-label="Complete">
+          ✓
+        </span>
+      </article>
       <article class="roadmap-item roadmap-active">
         <span class="roadmap-status">IN DEVELOPMENT</span>
         <div>
-          <h2>Complete coding turns</h2>
+          <h2>Reliable cancellation</h2>
           <p>
-            A verified end-to-end coding task across proposal, review, approval,
-            test execution, and outcome reporting. Shell execution, streaming,
-            and cancellation remain ahead.
+            Escape and API cancellation stop queued work and signal active
+            provider requests. A request cancelled before its first response
+            chunk still waits for the bounded transport cleanup timeout.
           </p>
         </div>
         <span class="roadmap-symbol" aria-label="In progress">
@@ -107,9 +123,10 @@ const basePath = import.meta.env.BASE_URL.replace(/\/$/, "");
         <div>
           <h2>Agent Plugins compatibility</h2>
           <p>
-            Per-session Skills discovery and activation are experimental. MCP
-            execution, plugin management, trust UX, and the conformance gate
-            remain ahead.
+            Local Skills and trusted stdio or Streamable HTTP MCP servers are
+            experimental and available per session. Managed installation, effect
+            review for each tool call, additional conformance fixtures, and the
+            full Agent Plugins v1.0.0 evidence gate remain in progress.
           </p>
         </div>
         <span class="roadmap-symbol" aria-label="In progress">
@@ -121,8 +138,8 @@ const basePath = import.meta.env.BASE_URL.replace(/\/$/, "");
         <div>
           <h2>Durable work</h2>
           <p>
-            Cancellation, bounded concurrency, background jobs, recovery, and
-            clear run history.
+            Durable background jobs, disconnect and reconnect recovery,
+            execution history, and stronger classification of uncertain effects.
           </p>
         </div>
         <span class="roadmap-symbol" aria-label="Planned">

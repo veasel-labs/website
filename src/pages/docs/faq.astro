@@ -26,7 +26,10 @@ const basePath = import.meta.env.BASE_URL.replace(/\/$/, "");
         inspect the saved diff with <code>/patch show &lt;id&gt;</code> and
         explicitly approve it with <code>/patch approve &lt;id&gt;</code>. The
         loopback API has no application token, so same-user processes can call
-        its review and approval routes. Veasel cannot run shell commands.
+        its review and approval routes. Veasel can also propose shell commands;
+        each one must be opened and approved with its exact command, working
+        directory, and timeout. Approved commands run with the server user's
+        permissions and without an OS sandbox.
       </p>
     </div>
     <div class="doc-panel faq-panel">
@@ -42,8 +45,8 @@ const basePath = import.meta.env.BASE_URL.replace(/\/$/, "");
     <div class="doc-panel faq-panel">
       <h2>Which AI providers can I use?</h2>
       <p>
-        The V backend has synchronous adapters for OpenAI-compatible APIs,
-        Anthropic, and Gemini. See{" "}
+        The V backend streams responses from OpenAI-compatible APIs, Anthropic,
+        and Gemini. See{" "}
         <a href={`${basePath}/docs/providers/`}>provider setup</a> and data
         disclosure details.
       </p>
@@ -51,11 +54,14 @@ const basePath = import.meta.env.BASE_URL.replace(/\/$/, "");
     <div class="doc-panel faq-panel">
       <h2>Can I use Agent Plugins already?</h2>
       <p>
-        Skills support is experimental: Veasel discovers local packages and lets
-        you enable validated Skill instructions for a session with
-        <code>/skills</code> and <code>/skill on plugin/skill</code>. It does
-        not install plugins, run MCP servers, grant Skills tools, or claim full
-        Agent Plugins compatibility.
+        Support is experimental. Veasel discovers local packages, lets you
+        enable validated Skill instructions per session, and can expose trusted
+        stdio or Streamable HTTP MCP servers as model tools. Use
+        <code>/mcp</code> and <code>/mcp trust plugin/server</code> to trust a
+        server for the session. Trusted stdio processes run with the server
+        user's permissions; MCP tool calls do not yet have separate per-call
+        approval. Veasel does not install plugins or claim full Agent Plugins
+        compatibility.
       </p>
     </div>
     <div class="doc-panel faq-panel">

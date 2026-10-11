@@ -81,9 +81,10 @@ v run . tui</code></pre>
       history locally, but sends prompts to your configured model provider. The
       model can request bounded, read-only listing, file reads, and literal
       search within the selected workspace; requested excerpts also go to that
-      provider. It can propose bounded single-file edits, but cannot execute
-      commands. See the{" "}
-      <a href={`${basePath}/docs/security/`}>security notes</a>
+      provider. It can propose bounded single-file edits and shell commands.
+      Open each exact diff or command review before approval. Approved shell
+      commands inherit the server user's permissions and have no OS sandbox. See
+      the <a href={`${basePath}/docs/security/`}>security notes</a>
       before using sensitive source code.
     </aside>
     <p class="doc-next">

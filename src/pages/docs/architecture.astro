@@ -60,9 +60,12 @@ import SiteLayout from "../../layouts/SiteLayout.astro";
         saves its diff without touching the workspace. In the normal TUI flow,
         the user opens that diff before a one-time approval can apply it;
         application verifies the reviewed file snapshot and uses an atomic
-        replacement. The loopback API has no application token, so same-user
-        processes can call those routes. Shell execution is not available, and
-        interrupted writes are not replayed automatically.
+        replacement. Shell commands require a separate review of the exact
+        command, workspace directory, and timeout before a one-time approval.
+        Commands run with the server user's permissions, inherit its
+        environment, and are not sandboxed. The loopback API has no application
+        token, so same-user processes can call approval routes. Interrupted file
+        writes and shell commands are not replayed automatically.
       </p>
     </div>
     <a
