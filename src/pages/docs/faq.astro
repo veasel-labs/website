@@ -43,6 +43,17 @@ const basePath = import.meta.env.BASE_URL.replace(/\/$/, "");
       </p>
     </div>
     <div class="doc-panel faq-panel">
+      <h2>What happens if an async turn is interrupted?</h2>
+      <p>
+        Async session turns have a durable operation ID and status you can query
+        after reconnecting. If the server stops before storing a result, Veasel
+        marks the turn <code>uncertain</code> and never retries a provider call
+        or possible tool effect automatically. Inspect your workspace and
+        operation status before deciding whether to try again. Durable queued
+        workers remain in development.
+      </p>
+    </div>
+    <div class="doc-panel faq-panel">
       <h2>Which AI providers can I use?</h2>
       <p>
         The V backend streams responses from OpenAI-compatible APIs, Anthropic,
