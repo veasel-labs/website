@@ -31,9 +31,13 @@ const basePath = import.meta.env.BASE_URL.replace(/\/$/, "");
         <p>
           Veasel discovers local packages, can activate validated Skills per
           session, and can expose trusted stdio or Streamable HTTP MCP servers
-          as model tools. Skill instructions are bounded, reloaded for each
-          turn, and treated as untrusted context. Veasel does not install
-          packages or claim full v1.0.0 conformance.
+          as model tools. Active Skills can expose bounded UTF-8 resources from
+          their own directory for on-demand reading. Experimental
+          <code>allowed-tools</code> declarations restrict the exact tool names
+          available to the session; they cannot add tools or bypass approvals.
+          Skill text and resource files are untrusted, and scripts are not run
+          automatically. Veasel does not install packages or claim full v1.0.0
+          conformance.
         </p>
       </div>
     </div>
@@ -52,8 +56,8 @@ const basePath = import.meta.env.BASE_URL.replace(/\/$/, "");
           <span class="guide-card-mark">✳</span>
           <h3>Agent Skills</h3>
           <p>
-            Discover descriptions first; choose which bounded instruction body
-            to include in a session.
+            Discover descriptions first, activate instructions per session, and
+            read bounded text resources from that Skill when needed.
           </p>
         </article>
         <article class="guide-card">
@@ -85,42 +89,36 @@ const basePath = import.meta.env.BASE_URL.replace(/\/$/, "");
         directory. Skill selection and MCP trust persist with the session.
         Disabling a Skill removes its instructions from the next model turn. MCP
         tool calls from trusted servers are available to the model without
-        separate per-call approval. Skill text cannot authorize tools or
-        override Veasel’s security policy.
+        separate per-call approval. While a Skill is active, the model may read
+        UTF-8 files only from that Skill’s directory; path traversal and symlink
+        escapes are rejected. Script files are never executed automatically. A
+        declared <code>allowed-tools</code> list restricts exact Veasel tool
+        names already available to the session; it cannot grant MCP trust or
+        bypass file and shell approvals. When multiple active Skills declare the
+        field, their tool names combine. An empty list denies all tools; a
+        missing declaration adds no restriction. Skill instructions and
+        resources remain untrusted input.
       </p>
     </div>
     <div class="doc-panel">
-      <h2>What Veasel must add as the host</h2>
+      <h2>What remains before a conformance claim</h2>
       <ul class="guide-list">
         <li>
           Managed installation and updates, a registry of source and version,
           component-level enablement, and persistent per-install data.
         </li>
         <li>
-          Isolated failure handling for malformed packages, unsupported
-          components, and disconnected servers.
+          Per-call MCP effect preview and approval. Current trust applies at the
+          server level for one session, and MCP tools run with the current
+          user’s OS privileges.
         </li>
         <li>
-          Per-call MCP effect review and approval; current trust applies at the
-          server level for one session. Plugin metadata cannot grant itself
-          authority.
-        </li>
-        <li>
-          Bounded MCP transports, cancellation, shutdown, and output limits.
-        </li>
-        <li>
-          Skills and MCP tools integrated into the model loop and reviewed in
-          the TUI.
-        </li>
-        <li>
-          Specification-derived fixtures and a published compatibility report
-          before claiming conformance.
+          The complete official fixture matrix, remaining transport lifecycle
+          cases, and the <code>com.veasel.code</code> extension contract. Binary
+          Skill assets and script execution with explicit approval are also not
+          supported yet.
         </li>
       </ul>
-      <p>
-        An <code>allowed-tools</code> hint in a Skill is advisory input. It must
-        never override user policy or Veasel’s permission checks.
-      </p>
     </div>
     <aside class="callout">
       <strong>Why compatibility is more than parsing.</strong> A plugin may
