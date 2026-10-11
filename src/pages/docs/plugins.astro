@@ -88,16 +88,18 @@ const basePath = import.meta.env.BASE_URL.replace(/\/$/, "");
         The plugin and Skill names come from the validated package manifest and
         directory. Skill selection and MCP trust persist with the session.
         Disabling a Skill removes its instructions from the next model turn. MCP
-        tool calls from trusted servers are available to the model without
-        separate per-call approval. While a Skill is active, the model may read
-        UTF-8 files only from that Skill’s directory; path traversal and symlink
-        escapes are rejected. Script files are never executed automatically. A
-        declared <code>allowed-tools</code> list restricts exact Veasel tool
-        names already available to the session; it cannot grant MCP trust or
-        bypass file and shell approvals. When multiple active Skills declare the
-        field, their tool names combine. An empty list denies all tools; a
-        missing declaration adds no restriction. Skill instructions and
-        resources remain untrusted input.
+        tools from trusted servers are available to the model, but every
+        requested call pauses for review. Use <code>/mcp calls</code>, inspect
+        one with <code>/mcp call show &lt;id&gt;</code>, then approve or reject
+        it. Rejected calls are not retried. While a Skill is active, the model
+        may read UTF-8 files only from that Skill’s directory; path traversal
+        and symlink escapes are rejected. Script files are never executed
+        automatically. A declared <code>allowed-tools</code> list restricts
+        exact Veasel tool names already available to the session; it cannot
+        grant MCP trust or bypass file and shell approvals. When multiple active
+        Skills declare the field, their tool names combine. An empty list denies
+        all tools; a missing declaration adds no restriction. Skill instructions
+        and resources remain untrusted input.
       </p>
     </div>
     <div class="doc-panel">
@@ -108,15 +110,14 @@ const basePath = import.meta.env.BASE_URL.replace(/\/$/, "");
           component-level enablement, and persistent per-install data.
         </li>
         <li>
-          Per-call MCP effect preview and approval. Current trust applies at the
-          server level for one session, and MCP tools run with the current
-          user’s OS privileges.
+          The complete spec-derived fixture matrix, Windows junction behavior,
+          additional transport lifecycle cases, and the documented
+          <code>com.veasel.code</code> extension contract.
         </li>
         <li>
-          The complete official fixture matrix, remaining transport lifecycle
-          cases, and the <code>com.veasel.code</code> extension contract. Binary
-          Skill assets and script execution with explicit approval are also not
-          supported yet.
+          Binary Skill assets and Skill-script execution with explicit approval
+          are not supported. MCP stdio processes still run with the current
+          user’s OS privileges and without an OS sandbox.
         </li>
       </ul>
     </div>
