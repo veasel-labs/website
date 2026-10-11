@@ -134,17 +134,19 @@ const basePath = import.meta.env.BASE_URL.replace(/\/$/, "");
           ◌
         </span>
       </article>
-      <article class="roadmap-item roadmap-next">
-        <span class="roadmap-status">PLANNED</span>
+      <article class="roadmap-item roadmap-active">
+        <span class="roadmap-status">IN DEVELOPMENT</span>
         <div>
           <h2>Durable work</h2>
           <p>
-            Durable background jobs, disconnect and reconnect recovery,
-            execution history, and stronger classification of uncertain effects.
+            Async session turns persist status before acceptance and can be
+            queried after reconnect. Interrupted work is classified as uncertain
+            and is never replayed. Durable queued workers, execution history,
+            and operation retention remain ahead.
           </p>
         </div>
-        <span class="roadmap-symbol" aria-label="Planned">
-          ·
+        <span class="roadmap-symbol" aria-label="In progress">
+          ◌
         </span>
       </article>
       <article class="roadmap-item roadmap-next">
