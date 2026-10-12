@@ -439,7 +439,9 @@ p {
   background: #101714;
   color: #e8f1eb;
   font: 500 0.68rem/1.5 var(--mono);
-  box-shadow: 0 32px 75px #183b2c35, 0 8px 0 #23986b1c;
+  box-shadow:
+    0 32px 75px #183b2c35,
+    0 8px 0 #23986b1c;
   transform: rotate(-1.4deg);
 }
 .tui-titlebar {
@@ -451,63 +453,334 @@ p {
   border-bottom: 1px solid #28342e;
   background: #1a231e;
 }
-.tui-window-dots { display: flex; gap: 5px; }
-.tui-window-dots i { width: 7px; height: 7px; border-radius: 50%; background: #f17e70; }
-.tui-window-dots i:nth-child(2) { background: #e8c05c; }
-.tui-window-dots i:nth-child(3) { background: #68c88a; }
-.tui-window-title { color: #dff5e7; font-weight: 700; letter-spacing: .08em; }
-.tui-window-title b { color: #68d89b; }
-.tui-window-host { margin-left: auto; color: #92a499; }
-.tui-live { display: flex; align-items: center; gap: 6px; color: #a9d8b8; font-size: .56rem; letter-spacing: .1em; }
-.tui-live i, .tui-status i, .tui-session-active > i { width: 6px; height: 6px; display: inline-block; border-radius: 50%; background: #68d89b; box-shadow: 0 0 12px #68d89b88; }
-.tui-screen { min-height: 294px; display: grid; grid-template-columns: 35% 65%; }
-.tui-sessions { position: relative; padding: 18px 12px 54px; border-right: 1px solid #28342e; background: #141b17; }
-.tui-eyebrow { display: flex; justify-content: space-between; color: #8eaa99; font-size: .58rem; letter-spacing: .12em; }
-.tui-eyebrow b { color: #71927e; font-weight: 500; }
-.tui-session { display: flex; gap: 9px; align-items: flex-start; margin: 14px -5px 0; padding: 9px 7px; border-radius: 7px; color: #b8c7bd; }
-.tui-session-active { background: #20372b; color: #ecf8ef; }
-.tui-session-active > i { flex: 0 0 6px; margin-top: 6px; }
-.tui-session:not(.tui-session-active) > i { flex: 0 0 6px; width: 6px; height: 6px; margin-top: 6px; border: 1px solid #789080; }
-.tui-session b, .tui-session small, .tui-session-foot b, .tui-session-foot small { display: block; }
-.tui-session b { font-weight: 600; font-size: .62rem; }
-.tui-session small { margin-top: 3px; color: #87988d; font-size: .56rem; }
-.tui-add-session { padding: 11px 3px; color: #7cda9f; font-size: .8rem; }
-.tui-add-session span { margin-left: 3px; font-size: .58rem; }
-.tui-session-foot { position: absolute; right: 12px; bottom: 13px; left: 12px; display: flex; align-items: center; gap: 8px; padding-top: 11px; border-top: 1px solid #28342e; font-size: .53rem; }
-.tui-avatar { width: 23px; height: 23px; display: grid; place-items: center; border-radius: 6px; background: #95e7b4; color: #163122; font-weight: 800; }
-.tui-session-foot b { color: #cedbd1; letter-spacing: .07em; }
-.tui-session-foot small { margin-top: 2px; color: #819188; }
-.tui-conversation { min-width: 0; padding: 13px 14px 10px; display: flex; flex-direction: column; }
-.tui-conversation-head { display: flex; align-items: center; justify-content: space-between; padding-bottom: 12px; border-bottom: 1px solid #28342e; color: #d6e4da; font-size: .61rem; }
-.tui-conversation-head > span { display: flex; align-items: center; gap: 7px; }
-.tui-conversation-head > span i { width: 5px; height: 5px; border-radius: 50%; background: #8bd7a5; }
-.tui-conversation-head kbd { color: #7e9085; font: inherit; }
-.tui-message { margin-top: 14px; }
-.tui-message-label { display: flex; align-items: center; gap: 5px; color: #9bdaa9; font-size: .55rem; letter-spacing: .1em; }
-.tui-message-label img { object-fit: contain; image-rendering: pixelated; }
-.tui-message-label b { color: #74867b; font-size: .48rem; font-weight: 500; letter-spacing: .03em; }
-.tui-message p { margin: 5px 0 0; color: #dbe5de; font: 500 .61rem/1.55 var(--body); }
-.tui-user .tui-message-label { color: #c7a2f2; }
-.tui-tool { display: flex; align-items: center; gap: 7px; margin: 12px 0 0 2px; color: #a9baae; font-size: .54rem; }
-.tui-tool > span { color: #e3c56a; font-size: .86rem; }
-.tui-tool code { min-width: 0; overflow: hidden; color: #aebdb3; font: inherit; text-overflow: ellipsis; }
-.tui-tool b { margin-left: auto; color: #79ca91; font-size: .5rem; font-weight: 500; }
-.tui-proposal { display: flex; justify-content: space-between; align-items: center; gap: 8px; margin-top: 13px; padding: 9px; border: 1px solid #3b5948; border-radius: 7px; background: #1c2d23; }
-.tui-proposal > div { display: grid; grid-template-columns: 14px 1fr; column-gap: 5px; align-items: center; }
-.tui-proposal > div > span { grid-row: span 2; color: #91e1a7; }
-.tui-proposal b { color: #dbf0df; font-size: .55rem; }
-.tui-proposal small { margin-top: 2px; color: #90a998; font-size: .5rem; }
-.tui-review { flex: 0 0 auto; padding: 5px 7px; border-radius: 5px; background: #a1edb8; color: #1a3925; font-size: .51rem; font-weight: 700; }
-.tui-review b { color: #1a3925; }
-.tui-composer { display: flex; align-items: center; gap: 7px; margin-top: auto; padding: 8px; border: 1px solid #3d4c42; border-radius: 6px; color: #84978b; font: 500 .53rem var(--body); }
-.tui-composer > span:first-child { color: #8fe6a9; font: 700 .8rem var(--mono); }
-.tui-composer i { width: 5px; height: 11px; background: #9ae8af; animation: tui-cursor 1.15s steps(2, start) infinite; }
-@keyframes tui-cursor { to { visibility: hidden; } }
-.tui-status { display: flex; justify-content: space-between; gap: 4px; margin-top: 8px; color: #829187; font-size: .47rem; }
-.tui-status > span:first-child { color: #9bc9a7; }
-.tui-status i { width: 5px; height: 5px; margin-right: 4px; }
-.tui-caption { display: flex; justify-content: space-between; gap: 10px; padding: 9px 13px; border-top: 1px solid #28342e; background: #151d18; color: #84958a; font-size: .49rem; }
-.tui-caption span:first-child { color: #8bd6a0; letter-spacing: .1em; }
+.tui-window-dots {
+  display: flex;
+  gap: 5px;
+}
+.tui-window-dots i {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #f17e70;
+}
+.tui-window-dots i:nth-child(2) {
+  background: #e8c05c;
+}
+.tui-window-dots i:nth-child(3) {
+  background: #68c88a;
+}
+.tui-window-title {
+  color: #dff5e7;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+}
+.tui-window-title b {
+  color: #68d89b;
+}
+.tui-window-host {
+  margin-left: auto;
+  color: #92a499;
+}
+.tui-live {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: #a9d8b8;
+  font-size: 0.56rem;
+  letter-spacing: 0.1em;
+}
+.tui-live i,
+.tui-status i,
+.tui-session-active > i {
+  width: 6px;
+  height: 6px;
+  display: inline-block;
+  border-radius: 50%;
+  background: #68d89b;
+  box-shadow: 0 0 12px #68d89b88;
+}
+.tui-screen {
+  min-height: 294px;
+  display: grid;
+  grid-template-columns: 35% 65%;
+}
+.tui-sessions {
+  position: relative;
+  padding: 18px 12px 54px;
+  border-right: 1px solid #28342e;
+  background: #141b17;
+}
+.tui-eyebrow {
+  display: flex;
+  justify-content: space-between;
+  color: #8eaa99;
+  font-size: 0.58rem;
+  letter-spacing: 0.12em;
+}
+.tui-eyebrow b {
+  color: #71927e;
+  font-weight: 500;
+}
+.tui-session {
+  display: flex;
+  gap: 9px;
+  align-items: flex-start;
+  margin: 14px -5px 0;
+  padding: 9px 7px;
+  border-radius: 7px;
+  color: #b8c7bd;
+}
+.tui-session-active {
+  background: #20372b;
+  color: #ecf8ef;
+}
+.tui-session-active > i {
+  flex: 0 0 6px;
+  margin-top: 6px;
+}
+.tui-session:not(.tui-session-active) > i {
+  flex: 0 0 6px;
+  width: 6px;
+  height: 6px;
+  margin-top: 6px;
+  border: 1px solid #789080;
+}
+.tui-session b,
+.tui-session small,
+.tui-session-foot b,
+.tui-session-foot small {
+  display: block;
+}
+.tui-session b {
+  font-weight: 600;
+  font-size: 0.62rem;
+}
+.tui-session small {
+  margin-top: 3px;
+  color: #87988d;
+  font-size: 0.56rem;
+}
+.tui-add-session {
+  padding: 11px 3px;
+  color: #7cda9f;
+  font-size: 0.8rem;
+}
+.tui-add-session span {
+  margin-left: 3px;
+  font-size: 0.58rem;
+}
+.tui-session-foot {
+  position: absolute;
+  right: 12px;
+  bottom: 13px;
+  left: 12px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding-top: 11px;
+  border-top: 1px solid #28342e;
+  font-size: 0.53rem;
+}
+.tui-avatar {
+  width: 23px;
+  height: 23px;
+  display: grid;
+  place-items: center;
+  border-radius: 6px;
+  background: #95e7b4;
+  color: #163122;
+  font-weight: 800;
+}
+.tui-session-foot b {
+  color: #cedbd1;
+  letter-spacing: 0.07em;
+}
+.tui-session-foot small {
+  margin-top: 2px;
+  color: #819188;
+}
+.tui-conversation {
+  min-width: 0;
+  padding: 13px 14px 10px;
+  display: flex;
+  flex-direction: column;
+}
+.tui-conversation-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-bottom: 12px;
+  border-bottom: 1px solid #28342e;
+  color: #d6e4da;
+  font-size: 0.61rem;
+}
+.tui-conversation-head > span {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+}
+.tui-conversation-head > span i {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: #8bd7a5;
+}
+.tui-conversation-head kbd {
+  color: #7e9085;
+  font: inherit;
+}
+.tui-message {
+  margin-top: 14px;
+}
+.tui-message-label {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  color: #9bdaa9;
+  font-size: 0.55rem;
+  letter-spacing: 0.1em;
+}
+.tui-message-label img {
+  object-fit: contain;
+  image-rendering: pixelated;
+}
+.tui-message-label b {
+  color: #74867b;
+  font-size: 0.48rem;
+  font-weight: 500;
+  letter-spacing: 0.03em;
+}
+.tui-message p {
+  margin: 5px 0 0;
+  color: #dbe5de;
+  font: 500 0.61rem/1.55 var(--body);
+}
+.tui-user .tui-message-label {
+  color: #c7a2f2;
+}
+.tui-tool {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  margin: 12px 0 0 2px;
+  color: #a9baae;
+  font-size: 0.54rem;
+}
+.tui-tool > span {
+  color: #e3c56a;
+  font-size: 0.86rem;
+}
+.tui-tool code {
+  min-width: 0;
+  overflow: hidden;
+  color: #aebdb3;
+  font: inherit;
+  text-overflow: ellipsis;
+}
+.tui-tool b {
+  margin-left: auto;
+  color: #79ca91;
+  font-size: 0.5rem;
+  font-weight: 500;
+}
+.tui-proposal {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+  margin-top: 13px;
+  padding: 9px;
+  border: 1px solid #3b5948;
+  border-radius: 7px;
+  background: #1c2d23;
+}
+.tui-proposal > div {
+  display: grid;
+  grid-template-columns: 14px 1fr;
+  column-gap: 5px;
+  align-items: center;
+}
+.tui-proposal > div > span {
+  grid-row: span 2;
+  color: #91e1a7;
+}
+.tui-proposal b {
+  color: #dbf0df;
+  font-size: 0.55rem;
+}
+.tui-proposal small {
+  margin-top: 2px;
+  color: #90a998;
+  font-size: 0.5rem;
+}
+.tui-review {
+  flex: 0 0 auto;
+  padding: 5px 7px;
+  border-radius: 5px;
+  background: #a1edb8;
+  color: #1a3925;
+  font-size: 0.51rem;
+  font-weight: 700;
+}
+.tui-review b {
+  color: #1a3925;
+}
+.tui-composer {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  margin-top: auto;
+  padding: 8px;
+  border: 1px solid #3d4c42;
+  border-radius: 6px;
+  color: #84978b;
+  font: 500 0.53rem var(--body);
+}
+.tui-composer > span:first-child {
+  color: #8fe6a9;
+  font: 700 0.8rem var(--mono);
+}
+.tui-composer i {
+  width: 5px;
+  height: 11px;
+  background: #9ae8af;
+  animation: tui-cursor 1.15s steps(2, start) infinite;
+}
+@keyframes tui-cursor {
+  to {
+    visibility: hidden;
+  }
+}
+.tui-status {
+  display: flex;
+  justify-content: space-between;
+  gap: 4px;
+  margin-top: 8px;
+  color: #829187;
+  font-size: 0.47rem;
+}
+.tui-status > span:first-child {
+  color: #9bc9a7;
+}
+.tui-status i {
+  width: 5px;
+  height: 5px;
+  margin-right: 4px;
+}
+.tui-caption {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 9px 13px;
+  border-top: 1px solid #28342e;
+  background: #151d18;
+  color: #84958a;
+  font-size: 0.49rem;
+}
+.tui-caption span:first-child {
+  color: #8bd6a0;
+  letter-spacing: 0.1em;
+}
 .sticker {
   position: absolute;
   z-index: 2;
@@ -1519,22 +1792,66 @@ pre {
     height: 390px;
     margin-top: 4px;
   }
-  .tui-preview { width: calc(100% - 4px); font-size: .62rem; transform: none; }
-  .tui-titlebar { min-height: 39px; padding-inline: 9px; gap: 7px; }
-  .tui-window-host { display: none; }
-  .tui-screen { min-height: 282px; grid-template-columns: 31% 69%; }
-  .tui-sessions { padding: 14px 7px 50px; }
-  .tui-session { margin-inline: -3px; padding-inline: 4px; gap: 5px; }
-  .tui-session b { font-size: .51rem; overflow-wrap: anywhere; }
-  .tui-session small { font-size: .48rem; }
-  .tui-session-foot { right: 7px; left: 7px; gap: 5px; }
-  .tui-session-foot b { font-size: .45rem; }
-  .tui-session-foot small { font-size: .44rem; }
-  .tui-conversation { padding: 12px 9px 9px; }
-  .tui-message p { font-size: .58rem; }
-  .tui-message-label b { display: none; }
-  .tui-review { padding: 5px; font-size: .46rem; }
-  .tui-caption { flex-wrap: wrap; font-size: .46rem; }
+  .tui-preview {
+    width: calc(100% - 4px);
+    font-size: 0.62rem;
+    transform: none;
+  }
+  .tui-titlebar {
+    min-height: 39px;
+    padding-inline: 9px;
+    gap: 7px;
+  }
+  .tui-window-host {
+    display: none;
+  }
+  .tui-screen {
+    min-height: 282px;
+    grid-template-columns: 31% 69%;
+  }
+  .tui-sessions {
+    padding: 14px 7px 50px;
+  }
+  .tui-session {
+    margin-inline: -3px;
+    padding-inline: 4px;
+    gap: 5px;
+  }
+  .tui-session b {
+    font-size: 0.51rem;
+    overflow-wrap: anywhere;
+  }
+  .tui-session small {
+    font-size: 0.48rem;
+  }
+  .tui-session-foot {
+    right: 7px;
+    left: 7px;
+    gap: 5px;
+  }
+  .tui-session-foot b {
+    font-size: 0.45rem;
+  }
+  .tui-session-foot small {
+    font-size: 0.44rem;
+  }
+  .tui-conversation {
+    padding: 12px 9px 9px;
+  }
+  .tui-message p {
+    font-size: 0.58rem;
+  }
+  .tui-message-label b {
+    display: none;
+  }
+  .tui-review {
+    padding: 5px;
+    font-size: 0.46rem;
+  }
+  .tui-caption {
+    flex-wrap: wrap;
+    font-size: 0.46rem;
+  }
   .sun {
     width: 245px;
     height: 245px;
@@ -1743,7 +2060,9 @@ pre {
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
   }
-  .tui-composer i { animation: none; }
+  .tui-composer i {
+    animation: none;
+  }
 }
 
 :root[data-theme="dark"] {
