@@ -17,8 +17,8 @@ const basePath = import.meta.env.BASE_URL.replace(/\/$/, "");
     </h1>
     <p class="lede">
       Veasel Code keeps model connections behind a small V provider interface.
-      Choose from 30 presets across three wire protocols and use the same
-      persistent session workflow. Presets are not 30 independent native SDK
+      Choose from 33 presets across three wire protocols and use the same
+      persistent session workflow. Presets are not 33 independent native SDK
       integrations: most hosted and local choices use the shared
       OpenAI-compatible Chat Completions adapter.
     </p>
@@ -77,18 +77,24 @@ const basePath = import.meta.env.BASE_URL.replace(/\/$/, "");
       </p>
       <h3>Hosted and gateway endpoints</h3>
       <p>
+        <a href="https://help.aliyun.com/en/model-studio/compatibility-of-openai-with-dashscope">
+          Alibaba Cloud Model Studio,
+        </a>
         Cerebras, Cloudflare Workers AI, DeepInfra, DeepSeek, Fireworks AI,
         Groq, Hugging Face, Hyperbolic, Mistral, Moonshot AI, Nebius AI Studio,
         Novita AI, NVIDIA NIM, OpenAI, OpenAI-compatible custom endpoints,
         OpenRouter, Perplexity, SambaNova, SiliconFlow, Together AI, Vercel AI
-        Gateway, Venice AI, and xAI.
+        Gateway, Venice AI, xAI, and <a href="https://docs.z.ai/">Z.AI</a>.
       </p>
       <h3>Local endpoints</h3>
       <p>
-        Ollama, llama.cpp, LM Studio, LocalAI, and vLLM. They start with
-        loopback URLs and do not require an API key by default. Change the
-        endpoint when your local server uses another address. Cloudflare Workers
-        AI needs its account ID in the endpoint URL.
+        <a href="https://opencode.ai/docs/providers/">Atomic Chat</a>, Ollama,
+        llama.cpp, LM Studio, LocalAI, and vLLM. They start with loopback URLs
+        and do not require an API key by default. Change the endpoint when your
+        local server uses another address. Cloudflare Workers AI needs its
+        account ID in the endpoint URL. Alibaba Cloud Model Studio defaults to
+        its US Virginia endpoint; select the URL that matches your account's
+        region and API key.
       </p>
       <h3>Model selection</h3>
       <p>
