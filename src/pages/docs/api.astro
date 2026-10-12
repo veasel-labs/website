@@ -59,7 +59,7 @@ const basePath = import.meta.env.BASE_URL.replace(/\/$/, "");
           <b role="cell">GET · POST</b>
           <code role="cell">{"/v1/sessions/{id}/messages"}</code>
           <span role="cell">
-            Restore history or complete and persist one exchange.
+            Page chat history or complete and persist one exchange.
           </span>
         </div>
         <div class="provider-table-row" role="row">
@@ -238,6 +238,22 @@ const basePath = import.meta.env.BASE_URL.replace(/\/$/, "");
           </span>
         </div>
       </div>
+    </div>
+    <div class="doc-panel">
+      <h2>Page session history</h2>
+      <p>
+        <code>GET /v1/sessions/&#123;id&#125;/messages</code> returns the latest
+        100 messages by default, in chronological order. Set <code>limit</code>{" "}
+        to a value from 1 to 100 to choose a page size. To fetch an earlier
+        page, pass the first message ID from the current page as the exclusive
+        <code>before</code> cursor:
+      </p>
+      <pre><code>curl 'http://127.0.0.1:4097/v1/sessions/SESSION_ID/messages?limit=100&before=101'</code></pre>
+      <p>
+        An empty array means there are no earlier messages. In the terminal
+        client, enter <code>/history older</code> to load and merge the previous
+        page while keeping the messages already on screen.
+      </p>
     </div>
     <aside class="callout">
       <strong>Review each effect before approving it.</strong> Session chat can
