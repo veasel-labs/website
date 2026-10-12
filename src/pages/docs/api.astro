@@ -45,6 +45,13 @@ const basePath = import.meta.env.BASE_URL.replace(/\/$/, "");
         </div>
         <div class="provider-table-row" role="row">
           <b role="cell">GET · POST</b>
+          <code role="cell">/v1/config/model</code>
+          <span role="cell">
+            Read or update provider profiles; responses never include API keys.
+          </span>
+        </div>
+        <div class="provider-table-row" role="row">
+          <b role="cell">GET · POST</b>
           <code role="cell">/v1/sessions</code>
           <span role="cell">
             List sessions or create one for an existing directory.

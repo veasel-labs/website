@@ -47,8 +47,10 @@ const basePath = import.meta.env.BASE_URL.replace(/\/$/, "");
           implemented.
         </li>
         <li>
-          Provider credentials stay in the backend environment and are not
-          returned by the API.
+          Provider credentials are never returned by the API. TUI-entered keys
+          are stored in the local model settings file with owner-only POSIX
+          permissions; they are plaintext at rest. Use environment credentials
+          if your local policy requires keychain-managed secrets.
         </li>
         <li>
           Remote model endpoints require HTTPS; local development endpoints may

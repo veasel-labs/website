@@ -17,8 +17,8 @@ const basePath = import.meta.env.BASE_URL.replace(/\/$/, "");
     </h1>
     <p class="lede">
       Veasel Code keeps model connections behind a small V provider interface.
-      Configure one backend and use the same persistent session workflow across
-      OpenAI-compatible APIs, Anthropic, and Gemini.
+      Configure provider profiles in the TUI and use the same persistent session
+      workflow across OpenAI-compatible APIs, Anthropic, and Gemini.
     </p>
     <div class="doc-panel">
       <h2>Available in the current source build</h2>
@@ -66,7 +66,21 @@ const basePath = import.meta.env.BASE_URL.replace(/\/$/, "");
       </div>
     </div>
     <div class="doc-panel">
-      <h2>Choose a provider for the backend</h2>
+      <h2>Choose a provider in Veasel</h2>
+      <p>
+        Press <kbd>s</kbd> on the home screen or enter <code>/models</code> in
+        an open session. Enter the provider ID, model ID, API base URL, and key.
+        Veasel keeps a separate profile for each provider. Leave the key blank
+        to keep the saved value, or enter <code>!clear</code> to remove it. Keys
+        are never shown again in the TUI or returned by the API.
+      </p>
+      <p>
+        Profiles live in <code>$VEASEL_DATA_DIR/model-settings.json</code>; on
+        POSIX, the file is restricted to the current user. Values are stored in
+        plaintext on disk, so use environment variables when local policy
+        requires secrets to be managed by an OS keychain.
+      </p>
+      <h3>Headless configuration</h3>
       <pre><code>export VEASEL_MODEL_PROVIDER=anthropic
 export VEASEL_MODEL=your-model-name
 export ANTHROPIC_API_KEY=your-api-key
@@ -76,7 +90,7 @@ v run . serve</code></pre>
         <code>openai-compatible</code>, or <code>GEMINI_API_KEY</code> with
         <code>gemini</code>. Set <code>VEASEL_MODEL_BASE_URL</code> for a
         compatible endpoint; custom endpoints require HTTPS or loopback HTTP.
-        The TUI inherits provider configuration from the server process.
+        Environment configuration remains available for scripts and automation.
       </p>
     </div>
     <p class="callout">
