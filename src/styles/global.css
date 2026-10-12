@@ -1673,7 +1673,9 @@ pre {
   .site-header nav {
     order: 3;
     width: 100%;
-    justify-content: space-between;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    gap: 5px 14px;
   }
   .theme-switch {
     margin-left: auto;
