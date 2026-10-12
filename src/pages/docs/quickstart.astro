@@ -37,27 +37,17 @@ const basePath = import.meta.env.BASE_URL.replace(/\/$/, "");
       </p>
     </div>
     <div class="doc-panel">
-      <h2>Start the V server</h2>
+      <h2>Start Veasel and choose a model</h2>
       <pre><code>git clone https://github.com/veasel-labs/veasel
 cd veasel
-export VEASEL_MODEL_PROVIDER=anthropic
-export VEASEL_MODEL=your-model-name
-export ANTHROPIC_API_KEY=your-api-key
-v run . serve</code></pre>
+v run .</code></pre>
       <p>
-        The server listens on <code>127.0.0.1:4097</code>. Keep your key in the
-        server environment. Veasel does not send it to the terminal client or
-        return it from the API.
-      </p>
-    </div>
-    <div class="doc-panel">
-      <h2>Open a session</h2>
-      <pre><code># In another terminal, from the repository
-v run . tui</code></pre>
-      <p>
-        Create a session by selecting an existing workspace directory. Ask a
-        question and the configured provider will answer. Messages and session
-        events are persisted locally in SQLite.
+        Veasel reuses a healthy server or starts one at
+        <code>127.0.0.1:4097</code> before opening the TUI. Press
+        <kbd>s</kbd> on the home screen or inside a session to choose a provider,
+        model, endpoint, and API key. Create a session by selecting a workspace
+        directory; messages and events are stored locally in SQLite. You can
+        still run <code>veasel serve</code> separately when needed.
       </p>
     </div>
     <div class="doc-panel">

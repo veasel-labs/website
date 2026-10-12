@@ -76,34 +76,32 @@ const basePath = import.meta.env.BASE_URL.replace(/\/$/, "");
           height="52"
         />
       </div>
-      <div class="terminal-card">
-        <div class="terminal-bar">
-          <span></span>
-          <span></span>
-          <span></span>
-          <b>veasel / your-project</b>
-          <i>⌘ K</i>
+      <div class="tui-preview" aria-label="HTML-rendered preview of Veasel Code running in a terminal">
+        <div class="tui-titlebar">
+          <div class="tui-window-dots" aria-hidden="true"><i></i><i></i><i></i></div>
+          <span class="tui-window-title">VEASEL <b>/</b> CODE</span>
+          <span class="tui-window-host">~/your-project</span>
+          <span class="tui-live"><i></i> LOCAL</span>
         </div>
-        <div class="terminal-content">
-          <p class="terminal-comment">// your next idea starts here</p>
-          <p>
-            <span class="code-purple">fn</span>{" "}
-            <span class="code-green">make_it_real</span>() &#123;
-          </p>
-          <p class="indent">
-            <span class="code-orange">veasel</span>.work(with:{" "}
-            <span class="code-yellow">you</span>)
-          </p>
-          <p>&#125;</p>
-          <div class="terminal-result">
-            <span class="result-icon">✓</span>
-            <span>
-              <b>Session saved</b>
-              <small>right here, on your machine</small>
-            </span>
-            <span class="dots">•••</span>
+        <div class="tui-screen">
+          <aside class="tui-sessions" aria-label="Session list">
+            <span class="tui-eyebrow">SESSIONS <b>02</b></span>
+            <div class="tui-session tui-session-active"><i></i><span><b>Polish the landing page</b><small>~/veasel.dev</small></span></div>
+            <div class="tui-session"><i></i><span><b>Explore the V parser</b><small>~/vlang</small></span></div>
+            <div class="tui-add-session">＋ <span>new workspace</span></div>
+            <div class="tui-session-foot"><span class="tui-avatar">V</span><span><b>VEASEL CODE</b><small>your local workspace</small></span></div>
+          </aside>
+          <div class="tui-conversation">
+            <div class="tui-conversation-head"><span><i></i> Polish the landing page</span><kbd>Esc</kbd></div>
+            <div class="tui-message tui-user"><span class="tui-message-label">YOU</span><p>Can you make this hero feel more alive on small screens?</p></div>
+            <div class="tui-message tui-agent"><span class="tui-message-label"><img src={`${basePath}/veasel-pixel.svg`} alt="" width="19" height="14" /> VEASEL <b>· THINKING THROUGH THE LAYOUT</b></span><p>I’ll trace the responsive styles first, then propose a focused change you can review.</p></div>
+            <div class="tui-tool"><span>⌕</span><code>read src/styles/hero.css</code><b>done</b></div>
+            <div class="tui-proposal"><div><span>✳</span><b>Change ready to review</b><small>src/styles/hero.css · +8 −3</small></div><span class="tui-review">Review diff <b>↗</b></span></div>
+            <div class="tui-composer"><span>›</span><span>Ask Veasel to explain or propose a workspace change…</span><i></i></div>
+            <div class="tui-status"><span><i></i> connected</span><span>s models&nbsp; · &nbsp;/help</span><span>↑ ↓ navigate</span></div>
           </div>
         </div>
+        <div class="tui-caption"><span>THE INTERFACE, BUILT IN CODE</span><span>Not a screenshot — every panel is live HTML.</span></div>
       </div>
       <div class="float-note note-top">
         <span>⌁</span> ideas welcome
