@@ -17,8 +17,10 @@ const basePath = import.meta.env.BASE_URL.replace(/\/$/, "");
     </h1>
     <p class="lede">
       Veasel Code keeps model connections behind a small V provider interface.
-      Configure provider profiles in the TUI and use the same persistent session
-      workflow across OpenAI-compatible APIs, Anthropic, and Gemini.
+      Choose from 30 presets across three wire protocols and use the same
+      persistent session workflow. Presets are not 30 independent native SDK
+      integrations: most hosted and local choices use the shared
+      OpenAI-compatible Chat Completions adapter.
     </p>
     <div class="doc-panel">
       <h2>Available in the current source build</h2>
@@ -29,8 +31,8 @@ const basePath = import.meta.env.BASE_URL.replace(/\/$/, "");
         listing, file reads, literal search, and a single-file edit proposal. A
         proposal is a saved diff; it does not modify the workspace until a
         person opens and approves it in the TUI. Requested file content and tool
-        results go back to the configured provider. Model response Responses
-        stream through durable session events. A model can also propose a shell
+        results go back to the configured provider. Model responses stream
+        through durable session events. A model can also propose a shell
         command; the TUI requires opening the exact command, working directory,
         and timeout before approval. Approved commands run as the server user
         without an OS sandbox. Shell output and requested file content are
@@ -64,6 +66,42 @@ const basePath = import.meta.env.BASE_URL.replace(/\/$/, "");
           <span role="cell">Native generateContent API</span>
         </div>
       </div>
+    </div>
+    <div class="doc-panel">
+      <h2>Provider presets</h2>
+      <p>
+        Anthropic and Gemini use their native HTTP APIs. The remaining presets
+        use OpenAI Chat Completions; provider-specific authentication and
+        features are not implied. Choose an entry in Settings with <kbd>s</kbd>
+        on the home screen or <code>/models</code> in a session.
+      </p>
+      <h3>Hosted and gateway endpoints</h3>
+      <p>
+        Cerebras, Cloudflare Workers AI, DeepInfra, DeepSeek, Fireworks AI,
+        Groq, Hugging Face, Hyperbolic, Mistral, Moonshot AI, Nebius AI Studio,
+        Novita AI, NVIDIA NIM, OpenAI, OpenAI-compatible custom endpoints,
+        OpenRouter, Perplexity, SambaNova, SiliconFlow, Together AI, Vercel AI
+        Gateway, Venice AI, and xAI.
+      </p>
+      <h3>Local endpoints</h3>
+      <p>
+        Ollama, llama.cpp, LM Studio, LocalAI, and vLLM. They start with
+        loopback URLs and do not require an API key by default. Change the
+        endpoint when your local server uses another address. Cloudflare Workers
+        AI needs its account ID in the endpoint URL.
+      </p>
+      <h3>Model selection</h3>
+      <p>
+        When a saved profile or environment variable already supplies provider
+        credentials, Settings can fetch that endpoint's model list. This is a
+        model-list request, not a generation request. If credentials are not
+        configured yet, the endpoint does not support listing, or the request
+        fails, enter a model ID manually. The selected provider, model,
+        endpoint, and key can all be configured from Settings; API keys are
+        never returned by the settings API. See the{" "}
+        <a href={`${basePath}/docs/api/`}>model-list endpoint</a> for its
+        contract.
+      </p>
     </div>
     <div class="doc-panel">
       <h2>Choose a provider in Veasel</h2>
