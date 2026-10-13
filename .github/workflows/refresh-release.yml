@@ -78,6 +78,39 @@ jobs:
           echo "number=$pull_request" >> "$GITHUB_OUTPUT"
           echo "head_sha=$(git rev-parse HEAD)" >> "$GITHUB_OUTPUT"
 
+      - name: Open or reuse verified-release pull request
+        id: pull-request
+        if: steps.release.outputs.changed == 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          RELEASE_TAG: ${{ steps.release.outputs.tag }}
+          RELEASE_BRANCH: ${{ steps.release.outputs.branch }}
+          EXISTING_PR: ${{ steps.branch.outputs.number }}
+        run: |
+          set -euo pipefail
+          pull_request="$EXISTING_PR"
+          if [[ -z "$pull_request" ]]; then
+            cat > "$RUNNER_TEMP/verified-release-pr.md" <<EOF
+          ## Summary
+
+          Refresh the checked-in download fallback to the latest preview release whose GitHub asset digests, checksum file, and release manifest agree.
+
+          ## Validation
+
+          The workflow runs the complete website CI for the proposed release metadata and enables auto-merge only after all required checks pass.
+
+          ## Scope
+
+          Generated release metadata only; no application code, credentials, or benchmark results are changed.
+          EOF
+            pull_request_url="$(gh pr create --repo "$GITHUB_REPOSITORY" --base main \
+              --head "$RELEASE_BRANCH" \
+              --title "chore: refresh verified release to $RELEASE_TAG" \
+              --body-file "$RUNNER_TEMP/verified-release-pr.md")"
+            pull_request="${pull_request_url##*/}"
+          fi
+          echo "number=$pull_request" >> "$GITHUB_OUTPUT"
+
       - name: Validate release metadata branch
         if: steps.release.outputs.changed == 'true'
         env:
@@ -109,39 +142,6 @@ jobs:
           fi
           gh run watch "$run_id" --repo "$GITHUB_REPOSITORY" --exit-status
 
-      - name: Open or reuse verified-release pull request
-        id: pull-request
-        if: steps.release.outputs.changed == 'true'
-        env:
-          GH_TOKEN: ${{ github.token }}
-          RELEASE_TAG: ${{ steps.release.outputs.tag }}
-          RELEASE_BRANCH: ${{ steps.release.outputs.branch }}
-          EXISTING_PR: ${{ steps.branch.outputs.number }}
-        run: |
-          set -euo pipefail
-          pull_request="$EXISTING_PR"
-          if [[ -z "$pull_request" ]]; then
-            cat > "$RUNNER_TEMP/verified-release-pr.md" <<EOF
-          ## Summary
-
-          Refresh the checked-in download fallback to the latest preview release whose GitHub asset digests, checksum file, and release manifest agree.
-
-          ## Validation
-
-          The workflow ran the complete website CI against this branch before opening this pull request. It merges only after the required checks pass; the merge starts the production Vercel deployment.
-
-          ## Scope
-
-          Generated release metadata only; no application code, credentials, or benchmark results are changed.
-          EOF
-            pull_request_url="$(gh pr create --repo "$GITHUB_REPOSITORY" --base main \
-              --head "$RELEASE_BRANCH" \
-              --title "chore: refresh verified release to $RELEASE_TAG" \
-              --body-file "$RUNNER_TEMP/verified-release-pr.md")"
-            pull_request="${pull_request_url##*/}"
-          fi
-          echo "number=$pull_request" >> "$GITHUB_OUTPUT"
-
       - name: Verify deployment checks and merge release metadata
         if: steps.release.outputs.changed == 'true'
         env:
@@ -150,4 +150,4 @@ jobs:
         run: |
           set -euo pipefail
           gh pr checks "$PR_NUMBER" --repo "$GITHUB_REPOSITORY" --watch
-          gh pr merge "$PR_NUMBER" --repo "$GITHUB_REPOSITORY" --squash --delete-branch
+          gh pr merge "$PR_NUMBER" --repo "$GITHUB_REPOSITORY" --squash --delete-branch --auto
