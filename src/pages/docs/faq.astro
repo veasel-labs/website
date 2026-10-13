@@ -56,8 +56,10 @@ const basePath = import.meta.env.BASE_URL.replace(/\/$/, "");
     <div class="doc-panel faq-panel">
       <h2>Which AI providers can I use?</h2>
       <p>
-        The V backend streams responses from OpenAI-compatible APIs, Anthropic,
-        and Gemini. See{" "}
+        The V backend supports OpenAI Chat Completions and Responses, Meta Model
+        API Responses, Anthropic Messages, Gemini, and many OpenAI-compatible
+        endpoints. These are four protocol families, not independent native
+        adapters for every preset. See{" "}
         <a href={`${basePath}/docs/providers/`}>provider setup</a> and data
         disclosure details.
       </p>

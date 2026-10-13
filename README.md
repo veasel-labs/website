@@ -37,9 +37,11 @@ deployments.
 ## Content boundary
 
 The site describes the current product honestly. Streaming chat through
-OpenAI-compatible, Anthropic, and Gemini APIs is available in the current
-build, with session history stored in a local SQLite database. The agent can
-inspect a selected workspace and propose bounded, single-file edits. In the
+OpenAI Chat Completions and Responses, Meta Model API, Anthropic, Gemini, and
+OpenAI-compatible endpoints are available in the current build, with session
+history stored in a local SQLite database. These are four protocol families;
+endpoint presets do not imply independent native SDK integrations. The agent
+can inspect a selected workspace and propose bounded, single-file edits. In the
 TUI, a user opens the saved diff and explicitly approves it before it is
 applied. Provider responses stream through replayable session events. The local
 API has no application token, so same-user processes can also access its review
