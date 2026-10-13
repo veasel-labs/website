@@ -184,16 +184,16 @@ if ($actual -ne $expected) &#123; throw 'Checksum mismatch' &#125;
         <p class="section-index">03 / TAKE YOUR FIRST STEP</p>
         <h2>Unpack. Then say hello.</h2>
         <p>
-          After extracting the archive, run the help command from its folder.
-          Bun 1.4 or newer is needed for the terminal interface; the backend
-          runs without Bun.
+          Extract the archive, add its folder to your <code>PATH</code>, and run
+          Veasel from any project directory. Bun 1.4.2 or newer is needed for
+          the terminal interface; the backend runs without Bun.
         </p>
       </div>
       <div class="command-card">
-        <code>./veasel --help</code>
-        <span>backend · no Bun needed</span>
-        <code>./veasel tui</code>
-        <span>terminal client · Bun 1.4+</span>
+        <code>veasel</code>
+        <span>server + terminal client · Bun 1.4.2+</span>
+        <code>veasel serve</code>
+        <span>API server only · no Bun needed</span>
       </div>
     </section>
 

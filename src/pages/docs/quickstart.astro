@@ -5,8 +5,8 @@ const basePath = import.meta.env.BASE_URL.replace(/\/$/, "");
 ---
 
 <SiteLayout
-  title="Run Veasel Code from source"
-  description="Set up the V backend, choose a model provider, and open the Veasel Code terminal client."
+  title="Start with Veasel Code"
+  description="Download Veasel Code, choose a model provider in Settings, and start your first coding session."
 >
   <section class="doc-page page-grid">
     <p class="kicker">FIELD GUIDE / FIRST SESSION</p>
@@ -16,33 +16,30 @@ const basePath = import.meta.env.BASE_URL.replace(/\/$/, "");
       <em>conversation.</em>
     </h1>
     <p class="lede">
-      Veasel Code is under active development and currently runs from source.
-      Start the app once and configure a hosted or local model from the TUI.
+      Download the preview build for your platform, open Veasel, and configure a
+      hosted or local model from the TUI.
     </p>
     <div class="doc-panel">
       <h2>What you need</h2>
       <ul class="guide-list">
         <li>
-          The V compiler revision recorded in the repository’s{" "}
-          <code>.v-version</code>.
+          The Veasel Code build for your operating system from the{" "}
+          <a href={`${basePath}/downloads/`}>downloads page</a>.
         </li>
-        <li>SQLite development headers and library for the V SQLite module.</li>
-        <li>Bun 1.3.14 or newer to build and run the OpenTUI client.</li>
+        <li>Bun 1.4.2 or newer to run the terminal interface.</li>
         <li>
           A provider credential for hosted models, or a running local model
           server such as Ollama, LM Studio, llama.cpp, LocalAI, or vLLM.
         </li>
       </ul>
       <p>
-        The backend itself is V and does not need Bun. V builds the OpenTUI
-        terminal client on first use.
+        The release includes the V backend and terminal client. No V compiler or
+        separate server process is needed. Bun runs the terminal client.
       </p>
     </div>
     <div class="doc-panel">
       <h2>Start Veasel and choose a model</h2>
-      <pre><code>git clone https://github.com/veasel-labs/veasel
-cd veasel
-v run .</code></pre>
+      <pre><code>veasel</code></pre>
       <p>
         Veasel reuses a healthy server or starts one at
         <code>127.0.0.1:4097</code> before opening the TUI. Press
@@ -51,9 +48,8 @@ v run .</code></pre>
         session by selecting a workspace directory; messages and events are
         stored locally in SQLite. Local presets do not need a key by default.
         For first-time provider setup, enter a model ID manually if the list is
-        not available before you save credentials. You can still run
-        <code>v run . serve</code> separately from source, or
-        <code>veasel serve</code> after installing a release.
+        not available before you save credentials. To run only the local API
+        server for another client, use <code>veasel serve</code>.
       </p>
     </div>
     <div class="doc-panel">
