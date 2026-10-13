@@ -293,6 +293,17 @@
       "source": "veasel-curated"
     },
     {
+      "id": "meta",
+      "name": "Meta Model API",
+      "description": "Muse Spark and Muse Wonder · native OpenAI Responses API",
+      "protocol": "openai-responses",
+      "api": "https://api.meta.ai/v1",
+      "environment_key": "MODEL_API_KEY",
+      "requires_api_key": true,
+      "documentation_url": "https://dev.meta.ai/docs/coding-agents",
+      "source": "veasel-curated"
+    },
+    {
       "id": "mistral",
       "name": "Mistral AI",
       "description": "Mistral models · OpenAI-compatible Chat Completions",
