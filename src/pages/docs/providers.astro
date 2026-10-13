@@ -1,7 +1,13 @@
 ---
 import SiteLayout from "../../layouts/SiteLayout.astro";
+import catalog from "../../data/provider-catalog.json";
 
 const basePath = import.meta.env.BASE_URL.replace(/\/$/, "");
+const providers = catalog.providers;
+const modelsDevCount = providers.filter(
+  (provider) => provider.source === "models.dev",
+).length;
+const modelsDevCommit = catalog.source.commit;
 ---
 
 <SiteLayout
@@ -17,10 +23,10 @@ const basePath = import.meta.env.BASE_URL.replace(/\/$/, "");
     </h1>
     <p class="lede">
       Veasel Code keeps model connections behind a small V provider interface.
-      Choose from 46 presets across three wire protocols and use the same
-      persistent session workflow. Presets are not 46 independent native SDK
-      integrations: most hosted and local choices use the shared
-      OpenAI-compatible Chat Completions adapter.
+      Choose from {providers.length} presets across three wire protocols and use
+      the same persistent session workflow. Presets are not independent native
+      SDK integrations: {modelsDevCount} entries from the pinned Models.dev
+      catalog share Veasel's OpenAI-compatible Chat Completions adapter.
     </p>
     <div class="doc-panel">
       <h2>Available in the current source build</h2>
@@ -73,57 +79,99 @@ const basePath = import.meta.env.BASE_URL.replace(/\/$/, "");
         Anthropic and Gemini use their native HTTP APIs. The remaining presets
         use OpenAI Chat Completions; provider-specific authentication and
         features are not implied. Choose an entry in Settings with <kbd>s</kbd>
-        on the home screen or <code>/models</code> in a session.
+        on the home screen or <code>/models</code> in a session. Search this
+        catalog by provider, ID, endpoint, or credential variable.
       </p>
-      <h3>Hosted and gateway endpoints</h3>
       <p>
-        <a href="https://doc-en.302.ai/5030894m0">302.AI</a>,
-        <a href="https://help.aliyun.com/en/model-studio/compatibility-of-openai-with-dashscope">
-          Alibaba Cloud Model Studio,
+        {modelsDevCount} compatible endpoint presets are sourced from the
+        MIT-licensed{" "}
+        <a
+          href={`https://github.com/anomalyco/models.dev/tree/${modelsDevCommit}`}
+        >
+          Models.dev snapshot {modelsDevCommit.slice(0, 12)}
         </a>
-        <a href="https://docs.baseten.co/inference/model-apis/overview">
-          Baseten
+        , which OpenCode also uses for its provider catalog. They share the same
+        Veasel transport and do not represent independent SDKs or feature
+        parity. The catalog is compiled into Veasel; releases do not fetch
+        provider metadata at runtime. For the pinned source and selection rules,
+        see the{" "}
+        <a href="https://github.com/veasel-labs/veasel/blob/main/docs/PROVIDERS.md">
+          Veasel provider reference
         </a>
-        , Cerebras, Cloudflare Workers AI,
-        <a href="https://docs.cortecs.ai/integration-examples/coding">
-          Cortecs
-        </a>
-        , DeepInfra, DeepSeek,
-        <a href="https://docs.digitalocean.com/products/gradient-ai-platform/details/models/">
-          DigitalOcean
-        </a>
-        , Fireworks AI, <a href="https://docs.frogbot.ai">FrogBot</a>,
-        <a href="https://www.gmicloud.ai/en/developers">GMI Cloud</a>, Groq,
-        <a href="https://docs.helicone.ai/ai-gateway/overview">Helicone</a>,
-        Hugging Face, Hyperbolic,
-        <a href="https://io.net/docs/guides/intelligence/io-intelligence">
-          IO.NET
-        </a>
-        ,<a href="https://llmgateway.io/docs">LLM Gateway</a>,
-        <a href="https://platform.minimax.io/docs/guides/text-generation">
-          MiniMax
-        </a>
-        , Mistral, Moonshot AI, Nebius AI Studio, Novita AI, NVIDIA NIM, OpenAI,
-        OpenAI-compatible custom endpoints, OpenRouter,
-        <a href="https://docs.ollama.com/cloud">Ollama Cloud</a>, Perplexity,
-        SambaNova,{" "}
-        <a href="https://www.scaleway.com/en/docs/generative-apis/reference-content/openai-compatibility/">
-          Scaleway Generative APIs
-        </a>
-        , SiliconFlow, Together AI, Vercel AI Gateway, Venice AI, xAI,{" "}
-        <a href="https://docs.z.ai/">Z.AI</a>, and
-        <a href="https://docs.zenmux.ai">ZenMux</a>.
+        .
       </p>
-      <h3>Local endpoints</h3>
-      <p>
-        <a href="https://opencode.ai/docs/providers/">Atomic Chat</a>, Ollama,
-        llama.cpp, LM Studio, LocalAI, and vLLM. They start with loopback URLs
-        and do not require an API key by default. Change the endpoint when your
-        local server uses another address. Cloudflare Workers AI needs its
-        account ID in the endpoint URL. Alibaba Cloud Model Studio defaults to
-        its US Virginia endpoint; select the URL that matches your account's
-        region and API key.
+      <label class="provider-filter" for="provider-filter">
+        <span>Filter providers</span>
+        <input
+          id="provider-filter"
+          type="search"
+          placeholder="Name, ID, endpoint, or environment variable"
+          autocomplete="off"
+          aria-controls="provider-catalog-rows"
+        />
+      </label>
+      <p id="provider-count" class="provider-count" aria-live="polite">
+        Showing {providers.length} of {providers.length} provider presets.
       </p>
+      <div
+        class="provider-catalog-wrap"
+        role="region"
+        aria-label="Provider catalog"
+        tabindex="0"
+      >
+        <table class="provider-catalog">
+          <thead>
+            <tr>
+              <th scope="col">Provider</th>
+              <th scope="col">Transport</th>
+              <th scope="col">Default endpoint</th>
+              <th scope="col">Credential</th>
+              <th scope="col">Reference</th>
+            </tr>
+          </thead>
+          <tbody id="provider-catalog-rows">
+            {providers.map((provider) => (
+              <tr
+                data-provider-row
+                data-search={`${provider.name} ${provider.id} ${provider.protocol} ${provider.api} ${provider.environment_key}`.toLocaleLowerCase()}
+              >
+                <th scope="row">
+                  <span>{provider.name}</span>
+                  <small>{provider.id}</small>
+                </th>
+                <td>
+                  {provider.protocol === "openai-compatible"
+                    ? "OpenAI-compatible"
+                    : provider.protocol}
+                </td>
+                <td>
+                  <code>{provider.api}</code>
+                </td>
+                <td>
+                  {provider.requires_api_key
+                    ? provider.environment_key
+                    : "Not required by preset"}
+                </td>
+                <td>
+                  {provider.documentation_url ? (
+                    <a
+                      href={provider.documentation_url}
+                      target="_blank"
+                      rel="noreferrer"
+                    >
+                      Provider docs
+                    </a>
+                  ) : (
+                    <a href="https://github.com/veasel-labs/veasel/blob/main/docs/PROVIDERS.md">
+                      Veasel catalog
+                    </a>
+                  )}
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
       <h3>Model selection</h3>
       <p>
         When a saved profile or environment variable already supplies provider
@@ -183,3 +231,116 @@ v run . serve</code></pre>
     </a>
   </section>
 </SiteLayout>
+
+<script>
+  const providerFilter =
+    document.querySelector<HTMLInputElement>("#provider-filter");
+  const providerCount = document.querySelector("#provider-count");
+  const providerRows = Array.from(
+    document.querySelectorAll<HTMLTableRowElement>("[data-provider-row]"),
+  );
+
+  providerFilter?.addEventListener("input", () => {
+    const query = providerFilter.value.trim().toLocaleLowerCase();
+    let visible = 0;
+    for (const row of providerRows) {
+      const matches = row.dataset.search?.includes(query) ?? false;
+      row.hidden = !matches;
+      if (matches) visible += 1;
+    }
+    if (providerCount) {
+      providerCount.textContent = `Showing ${visible} of ${providerRows.length} provider presets.`;
+    }
+  });
+</script>
+
+<style>
+  .provider-filter {
+    display: grid;
+    gap: 8px;
+    margin-top: 20px;
+    color: var(--muted);
+    font: 0.68rem var(--mono);
+  }
+  .provider-filter input {
+    width: 100%;
+    min-height: 46px;
+    padding: 10px 13px;
+    color: var(--ink);
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 7px;
+    font: 0.76rem var(--body);
+  }
+  .provider-filter input:focus-visible {
+    outline: 2px solid var(--green);
+    outline-offset: 2px;
+  }
+  .provider-count {
+    color: var(--muted);
+    font: 0.62rem var(--mono);
+  }
+  .provider-catalog-wrap {
+    overflow: auto;
+    max-height: 68vh;
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    scrollbar-color: var(--line) transparent;
+  }
+  .provider-catalog-wrap:focus-visible {
+    outline: 2px solid var(--green);
+    outline-offset: 3px;
+  }
+  .provider-catalog {
+    width: 100%;
+    min-width: 920px;
+    border-collapse: collapse;
+    text-align: left;
+    font-size: 0.68rem;
+  }
+  .provider-catalog th,
+  .provider-catalog td {
+    padding: 11px 12px;
+    vertical-align: top;
+    border-bottom: 1px solid var(--line);
+  }
+  .provider-catalog thead {
+    position: sticky;
+    z-index: 1;
+    top: 0;
+    color: var(--muted);
+    background: var(--surface);
+    font: 0.56rem var(--mono);
+    letter-spacing: 0.04em;
+  }
+  .provider-catalog tbody th {
+    min-width: 145px;
+    font-weight: 650;
+  }
+  .provider-catalog tbody th small {
+    display: block;
+    margin-top: 4px;
+    color: var(--muted);
+    font: 0.56rem var(--mono);
+  }
+  .provider-catalog td {
+    color: var(--muted);
+  }
+  .provider-catalog code {
+    color: var(--green-dark);
+    overflow-wrap: anywhere;
+    font: 0.57rem var(--mono);
+  }
+  .provider-catalog a {
+    color: var(--green-dark);
+    text-underline-offset: 3px;
+  }
+  .provider-catalog tr[hidden] {
+    display: none;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .provider-catalog-wrap {
+      scroll-behavior: auto;
+    }
+  }
+</style>
