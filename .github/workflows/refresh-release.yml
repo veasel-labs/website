@@ -119,15 +119,35 @@ jobs:
           RELEASE_BRANCH: ${{ steps.release.outputs.branch }}
         run: |
           set -euo pipefail
-          dispatched_at="$(date -u +%Y-%m-%dT%H:%M:%SZ)"
+          previous_run_id="$(
+            gh run list --repo "$GITHUB_REPOSITORY" --workflow ci.yml \
+              --branch "$RELEASE_BRANCH" --event workflow_dispatch \
+              --limit 20 --json databaseId,headSha \
+              | jq -r \
+                --arg expected_sha "$BRANCH_HEAD_SHA" \
+                '[.[] | select(.headSha == $expected_sha) | .databaseId] | max // 0'
+          )"
           gh workflow run ci.yml --repo "$GITHUB_REPOSITORY" --ref "$RELEASE_BRANCH"
           run_id=""
           delay=15
           for _ in $(seq 1 12); do
-            run_id="$(gh run list --repo "$GITHUB_REPOSITORY" --workflow ci.yml \
-              --branch "$RELEASE_BRANCH" --limit 20 --json databaseId,headSha,createdAt \
-              | python3 -c 'import json, sys; runs = json.load(sys.stdin); sha, since = sys.argv[1:3]; print(next((str(run["databaseId"]) for run in runs if run["headSha"] == sha and run["createdAt"] >= since), ""))' \
-                "$BRANCH_HEAD_SHA" "$dispatched_at")"
+            run_id="$(
+              gh run list --repo "$GITHUB_REPOSITORY" --workflow ci.yml \
+                --branch "$RELEASE_BRANCH" --event workflow_dispatch \
+                --limit 20 --json databaseId,event,headSha,createdAt \
+                | jq -r \
+                  --arg expected_sha "$BRANCH_HEAD_SHA" \
+                  --argjson previous_run_id "$previous_run_id" \
+                  '
+                    [
+                      .[] | select(
+                        .event == "workflow_dispatch"
+                        and .headSha == $expected_sha
+                        and .databaseId > $previous_run_id
+                      )
+                    ][0].databaseId // empty
+                  '
+            )"
             if [[ -n "$run_id" ]]; then
               break
             fi
