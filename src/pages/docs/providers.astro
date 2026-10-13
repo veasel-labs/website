@@ -62,6 +62,13 @@ const modelsDevCommit = catalog.source.commit;
           </span>
         </div>
         <div class="provider-table-row" role="row">
+          <b role="cell">OpenAI Responses</b>
+          <span role="cell">Available</span>
+          <span role="cell">
+            Responses API; reasoning only for supported models
+          </span>
+        </div>
+        <div class="provider-table-row" role="row">
           <b role="cell">Anthropic</b>
           <span role="cell">Available</span>
           <span role="cell">Native Messages API</span>
@@ -76,12 +83,24 @@ const modelsDevCommit = catalog.source.commit;
     <div class="doc-panel">
       <h2>Provider presets</h2>
       <p>
-        Anthropic and Gemini use their native HTTP APIs. The remaining presets
-        use OpenAI Chat Completions, except Meta Model API, which uses its
-        Responses API. Provider-specific features are not implied. Choose an
-        entry in Settings with <kbd>s</kbd>
+        Anthropic and Gemini use their native HTTP APIs. Most remaining presets
+        use OpenAI Chat Completions. OpenAI Responses and Meta Model API use the
+        Responses API; the OpenAI Responses preset targets GPT-5 and Codex
+        models, while the original OpenAI Chat Completions preset remains
+        available. Provider-specific features are not implied. Choose an entry
+        in Settings with <kbd>s</kbd>
         on the home screen or <code>/models</code> in a session. Search this
         catalog by provider, ID, endpoint, or credential variable.
+      </p>
+      <h3>OpenAI Responses models</h3>
+      <p>
+        Choose <code>OpenAI Responses</code> to discover models from your OpenAI
+        account and use GPT-5 or Codex models with the Responses API. Veasel
+        requests high reasoning effort and encrypted reasoning replay only for
+        model families that support it; other models use the same Responses
+        transport without reasoning options. The existing OpenAI Chat
+        Completions preset remains available for models or endpoints that need
+        that protocol.
       </p>
       <h3>Meta Muse models</h3>
       <p>
