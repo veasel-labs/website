@@ -12,12 +12,14 @@ npm lockfile, and build/check workflows. The visual identity and all copy are
 original. Pages are content-first; the only browser code is a small inline
 color-theme switcher (System, Light, Dark) that remembers the preference
 without adding a UI framework.
-The downloads page selects the latest complete preview release at runtime. Its
-checked-in offline/API-failure fallback is refreshed during site builds only
-after the release manifest and `SHA256SUMS` match GitHub's SHA-256 asset
-digests. If GitHub is unavailable, the build retains the previous verified
-fallback. Publishing a product release does not require a website commit while
-the GitHub releases API is available.
+The downloads page uses a checked-in, integrity-verified preview-release
+fallback. Site builds refresh it only after the release manifest and
+`SHA256SUMS` match GitHub's SHA-256 asset digests. A scheduled release sync
+checks for newer previews each hour, opens a focused website PR when the
+verified release changes, runs the full website CI on that branch, and merges
+only after required checks pass. The merge triggers the normal Vercel
+production deployment. If GitHub is unavailable, the build keeps the previous
+verified fallback and the next scheduled sync retries.
 
 ## Develop
 
