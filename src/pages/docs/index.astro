@@ -98,24 +98,23 @@ const basePath = import.meta.env.BASE_URL.replace(/\/$/, "");
       </a>
     </nav>
     <div class="doc-panel">
-      <h2>Run it from source</h2>
-      <pre><code>git clone https://github.com/veasel-labs/veasel
-cd veasel
-v run . serve</code></pre>
+      <h2>Launch Veasel Code</h2>
+      <pre><code>veasel</code></pre>
       <p>
-        Use the V compiler revision pinned in <code>.v-version</code>, plus
-        SQLite development files. Configure <code>VEASEL_MODEL_PROVIDER</code>,
-        <code>VEASEL_MODEL</code>, and the matching provider API key to enable
-        chat. The server listens on <code>127.0.0.1:4097</code> by default.
+        Download the build for your platform from the
+        <a href={`${basePath}/downloads/`}>downloads page</a>. Veasel starts its
+        local server when needed and opens the TUI. Press <kbd>s</kbd> on the
+        home screen to configure a provider, model, endpoint, and API key. The
+        server listens on <code>127.0.0.1:4097</code> by default.
       </p>
     </div>
     <div class="doc-panel">
-      <h2>Try the terminal client</h2>
-      <pre><code>v run . tui</code></pre>
+      <h2>Choose a model in Settings</h2>
+      <pre><code>veasel</code></pre>
       <p>
-        Start the server in one terminal, then launch this command in another.
-        The OpenTUI client lists sessions and sends chat turns to the local
-        loopback API. Bun is required for this command.
+        Press <kbd>s</kbd> on the home screen or enter <code>/models</code>
+        in a session. Veasel saves a separate profile for each provider; local
+        model presets do not need an API key by default.
       </p>
     </div>
     <p class="callout">

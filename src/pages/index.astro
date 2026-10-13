@@ -424,11 +424,14 @@ const basePath = import.meta.env.BASE_URL.replace(/\/$/, "");
         <span>fit right in.</span>
       </h2>
       <p>
-        Run the current foundation locally, peek at how it’s put together, or
-        follow the next milestones on GitHub.
+        Download Veasel Code, configure your model in the TUI, and start working
+        in your repository.
       </p>
-      <a class="button button-dark" href={`${basePath}/docs/`}>
-        Read the getting-started guide <span>→</span>
+      <a class="button button-dark" href={`${basePath}/downloads/`}>
+        Download Veasel Code <span>→</span>
+      </a>
+      <a class="text-link" href={`${basePath}/docs/`}>
+        Read the getting-started guide <span aria-hidden="true">↗</span>
       </a>
     </div>
     <div class="install-card">
@@ -436,12 +439,10 @@ const basePath = import.meta.env.BASE_URL.replace(/\/$/, "");
         <span class="live-dot"></span> THE CURRENT BUILD
       </div>
       <div class="install-code">
-        <small>01&nbsp; CLONE THE REPO</small>
-        <code>
-          git clone https://github.com/veasel-labs/veasel && cd veasel
-        </code>
-        <small>02&nbsp; LAUNCH VEASEL CODE</small>
-        <code>v run .</code>
+        <small>01&nbsp; DOWNLOAD FOR YOUR PLATFORM</small>
+        <code>veasel</code>
+        <small>02&nbsp; CONFIGURE YOUR MODEL IN SETTINGS</small>
+        <code>Press s · choose provider and model</code>
       </div>
       <div class="install-foot">
         V + SQLite · Bun for the terminal client <span>♥</span>
