@@ -12,9 +12,12 @@ npm lockfile, and build/check workflows. The visual identity and all copy are
 original. Pages are content-first; the only browser code is a small inline
 color-theme switcher (System, Light, Dark) that remembers the preference
 without adding a UI framework.
-The downloads page selects the latest complete preview release at runtime and
-keeps the last checksum-verified release as an offline/API-failure fallback;
-publishing a product release does not require a website commit.
+The downloads page selects the latest complete preview release at runtime. Its
+checked-in offline/API-failure fallback is refreshed during site builds only
+after the release manifest and `SHA256SUMS` match GitHub's SHA-256 asset
+digests. If GitHub is unavailable, the build retains the previous verified
+fallback. Publishing a product release does not require a website commit while
+the GitHub releases API is available.
 
 ## Develop
 

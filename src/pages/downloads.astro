@@ -1,11 +1,12 @@
 ---
 import SiteLayout from "../layouts/SiteLayout.astro";
+import verifiedRelease from "../data/verified-release.json";
 
 const basePath = import.meta.env.BASE_URL.replace(/\/$/, "");
-const release = "v0.6.2-next.0";
-const releaseUrl = `https://github.com/veasel-labs/veasel/releases/tag/${release}`;
-const assetUrl = (name: string) =>
-  `https://github.com/veasel-labs/veasel/releases/download/${release}/${name}`;
+const release = verifiedRelease.tag;
+const releaseUrl = verifiedRelease.release_url;
+const fallbackAssets: Record<string, string> = verifiedRelease.assets;
+const assetUrl = (name: string) => fallbackAssets[name] ?? "#";
 ---
 
 <SiteLayout
