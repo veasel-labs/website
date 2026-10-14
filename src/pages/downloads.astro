@@ -65,6 +65,31 @@ const assetUrl = (name: string) => fallbackAssets[name] ?? "#";
       </div>
     </div>
 
+    <section class="package-panel" aria-labelledby="package-title">
+      <div>
+        <p class="section-index">00 / OR USE A PACKAGE MANAGER</p>
+        <h2 id="package-title">Install in one line.</h2>
+        <p>
+          Both packages install the same verified release archives listed below.
+        </p>
+      </div>
+      <div class="package-commands">
+        <div class="terminal-card">
+          <div class="terminal-title">
+            <span aria-hidden="true">›</span> HOMEBREW / MACOS APPLE SILICON
+          </div>
+          <pre><code>brew tap veasel-labs/tap
+brew install --cask veasel-code</code></pre>
+        </div>
+        <div class="terminal-card">
+          <div class="terminal-title">
+            <span aria-hidden="true">›</span> AUR / ARCH LINUX X86_64
+          </div>
+          <pre><code>yay -S veasel-code-bin</code></pre>
+        </div>
+      </div>
+    </section>
+
     <div class="download-section-heading">
       <div>
         <p class="section-index">01 / PICK YOUR PLATFORM</p>
@@ -186,15 +211,15 @@ if ($actual -ne $expected) &#123; throw 'Checksum mismatch' &#125;
         <h2>Unpack. Then say hello.</h2>
         <p>
           Extract the archive, add its folder to your <code>PATH</code>, and run
-          Veasel from any project directory. Bun 1.4.2 or newer is needed for
-          the terminal interface; the backend runs without Bun.
+          Veasel from any project directory. The archive includes a standalone
+          terminal client, so neither Bun nor a V compiler is needed.
         </p>
       </div>
       <div class="command-card">
         <code>veasel</code>
-        <span>server + terminal client · Bun 1.4.2+</span>
+        <span>server + terminal client</span>
         <code>veasel serve</code>
-        <span>API server only · no Bun needed</span>
+        <span>API server only</span>
       </div>
     </section>
 
@@ -436,6 +461,7 @@ if ($actual -ne $expected) &#123; throw 'Checksum mismatch' &#125;
     margin: 22px 0 24px;
   }
   .download-section-heading h2,
+  .package-panel h2,
   .verify-copy h2,
   .first-run h2,
   .honest-note h2 {
@@ -527,6 +553,27 @@ if ($actual -ne $expected) &#123; throw 'Checksum mismatch' &#125;
   }
   .platform-footnote code {
     font: 0.95em var(--mono);
+  }
+  .package-panel {
+    margin-top: 8px;
+    padding: 30px 0 52px;
+    display: grid;
+    grid-template-columns: 0.76fr 1.24fr;
+    gap: 35px;
+    align-items: center;
+    border-bottom: 1px solid var(--line);
+  }
+  .package-panel h2 {
+    font-size: 2.4rem;
+  }
+  .package-panel > div > p:not(.section-index) {
+    color: var(--muted);
+    font-size: 0.83rem;
+    line-height: 1.7;
+  }
+  .package-commands {
+    display: grid;
+    gap: 14px;
   }
   .verify-panel {
     margin-top: 68px;
@@ -687,7 +734,8 @@ if ($actual -ne $expected) &#123; throw 'Checksum mismatch' &#125;
     .release-art {
       min-height: 310px;
     }
-    .verify-panel {
+    .verify-panel,
+    .package-panel {
       grid-template-columns: 1fr;
     }
     .first-run {
@@ -743,7 +791,8 @@ if ($actual -ne $expected) &#123; throw 'Checksum mismatch' &#125;
       padding: 23px 17px;
       gap: 21px;
     }
-    .verify-copy h2 {
+    .verify-copy h2,
+    .package-panel h2 {
       font-size: 2rem;
     }
     .terminal-card pre {

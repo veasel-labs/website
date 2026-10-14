@@ -26,7 +26,6 @@ const basePath = import.meta.env.BASE_URL.replace(/\/$/, "");
           The Veasel Code build for your operating system from the{" "}
           <a href={`${basePath}/downloads/`}>downloads page</a>.
         </li>
-        <li>Bun 1.4.2 or newer to run the terminal interface.</li>
         <li>
           A provider credential for hosted models, or a running local model
           server such as Ollama, LM Studio, llama.cpp, LocalAI, or vLLM.
@@ -34,7 +33,12 @@ const basePath = import.meta.env.BASE_URL.replace(/\/$/, "");
       </ul>
       <p>
         The release includes the V backend and terminal client. No V compiler or
-        separate server process is needed. Bun runs the terminal client.
+        separate server process is needed, and the bundled terminal client runs
+        without Bun. On macOS you can also run{" "}
+        <code>
+          brew tap veasel-labs/tap &amp;&amp; brew install --cask veasel-code
+        </code>
+        ; on Arch Linux, <code>yay -S veasel-code-bin</code>.
       </p>
     </div>
     <div class="doc-panel">
