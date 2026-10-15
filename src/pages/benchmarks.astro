@@ -1,6 +1,6 @@
 ---
 import SiteLayout from "../layouts/SiteLayout.astro";
-import startupReport from "../../public/data/benchmarks/cli-startup-linux-x64-2026-10-12.json";
+import startupReport from "../../public/data/benchmarks/cli-startup-linux-x64-2026-10-15.json";
 
 const basePath = import.meta.env.BASE_URL.replace(/\/$/, "");
 const startupResults = startupReport.operations.version;
@@ -9,9 +9,21 @@ const slowestStartup = Math.max(
 );
 const chartWidth = (value: number) =>
   Math.max(4, (Math.log(value) / Math.log(slowestStartup)) * 100);
+const rssResults = startupResults.filter(
+  (result) => result.rss_kb && result.rss_kb.p50_kb > 0,
+);
+const slowestRss = Math.max(
+  1,
+  ...rssResults.map((result) => result.rss_kb.p50_kb),
+);
+const rssChartWidth = (value: number) =>
+  Math.max(4, (Math.log(value) / Math.log(slowestRss)) * 100);
 const reportDate = new Date(startupReport.generated_at).toLocaleDateString(
   "en-US",
   { dateStyle: "long", timeZone: "UTC" },
+);
+const veaselStartup = startupResults.find(
+  (result) => result.id === "veasel-code",
 );
 ---
 
@@ -83,10 +95,10 @@ const reportDate = new Date(startupReport.generated_at).toLocaleDateString(
       <div class="bench-callout">
         <span aria-hidden="true">↳</span>
         <p>
-          Veasel's median was{" "}
-          {startupResults.find((result) => result.id === "veasel-code")?.p50_ms}{" "}
-          ms on this Linux x64 host. This measures command startup only: no
-          model call, interactive session, repository task, or coding quality.
+          Veasel <code>{veaselStartup?.first_output_line}</code> median was{" "}
+          {veaselStartup?.p50_ms} ms on this Linux x64 host. This measures
+          command startup only: no model call, interactive session, repository
+          task, or coding quality.
         </p>
       </div>
 
@@ -110,13 +122,72 @@ const reportDate = new Date(startupReport.generated_at).toLocaleDateString(
           <dt>Raw report</dt>
           <dd>
             <a
-              href={`${basePath}/data/benchmarks/cli-startup-linux-x64-2026-10-12.json`}
+              href={`${basePath}/data/benchmarks/cli-startup-linux-x64-2026-10-15.json`}
             >
               JSON · full measurements ↗
             </a>
           </dd>
         </div>
       </dl>
+    </section>
+
+    <section class="bench-evidence" aria-labelledby="rss-title">
+      <div class="bench-section-head">
+        <div>
+          <p class="bench-label">LOCAL RUNTIME / PEAK RSS</p>
+          <h2 id="rss-title">Resident memory at launch.</h2>
+        </div>
+        <span class="bench-tag">SAME HOST · SAME RUN WINDOW</span>
+      </div>
+      <p class="bench-copy">
+        Median peak RSS for each CLI's <code>--version</code> child, measured
+        with Linux <code>RUSAGE_CHILDREN.ru_maxrss</code> (kilobytes). This is
+        process-launch memory only — not an idle server, TUI session, or coding
+        task working set.
+      </p>
+
+      <ol
+        class="bench-chart"
+        aria-label="Median peak RSS at --version. Longer bars mean higher resident memory."
+      >
+        {rssResults.map((result) => (
+          <li
+            class:list={[
+              "bench-result",
+              result.id === "veasel-code" && "bench-result-veasel",
+            ]}
+          >
+            <div class="bench-result-head">
+              <span>{result.id}</span>
+              <strong>
+                {(result.rss_kb.p50_kb / 1024).toFixed(1)}
+                <small> MiB</small>
+              </strong>
+            </div>
+            <div class="bench-track" aria-hidden="true">
+              <span
+                style={`--bench-width: ${rssChartWidth(result.rss_kb.p50_kb)}%`}
+              />
+            </div>
+            <p>
+              p50 {result.rss_kb.p50_kb} kB · p95 {result.rss_kb.p95_kb} kB ·{" "}
+              {result.rss_kb.samples} samples
+            </p>
+          </li>
+        ))}
+      </ol>
+
+      <div class="bench-callout">
+        <span aria-hidden="true">↳</span>
+        <p>
+          Veasel peak RSS median was{" "}
+          {veaselStartup?.rss_kb
+            ? `${(veaselStartup.rss_kb.p50_kb / 1024).toFixed(1)} MiB`
+            : "n/a"}{" "}
+          ({veaselStartup?.rss_kb?.p50_kb} kB). Same disclaimer: launch only,
+          not agent task quality.
+        </p>
+      </div>
     </section>
 
     <section class="bench-status" aria-labelledby="evaluation-title">
@@ -133,8 +204,12 @@ const reportDate = new Date(startupReport.generated_at).toLocaleDateString(
             aria-hidden="true"
           ></span>
           <div>
-            <h3>CLI startup microbenchmark</h3>
-            <p>Executed locally; raw samples and method are published above.</p>
+            <h3>CLI startup + peak RSS</h3>
+            <p>
+              Re-measured 2026-10-15 against verified{" "}
+              <code>v0.40.0-next.0</code> (and peer CLIs on PATH); wall time and
+              Linux <code>ru_maxrss</code> published above.
+            </p>
           </div>
           <strong>Measured</strong>
         </article>
