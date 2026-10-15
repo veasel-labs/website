@@ -81,7 +81,11 @@ const basePath = import.meta.env.BASE_URL.replace(/\/$/, "");
       <p>
         Approval checks that the file still matches the reviewed version before
         writing. Conflicting or interrupted edits are not applied again
-        automatically.
+        automatically. A diff review starts with how many lines were added and
+        removed. A diff taller than the terminal keeps that summary and the
+        first screen, and says how many lines remain hidden. A shell review
+        states that the command runs as your OS user, without a sandbox, before
+        the command text. A long command keeps that warning on the first screen.
       </p>
     </div>
     <aside class="callout">
