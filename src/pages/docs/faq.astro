@@ -43,6 +43,19 @@ const basePath = import.meta.env.BASE_URL.replace(/\/$/, "");
       </p>
     </div>
     <div class="doc-panel faq-panel">
+      <h2>How do I find a session when the home list is long?</h2>
+      <p>
+        The home sidebar keeps the selected session on screen. Press
+        <kbd>j</kbd> or <kbd>k</kbd>, or the arrow keys, to move, then Enter to
+        open it. When the list is taller than the terminal, Veasel shows a
+        position such as <code>8/20</code> and omits sessions outside that
+        window. Long titles are clipped from the front and long directories from
+        the end, so the workspace name stays visible. A list that fits shows
+        every session and no position counter. Press <kbd>n</kbd> to start a
+        session when the list is empty.
+      </p>
+    </div>
+    <div class="doc-panel faq-panel">
       <h2>What happens if an async turn is interrupted?</h2>
       <p>
         Async session turns have a durable operation ID and status you can query
