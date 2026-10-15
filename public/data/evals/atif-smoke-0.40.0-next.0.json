@@ -1,9 +1,9 @@
 {
   "schema_version": "ATIF-v1.8",
-  "session_id": "3692726c-2088-401c-85c4-78d58d42980d",
+  "session_id": "737cc711-69bb-4f43-8ce5-404d72598ca6",
   "agent": {
     "name": "Veasel Code",
-    "version": "0.39.0-next.0",
+    "version": "0.40.0-next.0",
     "model_name": "smoke-model",
     "extra": {}
   },
@@ -56,6 +56,7 @@
     "cost": "unavailable",
     "outcome": "completed",
     "prompt_cache": "unavailable",
+    "reasoning_tokens": "unavailable",
     "redaction": "credentials",
     "token_usage": "reported",
     "veasel_trace_schema": "veasel-trace-v1"

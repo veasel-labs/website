@@ -9,13 +9,13 @@ const evalsPath = fileURLToPath(
 );
 const atifPath = fileURLToPath(
   new URL(
-    "../../public/data/evals/atif-smoke-0.39.0-next.0.json",
+    "../../public/data/evals/atif-smoke-0.40.0-next.0.json",
     import.meta.url,
   ),
 );
 const metaPath = fileURLToPath(
   new URL(
-    "../../public/data/evals/atif-smoke-0.39.0-next.0.meta.json",
+    "../../public/data/evals/atif-smoke-0.40.0-next.0.meta.json",
     import.meta.url,
   ),
 );
@@ -26,10 +26,10 @@ test("evals page refuses invented scores and links public ATIF sample", async ()
   assert.match(source, /Harbor Index:\s*Not submitted/i);
   assert.match(source, /not<\/strong> in Harbor/i);
   assert.match(source, /Not authenticated/i);
-  assert.match(source, /atif-smoke-0\.39\.0-next\.0\.json/);
+  assert.match(source, /atif-smoke-0\.40\.0-next\.0\.json/);
   assert.match(source, /validate-harbor-atif\.py/);
   assert.match(source, /dc933be707feafbb9efcdf092cb8a0e391332617/);
-  assert.match(source, /VEASEL_VERSION=0\.39\.0-next\.0/);
+  assert.match(source, /VEASEL_VERSION=0\.40\.0-next\.0/);
   assert.match(source, /terminal asciinema on \/demo\//i);
   assert.doesNotMatch(
     source,
@@ -43,7 +43,7 @@ test("public ATIF smoke sample is real ATIF-v1.8 with matching provenance", asyn
   const meta = JSON.parse(await readFile(metaPath, "utf8"));
   assert.equal(traj.schema_version, "ATIF-v1.8");
   assert.equal(traj.agent.name, "Veasel Code");
-  assert.equal(traj.agent.version, "0.39.0-next.0");
+  assert.equal(traj.agent.version, "0.40.0-next.0");
   assert.equal(traj.agent.model_name, "smoke-model");
   assert.deepEqual(
     traj.steps.map((step) => step.source),
@@ -60,9 +60,9 @@ test("public ATIF smoke sample is real ATIF-v1.8 with matching provenance", asyn
   assert.equal(traj.extra.redaction, "credentials");
   assert.doesNotMatch(
     raw.toString("utf8"),
-    /veasel-openai-key|\/tmp\/veasel-atif-gen/,
+    /veasel-openai-key|\/tmp\/veasel-atif/,
   );
   assert.match(meta.disclaimer, /not a Harbor Index trial/i);
-  assert.equal(meta.veasel_version, "0.39.0-next.0");
+  assert.equal(meta.veasel_version, "0.40.0-next.0");
   assert.equal(meta.sha256, createHash("sha256").update(raw).digest("hex"));
 });
