@@ -158,10 +158,12 @@ const basePath = import.meta.env.BASE_URL.replace(/\/$/, "");
         <div>
           <h2>Durable work</h2>
           <p>
-            Async session turns persist status before acceptance and can be
-            queried after reconnect. Interrupted work is classified as uncertain
-            and is never replayed. Durable queued workers, execution history,
-            and operation retention remain ahead.
+            Async session turns persist status before acceptance, resume queued{" "}
+            <code>Prefer: respond-async</code> work after restart (bounded per
+            session), and can be queried after reconnect. Mid-flight work
+            interrupted by a restart is classified as <code>uncertain</code> and
+            never replayed. Operation history management and retention policy
+            remain ahead.
           </p>
         </div>
         <span class="roadmap-symbol" aria-label="In progress">
