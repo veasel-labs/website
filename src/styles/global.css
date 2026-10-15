@@ -1349,6 +1349,95 @@ p {
   color: #c8ead7;
   font-size: 0.62rem;
 }
+.docs-shell {
+  display: grid;
+  grid-template-columns: 220px minmax(0, 1fr);
+  gap: 36px;
+  align-items: start;
+  padding-top: 72px;
+  padding-bottom: 96px;
+}
+.docs-sidebar {
+  position: sticky;
+  top: 88px;
+  padding: 18px 16px;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  background: var(--surface);
+}
+.docs-sidebar-kicker {
+  margin: 0 0 14px;
+  color: var(--green-dark);
+  font: 500 0.58rem var(--mono);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+.docs-nav-group + .docs-nav-group {
+  margin-top: 16px;
+}
+.docs-nav-label {
+  margin: 0 0 6px;
+  color: var(--muted);
+  font: 500 0.58rem var(--mono);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+.docs-sidebar ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.docs-sidebar li + li {
+  margin-top: 2px;
+}
+.docs-sidebar a {
+  display: block;
+  padding: 7px 10px;
+  border-radius: 8px;
+  color: var(--ink);
+  font-size: 0.78rem;
+  font-weight: 600;
+  text-decoration: none;
+}
+.docs-sidebar a:hover {
+  background: var(--mint);
+  color: var(--green-dark);
+}
+.docs-sidebar a[aria-current="page"] {
+  background: var(--mint);
+  color: var(--green-dark);
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--green) 35%, transparent);
+}
+.docs-sidebar a:focus-visible {
+  outline: 2px solid var(--green);
+  outline-offset: 2px;
+}
+.docs-sidebar-foot {
+  margin: 18px 0 0;
+  padding-top: 14px;
+  border-top: 1px solid var(--line);
+  color: var(--muted);
+  font-size: 0.68rem;
+  line-height: 1.55;
+}
+.docs-sidebar-foot a {
+  display: inline;
+  padding: 0;
+  color: var(--green-dark);
+  font-size: inherit;
+  font-weight: 700;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+.docs-main {
+  min-width: 0;
+}
+.docs-main .doc-page {
+  max-width: none;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+}
 .doc-page {
   max-width: 920px;
   width: min(920px, calc(100% - 56px));
@@ -1688,6 +1777,26 @@ pre {
 @media (max-width: 850px) {
   .wrap {
     width: min(100% - 48px, 700px);
+  }
+  .docs-shell {
+    grid-template-columns: 1fr;
+    gap: 22px;
+    padding-top: 56px;
+  }
+  .docs-sidebar {
+    position: static;
+    top: auto;
+  }
+  .docs-sidebar ul {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+  }
+  .docs-sidebar li + li {
+    margin-top: 0;
+  }
+  .docs-nav-group + .docs-nav-group {
+    margin-top: 12px;
   }
   .hero {
     min-height: 0;
@@ -2115,9 +2224,18 @@ pre {
 :root[data-theme="dark"] .terminal-card,
 :root[data-theme="dark"] .status-board,
 :root[data-theme="dark"] .install-card,
-:root[data-theme="dark"] .doc-panel {
+:root[data-theme="dark"] .doc-panel,
+:root[data-theme="dark"] .docs-sidebar {
   background: var(--surface);
   border-color: var(--line);
+}
+:root[data-theme="dark"] .docs-sidebar a {
+  color: var(--ink);
+}
+:root[data-theme="dark"] .docs-sidebar a[aria-current="page"],
+:root[data-theme="dark"] .docs-sidebar a:hover {
+  background: #203b30;
+  color: var(--green-dark);
 }
 :root[data-theme="dark"] .guide-card {
   background: var(--surface);

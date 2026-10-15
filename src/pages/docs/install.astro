@@ -1,0 +1,106 @@
+---
+import DocsLayout from "../../layouts/DocsLayout.astro";
+
+const basePath = import.meta.env.BASE_URL.replace(/\/$/, "");
+---
+
+<DocsLayout
+  title="Install Veasel Code"
+  description="Install Veasel Code on Linux, macOS, or Windows from GitHub Releases, Homebrew, or the AUR."
+>
+  <section class="doc-page">
+    <p class="kicker">FIELD GUIDE / INSTALL</p>
+    <h1>
+      Get a verified
+      <br />
+      <em>preview build.</em>
+    </h1>
+    <p class="lede">
+      Prefer an official archive with SHA-256 sums. Package managers track the
+      same verified prereleases. No V compiler is required for the release
+      binary.
+    </p>
+
+    <div class="doc-panel">
+      <h2>Official archives</h2>
+      <p>
+        Download Linux, macOS, or Windows builds from the{" "}
+        <a href={`${basePath}/downloads/`}>downloads page</a> or{" "}
+        <a href="https://github.com/veasel-labs/veasel/releases">
+          GitHub Releases
+        </a>
+        . Each release publishes <code>SHA256SUMS</code>. Verify before you run.
+      </p>
+      <pre><code># After extracting the archive onto your PATH:
+veasel --version
+veasel</code></pre>
+      <p>
+        Archives include the V backend and a standalone <code>veasel-tui</code>.
+        Bun is only needed when developing the terminal client from source.
+      </p>
+    </div>
+
+    <div class="doc-panel">
+      <h2>Homebrew (macOS)</h2>
+      <pre><code>brew tap veasel-labs/tap
+brew install --cask veasel-code</code></pre>
+      <p>
+        Tap source:{" "}
+        <a href="https://github.com/veasel-labs/homebrew-tap">
+          veasel-labs/homebrew-tap
+        </a>
+        .
+      </p>
+    </div>
+
+    <div class="doc-panel">
+      <h2>Arch Linux (AUR)</h2>
+      <pre><code>yay -S veasel-code-bin</code></pre>
+      <p>
+        PKGBUILDs:{" "}
+        <a href="https://github.com/veasel-labs/aur-package">
+          veasel-labs/aur-package
+        </a>
+        .
+      </p>
+    </div>
+
+    <div class="doc-panel">
+      <h2>From source (contributors)</h2>
+      <p>
+        Use the V revision pinned in <code>.v-version</code>, SQLite headers for{" "}
+        <code>db.sqlite</code>, and Bun 1.4.2+ for TUI development.
+      </p>
+      <pre><code>v run .
+# or build, then:
+veasel serve   # API only on 127.0.0.1:4097
+veasel         # reuses or starts the server, then opens the TUI</code></pre>
+      <p>
+        See{" "}
+        <a href="https://github.com/veasel-labs/veasel/blob/main/CONTRIBUTING.md">
+          CONTRIBUTING.md
+        </a>{" "}
+        and{" "}
+        <a href="https://github.com/veasel-labs/veasel/blob/main/docs/RELEASES.md">
+          docs/RELEASES.md
+        </a>
+        .
+      </p>
+    </div>
+
+    <aside class="callout">
+      <strong>Prereleases only.</strong> Verified pushes to <code>main</code>{" "}
+      publish versioned previews. Checksums are part of the trust path — do not
+      skip them for production-like environments.
+    </aside>
+
+    <p class="doc-next">
+      <a class="text-link" href={`${basePath}/docs/quickstart/`}>
+        Next: first session <span aria-hidden="true">→</span>
+      </a>
+      <a class="text-link" href={`${basePath}/downloads/`}>
+        Open downloads <span aria-hidden="true">↓</span>
+      </a>
+    </p>
+  </section>
+</DocsLayout>

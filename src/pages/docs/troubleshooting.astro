@@ -1,0 +1,118 @@
+---
+import DocsLayout from "../../layouts/DocsLayout.astro";
+
+const basePath = import.meta.env.BASE_URL.replace(/\/$/, "");
+---
+
+<DocsLayout
+  title="Troubleshooting"
+  description="Fix common Veasel Code install, connect, sandbox, and session issues."
+>
+  <section class="doc-page">
+    <p class="kicker">FIELD GUIDE / TROUBLESHOOTING</p>
+    <h1>
+      When something
+      <br />
+      <em>stalls.</em>
+    </h1>
+    <p class="lede">
+      Short checks for the paths people hit first. For deeper contracts, open
+      the linked runtime docs.
+    </p>
+
+    <div class="doc-panel faq-panel">
+      <h2>veasel cannot find a server / health fails</h2>
+      <p>
+        Default listen address is <code>127.0.0.1:4097</code>. Run{" "}
+        <code>veasel serve</code> alone if another client needs the API. Only
+        unauthenticated loopback HTTP is accepted for{" "}
+        <code>VEASEL_API_URL</code>. Non-loopback <code>Host</code> and browser{" "}
+        <code>Origin</code> values are rejected.
+      </p>
+    </div>
+
+    <div class="doc-panel faq-panel">
+      <h2>/connect or model discovery fails</h2>
+      <p>
+        Confirm the endpoint is HTTPS (or loopback HTTP for local servers).
+        Placeholders such as a Cloudflare account ID must be replaced (Ctrl+U in
+        full settings). A newly typed key is sent to the local server only for
+        discovery and is saved when you choose a model. Environment variables
+        are optional; a saved profile key wins for that provider.
+      </p>
+    </div>
+
+    <div class="doc-panel faq-panel">
+      <h2>Shell review says no sandbox / unexpected wrap</h2>
+      <p>
+        Approval is always required. Platform sandboxes are defense-in-depth:
+      </p>
+      <ul class="guide-list">
+        <li>
+          Linux: Bubblewrap when <code>bwrap</code> is on <code>PATH</code>
+        </li>
+        <li>
+          macOS: Seatbelt via <code>/usr/bin/sandbox-exec</code>
+        </li>
+        <li>Windows: AppContainer + Job Object when wrap can be created</li>
+      </ul>
+      <p>
+        <code>VEASEL_SHELL_SANDBOX=auto</code> (default) falls through
+        unsandboxed when a backend is missing and does not advertise that
+        capability. <code>require</code> fails closed. <code>off</code> never
+        wraps. Network is denied unless{" "}
+        <code>VEASEL_SHELL_SANDBOX_NETWORK=allow</code>. See{" "}
+        <a href={`${basePath}/docs/security/`}>security</a> and{" "}
+        <a href="https://github.com/veasel-labs/veasel/blob/main/docs/SHELL_COMMANDS.md">
+          SHELL_COMMANDS.md
+        </a>
+        .
+      </p>
+    </div>
+
+    <div class="doc-panel faq-panel">
+      <h2>Turn stuck as uncertain</h2>
+      <p>
+        After a crash during claimed work, Veasel marks the operation{" "}
+        <code>uncertain</code> and never auto-retries. Inspect the workspace and
+        operation status before sending another prompt.
+      </p>
+    </div>
+
+    <div class="doc-panel faq-panel">
+      <h2>Skills or MCP missing</h2>
+      <p>
+        Confirm skill folders sit under a discovered root or{" "}
+        <code>VEASEL_SKILLS_DIRS</code>. MCP needs per-session trust before tool
+        calls can be approved. Skill scripts are never auto-run.
+      </p>
+    </div>
+
+    <div class="doc-panel faq-panel">
+      <h2>Where to ask for help</h2>
+      <p>
+        <a href="https://github.com/veasel-labs/veasel/discussions">
+          Discussions
+        </a>
+        ·{" "}
+        <a href="https://github.com/veasel-labs/veasel/blob/main/SUPPORT.md">
+          SUPPORT.md
+        </a>
+        · private security reports via{" "}
+        <a href="https://github.com/veasel-labs/veasel/blob/main/SECURITY.md">
+          SECURITY.md
+        </a>
+        .
+      </p>
+    </div>
+
+    <p class="doc-next">
+      <a class="text-link" href={`${basePath}/docs/faq/`}>
+        FAQ <span aria-hidden="true">→</span>
+      </a>
+      <a class="text-link" href={`${basePath}/docs/`}>
+        Docs overview <span aria-hidden="true">↑</span>
+      </a>
+    </p>
+  </section>
+</DocsLayout>

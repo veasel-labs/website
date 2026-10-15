@@ -32,7 +32,7 @@ const basePath = import.meta.env.BASE_URL.replace(/\/$/, "");
           Download preview <span aria-hidden="true">↓</span>
         </a>
         <a class="button button-quiet" href={`${basePath}/docs/`}>
-          Field guide <span aria-hidden="true">→</span>
+          Read the docs <span aria-hidden="true">→</span>
         </a>
       </div>
       <div class="hero-meta">
@@ -394,11 +394,26 @@ const basePath = import.meta.env.BASE_URL.replace(/\/$/, "");
         </div>
         <div class="status-row">
           <span class="status-symbol done">✓</span>
+          <b>Platform shell sandboxes</b>
+          <small>READY</small>
+        </div>
+        <div class="status-row">
+          <span class="status-symbol done">✓</span>
+          <b>Skills discovery + /connect</b>
+          <small>READY</small>
+        </div>
+        <div class="status-row">
+          <span class="status-symbol done">✓</span>
+          <b>Repo map + session compaction</b>
+          <small>READY</small>
+        </div>
+        <div class="status-row">
+          <span class="status-symbol done">✓</span>
           <b>Experimental Agent Plugins</b>
           <small>PARTIAL</small>
         </div>
-        <a href="https://github.com/veasel-labs/veasel/blob/main/docs/IMPLEMENTATION_PLAN.md">
-          See the honest roadmap <span>↗</span>
+        <a href={`${basePath}/docs/`}>
+          Open the docs <span>↗</span>
         </a>
       </div>
     </div>
@@ -413,8 +428,8 @@ const basePath = import.meta.env.BASE_URL.replace(/\/$/, "");
         <span>Configure a model.</span>
       </h2>
       <p>
-        Download Veasel Code, pick a provider in settings, and start working in
-        your repository.
+        Download Veasel Code, run <code>/connect</code> for credentials, and
+        start working in your repository.
       </p>
       <a class="button button-dark" href={`${basePath}/downloads/`}>
         Download Veasel Code <span>→</span>
@@ -430,8 +445,8 @@ const basePath = import.meta.env.BASE_URL.replace(/\/$/, "");
       <div class="install-code">
         <small>01&nbsp; DOWNLOAD FOR YOUR PLATFORM</small>
         <code>veasel</code>
-        <small>02&nbsp; CONFIGURE YOUR MODEL IN SETTINGS</small>
-        <code>Press s · choose provider and model</code>
+        <small>02&nbsp; CONNECT A PROVIDER</small>
+        <code>/connect · paste key · pick model</code>
       </div>
       <div class="install-foot">
         V runtime · OpenTUI client · local SQLite <span>♥</span>

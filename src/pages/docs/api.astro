@@ -1,14 +1,14 @@
 ---
-import SiteLayout from "../../layouts/SiteLayout.astro";
+import DocsLayout from "../../layouts/DocsLayout.astro";
 
 const basePath = import.meta.env.BASE_URL.replace(/\/$/, "");
 ---
 
-<SiteLayout
+<DocsLayout
   title="Local HTTP API"
   description="The currently implemented Veasel Code HTTP endpoints, asynchronous session turns, approval flows, and replayable server-sent events."
 >
-  <section class="doc-page page-grid">
+  <section class="doc-page">
     <p class="kicker">FIELD GUIDE / API</p>
     <h1>
       A small local
@@ -82,6 +82,13 @@ const basePath = import.meta.env.BASE_URL.replace(/\/$/, "");
           <span role="cell">Discover local plugin and Skill metadata.</span>
         </div>
         <div class="provider-table-row" role="row">
+          <b role="cell">GET</b>
+          <code role="cell">/v1/skills</code>
+          <span role="cell">
+            List standalone discovered Skills across configured roots.
+          </span>
+        </div>
+        <div class="provider-table-row" role="row">
           <b role="cell">GET · POST</b>
           <code role="cell">{"/v1/sessions/{id}/mcp-servers"}</code>
           <span role="cell">
@@ -147,6 +154,14 @@ const basePath = import.meta.env.BASE_URL.replace(/\/$/, "");
           <code role="cell">{"/v1/sessions/{id}/workspace/search"}</code>
           <span role="cell">
             Search literal text with bounded file, byte, and result counts.
+          </span>
+        </div>
+        <div class="provider-table-row" role="row">
+          <b role="cell">GET</b>
+          <code role="cell">{"/v1/sessions/{id}/workspace/map"}</code>
+          <span role="cell">
+            Extractive repository map for context selection (also{" "}
+            <code>/map</code> in the TUI).
           </span>
         </div>
         <div class="provider-table-row" role="row">
@@ -269,16 +284,30 @@ const basePath = import.meta.env.BASE_URL.replace(/\/$/, "");
         page while keeping the messages already on screen.
       </p>
     </div>
+    <div class="doc-panel">
+      <h2>Headless CLI</h2>
+      <p>Run a single turn against the same local server and approval rules:</p>
+      <pre><code>veasel run --prompt "Explain the request flow in this repository" \
+  --workspace . --json</code></pre>
+      <p>
+        Prefer <code>veasel serve</code> when another client owns the API. Full
+        OpenAPI contract:{" "}
+        <a href="https://github.com/veasel-labs/veasel/blob/main/docs/openapi.yaml">
+          docs/openapi.yaml
+        </a>
+        .
+      </p>
+    </div>
     <aside class="callout">
       <strong>Review each effect before approving it.</strong> Session chat can
       let the configured provider request bounded file listing, reads, and
       literal search, or propose one text-file replacement. The normal TUI flow
       opens the saved diff before approval. Veasel checks for file changes since
       review. Shell commands require a separate review of the exact command,
-      working directory, and timeout; they run with the server user's
-      permissions and have no OS sandbox. This loopback API has no application
-      token, so same-user processes can call its review and approval routes too.
-      Requested content and tool output are sent to your provider.
+      working directory, and timeout; they may wrap in a platform sandbox when
+      available. This loopback API has no application token, so same-user
+      processes can call its review and approval routes too. Requested content
+      and tool output are sent to your provider.
     </aside>
     <div class="doc-panel">
       <h2>Resume the event stream</h2>
@@ -345,4 +374,4 @@ const basePath = import.meta.env.BASE_URL.replace(/\/$/, "");
       </a>
     </p>
   </section>
-</SiteLayout>
+</DocsLayout>
