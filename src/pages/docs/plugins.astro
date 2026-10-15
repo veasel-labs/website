@@ -123,8 +123,9 @@ const basePath = import.meta.env.BASE_URL.replace(/\/$/, "");
           broader persistent per-install data surfaces.
         </li>
         <li>
-          OAuth for remote MCP servers (<code>/mcp add</code> user/project scope
-          and portable <code>.mcp.json</code> import already ship).
+          Automatic browser launch for MCP OAuth (PKCE authorize/complete, named
+          credentials, and loopback <code>--listen</code> already ship — see the{" "}
+          <a href={`${basePath}/docs/mcp/`}>MCP guide</a>).
         </li>
         <li>
           The complete spec-derived fixture matrix, Windows junction behavior,

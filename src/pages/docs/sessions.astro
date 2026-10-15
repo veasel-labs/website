@@ -82,6 +82,28 @@ VEASEL_SESSION_COMPACTION_SUMMARIZER=llm         # optional provider summary</co
       </p>
     </div>
 
+    <div class="doc-panel">
+      <h2>Git worktrees</h2>
+      <p>
+        Manage linked worktrees for a session workspace through the local API or
+        headless CLI. Listing reads the repository git directory (no{" "}
+        <code>git</code> subprocess); add/remove/lock/unlock use argv-only{" "}
+        <code>git worktree</code>.
+      </p>
+      <pre><code>veasel worktrees list
+veasel worktrees add --path /abs/path --branch main
+veasel worktrees add --path /abs/path --new-branch feature/x
+veasel worktrees lock --path /abs/path --reason "hold review"
+veasel worktrees unlock --path /abs/path
+veasel worktrees remove --path /abs/path</code></pre>
+      <p>
+        HTTP under{" "}
+        <code>/v1/sessions/&#123;id&#125;/workspace/git/worktrees</code>. Pass{" "}
+        <code>--session</code> to reuse an existing session, or{" "}
+        <code>--workspace</code> to create one.
+      </p>
+    </div>
+
     <p class="doc-next">
       <a class="text-link" href={`${basePath}/docs/api/`}>
         API and headless <span aria-hidden="true">→</span>
