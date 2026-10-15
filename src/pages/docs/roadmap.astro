@@ -94,10 +94,11 @@ const basePath = import.meta.env.BASE_URL.replace(/\/$/, "");
           <h2>Approved shell commands</h2>
           <p>
             Store each proposed command for review. The TUI exposes its exact
-            text, working directory, and timeout before explicit approval;
-            execution is bounded and never replayed after interruption. Commands
-            still run with the server user's permissions and without an OS
-            sandbox.
+            text, working directory, timeout, and whether a platform sandbox
+            will wrap the process before explicit approval; execution is bounded
+            and never replayed after interruption. Approved shell wraps with
+            Bubblewrap, Seatbelt, or Windows AppContainer+Job when available
+            (honest capability flags; not a VM). MCP stdio stays unsandboxed.
           </p>
         </div>
         <span class="roadmap-symbol" aria-label="Complete">
