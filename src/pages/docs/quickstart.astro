@@ -98,7 +98,8 @@ const basePath = import.meta.env.BASE_URL.replace(/\/$/, "");
       <strong>Know the boundary.</strong> Session history stays local; prompts
       and tool excerpts go to your configured provider. Approved shell uses
       Bubblewrap / Seatbelt / Windows AppContainer+Job when available — best
-      effort, not a VM. MCP stays unsandboxed. Read the{" "}
+      effort, not a VM. MCP stdio defaults unsandboxed; Linux can opt into
+      Bubblewrap with <code>VEASEL_MCP_STDIO_SANDBOX</code>. Read the{" "}
       <a href={`${basePath}/docs/security/`}>security notes</a> before sensitive
       work.
     </aside>
