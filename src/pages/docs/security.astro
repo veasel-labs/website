@@ -1,14 +1,14 @@
 ---
-import SiteLayout from "../../layouts/SiteLayout.astro";
+import DocsLayout from "../../layouts/DocsLayout.astro";
 
 const basePath = import.meta.env.BASE_URL.replace(/\/$/, "");
 ---
 
-<SiteLayout
+<DocsLayout
   title="Privacy and security"
-  description="What stays on your machine, what leaves for your model provider, and the current safety boundaries in Veasel Code."
+  description="What stays local, what reaches your provider, approvals, and platform shell sandboxes in Veasel Code."
 >
-  <section class="doc-page page-grid">
+  <section class="doc-page">
     <p class="kicker">TRUST / DATA FLOW</p>
     <h1>
       Know what moves.
@@ -16,10 +16,10 @@ const basePath = import.meta.env.BASE_URL.replace(/\/$/, "");
       <em>Keep the reins.</em>
     </h1>
     <p class="lede">
-      Veasel Code runs its server locally and stores session history in SQLite.
-      Model prompts are sent to the provider configured by the person running
-      the server. Local storage does not mean local inference.
+      Veasel runs on loopback and stores history in SQLite. Model prompts go to
+      the provider you configure. Local storage is not local inference.
     </p>
+
     <div class="data-flow" aria-label="Current message data flow">
       <div>
         <small>YOU</small>
@@ -39,109 +39,122 @@ const basePath = import.meta.env.BASE_URL.replace(/\/$/, "");
         <span>prompt and recent context</span>
       </div>
     </div>
+
     <div class="doc-panel">
       <h2>Current protections</h2>
       <ul class="guide-list">
         <li>
-          The backend binds to loopback; remote server binding is not
-          implemented.
+          Backend binds to loopback; remote server binding is not implemented.
+          Non-loopback <code>Host</code> / browser <code>Origin</code> values
+          are rejected.
         </li>
         <li>
-          Provider credentials are never returned by the API. TUI-entered keys
-          are stored in the local model settings file with owner-only POSIX
-          permissions; they are plaintext at rest. Use environment credentials
-          if your local policy requires keychain-managed secrets.
+          Provider credentials never leave the API responses. TUI-entered keys
+          live in <code>model-settings.json</code> with owner-only POSIX
+          permissions (plaintext at rest). Prefer env/keychain policy if
+          required.
         </li>
         <li>
-          Remote model endpoints require HTTPS; local development endpoints may
-          use loopback HTTP.
+          Remote model endpoints require HTTPS; local development may use
+          loopback HTTP. Provider redirects are rejected; sizes and message
+          counts are bounded.
         </li>
         <li>
-          Provider redirects are rejected, and response sizes and message counts
-          are bounded.
+          Workspace list/read/search stay inside the session root, skip symlinks
+          during traversal, and enforce limits.
         </li>
         <li>
-          New sessions accept an existing workspace directory and store its
-          canonical path.
+          File edits, shell, and MCP require inspect-then-approve. Application
+          verifies the reviewed file snapshot before atomic write.
         </li>
         <li>
-          Workspace listing, file reads, and literal search stay inside that
-          root, skip symlinks during traversal, and enforce file, byte, and
-          result limits.
+          Approved shell can wrap with platform sandboxes (see below). Approval
+          remains the authorization gate; sandboxes are defense-in-depth.
         </li>
         <li>
-          Provider tool calls are bounded by round, call, argument, and result
-          limits. The model can propose a bounded replacement for one text file;
-          the normal TUI flow opens the saved diff before explicit approval and
-          writing.
-        </li>
-        <li>
-          Shell commands are stored for review. The TUI shows the exact command,
-          working directory, and timeout before approval; execution is bounded
-          to 300 seconds and 64 KiB of captured output. Commands inherit the
-          server user's environment and permissions and have no OS sandbox.
-        </li>
-        <li>
-          Agent Plugins support is experimental. MCP servers require per-session
-          trust, and every model-requested MCP tool call requires separate
-          inspection and one-time approval before it reaches the server. A
-          rejection is not retried. Stdio processes inherit the server user's
-          permissions and have no OS sandbox. Streamable HTTP refuses redirects
-          and validates TLS, but configured headers and approved tool inputs are
-          sent to the chosen server origin.
+          MCP requires per-session trust plus per-call approval. Stdio MCP is
+          not OS sandboxed. Streamable HTTP refuses redirects and validates TLS.
         </li>
       </ul>
     </div>
+
+    <div class="doc-panel">
+      <h2>Shell sandboxes by platform</h2>
+      <p>
+        Configure with <code>VEASEL_SHELL_SANDBOX</code> (<code>auto</code>{" "}
+        default, <code>off</code>, <code>require</code>) and optional{" "}
+        <code>VEASEL_SHELL_SANDBOX_NETWORK=allow</code>.
+      </p>
+      <ul class="guide-list">
+        <li>
+          <strong>Linux</strong> — Bubblewrap when <code>bwrap</code> is on{" "}
+          <code>PATH</code> (<code>shell.sandbox.bubblewrap</code>). Read-only
+          host bind, writable workspace, tempfs over sensitive homes, network
+          denied by default.
+        </li>
+        <li>
+          <strong>macOS</strong> — Seatbelt via{" "}
+          <code>/usr/bin/sandbox-exec</code> (
+          <code>shell.sandbox.seatbelt</code>). Best-effort; may be constrained
+          by future macOS releases.
+        </li>
+        <li>
+          <strong>Windows</strong> — AppContainer + Job Object (
+          <code>shell.sandbox.windows</code>). Workspace ACL for the
+          AppContainer SID; job memory/process caps; network denied by default.
+          Not Codex-level WFP/LPAC.
+        </li>
+      </ul>
+      <p>
+        Under <code>auto</code>, missing backends fall through unsandboxed and
+        do not advertise a sandbox capability. Under <code>require</code>,
+        missing backends fail closed. Full policy:{" "}
+        <a href="https://github.com/veasel-labs/veasel/blob/main/docs/SHELL_COMMANDS.md">
+          docs/SHELL_COMMANDS.md
+        </a>
+        .
+      </p>
+    </div>
+
     <div class="doc-panel">
       <h2>What to keep in mind</h2>
       <ul class="guide-list">
         <li>
-          Your model provider receives the prompt and conversation history
-          needed to answer.
+          Your provider receives prompts, conversation context, enabled skill
+          instructions, and approved tool/shell output needed to answer.
         </li>
         <li>
-          The loopback API has no application token; other programs running as
-          your user may reach it, read files beneath an active session root, and
-          call the diff and approval routes. TUI review is a workflow, not an
-          enforced caller-identity boundary.
+          The loopback API has no application token; same-user processes can
+          reach health, workspace, and approval routes. TUI review is a
+          workflow, not caller-identity enforcement.
         </li>
         <li>
-          The model may request reads from the selected workspace or propose an
-          edit. Returned excerpts and tool results are sent to your configured
-          provider. These tools do not provide a filesystem sandbox against
-          other processes running as your user.
-        </li>
-        <li>
-          Enabled Skill instructions, MCP tool arguments and results, and
-          approved shell output may be sent to your configured model provider.
-        </li>
-        <li>
-          The official mascot artwork carries a noncommercial license;
-          commercial distribution needs separate permission.
+          Sandboxes are not VMs. Inherited environment may still carry
+          credentials. Inspect effects before approval.
         </li>
       </ul>
     </div>
+
     <aside class="callout">
-      <strong>Review before a file changes.</strong> Repository content and tool
-      output are treated as untrusted data. A proposal alone does not write to
-      disk; a recorded diff view, explicit approval, and a matching file
-      snapshot are required. The unauthenticated loopback API allows same-user
-      processes to call those routes. Shell commands are reviewed before
-      execution but are not sandboxed. MCP calls are held before execution until
-      their exact arguments are inspected and approved; the unauthenticated
-      loopback API means same-user processes can also access those review and
-      approval routes. Trusted stdio servers still run without an OS sandbox.
-    </aside>
-    <p class="doc-next">
-      <a
-        class="text-link"
-        href="https://github.com/veasel-labs/veasel/blob/main/docs/security/threat-model.md"
-      >
-        Read the threat model <span aria-hidden="true">↗</span>
+      <strong>Threat model.</strong>{" "}
+      <a href="https://github.com/veasel-labs/veasel/blob/main/docs/security/threat-model.md">
+        docs/security/threat-model.md
+      </a>{" "}
+      is the source of truth for attack surfaces. Report vulnerabilities
+      privately via repository{" "}
+      <a href="https://github.com/veasel-labs/veasel/blob/main/SECURITY.md">
+        SECURITY.md
       </a>
-      <a class="text-link" href={`${basePath}/docs/plugins/`}>
-        Explore plugin safety <span aria-hidden="true">→</span>
+      .
+    </aside>
+
+    <p class="doc-next">
+      <a class="text-link" href={`${basePath}/docs/architecture/`}>
+        Architecture <span aria-hidden="true">→</span>
+      </a>
+      <a class="text-link" href={`${basePath}/docs/troubleshooting/`}>
+        Troubleshooting <span aria-hidden="true">→</span>
       </a>
     </p>
   </section>
-</SiteLayout>
+</DocsLayout>

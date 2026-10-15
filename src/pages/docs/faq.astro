@@ -1,14 +1,14 @@
 ---
-import SiteLayout from "../../layouts/SiteLayout.astro";
+import DocsLayout from "../../layouts/DocsLayout.astro";
 
 const basePath = import.meta.env.BASE_URL.replace(/\/$/, "");
 ---
 
-<SiteLayout
+<DocsLayout
   title="Frequently asked questions"
   description="Answers about what Veasel Code can do today, model providers, local data, the V language mascot, and contributing."
 >
-  <section class="doc-page page-grid">
+  <section class="doc-page">
     <p class="kicker">FIELD GUIDE / COMMON QUESTIONS</p>
     <h1>
       Clear answers.
@@ -26,13 +26,14 @@ const basePath = import.meta.env.BASE_URL.replace(/\/$/, "");
         inspect the saved diff with <code>/patch show &lt;id&gt;</code> and
         explicitly approve it with <code>/patch approve &lt;id&gt;</code>. The
         diff review starts with how many lines were added and removed, and a
-        long diff keeps that summary on the first screen. A shell review states
-        the missing sandbox before the command text. The loopback API has no
-        application token, so same-user processes can call its review and
+        long diff keeps that summary on the first screen. A shell review shows
+        whether a platform sandbox will wrap the command. The loopback API has
+        no application token, so same-user processes can call its review and
         approval routes. Veasel can also propose shell commands; each one must
         be opened and approved with its exact command, working directory, and
-        timeout. Approved commands run with the server user's permissions and
-        without an OS sandbox.
+        timeout. Approved commands may wrap with Bubblewrap, Seatbelt, or
+        Windows AppContainer+Job when available — otherwise they fall through
+        unsandboxed.
       </p>
     </div>
     <div class="doc-panel faq-panel">
@@ -104,8 +105,22 @@ const basePath = import.meta.env.BASE_URL.replace(/\/$/, "");
         current source, that review says the call has not reached its server
         before the arguments, and a long argument list keeps the decision on the
         first screen. Rejected calls are not retried. Trusted stdio processes
-        run with the server user's permissions and have no OS sandbox. Veasel
-        does not install plugins or claim full Agent Plugins compatibility.
+        run with the server user's permissions and remain without an OS sandbox
+        (unlike approved shell). Veasel does not install plugins or claim full
+        Agent Plugins compatibility.
+      </p>
+    </div>
+    <div class="doc-panel faq-panel">
+      <h2>What is Harbor support?</h2>
+      <p>
+        Veasel ships adapter notes for Harbor’s installed-agent contract
+        (Bubblewrap + verified Linux release inside the task environment). It is
+        for evaluation harnesses, not a public benchmark dashboard claim. See{" "}
+        <a href="https://github.com/veasel-labs/veasel/blob/main/docs/compatibility/harbor.md">
+          docs/compatibility/harbor.md
+        </a>{" "}
+        and the site <a href={`${basePath}/benchmarks/`}>benchmarks</a> page for
+        measured startup honesty.
       </p>
     </div>
     <div class="doc-panel faq-panel">
@@ -140,4 +155,4 @@ const basePath = import.meta.env.BASE_URL.replace(/\/$/, "");
       </a>
     </p>
   </section>
-</SiteLayout>
+</DocsLayout>

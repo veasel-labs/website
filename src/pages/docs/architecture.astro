@@ -1,12 +1,12 @@
 ---
-import SiteLayout from "../../layouts/SiteLayout.astro";
+import DocsLayout from "../../layouts/DocsLayout.astro";
 ---
 
-<SiteLayout
+<DocsLayout
   title="Architecture notes"
   description="The boundaries behind Veasel Code's V-native server and client API."
 >
-  <section class="doc-page page-grid">
+  <section class="doc-page">
     <p class="eyebrow">FIELD GUIDE / 02</p>
     <h1>
       Keep the core
@@ -62,10 +62,12 @@ import SiteLayout from "../../layouts/SiteLayout.astro";
         application verifies the reviewed file snapshot and uses an atomic
         replacement. Shell commands require a separate review of the exact
         command, workspace directory, and timeout before a one-time approval.
-        Commands run with the server user's permissions, inherit its
-        environment, and are not sandboxed. The loopback API has no application
-        token, so same-user processes can call approval routes. Interrupted file
-        writes and shell commands are not replayed automatically.
+        Commands inherit the server user's environment. When a platform sandbox
+        backend is available, approved shell wraps with Bubblewrap (Linux),
+        Seatbelt (macOS), or AppContainer+Job (Windows); otherwise it falls
+        through unsandboxed. The loopback API has no application token, so
+        same-user processes can call approval routes. Interrupted file writes
+        and shell commands are not replayed automatically.
       </p>
     </div>
     <a
@@ -75,4 +77,4 @@ import SiteLayout from "../../layouts/SiteLayout.astro";
       Open the implementation plan <span aria-hidden="true">↗</span>
     </a>
   </section>
-</SiteLayout>
+</DocsLayout>

@@ -14,12 +14,17 @@ const canonicalUrl = Astro.site
   : undefined;
 const links = [
   { href: "/", label: "Overview" },
-  { href: "/docs/", label: "Field guide" },
+  { href: "/docs/", label: "Docs" },
   { href: "/benchmarks/", label: "Benchmarks" },
   { href: "/downloads/", label: "Downloads" },
-  { href: "/docs/architecture/", label: "Architecture" },
-  { href: "/docs/providers/", label: "Providers" },
 ];
+
+function navCurrent(href: string, path: string) {
+  if (href === "/docs/") {
+    return path === "/docs/" || path.startsWith("/docs/");
+  }
+  return path === href;
+}
 ---
 
 <!doctype html>
@@ -105,7 +110,9 @@ const links = [
         {links.map((link) => (
           <a
             href={`${basePath}${link.href}`}
-            aria-current={currentPath === link.href ? "page" : undefined}
+            aria-current={
+              navCurrent(link.href, currentPath) ? "page" : undefined
+            }
           >
             {link.label}
           </a>

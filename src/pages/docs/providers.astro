@@ -1,5 +1,5 @@
 ---
-import SiteLayout from "../../layouts/SiteLayout.astro";
+import DocsLayout from "../../layouts/DocsLayout.astro";
 import catalog from "../../data/provider-catalog.json";
 
 const basePath = import.meta.env.BASE_URL.replace(/\/$/, "");
@@ -10,11 +10,11 @@ const modelsDevCount = providers.filter(
 const modelsDevCommit = catalog.source.commit;
 ---
 
-<SiteLayout
+<DocsLayout
   title="AI providers"
   description="The provider architecture and current integration status for Veasel Code."
 >
-  <section class="doc-page page-grid">
+  <section class="doc-page">
     <p class="kicker">FIELD GUIDE / PROVIDERS</p>
     <h1>
       Bring the model
@@ -40,8 +40,8 @@ const modelsDevCommit = catalog.source.commit;
         results go back to the configured provider. Model responses stream
         through durable session events. A model can also propose a shell
         command; the TUI requires opening the exact command, working directory,
-        and timeout before approval. Approved commands run as the server user
-        without an OS sandbox. Shell output and requested file content are
+        and timeout before approval. Approved commands may use a platform
+        sandbox when available. Shell output and requested file content are
         returned to the configured provider.
       </p>
       <div
@@ -270,9 +270,9 @@ veasel</code></pre>
       the selected workspace through bounded tools, propose a single-file edit
       for review, and restore recent history. Applying a proposal requires
       opening its diff and explicitly approving it in the TUI. Proposed shell
-      commands require the same exact review and approval before running, but
-      have no OS sandbox. File excerpts and tool output are sent to your
-      configured provider. See the
+      commands require the same exact review and approval before running, and
+      may wrap in a platform sandbox when available. File excerpts and tool
+      output are sent to your configured provider. See the
       <a href="https://github.com/veasel-labs/veasel/blob/main/docs/IMPLEMENTATION_PLAN.md">
         implementation plan
       </a>
@@ -282,7 +282,7 @@ veasel</code></pre>
       See the architecture <span aria-hidden="true">→</span>
     </a>
   </section>
-</SiteLayout>
+</DocsLayout>
 
 <script>
   const providerFilter =

@@ -52,14 +52,15 @@ applied. Provider responses stream through replayable session events. The local
 API has no application token, so same-user processes can also access its review
 and approval routes.
 Shell commands require review of the exact command, working directory, and
-timeout before approval; they run with the server user's permissions and no OS
-sandbox. Every model-requested MCP call pauses for exact-argument review and
-one-time approval; MCP stdio servers also run with the server user's
-permissions and no OS sandbox. Session messages support opt-in asynchronous
-responses through `Prefer: respond-async`. Their status is persisted and can
-be queried after reconnect; work interrupted by a restart is marked uncertain
-and never replayed. Durable queued workers and operation history management
-remain in development.
+timeout before approval. When available, approved shell wraps with Bubblewrap
+(Linux), Seatbelt (macOS), or AppContainer+Job (Windows); otherwise it falls
+through unsandboxed. Every model-requested MCP call pauses for exact-argument
+review and one-time approval; MCP stdio servers run with the server user's
+permissions and remain without an OS sandbox. Session messages support opt-in
+asynchronous responses through `Prefer: respond-async`. Their status is
+persisted and can be queried after reconnect; work interrupted by a restart is
+marked uncertain and never replayed. Durable queued workers and operation
+history management remain in development.
 
 ## Community
 

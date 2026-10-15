@@ -1,14 +1,14 @@
 ---
-import SiteLayout from "../../layouts/SiteLayout.astro";
+import DocsLayout from "../../layouts/DocsLayout.astro";
 
 const basePath = import.meta.env.BASE_URL.replace(/\/$/, "");
 ---
 
-<SiteLayout
+<DocsLayout
   title="Agent Plugins compatibility"
   description="The Agent Plugins v1.0.0 compatibility target, current implementation status, and safety requirements for Veasel Code."
 >
-  <section class="doc-page page-grid">
+  <section class="doc-page">
     <p class="kicker">EXTENSIBILITY / COMPATIBILITY</p>
     <h1>
       One portable format.
@@ -117,7 +117,8 @@ const basePath = import.meta.env.BASE_URL.replace(/\/$/, "");
         <li>
           Binary Skill assets and Skill-script execution with explicit approval
           are not supported. MCP stdio processes still run with the current
-          user’s OS privileges and without an OS sandbox.
+          user’s OS privileges and without an OS sandbox (MCP remains
+          unsandboxed; approved shell may wrap separately).
         </li>
       </ul>
     </div>
@@ -141,4 +142,4 @@ const basePath = import.meta.env.BASE_URL.replace(/\/$/, "");
       </a>
     </p>
   </section>
-</SiteLayout>
+</DocsLayout>

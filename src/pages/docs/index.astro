@@ -1,141 +1,160 @@
 ---
-import SiteLayout from "../../layouts/SiteLayout.astro";
+import DocsLayout from "../../layouts/DocsLayout.astro";
 
 const basePath = import.meta.env.BASE_URL.replace(/\/$/, "");
 ---
 
-<SiteLayout
-  title="Field guide"
-  description="Install and explore the current Veasel Code foundation."
+<DocsLayout
+  title="Documentation"
+  description="Install, connect, and operate Veasel Code — local-first coding agent with approvals, providers, skills, and a loopback API."
 >
-  <section class="doc-page page-grid">
-    <p class="eyebrow">FIELD GUIDE / 01</p>
+  <section class="doc-page">
+    <p class="kicker">FIELD GUIDE</p>
     <h1>
-      Find your next
+      Adopt Veasel in
       <br />
-      <em>good step.</em>
+      <em>a few clear steps.</em>
     </h1>
     <p class="lede">
-      A practical guide to the current Veasel Code build: set it up, understand
-      what it sends, choose a provider, and follow the work that is still ahead.
+      Everything you need to evaluate or run the current preview: install,
+      connect a model, review work, and understand what stays local.
     </p>
-    <nav class="guide-grid" aria-label="Veasel Code guides">
+
+    <nav class="guide-grid" aria-label="Documentation paths">
       <a
         class="guide-card guide-card-featured"
-        href={`${basePath}/docs/quickstart/`}
+        href={`${basePath}/docs/install/`}
       >
-        <span class="guide-card-mark">↗</span>
-        <h2>Run your first session</h2>
-        <p>Set up V, configure a provider, and open the terminal client.</p>
+        <span class="guide-card-mark">01</span>
+        <h2>Install</h2>
+        <p>Archives, Homebrew, AUR, or build from source.</p>
+        <span class="guide-card-link">
+          Install <span aria-hidden="true">→</span>
+        </span>
+      </a>
+      <a class="guide-card" href={`${basePath}/docs/quickstart/`}>
+        <span class="guide-card-mark">02</span>
+        <h2>First session</h2>
+        <p>
+          <code>/connect</code>, open a workspace, review a patch or command.
+        </p>
         <span class="guide-card-link">
           Quickstart <span aria-hidden="true">→</span>
         </span>
       </a>
+      <a class="guide-card" href={`${basePath}/docs/tui/`}>
+        <span class="guide-card-mark">03</span>
+        <h2>Terminal UI</h2>
+        <p>Themes, slash commands, usage, and keyboard flow.</p>
+        <span class="guide-card-link">
+          TUI <span aria-hidden="true">→</span>
+        </span>
+      </a>
       <a class="guide-card" href={`${basePath}/docs/providers/`}>
         <span class="guide-card-mark">◌</span>
-        <h2>Choose a model</h2>
-        <p>Compare the provider adapters and configure credentials safely.</p>
+        <h2>Providers</h2>
+        <p>OpenAI-compatible, Anthropic, Gemini, Meta, and locals.</p>
         <span class="guide-card-link">
           Providers <span aria-hidden="true">→</span>
         </span>
       </a>
-      <a class="guide-card" href={`${basePath}/docs/architecture/`}>
-        <span class="guide-card-mark">⌘</span>
-        <h2>Understand the shape</h2>
-        <p>
-          Follow requests from the terminal through the V runtime and SQLite.
-        </p>
-        <span class="guide-card-link">
-          Architecture <span aria-hidden="true">→</span>
-        </span>
-      </a>
-      <a class="guide-card" href={`${basePath}/docs/plugins/`}>
+      <a class="guide-card" href={`${basePath}/docs/skills/`}>
         <span class="guide-card-mark">✳</span>
-        <h2>Explore Agent Plugins</h2>
-        <p>
-          See the v1.0.0 target and the work required for real compatibility.
-        </p>
+        <h2>Skills & plugins</h2>
+        <p>Discover SKILL.md roots and experimental MCP plugins.</p>
         <span class="guide-card-link">
-          Compatibility <span aria-hidden="true">→</span>
+          Skills <span aria-hidden="true">→</span>
         </span>
       </a>
-      <a class="guide-card" href={`${basePath}/docs/security/`}>
-        <span class="guide-card-mark">⌂</span>
-        <h2>Follow your data</h2>
-        <p>
-          Know what stays local, what reaches providers, and what is not
-          sandboxed.
-        </p>
+      <a class="guide-card" href={`${basePath}/docs/sessions/`}>
+        <span class="guide-card-mark">☷</span>
+        <h2>Sessions & context</h2>
+        <p>SQLite history, repository map, compaction, async turns.</p>
         <span class="guide-card-link">
-          Privacy and security <span aria-hidden="true">→</span>
-        </span>
-      </a>
-      <a class="guide-card" href={`${basePath}/docs/roadmap/`}>
-        <span class="guide-card-mark">◎</span>
-        <h2>See what comes next</h2>
-        <p>Track verified foundations and the coding-agent milestones ahead.</p>
-        <span class="guide-card-link">
-          Roadmap <span aria-hidden="true">→</span>
+          Sessions <span aria-hidden="true">→</span>
         </span>
       </a>
       <a class="guide-card" href={`${basePath}/docs/api/`}>
         <span class="guide-card-mark">⇄</span>
-        <h2>Connect a client</h2>
-        <p>Browse the loopback HTTP routes and resume server events.</p>
-        <span class="guide-card-link">
-          API reference <span aria-hidden="true">→</span>
-        </span>
-      </a>
-      <a class="guide-card" href={`${basePath}/docs/faq/`}>
-        <span class="guide-card-mark">?</span>
-        <h2>Get a clear answer</h2>
+        <h2>API & headless</h2>
         <p>
-          Check common questions about the current build and its boundaries.
+          Loopback HTTP, SSE, and <code>veasel run</code>.
         </p>
         <span class="guide-card-link">
-          FAQ <span aria-hidden="true">→</span>
+          API <span aria-hidden="true">→</span>
+        </span>
+      </a>
+      <a class="guide-card" href={`${basePath}/docs/security/`}>
+        <span class="guide-card-mark">⌂</span>
+        <h2>Security</h2>
+        <p>Approvals, sandboxes by platform, and data flow.</p>
+        <span class="guide-card-link">
+          Security <span aria-hidden="true">→</span>
+        </span>
+      </a>
+      <a class="guide-card" href={`${basePath}/docs/troubleshooting/`}>
+        <span class="guide-card-mark">?</span>
+        <h2>Troubleshooting</h2>
+        <p>Connect, sandbox, and uncertain-turn recovery.</p>
+        <span class="guide-card-link">
+          Fix it <span aria-hidden="true">→</span>
         </span>
       </a>
     </nav>
+
     <div class="doc-panel">
-      <h2>Launch Veasel Code</h2>
-      <pre><code>veasel</code></pre>
+      <h2>Five-minute path</h2>
+      <pre><code>veasel
+# In the TUI:
+/connect          # paste key → pick model
+# open a workspace session, then ask a question
+/patches          # when an edit is proposed
+/commands         # when a shell proposal appears</code></pre>
       <p>
-        Download the build for your platform from the
-        <a href={`${basePath}/downloads/`}>downloads page</a>. Veasel starts its
-        local server when needed and opens the TUI. Press <kbd>s</kbd> on the
-        home screen, choose a provider, and continue. A known endpoint is filled
-        in, and an API key is requested only when that provider needs one. The
-        server listens on <code>127.0.0.1:4097</code> by default.
+        Default API: <code>127.0.0.1:4097</code>. For API-only:{" "}
+        <code>veasel serve</code>. Headless:{" "}
+        <code>veasel run --prompt "…" --workspace . --json</code>.
       </p>
     </div>
+
     <div class="doc-panel">
-      <h2>Choose a model in Settings</h2>
-      <pre><code>veasel</code></pre>
-      <p>
-        Press <kbd>s</kbd> on the home screen or enter <code>/models</code>
-        in a session. Veasel discovers the provider's models and saves the
-        profile when you choose one. The output-token budget is filled in; press{" "}
-        <kbd>Ctrl+O</kbd> to change it. Local presets do not need an API key.
-        Each provider keeps its own profile.
-      </p>
+      <h2>What ships today (honest)</h2>
+      <ul class="guide-list">
+        <li>Loopback V server, SQLite sessions, OpenTUI client with themes</li>
+        <li>
+          Multi-provider chat, bounded workspace tools, review-gated edits /
+          shell / MCP
+        </li>
+        <li>
+          Skills discovery, repository map, adaptive compaction, durable async
+          turns
+        </li>
+        <li>
+          Platform shell sandboxes when backends are available (not Codex-level)
+        </li>
+        <li>
+          Experimental Agent Plugins — see the{" "}
+          <a href="https://github.com/veasel-labs/veasel/blob/main/docs/compatibility/agent-plugins.md">
+            compatibility ledger
+          </a>
+        </li>
+      </ul>
     </div>
-    <p class="callout">
-      <strong>Current boundary</strong> Provider responses stream through
-      session events. Veasel can propose bounded, single-file edits; the TUI
-      applies them only after you inspect the saved diff and explicitly approve
-      it. Shell commands require review of the exact command, working directory,
-      and timeout before approval, and run without an OS sandbox. Follow the
-      implementation plan in the source repository for verified progress.
-    </p>
+
+    <aside class="callout">
+      <strong>Deep contracts.</strong> OpenAPI, provider catalog, shell risk
+      model, and threat model live in the{" "}
+      <a href="https://github.com/veasel-labs/veasel/tree/main/docs">
+        veasel repository docs
+      </a>
+      . This site summarizes what you need to adopt; it does not invent APIs.
+    </aside>
+
     <p class="callout mascot-terms">
-      <strong>Mascot artwork</strong> Veasel is the V language mascot. This
-      pixel-art adaptation credits the V contributors and is shared under
+      <strong>Mascot artwork</strong> Veasel is the V language mascot. Pixel-art
+      adaptations credit V contributors under{" "}
       <a href="https://creativecommons.org/licenses/by-nc/4.0/">CC BY-NC 4.0</a>
-      . Commercial use needs separate permission from the rights holder.
+      . Commercial use needs separate permission.
     </p>
-    <a class="text-link" href={`${basePath}/docs/architecture/`}>
-      Next: architecture notes <span aria-hidden="true">→</span>
-    </a>
   </section>
-</SiteLayout>
+</DocsLayout>

@@ -1,0 +1,115 @@
+---
+import DocsLayout from "../../layouts/DocsLayout.astro";
+
+const basePath = import.meta.env.BASE_URL.replace(/\/$/, "");
+---
+
+<DocsLayout
+  title="Terminal UI"
+  description="Use the OpenTUI client: sessions, slash commands, themes, reviews, and keyboard shortcuts."
+>
+  <section class="doc-page">
+    <p class="kicker">FIELD GUIDE / TUI</p>
+    <h1>
+      Drive Veasel
+      <br />
+      <em>from the terminal.</em>
+    </h1>
+    <p class="lede">
+      The bundled OpenTUI client talks to the local loopback API. Sessions,
+      reviews, and settings stay on your machine.
+    </p>
+
+    <div class="doc-panel">
+      <h2>Home and sessions</h2>
+      <ul class="guide-list">
+        <li>
+          <kbd>j</kbd> / <kbd>k</kbd> or arrows move the session list; Enter
+          opens; <kbd>n</kbd> starts a session when the list is empty.
+        </li>
+        <li>
+          Long lists keep the selection on screen and show a position such as{" "}
+          <code>8/20</code>.
+        </li>
+        <li>
+          Esc cancels a running turn. Session history and events live in local
+          SQLite.
+        </li>
+      </ul>
+    </div>
+
+    <div class="doc-panel">
+      <h2>Credentials and models</h2>
+      <ul class="guide-list">
+        <li>
+          <code>/connect</code> — paste an API key, save it locally, pick a
+          model (happy path).
+        </li>
+        <li>
+          <kbd>s</kbd> or <code>/models</code> — full settings: endpoint
+          (Ctrl+U), output budget (Ctrl+O), and model discovery.
+        </li>
+        <li>
+          Keys are stored under{" "}
+          <code>$VEASEL_DATA_DIR/model-settings.json</code> with owner-only
+          POSIX permissions (plaintext at rest). Saved profile keys win over
+          environment variables for the same provider.
+        </li>
+      </ul>
+    </div>
+
+    <div class="doc-panel">
+      <h2>Themes</h2>
+      <p>
+        Use <code>/theme</code> to switch among <code>mint</code>,{" "}
+        <code>ember</code>, <code>slate</code>, <code>mono</code>, and{" "}
+        <code>aurora</code>. The default mint theme matches the product mock
+        (charcoal panels, mint accents, LOCAL cue).
+      </p>
+    </div>
+
+    <div class="doc-panel">
+      <h2>Reviews and slash commands</h2>
+      <p>
+        Type <code>/</code> for suggestions. Common flows:
+      </p>
+      <pre><code>/patches
+/patch show &lt;id&gt;
+/patch approve &lt;id&gt;   # or reject
+
+/commands
+/command show &lt;id&gt;
+/command approve &lt;id&gt;
+
+/mcp calls
+/mcp call show &lt;id&gt;
+/mcp call approve &lt;id&gt;
+
+/skills [filter]
+/skill on|off &lt;name&gt;
+/map
+/usage</code></pre>
+      <p>
+        File edits, shell, and MCP never take effect until you inspect and
+        approve. Rejected or interrupted work is not replayed automatically.
+      </p>
+    </div>
+
+    <div class="doc-panel">
+      <h2>Usage</h2>
+      <p>
+        <code>/usage</code> shows provider-reported token totals when adapters
+        set <code>usage.reported</code>. Veasel does not invent cost figures.
+      </p>
+    </div>
+
+    <p class="doc-next">
+      <a class="text-link" href={`${basePath}/docs/providers/`}>
+        Configure providers <span aria-hidden="true">→</span>
+      </a>
+      <a class="text-link" href={`${basePath}/docs/skills/`}>
+        Skills and plugins <span aria-hidden="true">→</span>
+      </a>
+    </p>
+  </section>
+</DocsLayout>
