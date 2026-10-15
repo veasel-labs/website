@@ -395,13 +395,19 @@ const basePath = import.meta.env.BASE_URL.replace(/\/$/, "");
       <h2>Resume the event stream</h2>
       <p>
         Events use increasing numeric IDs. Send the last event ID you handled to
-        replay newer events after a reconnect:
+        replay newer events after a reconnect. <code>Last-Event-ID</code> must
+        be a digit-only non-negative integer (no sign, spaces, or leading zeros
+        except <code>0</code>); omit it or send <code>0</code> to start from the
+        beginning. Catch-up returns at most 500 events per poll. Quiet streams
+        emit <code>event: heartbeat</code> with <code>data: &#123;&#125;</code>{" "}
+        about every 15 seconds so clients can detect a live connection without
+        inventing session events.
       </p>
       <pre><code>curl -N -H 'Last-Event-ID: 12' \
   http://127.0.0.1:4097/v1/events</code></pre>
       <p>
-        Each event includes its session ID and type. Keep the cursor supplied by
-        the server; IDs are created by the local event database.
+        Each session event includes its session ID and type. Keep the cursor
+        supplied by the server; IDs are created by the local event database.
       </p>
     </div>
     <div class="doc-panel">
