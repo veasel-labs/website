@@ -1,6 +1,7 @@
 ---
 import SiteLayout from "../layouts/SiteLayout.astro";
 import startupReport from "../../public/data/benchmarks/cli-startup-linux-x64-2026-10-15.json";
+import tuiStartupReport from "../../public/data/benchmarks/tui-startup-linux-x64-2026-10-15.json";
 
 const basePath = import.meta.env.BASE_URL.replace(/\/$/, "");
 const startupResults = startupReport.operations.version;
@@ -25,6 +26,17 @@ const reportDate = new Date(startupReport.generated_at).toLocaleDateString(
 const veaselStartup = startupResults.find(
   (result) => result.id === "veasel-code",
 );
+const tuiVersionP50 = tuiStartupReport.cli.version.wall.medianMs;
+const tuiHelpP50 = tuiStartupReport.cli.help.wall.medianMs;
+const tuiPtyP50 = tuiStartupReport.ptyConnectedMs.wall.medianMs;
+const tuiVersionRssMiB =
+  tuiStartupReport.cli.version.rssKb.medianKb / 1024;
+const tuiHelpRssMiB = tuiStartupReport.cli.help.rssKb.medianKb / 1024;
+const tuiReportDate = new Date(tuiStartupReport.measuredAt).toLocaleDateString(
+  "en-US",
+  { dateStyle: "long", timeZone: "UTC" },
+);
+const fmtMs = (value: number) => value.toFixed(1);
 ---
 
 <SiteLayout
@@ -190,6 +202,124 @@ const veaselStartup = startupResults.find(
       </div>
     </section>
 
+    <section class="bench-evidence" aria-labelledby="tui-startup-title">
+      <div class="bench-section-head">
+        <div>
+          <p class="bench-label">LOCAL RUNTIME / TUI STARTUP + PTY</p>
+          <h2 id="tui-startup-title">Terminal client, measured plainly.</h2>
+        </div>
+        <span class="bench-tag">LINUX X64 · ONE HOST</span>
+      </div>
+      <p class="bench-copy">
+        Median wall time for packaged <code>veasel-tui</code>{" "}
+        <code>--version</code> / <code>--help</code>, plus PTY time-to-connected
+        against an isolated <code>veasel serve</code> (visible markers{" "}
+        <code>connected</code>, <code>SESSIONS</code>, <code>VEASEL</code>). No
+        model requests. Not interactive render FPS, not coding-task quality, not
+        macOS/Windows numbers, and not Windows ConPTY coverage.
+      </p>
+
+      <ol
+        class="bench-chart"
+        aria-label="Median veasel-tui startup probes on Linux x64."
+      >
+        <li class="bench-result bench-result-veasel">
+          <div class="bench-result-head">
+            <span>veasel-tui --version</span>
+            <strong>
+              {fmtMs(tuiVersionP50)}
+              <small> ms</small>
+            </strong>
+          </div>
+          <div class="bench-track" aria-hidden="true">
+            <span style="--bench-width: 100%" />
+          </div>
+          <p>
+            p50 RSS {tuiVersionRssMiB.toFixed(1)} MiB ·{" "}
+            {tuiStartupReport.cli.version.wall.count} samples ·{" "}
+            {tuiStartupReport.cli.version.failures} failures
+          </p>
+        </li>
+        <li class="bench-result bench-result-veasel">
+          <div class="bench-result-head">
+            <span>veasel-tui --help</span>
+            <strong>
+              {fmtMs(tuiHelpP50)}
+              <small> ms</small>
+            </strong>
+          </div>
+          <div class="bench-track" aria-hidden="true">
+            <span
+              style={`--bench-width: ${Math.max(4, (tuiHelpP50 / tuiVersionP50) * 100)}%`}
+            />
+          </div>
+          <p>
+            p50 RSS {tuiHelpRssMiB.toFixed(1)} MiB ·{" "}
+            {tuiStartupReport.cli.help.wall.count} samples ·{" "}
+            {tuiStartupReport.cli.help.failures} failures
+          </p>
+        </li>
+        <li class="bench-result bench-result-veasel">
+          <div class="bench-result-head">
+            <span>PTY → connected home</span>
+            <strong>
+              {fmtMs(tuiPtyP50)}
+              <small> ms</small>
+            </strong>
+          </div>
+          <div class="bench-track" aria-hidden="true">
+            <span
+              style={`--bench-width: ${Math.max(4, (tuiPtyP50 / tuiVersionP50) * 100)}%`}
+            />
+          </div>
+          <p>
+            {tuiStartupReport.ptyConnectedMs.wall.count} samples ·{" "}
+            {tuiStartupReport.ptyConnectedMs.failures} failures · isolated serve
+          </p>
+        </li>
+      </ol>
+
+      <div class="bench-callout">
+        <span aria-hidden="true">↳</span>
+        <p>
+          Binary line <code>{tuiStartupReport.binaries.tuiVersionLine}</code>.
+          Medians on this Linux x64 host only:{" "}
+          <code>--version</code> {fmtMs(tuiVersionP50)} ms ·{" "}
+          <code>--help</code> {fmtMs(tuiHelpP50)} ms · PTY connected{" "}
+          {fmtMs(tuiPtyP50)} ms. Windows ConPTY interactive smoke is still open
+          in the product checklist — this page does not claim it.
+        </p>
+      </div>
+
+      <dl class="bench-meta">
+        <div>
+          <dt>Captured</dt>
+          <dd>
+            {tuiReportDate} · {tuiStartupReport.host.platform}{" "}
+            {tuiStartupReport.host.arch}
+          </dd>
+        </div>
+        <div>
+          <dt>Method</dt>
+          <dd>{tuiStartupReport.method.cli}</dd>
+        </div>
+        <div>
+          <dt>PTY probe</dt>
+          <dd>{tuiStartupReport.method.ptyConnected}</dd>
+        </div>
+        <div>
+          <dt>Raw report</dt>
+          <dd>
+            <a
+              href={`${basePath}/data/benchmarks/tui-startup-linux-x64-2026-10-15.json`}
+            >
+              JSON · full measurements ↗
+            </a>
+          </dd>
+        </div>
+      </dl>
+    </section>
+
     <section class="bench-status" aria-labelledby="evaluation-title">
       <div class="bench-section-head">
         <div>
@@ -209,6 +339,22 @@ const veaselStartup = startupResults.find(
               Re-measured 2026-10-15 against verified{" "}
               <code>v0.41.0-next.0</code> (and peer CLIs on PATH); wall time and
               Linux <code>ru_maxrss</code> published above.
+            </p>
+          </div>
+          <strong>Measured</strong>
+        </article>
+        <article class="bench-status-row">
+          <span
+            class="bench-status-dot status-measured"
+            aria-hidden="true"
+          ></span>
+          <div>
+            <h3>TUI startup + PTY connected</h3>
+            <p>
+              Linux x64 only for <code>veasel-tui</code>{" "}
+              <code>0.41.0-next.0</code>: version/help wall+RSS and PTY
+              time-to-connected published above. macOS/Windows baselines and
+              Windows ConPTY interactive smoke remain open.
             </p>
           </div>
           <strong>Measured</strong>
