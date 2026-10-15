@@ -54,9 +54,12 @@ const basePath = import.meta.env.BASE_URL.replace(/\/$/, "");
         API key only when the provider requires one. Veasel then requests that
         provider's model list, using the key you just typed or a key already
         saved in the environment or profile. The request does not generate text.
-        If the list does not come back, enter a model ID. The last step sets the
-        output-token budget; 0 keeps Veasel's 4,096-token default, except Meta,
-        which leaves the field unset so Meta applies its own limit. Create a
+        If the list does not come back, enter a model ID. Choosing a model saves
+        the profile. The output-token budget is already filled in; press
+        <kbd>Ctrl+O</kbd> to change it. 0 keeps Veasel's 4,096-token default,
+        except Meta, which leaves the field unset so Meta applies its own limit.
+        A chat message can contain up to 1 MiB (1,048,576 bytes) of text. That
+        limit is not Muse's advertised 1,048,576-token context window. Create a
         session by selecting a workspace directory; messages and events are
         stored locally in SQLite. To run only the local API server for another
         client, use <code>veasel serve</code>.

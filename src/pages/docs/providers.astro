@@ -222,11 +222,14 @@ veasel</code></pre>
         It uses the key typed in this session, a saved profile, or the
         provider's environment variable. This is a model-list request, not a
         generation request. If the endpoint does not support listing or the
-        request fails, enter a model ID manually. The next step sets the
-        output-token budget from 16 to 131,072 tokens; 0 selects Veasel's
-        4,096-token default, except Meta, which omits{" "}
-        <code>max_output_tokens</code>. API keys are never returned by the
-        settings API. See the{" "}
+        request fails, enter a model ID manually. Choosing a model saves the
+        profile. The output-token budget is already filled in;
+        <kbd>Ctrl+O</kbd> changes it, from 16 to 131,072 tokens. 0 selects
+        Veasel's 4,096-token default, except Meta, which omits{" "}
+        <code>max_output_tokens</code>. A chat message can contain up to 1 MiB
+        (1,048,576 bytes) of text. Veasel does not yet use Muse's full
+        advertised 1,048,576-token context window. API keys are never returned
+        by the settings API. See the{" "}
         <a href={`${basePath}/docs/api/`}>model-list endpoint</a> for its
         contract.
       </p>
@@ -237,7 +240,8 @@ veasel</code></pre>
         Press <kbd>s</kbd> on the home screen or enter <code>/models</code> in
         an open session. Search the catalog and choose a provider. A known
         endpoint is filled in; <kbd>Ctrl+U</kbd> replaces it. Enter a key only
-        when the provider requires one. Veasel keeps a separate profile for each
+        when the provider requires one. Press <kbd>Ctrl+O</kbd> to change the
+        filled-in output-token budget. Veasel keeps a separate profile for each
         provider. Leave the key blank to keep the saved value, or enter{" "}
         <code>!clear</code> to remove it. Keys are never shown again in the TUI
         or returned by the API.
