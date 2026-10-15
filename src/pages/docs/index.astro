@@ -61,9 +61,20 @@ const basePath = import.meta.env.BASE_URL.replace(/\/$/, "");
       <a class="guide-card" href={`${basePath}/docs/skills/`}>
         <span class="guide-card-mark">✳</span>
         <h2>Skills & plugins</h2>
-        <p>Discover SKILL.md roots and experimental MCP plugins.</p>
+        <p>Discover SKILL.md roots and experimental Agent Plugins.</p>
         <span class="guide-card-link">
           Skills <span aria-hidden="true">→</span>
+        </span>
+      </a>
+      <a class="guide-card" href={`${basePath}/docs/mcp/`}>
+        <span class="guide-card-mark">⌘</span>
+        <h2>MCP servers</h2>
+        <p>
+          <code>/mcp add</code>, user-scoped config, trust, and per-call
+          approval.
+        </p>
+        <span class="guide-card-link">
+          MCP <span aria-hidden="true">→</span>
         </span>
       </a>
       <a class="guide-card" href={`${basePath}/docs/sessions/`}>
@@ -133,7 +144,9 @@ const basePath = import.meta.env.BASE_URL.replace(/\/$/, "");
           Platform shell sandboxes when backends are available (not Codex-level)
         </li>
         <li>
-          Experimental Agent Plugins — see the{" "}
+          User-scoped MCP add/manage (<code>/mcp add</code>,{" "}
+          <code>/v1/mcp-servers</code>) plus experimental Agent Plugins — see
+          the <a href={`${basePath}/docs/mcp/`}>MCP guide</a> and{" "}
           <a href="https://github.com/veasel-labs/veasel/blob/main/docs/compatibility/agent-plugins.md">
             compatibility ledger
           </a>
