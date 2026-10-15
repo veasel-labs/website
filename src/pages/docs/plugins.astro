@@ -97,7 +97,9 @@ const basePath = import.meta.env.BASE_URL.replace(/\/$/, "");
         Standalone MCP config uses <code>/v1/mcp-servers</code> (user, project,
         and read-only <code>.mcp.json</code> import) — see the{" "}
         <a href={`${basePath}/docs/mcp/`}>MCP guide</a>. The plugin and Skill
-        names come from the validated package manifest and directory. Skill
+        names come from the validated package manifest and directory. Manifest
+        metadata fields such as description, homepage, repository, license,
+        version, author, and keywords reject C0/DEL control bytes. Skill
         selection and MCP trust persist with the session. Disabling a Skill
         removes its instructions from the next model turn. MCP tools from
         trusted servers are available to the model, but every requested call
