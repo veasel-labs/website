@@ -1,6 +1,6 @@
 ---
 import SiteLayout from "../layouts/SiteLayout.astro";
-import atifMeta from "../../public/data/evals/atif-smoke-0.39.0-next.0.meta.json";
+import atifMeta from "../../public/data/evals/atif-smoke-0.40.0-next.0.meta.json";
 
 const basePath = import.meta.env.BASE_URL.replace(/\/$/, "");
 const harborCommit = "dc933be707feafbb9efcdf092cb8a0e391332617";
@@ -16,8 +16,8 @@ const adapter =
   "https://github.com/veasel-labs/veasel/blob/main/benchmarks/harbor/veasel_agent.py";
 const benchmarking =
   "https://github.com/veasel-labs/veasel/blob/main/docs/benchmarking.md";
-const atifSampleHref = `${basePath}/data/evals/atif-smoke-0.39.0-next.0.json`;
-const atifMetaHref = `${basePath}/data/evals/atif-smoke-0.39.0-next.0.meta.json`;
+const atifSampleHref = `${basePath}/data/evals/atif-smoke-0.40.0-next.0.json`;
+const atifMetaHref = `${basePath}/data/evals/atif-smoke-0.40.0-next.0.meta.json`;
 const mockProvider =
   "https://github.com/veasel-labs/veasel/blob/main/scripts/mock-provider.py";
 ---
@@ -122,7 +122,7 @@ const mockProvider =
         <li>
           Authentic{" "}
           <a href={`${basePath}/demo/`}>terminal asciinema on /demo/</a> from
-          the <code>0.39.0-next.0</code> binary (CLI + scripted TUI keys; no
+          the <code>0.40.0-next.0</code> binary (CLI + scripted TUI keys; no
           live model).
         </li>
         <li>
@@ -143,7 +143,7 @@ const mockProvider =
         </li>
       </ul>
       <pre class="evals-pre"><code># From a veasel checkout, after a verified release exists:
-VEASEL_VERSION=0.39.0-next.0 benchmarks/harbor/smoke.sh
+VEASEL_VERSION=0.40.0-next.0 benchmarks/harbor/smoke.sh
 # Inspect the Harbor job directory locally — do not upload raw ATIF.</code></pre>
     </div>
 
@@ -197,12 +197,12 @@ VEASEL_VERSION=0.39.0-next.0 benchmarks/harbor/smoke.sh
             <code>benchmarks/harbor/smoke-task</code>
           </a>{" "}
           via{" "}
-          <code>VEASEL_VERSION=0.39.0-next.0 benchmarks/harbor/smoke.sh</code>{" "}
+          <code>VEASEL_VERSION=0.40.0-next.0 benchmarks/harbor/smoke.sh</code>{" "}
           (fixture model; reward plumbing only — not an Index score).
         </li>
         <li>
           <strong>Public ATIF evidence:</strong>{" "}
-          <a href={atifSampleHref}>atif-smoke-0.39.0-next.0.json</a> validated
+          <a href={atifSampleHref}>atif-smoke-0.40.0-next.0.json</a> validated
           with Harbor’s trajectory models.
         </li>
         <li>

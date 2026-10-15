@@ -13,9 +13,18 @@
           "kind": "comment",
           "text": "# Verify SHA-256 before you run (downloads page links SHA256SUMS)"
         },
-        { "kind": "command", "text": "veasel --version" },
-        { "kind": "output", "text": "veasel 0.39.0-next.0" },
-        { "kind": "command", "text": "veasel" },
+        {
+          "kind": "command",
+          "text": "veasel --version"
+        },
+        {
+          "kind": "output",
+          "text": "Veasel Code 0.40.0-next.0"
+        },
+        {
+          "kind": "command",
+          "text": "veasel"
+        },
         {
           "kind": "output",
           "text": "# starts or reuses 127.0.0.1:4097, then opens the TUI"
@@ -30,12 +39,18 @@
       "summary": "Paste a key once, pick a model, keep credentials local.",
       "prompt": "Authenticate without sending keys back through the API.",
       "lines": [
-        { "kind": "command", "text": "/connect" },
+        {
+          "kind": "command",
+          "text": "/connect"
+        },
         {
           "kind": "output",
           "text": "Paste API key → discover models → choose one"
         },
-        { "kind": "command", "text": "/models" },
+        {
+          "kind": "command",
+          "text": "/models"
+        },
         {
           "kind": "output",
           "text": "Ctrl+U endpoint · Ctrl+O output budget · keys never re-shown"
@@ -76,10 +91,22 @@
       "summary": "Edits are proposals until you inspect and approve.",
       "prompt": "Nothing lands on disk until approve.",
       "lines": [
-        { "kind": "output", "text": "Change ready · src/config.v · +6 −2" },
-        { "kind": "command", "text": "/patches" },
-        { "kind": "command", "text": "/patch show <id>" },
-        { "kind": "command", "text": "/patch approve <id>" },
+        {
+          "kind": "output",
+          "text": "Change ready · src/config.v · +6 −2"
+        },
+        {
+          "kind": "command",
+          "text": "/patches"
+        },
+        {
+          "kind": "command",
+          "text": "/patch show <id>"
+        },
+        {
+          "kind": "command",
+          "text": "/patch approve <id>"
+        },
         {
           "kind": "output",
           "text": "# rejected or interrupted edits are not replayed"
@@ -94,13 +121,22 @@
       "summary": "Shell shows the exact command, cwd, timeout, and sandbox wrap.",
       "prompt": "Authorize one command — not a blank check.",
       "lines": [
-        { "kind": "command", "text": "/commands" },
-        { "kind": "command", "text": "/command show <id>" },
+        {
+          "kind": "command",
+          "text": "/commands"
+        },
+        {
+          "kind": "command",
+          "text": "/command show <id>"
+        },
         {
           "kind": "output",
           "text": "cwd ~/project · timeout 60s · sandbox bubblewrap (when available)"
         },
-        { "kind": "command", "text": "/command approve <id>" }
+        {
+          "kind": "command",
+          "text": "/command approve <id>"
+        }
       ],
       "note": "Platform sandboxes are defense-in-depth; approval remains the authorization gate."
     },
@@ -123,11 +159,20 @@
           "kind": "comment",
           "text": "# or drop workspace .mcp.json / .cursor/mcp.json (read-only import)"
         },
-        { "kind": "command", "text": "/mcp trust configured/memory" },
-        { "kind": "command", "text": "/mcp call show <id>" },
-        { "kind": "command", "text": "/mcp call approve <id>" }
+        {
+          "kind": "command",
+          "text": "/mcp trust configured/memory"
+        },
+        {
+          "kind": "command",
+          "text": "/mcp call show <id>"
+        },
+        {
+          "kind": "command",
+          "text": "/mcp call approve <id>"
+        }
       ],
-      "note": "Configured MCP (user/project scope and portable .mcp.json import) ships in v0.39.0-next.0 archives and package-manager installs."
+      "note": "Configured MCP, named credentials, and OAuth PKCE ship in v0.40.0-next.0 archives and package-manager installs."
     },
     {
       "id": "headless",
