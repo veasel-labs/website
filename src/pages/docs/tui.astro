@@ -18,10 +18,10 @@ const basePath = import.meta.env.BASE_URL.replace(/\/$/, "");
     <p class="lede">
       The bundled OpenTUI client talks to the local loopback API. Multiline
       drafts, live + completed MarkdownRenderable replies, DiffRenderable
-      reviews with content washes, <code>$</code> skill and fuzzy{" "}
-      <code>@</code> path autocomplete, mode-aware context footers, dedicated
-      system/tool theme tokens, custom JSON themes, and reduced-motion mode.
-      Type <code>/help</code> in a session for the live shortcut list.
+      reviews with content washes, <code>$</code> skill and fuzzy <code>@</code>{" "}
+      path autocomplete, mode-aware context footers, dedicated system/tool theme
+      tokens, custom JSON themes, and reduced-motion mode. Type{" "}
+      <code>/help</code> in a session for the live shortcut list.
     </p>
 
     <div class="compatibility-banner">
@@ -172,25 +172,25 @@ const basePath = import.meta.env.BASE_URL.replace(/\/$/, "");
         <code>mint</code> (default product look), <code>ember</code>,{" "}
         <code>slate</code>, <code>mono</code>, <code>aurora</code>,{" "}
         <code>day</code> (light), and <code>contrast</code> (high-contrast
-        light). The choice is stored in{" "}
-        <code>~/.config/veasel/tui-theme</code> (override with{" "}
-        <code>VEASEL_TUI_THEME</code>). While the <code>/theme</code> menu is
-        open, ↑/↓ preview colors live; Enter keeps the choice and Esc restores
-        the saved theme.
+        light). The choice is stored in <code>~/.config/veasel/tui-theme</code>{" "}
+        (override with <code>VEASEL_TUI_THEME</code>). While the{" "}
+        <code>/theme</code> menu is open, ↑/↓ preview colors live; Enter keeps
+        the choice and Esc restores the saved theme.
       </p>
       <p>
         <strong>Custom JSON themes:</strong> drop <code>*.json</code> files
         under <code>~/.config/veasel/themes/</code> or{" "}
         <code>&lt;workspace&gt;/.veasel/themes/</code>. Each file needs{" "}
-        <code>id</code>, <code>name</code>, and optional{" "}
-        <code>extends</code> (a builtin id) plus hex color overrides — including
-        dedicated <code>systemLabel</code> / <code>systemText</code> /{" "}
+        <code>id</code>, <code>name</code>, and optional <code>extends</code> (a
+        builtin id) plus hex color overrides — including dedicated{" "}
+        <code>systemLabel</code> / <code>systemText</code> /{" "}
         <code>toolLabel</code> / <code>toolText</code> tokens.{" "}
         <code>/theme</code> lists those directories (missing, empty, or with
         filenames) and surfaces clear errors for bad JSON. Project themes
         override user themes with the same id; builtins cannot be replaced.
       </p>
-      <pre><code>{
+      <pre><code
+        >{`{
   "id": "ocean",
   "name": "Ocean",
   "description": "Deep blue workspace",
@@ -199,7 +199,8 @@ const basePath = import.meta.env.BASE_URL.replace(/\/$/, "");
   "shellBg": "#0a1628",
   "systemLabel": "#7dd3fc",
   "toolLabel": "#e6c07b"
-}</code></pre>
+}`}</code
+      ></pre>
     </div>
 
     <div class="doc-panel">

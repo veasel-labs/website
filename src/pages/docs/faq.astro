@@ -119,12 +119,12 @@ const basePath = import.meta.env.BASE_URL.replace(/\/$/, "");
         reject it. In the current source, that review says the call has not
         reached its server before the arguments, and a long argument list keeps
         the decision on the first screen. Rejected calls are not retried.
-        Trusted stdio processes default to the server user's permissions.
-        On Linux they may opt into Bubblewrap via{" "}
+        Trusted stdio processes default to the server user's permissions. On
+        Linux they may opt into Bubblewrap via{" "}
         <code>VEASEL_MCP_STDIO_SANDBOX=auto|require</code> when{" "}
         <code>bwrap</code> is available; macOS/Windows MCP stdio stay
-        unsandboxed (unlike approved shell). Veasel does not fetch remote
-        plugin packages or claim full Agent Plugins compatibility.
+        unsandboxed (unlike approved shell). Veasel does not fetch remote plugin
+        packages or claim full Agent Plugins compatibility.
       </p>
     </div>
     <div class="doc-panel faq-panel">

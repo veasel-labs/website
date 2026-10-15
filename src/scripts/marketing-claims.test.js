@@ -32,6 +32,13 @@ describe("Marketing claims stay declarative and honest", () => {
       /cost schedule honesty|Honest dollars|pinned schedule/i,
     );
     assert.match(index, /Builder · SSE · json2|json2/);
+    // Build Board: OpenTUI session client is READY (not EARLY) once Markdown,
+    // $, Diff, themes, and Linux PTY smoke ship — ConPTY stays explicitly open.
+    assert.match(index, /OpenTUI session client[\s\S]*?<small>READY<\/small>/);
+    assert.doesNotMatch(
+      index,
+      /OpenTUI session client[\s\S]*?<small>EARLY<\/small>/,
+    );
     assert.match(index, /Harbor Index/);
     assert.match(index, /No Harbor Index|never invented|without inventing/i);
     assert.doesNotMatch(index, /Harbor Index score of|#\d+ on Harbor/i);
@@ -69,17 +76,29 @@ describe("Marketing claims stay declarative and honest", () => {
     assert.match(benchmarks, /tuiVersionP50|cli\.version\.wall\.medianMs/);
     assert.match(benchmarks, /tuiHelpP50|cli\.help\.wall\.medianMs/);
     assert.match(benchmarks, /tuiPtyP50|ptyConnectedMs\.wall\.medianMs/);
-    assert.match(benchmarks, /Windows ConPTY interactive smoke is still open/);
+    assert.match(
+      benchmarks,
+      /Windows ConPTY interactive\s+smoke is still open/,
+    );
     assert.match(benchmarks, /Not submitted/);
-    assert.doesNotMatch(benchmarks, /Harbor Index score|submitted to Harbor Index/i);
+    assert.doesNotMatch(
+      benchmarks,
+      /Harbor Index score|submitted to Harbor Index/i,
+    );
     const tuiStartup = JSON.parse(
       await readDoc(
         "public/data/benchmarks/tui-startup-linux-x64-2026-10-15.json",
       ),
     );
-    assert.equal(tuiStartup.binaries.tuiVersionLine, "Veasel Code Terminal 0.41.0-next.0");
+    assert.equal(
+      tuiStartup.binaries.tuiVersionLine,
+      "Veasel Code Terminal 0.41.0-next.0",
+    );
     assert.equal(Number(tuiStartup.cli.version.wall.medianMs.toFixed(1)), 41.1);
     assert.equal(Number(tuiStartup.cli.help.wall.medianMs.toFixed(1)), 41.9);
-    assert.equal(Number(tuiStartup.ptyConnectedMs.wall.medianMs.toFixed(1)), 70.0);
+    assert.equal(
+      Number(tuiStartup.ptyConnectedMs.wall.medianMs.toFixed(1)),
+      70.0,
+    );
   });
 });
