@@ -20,6 +20,15 @@ describe("Marketing claims stay declarative and honest", () => {
     assert.match(index, /The new standard/);
     assert.match(index, /one-shot invoke/i);
     assert.match(index, /Graduated/);
+    assert.match(index, /Reviewed shell \+ MCP calls/);
+    assert.match(
+      index,
+      /Reviewed shell \+ MCP calls[\s\S]*?<small>READY<\/small>/,
+    );
+    assert.doesNotMatch(
+      index,
+      /Reviewed shell \+ MCP calls[\s\S]*?<small>PREVIEW<\/small>/,
+    );
     assert.match(index, /DiffRenderable/);
     assert.match(index, /MarkdownRenderable/);
     assert.match(index, /\$skill|\$<\/code> skill/);
