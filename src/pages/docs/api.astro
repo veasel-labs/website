@@ -368,28 +368,44 @@ const basePath = import.meta.env.BASE_URL.replace(/\/$/, "");
     </div>
     <div class="doc-panel">
       <h2>Headless CLI</h2>
-      <p>Run a single turn against the same local server and approval rules:</p>
-      <pre><code>veasel run --prompt "Explain the request flow in this repository" \
-  --workspace . --json</code></pre>
       <p>
-        Prefer <code>veasel serve</code> when another client owns the API. Full
-        OpenAPI contract:{" "}
+        Run a single turn against the same local server. Default policy is{" "}
+        <code>ask</code> (same review gates as the TUI):
+      </p>
+      <pre><code>veasel run --prompt "Explain the request flow in this repository" \
+  --workspace . --json
+
+# sandbox-auto (danger: disposable sandboxes only; server must allow):
+# VEASEL_ALLOW_AUTONOMOUS_EXECUTION=1 veasel serve
+# veasel run --autonomous --prompt "…" --workspace . --json
+</code></pre>
+      <p>
+        HTTP turns accept optional <code>execution_policy</code>:{" "}
+        <code>ask</code> (default), <code>auto-edit</code>, or{" "}
+        <code>sandbox-auto</code> (<code>autonomous: true</code> aliases
+        sandbox-auto). Server gates: <code>VEASEL_ALLOW_AUTO_EDIT=1</code>,{" "}
+        <code>VEASEL_ALLOW_AUTONOMOUS_EXECUTION=1</code>. Prefer{" "}
+        <code>veasel serve</code> when another client owns the API. Full OpenAPI
+        contract:{" "}
         <a href="https://github.com/veasel-labs/veasel/blob/main/docs/openapi.yaml">
           docs/openapi.yaml
         </a>
-        .
+        . Capability discovery lists <code>agent.execution_policy</code> (and{" "}
+        <code>.auto_edit</code> / <code>.sandbox_auto</code> when enabled).
       </p>
     </div>
     <aside class="callout">
-      <strong>Review each effect before approving it.</strong> Session chat can
-      let the configured provider request bounded file listing, reads, and
-      literal search, or propose one text-file replacement. The normal TUI flow
-      opens the saved diff before approval. Veasel checks for file changes since
-      review. Shell commands require a separate review of the exact command,
-      working directory, and timeout; they may wrap in a platform sandbox when
-      available. This loopback API has no application token, so same-user
-      processes can call its review and approval routes too. Requested content
-      and tool output are sent to your provider.
+      <strong>Review each effect unless a gated policy says otherwise.</strong>{" "}
+      Session chat can let the configured provider request bounded file listing,
+      reads, and literal search, or propose one text-file replacement. The
+      normal TUI flow opens the saved diff before approval. Veasel checks for
+      file changes since review. Shell commands require a separate review of the
+      exact command, working directory, and timeout; they may wrap in a platform
+      sandbox when available. Under <code>sandbox-auto</code>, MCP stays denied
+      and shell auto-apply requires a fail-closed OS sandbox. This loopback API
+      has no application token, so same-user processes can call its review and
+      approval routes too. Requested content and tool output are sent to your
+      provider.
     </aside>
     <div class="doc-panel">
       <h2>Resume the event stream</h2>

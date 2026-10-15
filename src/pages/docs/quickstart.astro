@@ -62,7 +62,11 @@ const basePath = import.meta.env.BASE_URL.replace(/\/$/, "");
     <div class="doc-panel">
       <h2>4. Review before effect</h2>
       <p>
-        Proposals do not change the workspace until you inspect and approve:
+        Default policy is <code>ask</code>: proposals do not change the
+        workspace until you inspect and approve. Opt-in{" "}
+        <code>auto-edit</code> / <code>sandbox-auto</code> (server env gates)
+        can auto-apply edits or sandboxed shell — see{" "}
+        <a href={`${basePath}/docs/security/`}>security</a>. Interactive review:
       </p>
       <pre><code>/patches
 /patch show &lt;id&gt;
