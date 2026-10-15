@@ -100,10 +100,12 @@ const basePath = import.meta.env.BASE_URL.replace(/\/$/, "");
         <code>/mcp</code> and <code>/mcp trust plugin/server</code> to trust a
         server for the session. Trust permits a server to connect; each
         model-requested tool call pauses the turn until you inspect its exact
-        arguments with <code>/mcp calls</code> and approve or reject it.
-        Rejected calls are not retried. Trusted stdio processes run with the
-        server user's permissions and have no OS sandbox. Veasel does not
-        install plugins or claim full Agent Plugins compatibility.
+        arguments with <code>/mcp calls</code> and approve or reject it. In the
+        current source, that review says the call has not reached its server
+        before the arguments, and a long argument list keeps the decision on the
+        first screen. Rejected calls are not retried. Trusted stdio processes
+        run with the server user's permissions and have no OS sandbox. Veasel
+        does not install plugins or claim full Agent Plugins compatibility.
       </p>
     </div>
     <div class="doc-panel faq-panel">
