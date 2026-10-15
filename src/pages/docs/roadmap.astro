@@ -104,6 +104,22 @@ const basePath = import.meta.env.BASE_URL.replace(/\/$/, "");
           ✓
         </span>
       </article>
+      <article class="roadmap-item roadmap-done">
+        <span class="roadmap-status">WORKING FOUNDATION</span>
+        <div>
+          <h2>Configured MCP and OAuth PKCE</h2>
+          <p>
+            User/project servers, portable <code>.mcp.json</code> import, named
+            HTTP credentials, and authorization-code + PKCE authorize/complete
+            with optional loopback <code>--listen</code> (prints the URL; no
+            automatic browser launch). Per-session trust and per-call approval
+            still gate every tool effect.
+          </p>
+        </div>
+        <span class="roadmap-symbol" aria-label="Complete">
+          ✓
+        </span>
+      </article>
       <article class="roadmap-item roadmap-active">
         <span class="roadmap-status">IN DEVELOPMENT</span>
         <div>
@@ -111,7 +127,9 @@ const basePath = import.meta.env.BASE_URL.replace(/\/$/, "");
           <p>
             Escape and API cancellation stop queued work and signal active
             provider requests. A request cancelled before its first response
-            chunk still waits for the bounded transport cleanup timeout.
+            chunk still waits for the bounded transport cleanup timeout. MCP
+            transports emit best-effort <code>notifications/cancelled</code> for
+            in-flight requests.
           </p>
         </div>
         <span class="roadmap-symbol" aria-label="In progress">
@@ -123,11 +141,12 @@ const basePath = import.meta.env.BASE_URL.replace(/\/$/, "");
         <div>
           <h2>Agent Plugins compatibility</h2>
           <p>
-            Local Skills and trusted stdio or Streamable HTTP MCP servers are
-            experimental and available per session. Every MCP tool call now
-            pauses for argument review and one-time approval. Managed
-            installation, additional conformance fixtures, and the full Agent
-            Plugins v1.0.0 evidence gate remain in progress.
+            Local Skills, plugin component toggles, and trusted stdio or
+            Streamable HTTP MCP servers are experimental and available per
+            session. Every MCP tool call still pauses for argument review and
+            one-time approval. Managed installation, automatic OAuth browser
+            launch, additional conformance fixtures, and the full Agent Plugins
+            v1.0.0 evidence gate remain in progress.
           </p>
         </div>
         <span class="roadmap-symbol" aria-label="In progress">

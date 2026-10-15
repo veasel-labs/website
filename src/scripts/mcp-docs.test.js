@@ -39,4 +39,11 @@ describe("MCP OAuth and runtime docs honesty", () => {
     assert.match(skills, /veasel skills list/);
     assert.match(faq, /Does MCP OAuth open my browser automatically/);
   });
+
+  it("marks configured MCP OAuth as roadmap foundation, not auto-browser", async () => {
+    const roadmap = await readDoc("src/pages/docs/roadmap.astro");
+    assert.match(roadmap, /Configured MCP and OAuth PKCE/);
+    assert.match(roadmap, /no\s+automatic browser launch/i);
+    assert.match(roadmap, /automatic OAuth browser\s+launch/);
+  });
 });
