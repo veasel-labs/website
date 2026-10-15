@@ -61,8 +61,11 @@ const basePath = import.meta.env.BASE_URL.replace(/\/$/, "");
         A chat message can contain up to 1 MiB (1,048,576 bytes) of text. That
         limit is not Muse's advertised 1,048,576-token context window. Create a
         session by selecting a workspace directory; messages and events are
-        stored locally in SQLite. To run only the local API server for another
-        client, use <code>veasel serve</code>.
+        stored locally in SQLite. On the home screen, <kbd>j</kbd> and
+        <kbd>k</kbd> (or the arrow keys) move the selection and Enter opens it.
+        A list taller than the terminal keeps the selected session on screen and
+        shows its position, such as <code>8/20</code>. To run only the local API
+        server for another client, use <code>veasel serve</code>.
       </p>
     </div>
     <div class="doc-panel">
