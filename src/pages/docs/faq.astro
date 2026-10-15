@@ -65,6 +65,17 @@ const basePath = import.meta.env.BASE_URL.replace(/\/$/, "");
       </p>
     </div>
     <div class="doc-panel faq-panel">
+      <h2>How much text can one message contain?</h2>
+      <p>
+        A submitted conversation is limited to 1 MiB (1,048,576 bytes) of text.
+        That limit is not a model's token window. Veasel does not yet use Muse's
+        advertised 1,048,576-token context window. The output-token budget is
+        filled in when you choose a model; press <kbd>Ctrl+O</kbd> to change it.
+        Zero keeps Veasel's 4,096-token default, except Meta, which leaves the
+        field unset so Meta applies its own limit.
+      </p>
+    </div>
+    <div class="doc-panel faq-panel">
       <h2>Can I use Agent Plugins already?</h2>
       <p>
         Support is experimental. Veasel discovers local packages, lets you
