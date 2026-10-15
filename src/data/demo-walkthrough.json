@@ -149,7 +149,7 @@
           "text": "# Harbor adapter uses veasel run inside Bubblewrap + verified Linux release"
         }
       ],
-      "note": "Harbor Index is not submitted; the local adapter and ATIF validator coverage are documented in harbor.md."
+      "note": "Harbor Index is still Not submitted (auth + human PR + budget blockers on /evals/). A sanitized ATIF smoke sample from the mock-provider path is linked there — plumbing only, not a score."
     }
   ]
 }

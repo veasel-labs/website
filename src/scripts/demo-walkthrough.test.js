@@ -27,5 +27,6 @@ test("demo walkthrough stays a labeled script of authentic commands", async () =
   const joined = JSON.stringify(walkthrough);
   assert.match(joined, /\/mcp add/);
   assert.match(joined, /\/patch approve/);
+  assert.match(joined, /Harbor Index is still Not submitted/i);
   assert.doesNotMatch(joined, /leaderboard score|99%|solved all tasks/i);
 });

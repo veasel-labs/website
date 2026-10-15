@@ -1,5 +1,6 @@
 ---
 import SiteLayout from "../layouts/SiteLayout.astro";
+import atifMeta from "../../public/data/evals/atif-smoke-0.39.0-next.0.meta.json";
 
 const basePath = import.meta.env.BASE_URL.replace(/\/$/, "");
 const harborCommit = "dc933be707feafbb9efcdf092cb8a0e391332617";
@@ -15,6 +16,10 @@ const adapter =
   "https://github.com/veasel-labs/veasel/blob/main/benchmarks/harbor/veasel_agent.py";
 const benchmarking =
   "https://github.com/veasel-labs/veasel/blob/main/docs/benchmarking.md";
+const atifSampleHref = `${basePath}/data/evals/atif-smoke-0.39.0-next.0.json`;
+const atifMetaHref = `${basePath}/data/evals/atif-smoke-0.39.0-next.0.meta.json`;
+const mockProvider =
+  "https://github.com/veasel-labs/veasel/blob/main/scripts/mock-provider.py";
 ---
 
 <SiteLayout
@@ -49,25 +54,30 @@ const benchmarking =
           Veasel is <strong>not</strong> in Harbor’s built-in agent registry and
           has no Index trial set or leaderboard placement. A local{" "}
           <code>BaseInstalledAgent</code> adapter and CI ATIF validation exist;
-          upstream Index work stays open — see the checklist below. This is not
-          a claim of Index support.
+          upstream Index work stays open — see the blockers and prep package
+          below. This is not a claim of Index support.
         </p>
       </div>
     </aside>
 
     <aside class="compatibility-banner" role="note">
       <span class="compatibility-mark" aria-hidden="true">
-        ⌀
+        ✳
       </span>
       <div>
-        <strong>No public ATIF sample artifact yet</strong>
+        <strong>Public ATIF smoke sample (sanitized)</strong>
         <p>
-          Linux CI generates <code>benchmark-results/atif-smoke.json</code> from
-          the API smoke path, validates it with Harbor <code>0.24.0</code>’s
-          trajectory validator, then discards it. The file is{" "}
-          <strong>not</strong> uploaded as a GitHub Actions artifact because
-          traces can contain workspace content. When a sanitized public sample
-          is published, it will be linked here with commit and method.
+          A real four-step <code>ATIF-v1.8</code> trajectory from Veasel{" "}
+          <code>{atifMeta.veasel_version}</code> + the deterministic{" "}
+          <a href={mockProvider}>mock-provider</a> path (same contract Linux CI
+          validates, then discards). Harbor <code>0.24.0</code> validator passed
+          locally. This is <strong>plumbing only</strong> — not an Index trial
+          and not a capability score.{" "}
+          <a href={atifSampleHref}>Download sample JSON</a>
+          {" · "}
+          <a href={atifMetaHref}>Provenance</a>
+          {" · "}
+          SHA-256 <code>{atifMeta.sha256.slice(0, 16)}…</code>
         </p>
       </div>
     </aside>
@@ -93,7 +103,9 @@ const benchmarking =
         <li>
           Uploaded CI artifacts include platform binaries,{" "}
           <code>benchmark-session-store</code>, and Trivy results —{" "}
-          <strong>not</strong> ATIF JSON.
+          <strong>not</strong> ATIF JSON (CI still discards the raw smoke
+          trace). The public sample above is a separately regenerated,
+          path-scrubbed copy of that same deterministic path.
         </li>
       </ul>
       <p>
@@ -104,19 +116,22 @@ const benchmarking =
     </div>
 
     <div class="doc-panel">
-      <h2>Recorded-session placeholder</h2>
+      <h2>Recorded session path</h2>
       <p>
-        There is no asciinema, screen capture, or published trajectory on this
-        site yet. Until one exists:
+        There is still no asciinema or screen capture. What you can inspect
+        today:
       </p>
       <ul class="guide-list">
         <li>
-          Use the interactive{" "}
-          <a href={`${basePath}/demo/`}>product walkthrough</a> (labeled script
-          of shipped commands — not a live model run).
+          <a href={atifSampleHref}>Sanitized ATIF smoke JSON</a> (download) with{" "}
+          <a href={atifMetaHref}>method + SHA-256</a>.
         </li>
         <li>
-          Reproduce Harbor smoke locally with{" "}
+          Interactive <a href={`${basePath}/demo/`}>product walkthrough</a>{" "}
+          (labeled script of shipped commands — not a live model run).
+        </li>
+        <li>
+          Full Harbor installed-agent smoke locally with{" "}
           <a href={smokeReadme}>
             <code>benchmarks/harbor/smoke-task</code>
           </a>{" "}
@@ -130,13 +145,80 @@ VEASEL_VERSION=0.39.0-next.0 benchmarks/harbor/smoke.sh
     </div>
 
     <div class="doc-panel">
-      <h2>Harbor Index — submission draft (prep only)</h2>
+      <h2>Harbor Index — blockers (evidence)</h2>
       <p>
-        Status remains <strong>Not submitted</strong> (banner above). The
-        checklist tracks prep only: a future human-authored upstream
-        discussion/PR — not Index placement, not a built-in Harbor agent, and
-        not a leaderboard claim.
+        Index submission was <strong>not</strong> performed from this
+        workstation. Exact blockers checked 2026-10-15:
       </p>
+      <ol class="guide-list evals-checklist">
+        <li>
+          <span class="evals-check open">Block</span>{" "}
+          <code>harbor auth status</code> → <strong>Not authenticated</strong>.
+          Hub upload / leaderboard flows need interactive{" "}
+          <code>harbor auth login</code> (GitHub OAuth) or a stored{" "}
+          <code>HARBOR_API_KEY</code> / <code>~/.harbor/credentials.json</code>.
+          Neither is available in this agent environment.
+        </li>
+        <li>
+          <span class="evals-check open">Block</span> No authorized budget or
+          org approval for an 80-task Harbor Index trial set (paid model calls +
+          Hub job upload). Policy: no unpaid leaderboard claims.
+        </li>
+        <li>
+          <span class="evals-check open">Block</span> Harbor contribution policy
+          requires a <strong>human-authored</strong> initial and final upstream
+          PR draft for built-in agent registry changes. An automated agent must
+          not open that PR.
+        </li>
+      </ol>
+    </div>
+
+    <div class="doc-panel">
+      <h2>Harbor Index — strongest prep package (not a submission)</h2>
+      <p>
+        Status remains <strong>Not submitted</strong>. Package contents for a
+        future human maintainer — not Index placement:
+      </p>
+      <ul class="guide-list">
+        <li>
+          <strong>Adapter:</strong>{" "}
+          <a href={adapter}>
+            <code>benchmarks/harbor/veasel_agent.py</code>
+          </a>{" "}
+          (<code>BaseInstalledAgent</code>, Harbor <code>0.24.0</code> @{" "}
+          <code>{harborCommit.slice(0, 12)}</code>).
+        </li>
+        <li>
+          <strong>Deterministic plumbing trial:</strong>{" "}
+          <a href={smokeReadme}>
+            <code>benchmarks/harbor/smoke-task</code>
+          </a>{" "}
+          via{" "}
+          <code>VEASEL_VERSION=0.39.0-next.0 benchmarks/harbor/smoke.sh</code>{" "}
+          (fixture model; reward plumbing only — not an Index score).
+        </li>
+        <li>
+          <strong>Public ATIF evidence:</strong>{" "}
+          <a href={atifSampleHref}>atif-smoke-0.39.0-next.0.json</a> validated
+          with Harbor’s trajectory models.
+        </li>
+        <li>
+          <strong>
+            Contribution PR draft (outline only — human must write):
+          </strong>{" "}
+          propose registering a custom installed agent that downloads the
+          verified Linux release, maps Harbor providers honestly, writes ATIF to
+          the agent log path, and documents autonomous opt-in + Bubblewrap
+          requirements. Open a design discussion before interface changes per
+          Harbor policy.
+        </li>
+        <li>
+          <strong>Index trial set (not started):</strong> pin Harbor Index
+          dataset digest + agent image + model/provider + env revisions; run
+          under authenticated Hub org with recorded uncertainty — only after
+          budget + human PR path clear.
+        </li>
+      </ul>
       <ol class="guide-list evals-checklist">
         <li>
           <span class="evals-check done">Done</span> Local{" "}
@@ -152,6 +234,10 @@ VEASEL_VERSION=0.39.0-next.0 benchmarks/harbor/smoke.sh
           (fixture model; not a coding benchmark).
         </li>
         <li>
+          <span class="evals-check done">Done</span> Sanitized public ATIF smoke
+          sample linked above with provenance.
+        </li>
+        <li>
           <span class="evals-check open">Open</span> Discuss interface/core
           changes with Harbor maintainers per their contribution policy.
         </li>
@@ -163,10 +249,6 @@ VEASEL_VERSION=0.39.0-next.0 benchmarks/harbor/smoke.sh
           <span class="evals-check open">Open</span> Authorized Index trial set
           with recorded dataset/agent/model/env revisions — no unpaid
           leaderboard claims.
-        </li>
-        <li>
-          <span class="evals-check open">Open</span> Sanitized public ATIF (or
-          redacted excerpt) linked from this page with provenance.
         </li>
       </ol>
     </div>
