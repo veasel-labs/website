@@ -78,9 +78,11 @@ const basePath = import.meta.env.BASE_URL.replace(/\/$/, "");
         Diff reviews lead with add/remove line counts. Shell reviews show the
         exact command, working directory, timeout, and whether a platform
         sandbox will wrap the process. MCP needs per-session trust plus per-call
-        argument review (user/project config or portable <code>.mcp.json</code>{" "}
-        — see the <a href={`${basePath}/docs/mcp/`}>MCP guide</a>
-        ). Interrupted or rejected work is not replayed automatically.
+        argument review (user/project config or portable <code>.mcp.json</code>
+        ). For Streamable HTTP auth, use named credentials or{" "}
+        <code>veasel mcp oauth</code> (prints the authorize URL — see the{" "}
+        <a href={`${basePath}/docs/mcp/`}>MCP guide</a>). Interrupted or
+        rejected work is not replayed automatically.
       </p>
     </div>
 

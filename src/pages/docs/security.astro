@@ -76,8 +76,10 @@ const basePath = import.meta.env.BASE_URL.replace(/\/$/, "");
           servers persist via <code>/mcp add</code> /{" "}
           <code>/v1/mcp-servers</code> (user or project scope; portable{" "}
           <code>.mcp.json</code> import is read-only — see the{" "}
-          <a href={`${basePath}/docs/mcp/`}>MCP guide</a>). Stdio MCP is not OS
-          sandboxed. Streamable HTTP refuses redirects and validates TLS.
+          <a href={`${basePath}/docs/mcp/`}>MCP guide</a>). Named credentials
+          and OAuth tokens live under <code>$VEASEL_DATA_DIR</code>; API/CLI
+          responses never return secret values. Stdio MCP is not OS sandboxed.
+          Streamable HTTP refuses redirects and validates TLS.
         </li>
       </ul>
     </div>
