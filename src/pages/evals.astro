@@ -44,6 +44,22 @@ const benchmarking =
         ⌀
       </span>
       <div>
+        <strong>Harbor Index: Not submitted</strong>
+        <p>
+          Veasel is <strong>not</strong> in Harbor’s built-in agent registry and
+          has no Index trial set or leaderboard placement. A local{" "}
+          <code>BaseInstalledAgent</code> adapter and CI ATIF validation exist;
+          upstream Index work stays open — see the checklist below. This is not
+          a claim of Index support.
+        </p>
+      </div>
+    </aside>
+
+    <aside class="compatibility-banner" role="note">
+      <span class="compatibility-mark" aria-hidden="true">
+        ⌀
+      </span>
+      <div>
         <strong>No public ATIF sample artifact yet</strong>
         <p>
           Linux CI generates <code>benchmark-results/atif-smoke.json</code> from
@@ -116,9 +132,10 @@ VEASEL_VERSION=0.39.0-next.0 benchmarks/harbor/smoke.sh
     <div class="doc-panel">
       <h2>Harbor Index — submission draft (prep only)</h2>
       <p>
-        Status: <strong>Not submitted</strong>. Veasel is not in Harbor’s
-        built-in registry. The checklist below is for a future human-authored
-        upstream discussion/PR — not a claim of Index placement.
+        Status remains <strong>Not submitted</strong> (banner above). The
+        checklist tracks prep only: a future human-authored upstream
+        discussion/PR — not Index placement, not a built-in Harbor agent, and
+        not a leaderboard claim.
       </p>
       <ol class="guide-list evals-checklist">
         <li>
