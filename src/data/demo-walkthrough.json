@@ -1,0 +1,155 @@
+{
+  "label": "Guided walkthrough",
+  "disclaimer": "This is an interactive script of shipped product commands — not a live Veasel session, not a recorded model run, and not a benchmark. Every line matches the current field guide and runtime docs.",
+  "steps": [
+    {
+      "id": "install",
+      "title": "Install a verified preview",
+      "kicker": "01 · DOWNLOAD",
+      "summary": "Grab a checksummed archive or a package manager build that tracks the same tag.",
+      "prompt": "Get Veasel onto PATH without inventing a release.",
+      "lines": [
+        {
+          "kind": "comment",
+          "text": "# Verify SHA-256 before you run (downloads page links SHA256SUMS)"
+        },
+        { "kind": "command", "text": "veasel --version" },
+        { "kind": "output", "text": "veasel 0.38.0-next.0" },
+        { "kind": "command", "text": "veasel" },
+        {
+          "kind": "output",
+          "text": "# starts or reuses 127.0.0.1:4097, then opens the TUI"
+        }
+      ],
+      "note": "Homebrew and AUR install the same verified archives listed on Downloads."
+    },
+    {
+      "id": "connect",
+      "title": "Connect a provider",
+      "kicker": "02 · /CONNECT",
+      "summary": "Paste a key once, pick a model, keep credentials local.",
+      "prompt": "Authenticate without sending keys back through the API.",
+      "lines": [
+        { "kind": "command", "text": "/connect" },
+        {
+          "kind": "output",
+          "text": "Paste API key → discover models → choose one"
+        },
+        { "kind": "command", "text": "/models" },
+        {
+          "kind": "output",
+          "text": "Ctrl+U endpoint · Ctrl+O output budget · keys never re-shown"
+        }
+      ],
+      "note": "Profiles live in $VEASEL_DATA_DIR/model-settings.json (owner-only on POSIX)."
+    },
+    {
+      "id": "session",
+      "title": "Open a workspace session",
+      "kicker": "03 · SESSIONS",
+      "summary": "Bind a session to a real directory; history stays in local SQLite.",
+      "prompt": "Ask about the repo with bounded list/read/search tools.",
+      "lines": [
+        {
+          "kind": "output",
+          "text": "Home · j/k move · Enter open · n new when empty"
+        },
+        {
+          "kind": "user",
+          "text": "Where do we configure the loopback API port?"
+        },
+        {
+          "kind": "agent",
+          "text": "I’ll search the workspace, then cite the matching files."
+        },
+        {
+          "kind": "tool",
+          "text": "workspace.search \"4097\" → pending review of results in context"
+        }
+      ],
+      "note": "Tool excerpts may be sent to your configured provider — local storage is not local inference."
+    },
+    {
+      "id": "review-edit",
+      "title": "Review a file edit",
+      "kicker": "04 · /PATCHES",
+      "summary": "Edits are proposals until you inspect and approve.",
+      "prompt": "Nothing lands on disk until approve.",
+      "lines": [
+        { "kind": "output", "text": "Change ready · src/config.v · +6 −2" },
+        { "kind": "command", "text": "/patches" },
+        { "kind": "command", "text": "/patch show <id>" },
+        { "kind": "command", "text": "/patch approve <id>" },
+        {
+          "kind": "output",
+          "text": "# rejected or interrupted edits are not replayed"
+        }
+      ],
+      "note": "Diff reviews lead with add/remove counts and keep the decision on the first screen."
+    },
+    {
+      "id": "review-shell",
+      "title": "Approve a shell command",
+      "kicker": "05 · /COMMANDS",
+      "summary": "Shell shows the exact command, cwd, timeout, and sandbox wrap.",
+      "prompt": "Authorize one command — not a blank check.",
+      "lines": [
+        { "kind": "command", "text": "/commands" },
+        { "kind": "command", "text": "/command show <id>" },
+        {
+          "kind": "output",
+          "text": "cwd ~/project · timeout 60s · sandbox bubblewrap (when available)"
+        },
+        { "kind": "command", "text": "/command approve <id>" }
+      ],
+      "note": "Platform sandboxes are defense-in-depth; approval remains the authorization gate."
+    },
+    {
+      "id": "mcp",
+      "title": "Add and approve MCP",
+      "kicker": "06 · /MCP",
+      "summary": "User or project scope, portable .mcp.json import, then trust + per-call approval.",
+      "prompt": "Tools stay visible — every call pauses.",
+      "lines": [
+        {
+          "kind": "command",
+          "text": "/mcp add stdio memory npx -y @modelcontextprotocol/server-memory"
+        },
+        {
+          "kind": "command",
+          "text": "/mcp add project http docs https://mcp.example.com/mcp"
+        },
+        {
+          "kind": "comment",
+          "text": "# or drop workspace .mcp.json / .cursor/mcp.json (read-only import)"
+        },
+        { "kind": "command", "text": "/mcp trust configured/memory" },
+        { "kind": "command", "text": "/mcp call show <id>" },
+        { "kind": "command", "text": "/mcp call approve <id>" }
+      ],
+      "note": "Configured MCP shipped after v0.38.0-next.0 on main — package managers sync when the next verified prerelease publishes."
+    },
+    {
+      "id": "headless",
+      "title": "Run headless when you need a script",
+      "kicker": "07 · VEASEL RUN",
+      "summary": "Same approvals and API — machine-readable JSON for automation.",
+      "prompt": "Keep the harness honest: no invented scores.",
+      "lines": [
+        {
+          "kind": "command",
+          "text": "veasel run --prompt \"List the top-level modules\" --workspace . --json"
+        },
+        {
+          "kind": "output",
+          "text": "{\"ok\":true,\"session_id\":\"…\",\"usage_reported\":true}"
+        },
+        {
+          "kind": "comment",
+          "text": "# Harbor adapter uses veasel run inside Bubblewrap + verified Linux release"
+        }
+      ],
+      "note": "Harbor Index is not submitted; the local adapter and ATIF validator coverage are documented in harbor.md."
+    }
+  ]
+}

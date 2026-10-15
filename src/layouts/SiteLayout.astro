@@ -14,6 +14,7 @@ const canonicalUrl = Astro.site
   : undefined;
 const links = [
   { href: "/", label: "Overview" },
+  { href: "/demo/", label: "Demo" },
   { href: "/docs/", label: "Docs" },
   { href: "/benchmarks/", label: "Benchmarks" },
   { href: "/downloads/", label: "Downloads" },
@@ -22,6 +23,9 @@ const links = [
 function navCurrent(href: string, path: string) {
   if (href === "/docs/") {
     return path === "/docs/" || path.startsWith("/docs/");
+  }
+  if (href === "/demo/") {
+    return path === "/demo/" || path.startsWith("/demo/");
   }
   return path === href;
 }
