@@ -19,7 +19,7 @@
         },
         {
           "kind": "output",
-          "text": "Veasel Code 0.40.0-next.0"
+          "text": "Veasel Code 0.41.0-next.0"
         },
         {
           "kind": "command",
@@ -172,7 +172,7 @@
           "text": "/mcp call approve <id>"
         }
       ],
-      "note": "Configured MCP, named credentials, and OAuth PKCE ship in v0.40.0-next.0 archives and package-manager installs."
+      "note": "Configured MCP, named credentials, and OAuth PKCE ship in v0.41.0-next.0 archives and package-manager installs."
     },
     {
       "id": "headless",

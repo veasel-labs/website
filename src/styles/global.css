@@ -1564,11 +1564,39 @@ p {
   gap: 12px 24px;
 }
 .text-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35em;
+  max-width: 100%;
   color: var(--green-dark);
   font-size: 0.77rem;
   font-weight: 700;
   text-decoration-thickness: 1px;
   text-underline-offset: 3px;
+}
+/* Keep arrow glyphs with their label; prevent sibling smash when HTML
+   whitespace is collapsed between adjacent <a> tags. */
+.text-link span[aria-hidden="true"],
+.text-link > span:last-child {
+  flex: 0 0 auto;
+}
+.button + .text-link,
+.text-link + .text-link,
+.button + .button {
+  margin-inline-start: 1rem;
+}
+.doc-next .text-link,
+.demo-links .text-link,
+.hero-actions .button,
+.start-actions .button,
+.start-actions .text-link {
+  margin-inline-start: 0;
+}
+.start-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px 18px;
 }
 .compatibility-banner {
   display: grid;
