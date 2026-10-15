@@ -53,6 +53,11 @@ const basePath = import.meta.env.BASE_URL.replace(/\/$/, "");
           sticks to the latest reply while streaming.
         </li>
         <li>
+          <strong>Multiline drafts:</strong> <kbd>Enter</kbd> submits.{" "}
+          <kbd>Shift+Enter</kbd>, <kbd>Ctrl+J</kbd>, <kbd>Ctrl+Enter</kbd>, or{" "}
+          <kbd>Alt+Enter</kbd> insert a newline (OpenTUI <code>Textarea</code>).
+        </li>
+        <li>
           Readline edits: <kbd>Ctrl+A</kbd> / <kbd>Ctrl+E</kbd> ends,{" "}
           <kbd>Ctrl+←</kbd> / <kbd>Ctrl+→</kbd> or <kbd>Alt+B</kbd> /{" "}
           <kbd>Alt+F</kbd> by word, <kbd>Ctrl+U</kbd> clear draft,{" "}
@@ -65,6 +70,12 @@ const basePath = import.meta.env.BASE_URL.replace(/\/$/, "");
           <kbd>Ctrl+Y</kbd> copies the latest assistant reply (OSC 52). Esc
           dismisses a notice or review first; a second Esc returns home. Esc
           also cancels an in-flight turn — it never clears the composer.
+        </li>
+        <li>
+          Transcript chrome tones fenced-code language tags, blockquotes, and
+          muted diff context separately; add/remove diff lines use bold chrome.
+          Truncated review summaries say how many lines remain (and{" "}
+          <code>{"}"}</code> when more hunks exist).
         </li>
         <li>
           Status uses ● idle, ◌ busy, ▲ attention, and ✖ error. Idle shows the
@@ -137,10 +148,30 @@ const basePath = import.meta.env.BASE_URL.replace(/\/$/, "");
 /usage</code></pre>
       <p>
         File edits, shell, and MCP never take effect until you inspect and
-        approve. Empty-composer review hotkeys include Space multi-select, a/x
-        for the selection, Shift+A / Shift+X for all pending of that kind, and
-        Ctrl+R for the first pending list. Configured MCP persists in user{" "}
-        <code>mcp-servers.json</code> or project{" "}
+        approve. After <code>/patch show</code> (or shell/MCP review) with an
+        empty composer:
+      </p>
+      <ul class="guide-list">
+        <li>
+          <kbd>Space</kbd> multi-select · <kbd>a</kbd> / <kbd>x</kbd> approve or
+          reject the selection (or current item)
+        </li>
+        <li>
+          <kbd>Shift+A</kbd> / <kbd>Shift+X</kbd> approve or reject all pending
+          of that kind
+        </li>
+        <li>
+          <kbd>{"{"}</kbd> / <kbd>{"}"}</kbd> move between diff hunks ·{" "}
+          <kbd>]</kbd> / <kbd>[</kbd> or <kbd>n</kbd> / <kbd>p</kbd> move
+          between pending reviews
+        </li>
+        <li>
+          <kbd>Ctrl+R</kbd> opens the first pending review list (patches,
+          commands, or MCP calls)
+        </li>
+      </ul>
+      <p>
+        Configured MCP persists in user <code>mcp-servers.json</code> or project{" "}
         <code>.veasel/mcp-servers.json</code>; workspace <code>.mcp.json</code>{" "}
         imports read-only. Trust is still per-session. OAuth token values are
         never shown in the TUI — prefer headless{" "}
