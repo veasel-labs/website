@@ -96,11 +96,15 @@ const basePath = import.meta.env.BASE_URL.replace(/\/$/, "");
           redirects and validates TLS.
         </li>
         <li>
-          <strong>MCP stdio is not OS sandboxed.</strong> Approved shell may
-          wrap with Bubblewrap / Seatbelt / AppContainer+Job; trusted MCP
-          processes still run with the Veasel OS user and inherited environment.
-          Do not treat a shell sandbox review as covering MCP. OAuth PKCE is
-          available for Streamable HTTP only — it does not contain stdio.
+          <strong>MCP stdio containment.</strong> Default is unsandboxed (full
+          Veasel OS user). On Linux, trusted stdio may wrap in Bubblewrap when{" "}
+          <code>VEASEL_MCP_STDIO_SANDBOX</code> is <code>auto</code> or{" "}
+          <code>require</code> and <code>bwrap</code> is available (capability{" "}
+          <code>mcp.stdio.sandbox.bubblewrap</code>); missing <code>bwrap</code>{" "}
+          under auto falls back honestly; require fails closed. Network is
+          shared inside that wrap. macOS/Windows MCP stdio stay unsandboxed. Do
+          not treat a shell-sandbox review as covering MCP. OAuth PKCE is for
+          Streamable HTTP only — it does not contain stdio.
         </li>
       </ul>
     </div>
