@@ -144,8 +144,9 @@ const reportDate = new Date(startupReport.generated_at).toLocaleDateString(
             <h3>Harbor Index</h3>
             <p>
               A local installed-agent adapter exists (Harbor 0.24.0 contract,
-              Bubblewrap + verified Linux release). No Index trial set or
-              upstream registry submission yet — see{" "}
+              Bubblewrap + verified Linux release, ATIF validation in CI). No
+              Index trial set, leaderboard score, or upstream registry
+              submission — see{" "}
               <a href="https://github.com/veasel-labs/veasel/blob/main/docs/compatibility/harbor.md">
                 harbor.md
               </a>
@@ -180,6 +181,39 @@ const reportDate = new Date(startupReport.generated_at).toLocaleDateString(
         href="https://github.com/veasel-labs/veasel/tree/main/benchmarks"
       >
         Inspect the runner and methodology <span aria-hidden="true">↗</span>
+      </a>
+    </section>
+
+    <section class="bench-method" aria-labelledby="harbor-prep-title">
+      <p class="bench-label">HARBOR INDEX · PREP ONLY</p>
+      <h2 id="harbor-prep-title">What exists before any submission.</h2>
+      <ul class="guide-list">
+        <li>
+          Local adapter: <code>benchmarks/harbor/veasel_agent.py</code> (
+          <code>BaseInstalledAgent</code>).
+        </li>
+        <li>
+          Pin: Harbor <code>0.24.0</code> at commit{" "}
+          <code>dc933be707feafbb9efcdf092cb8a0e391332617</code>.
+        </li>
+        <li>
+          CI validates an ATIF trajectory with Harbor’s own validator; traces
+          are not published as public artifacts (may contain workspace content).
+        </li>
+        <li>
+          Harbor’s contribution policy requires discussing interface changes and
+          human-authored PR drafts before upstream registry work.
+        </li>
+        <li>
+          <strong>Not done:</strong> Index trial set, paid/authorized
+          leaderboard runs, or a claim of built-in Harbor agent support.
+        </li>
+      </ul>
+      <a
+        class="text-link"
+        href="https://github.com/veasel-labs/veasel/blob/main/docs/compatibility/harbor.md"
+      >
+        Read the Harbor compatibility note <span aria-hidden="true">↗</span>
       </a>
     </section>
   </section>
