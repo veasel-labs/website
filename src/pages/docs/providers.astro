@@ -218,13 +218,15 @@ veasel</code></pre>
       </div>
       <h3>Model selection</h3>
       <p>
-        When a saved profile or environment variable already supplies provider
-        credentials, Settings can fetch that endpoint's model list. This is a
-        model-list request, not a generation request. If credentials are not
-        configured yet, the endpoint does not support listing, or the request
-        fails, enter a model ID manually. The selected provider, model,
-        endpoint, and key can all be configured from Settings; API keys are
-        never returned by the settings API. See the{" "}
+        Settings requests the provider's model list before the profile is saved.
+        It uses the key typed in this session, a saved profile, or the
+        provider's environment variable. This is a model-list request, not a
+        generation request. If the endpoint does not support listing or the
+        request fails, enter a model ID manually. The next step sets the
+        output-token budget from 16 to 131,072 tokens; 0 selects Veasel's
+        4,096-token default, except Meta, which omits{" "}
+        <code>max_output_tokens</code>. API keys are never returned by the
+        settings API. See the{" "}
         <a href={`${basePath}/docs/api/`}>model-list endpoint</a> for its
         contract.
       </p>
@@ -233,10 +235,12 @@ veasel</code></pre>
       <h2>Choose a provider in Veasel</h2>
       <p>
         Press <kbd>s</kbd> on the home screen or enter <code>/models</code> in
-        an open session. Enter the provider ID, model ID, API base URL, and key.
-        Veasel keeps a separate profile for each provider. Leave the key blank
-        to keep the saved value, or enter <code>!clear</code> to remove it. Keys
-        are never shown again in the TUI or returned by the API.
+        an open session. Search the catalog and choose a provider. A known
+        endpoint is filled in; <kbd>Ctrl+U</kbd> replaces it. Enter a key only
+        when the provider requires one. Veasel keeps a separate profile for each
+        provider. Leave the key blank to keep the saved value, or enter{" "}
+        <code>!clear</code> to remove it. Keys are never shown again in the TUI
+        or returned by the API.
       </p>
       <p>
         Profiles live in <code>$VEASEL_DATA_DIR/model-settings.json</code>; on

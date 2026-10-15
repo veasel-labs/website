@@ -104,7 +104,8 @@ const basePath = import.meta.env.BASE_URL.replace(/\/$/, "");
         Download the build for your platform from the
         <a href={`${basePath}/downloads/`}>downloads page</a>. Veasel starts its
         local server when needed and opens the TUI. Press <kbd>s</kbd> on the
-        home screen to configure a provider, model, endpoint, and API key. The
+        home screen, choose a provider, and continue. A known endpoint is filled
+        in, and an API key is requested only when that provider needs one. The
         server listens on <code>127.0.0.1:4097</code> by default.
       </p>
     </div>
@@ -113,8 +114,9 @@ const basePath = import.meta.env.BASE_URL.replace(/\/$/, "");
       <pre><code>veasel</code></pre>
       <p>
         Press <kbd>s</kbd> on the home screen or enter <code>/models</code>
-        in a session. Veasel saves a separate profile for each provider; local
-        model presets do not need an API key by default.
+        in a session. Veasel discovers the provider's models, then asks for an
+        output-token budget. Local presets do not need an API key. Each provider
+        keeps its own profile.
       </p>
     </div>
     <p class="callout">
