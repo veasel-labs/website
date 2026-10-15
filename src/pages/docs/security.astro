@@ -64,20 +64,20 @@ const basePath = import.meta.env.BASE_URL.replace(/\/$/, "");
           during traversal, and enforce limits.
         </li>
         <li>
-          Default <code>execution_policy</code> is <code>ask</code>: file
-          edits, shell, and MCP require inspect-then-approve. Application
-          verifies the reviewed file snapshot before atomic write.
+          Default <code>execution_policy</code> is <code>ask</code>: file edits,
+          shell, and MCP require inspect-then-approve. Application verifies the
+          reviewed file snapshot before atomic write.
         </li>
         <li>
           Graduated policies (server-gated): <code>auto-edit</code> applies
-          in-root edits immediately when{" "}
-          <code>VEASEL_ALLOW_AUTO_EDIT=1</code> (shell/MCP still ask, or deny
-          when non-interactive); <code>sandbox-auto</code> (alias{" "}
-          <code>autonomous: true</code>) auto-applies edits and sandboxed shell
-          only when <code>VEASEL_ALLOW_AUTONOMOUS_EXECUTION=1</code> and a
-          platform sandbox can wrap — MCP stays denied. Capabilities:{" "}
-          <code>agent.execution_policy</code>,{" "}
-          <code>.auto_edit</code>, <code>.sandbox_auto</code>.
+          in-root edits immediately when <code>VEASEL_ALLOW_AUTO_EDIT=1</code>{" "}
+          (shell/MCP still ask, or deny when non-interactive);{" "}
+          <code>sandbox-auto</code> (alias <code>autonomous: true</code>)
+          auto-applies edits and sandboxed shell only when{" "}
+          <code>VEASEL_ALLOW_AUTONOMOUS_EXECUTION=1</code> and a platform
+          sandbox can wrap — MCP stays denied. Capabilities:{" "}
+          <code>agent.execution_policy</code>, <code>.auto_edit</code>,{" "}
+          <code>.sandbox_auto</code>.
         </li>
         <li>
           Approved shell can wrap with platform sandboxes (see below). Under{" "}
