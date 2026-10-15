@@ -1,24 +1,43 @@
 ---
 import DocsLayout from "../../layouts/DocsLayout.astro";
+import verifiedRelease from "../../data/verified-release.json";
 
 const basePath = import.meta.env.BASE_URL.replace(/\/$/, "");
+const release = verifiedRelease.tag;
 ---
 
 <DocsLayout
   title="Documentation"
-  description="Install, connect, and operate Veasel Code — local-first coding agent with approvals, providers, skills, and a loopback API."
+  description="Adopt Veasel Code — the local coding-agent standard: install, connect, skills, MCP, sandboxes, TUI, and the loopback API."
 >
   <section class="doc-page">
     <p class="kicker">FIELD GUIDE</p>
     <h1>
-      Adopt Veasel in
+      The standard,
       <br />
-      <em>a few clear steps.</em>
+      <em>documented.</em>
     </h1>
     <p class="lede">
-      Everything you need to evaluate or run the current preview: install,
-      connect a model, review work, and understand what stays local.
+      Install the verified prerelease <code>{release}</code>, connect a model,
+      and operate every surface that already ships — skills, sandboxes, MCP,
+      compaction, and a keyboard-first TUI — without invented benchmark claims.
     </p>
+
+    <div class="compatibility-banner">
+      <span class="compatibility-mark" aria-hidden="true">
+        ✳
+      </span>
+      <div>
+        <strong>Product claims, tied to code</strong>
+        <p>
+          Universal skills discovery and one-shot invoke · graduated execution
+          policy · shell + opt-in MCP stdio sandboxes on Linux/macOS/Windows ·
+          compaction, repo map, prompt-cache accounting, parallel reads, durable
+          jobs · cost schedule honesty · OAuth refresh · DiffRenderable TUI.
+          Agent Plugins remain experimental (partial v1.0.0).
+        </p>
+      </div>
+    </div>
 
     <nav class="guide-grid" aria-label="Documentation paths">
       <a
@@ -45,7 +64,10 @@ const basePath = import.meta.env.BASE_URL.replace(/\/$/, "");
       <a class="guide-card" href={`${basePath}/docs/tui/`}>
         <span class="guide-card-mark">03</span>
         <h2>Terminal UI</h2>
-        <p>Themes, slash commands, usage, and keyboard flow.</p>
+        <p>
+          Multiline, DiffRenderable, themes, <code>@</code> paths, reduced
+          motion, a11y cues.
+        </p>
         <span class="guide-card-link">
           TUI <span aria-hidden="true">→</span>
         </span>
@@ -62,7 +84,7 @@ const basePath = import.meta.env.BASE_URL.replace(/\/$/, "");
         <span class="guide-card-mark">✳</span>
         <h2>Skills & plugins</h2>
         <p>
-          Discover SKILL.md roots, <code>veasel skills list</code>, and
+          Universal <code>SKILL.md</code> discovery, trust, one-shot invoke,
           component toggles.
         </p>
         <span class="guide-card-link">
@@ -73,8 +95,8 @@ const basePath = import.meta.env.BASE_URL.replace(/\/$/, "");
         <span class="guide-card-mark">⌘</span>
         <h2>MCP servers</h2>
         <p>
-          Configured servers, named credentials, OAuth PKCE, trust, and per-call
-          approval.
+          Configured servers, credentials, OAuth PKCE + refresh, trust, and
+          per-call approval.
         </p>
         <span class="guide-card-link">
           MCP <span aria-hidden="true">→</span>
@@ -84,7 +106,8 @@ const basePath = import.meta.env.BASE_URL.replace(/\/$/, "");
         <span class="guide-card-mark">☷</span>
         <h2>Sessions & context</h2>
         <p>
-          SQLite history, repository map, compaction, worktrees, async turns.
+          Compaction, repo map, prompt cache, parallel reads, durable async
+          turns.
         </p>
         <span class="guide-card-link">
           Sessions <span aria-hidden="true">→</span>
@@ -104,7 +127,7 @@ const basePath = import.meta.env.BASE_URL.replace(/\/$/, "");
       <a class="guide-card" href={`${basePath}/docs/security/`}>
         <span class="guide-card-mark">⌂</span>
         <h2>Security</h2>
-        <p>Approvals, sandboxes by platform, and data flow.</p>
+        <p>Graduated policy, three-OS sandboxes, and data flow.</p>
         <span class="guide-card-link">
           Security <span aria-hidden="true">→</span>
         </span>
@@ -126,7 +149,8 @@ const basePath = import.meta.env.BASE_URL.replace(/\/$/, "");
 /connect          # paste key → pick model
 # open a workspace session, then ask a question
 /patches          # when an edit is proposed
-/commands         # when a shell proposal appears</code></pre>
+/commands         # when a shell proposal appears
+/mcp · /skills    # when tools or skills enter the loop</code></pre>
       <p>
         Default API: <code>127.0.0.1:4097</code>. For API-only:{" "}
         <code>veasel serve</code>. Headless:{" "}
@@ -135,28 +159,36 @@ const basePath = import.meta.env.BASE_URL.replace(/\/$/, "");
     </div>
 
     <div class="doc-panel">
-      <h2>What ships today (honest)</h2>
+      <h2>What the standard includes today</h2>
       <ul class="guide-list">
-        <li>Loopback V server, SQLite sessions, OpenTUI client with themes</li>
         <li>
-          Multi-provider chat, bounded workspace tools, review-gated edits /
-          shell / MCP
+          Loopback V server, SQLite sessions, OpenTUI client with multiline
+          composer, DiffRenderable reviews, themes, and reduced-motion support
         </li>
         <li>
-          Skills discovery, repository map, adaptive compaction, durable async
-          turns
+          Multi-provider catalog, bounded workspace tools (parallel
+          list/read/search), review-gated edits / shell / MCP
         </li>
         <li>
-          Platform shell sandboxes when backends are available (not Codex-level)
+          Universal skills discovery + one-shot invoke, repository map, adaptive
+          compaction, prompt-cache accounting, durable async turns
         </li>
         <li>
-          Configured MCP add/manage (user + project scope, portable{" "}
-          <code>.mcp.json</code> import, <code>/v1/mcp-servers</code>) plus
-          experimental Agent Plugins — see the{" "}
-          <a href={`${basePath}/docs/mcp/`}>MCP guide</a> and{" "}
+          Graduated <code>execution_policy</code>; platform shell sandboxes;
+          opt-in MCP stdio sandbox on Linux/macOS/Windows (
+          <code>VEASEL_MCP_STDIO_SANDBOX</code>)
+        </li>
+        <li>
+          Configured MCP (user/project + portable <code>.mcp.json</code>), named
+          credentials, OAuth PKCE authorize/complete/refresh, experimental Agent
+          Plugins — see the <a href={`${basePath}/docs/mcp/`}>MCP guide</a> and{" "}
           <a href="https://github.com/veasel-labs/veasel/blob/main/docs/compatibility/agent-plugins.md">
             compatibility ledger
           </a>
+        </li>
+        <li>
+          Cost only from the pinned USD schedule when every reported turn
+          matches — never invented savings or Harbor Index claims
         </li>
       </ul>
     </div>

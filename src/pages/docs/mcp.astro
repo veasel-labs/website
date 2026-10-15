@@ -6,22 +6,21 @@ const basePath = import.meta.env.BASE_URL.replace(/\/$/, "");
 
 <DocsLayout
   title="MCP servers"
-  description="Configure MCP servers, named HTTP credentials, and OAuth PKCE authorize/complete in Veasel Code — trust per session and approve every tool call."
+  description="Veasel Code MCP: configured servers, credentials, OAuth PKCE with refresh, per-session trust, per-call approval, and opt-in stdio sandbox on Linux/macOS/Windows."
 >
   <section class="doc-page">
     <p class="kicker">FIELD GUIDE / MCP</p>
     <h1>
-      Connect tools.
+      MCP without
       <br />
-      <em>Keep every call in view.</em>
+      <em>blind trust.</em>
     </h1>
     <p class="lede">
-      Veasel can use Model Context Protocol servers from operator-managed user
-      or project config, read-only portable imports, or experimental Agent
-      Plugin packages. Named HTTP credentials and authorization-code + PKCE
-      OAuth are available for Streamable HTTP. Trust is per session; every
-      model-requested tool call still pauses for inspection and one-time
-      approval.
+      Configure stdio or Streamable HTTP servers from user/project config,
+      portable imports, or experimental Agent Plugins. Named credentials and
+      authorization-code + PKCE OAuth (with refresh) ship for Streamable HTTP.
+      Trust is per session; every model-requested tool call still pauses for
+      inspection and one-time approval.
     </p>
 
     <div class="compatibility-banner">
@@ -29,15 +28,16 @@ const basePath = import.meta.env.BASE_URL.replace(/\/$/, "");
         ⌘
       </span>
       <div>
-        <strong>Configured MCP + OAuth ship on main</strong>
+        <strong>Configured MCP · OAuth refresh · three-OS stdio sandbox</strong>
         <p>
-          Add stdio or Streamable HTTP servers with{" "}
-          <code>/mcp add [user|project]</code> or{" "}
+          Add servers with <code>/mcp add [user|project]</code> or{" "}
           <code>POST /v1/mcp-servers</code>. Capabilities:{" "}
           <code>mcp.servers.configured</code>, <code>mcp.credentials</code>,{" "}
           <code>mcp.oauth</code>. Portable <code>.mcp.json</code> /{" "}
           <code>.cursor/mcp.json</code> import read-only. OAuth prints an
-          authorize URL for you to open — Veasel does not auto-launch a browser.
+          authorize URL — Veasel does not auto-launch a browser. Opt-in{" "}
+          <code>VEASEL_MCP_STDIO_SANDBOX</code> wraps trusted stdio on
+          Linux/macOS/Windows when backends are available.
         </p>
       </div>
     </div>
@@ -172,6 +172,16 @@ veasel mcp add http docs https://mcp.example.com/mcp --credential my-cred</code>
           and token endpoints — it still does not start a dance until you call
           authorize.
         </li>
+        <li>
+          <strong>Refresh.</strong> When a refresh token is stored (owner-only{" "}
+          <code>mcp-oauth-refresh.json</code>),{" "}
+          <code>/mcp oauth refresh &lt;cred&gt;</code> or{" "}
+          <code>POST /v1/mcp-oauth/refresh</code> exchanges it. On HTTP 401,
+          Veasel may auto-refresh once per call path, then clear or fail closed
+          — it does not invent silent multi-retry loops. Dynamic Client
+          Registration (DCR) is deferred; use an explicit <code>client_id</code>
+          .
+        </li>
       </ul>
     </div>
 
@@ -240,9 +250,8 @@ veasel mcp add http docs https://mcp.example.com/mcp --credential my-cred</code>
           Trusted stdio processes inherit the server user by default (
           <code>VEASEL_MCP_STDIO_SANDBOX</code> unset/off). Set{" "}
           <code>auto</code> or <code>require</code> to wrap trusted stdio in
-          Linux Bubblewrap, macOS Seatbelt (
-          <code>/usr/bin/sandbox-exec</code>), or Windows AppContainer + Job
-          when available (capabilities{" "}
+          Linux Bubblewrap, macOS Seatbelt (<code>/usr/bin/sandbox-exec</code>),
+          or Windows AppContainer + Job when available (capabilities{" "}
           <code>mcp.stdio.sandbox.bubblewrap</code>,{" "}
           <code>mcp.stdio.sandbox.seatbelt</code>,{" "}
           <code>mcp.stdio.sandbox.windows</code> only when wrap will run;
@@ -313,6 +322,14 @@ veasel mcp add http docs https://mcp.example.com/mcp --credential my-cred</code>
           </span>
         </div>
         <div class="provider-table-row" role="row">
+          <b role="cell">POST</b>
+          <code role="cell">/v1/mcp-oauth/refresh</code>
+          <span role="cell">
+            Exchange a stored refresh token; update Bearer (values never
+            returned).
+          </span>
+        </div>
+        <div class="provider-table-row" role="row">
           <b role="cell">GET · POST</b>
           <code role="cell">{"/v1/sessions/{id}/mcp-servers"}</code>
           <span role="cell">
@@ -369,8 +386,8 @@ curl -sS -X PATCH 'http://127.0.0.1:4097/v1/mcp-servers/memory?scope=project&amp
           Import of <code>.vscode/mcp.json</code> (<code>servers</code> layout).
         </li>
         <li>
-          Full Agent Plugins v1.0.0 conformance (stdio sandbox opt-in is
-          shipped on Linux/macOS/Windows; default remains off).
+          Full Agent Plugins v1.0.0 conformance (stdio sandbox opt-in is shipped
+          on Linux/macOS/Windows; default remains off).
         </li>
         <li>
           Product UI for inbound MCP notification streams (transport listen is

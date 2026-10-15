@@ -12,21 +12,22 @@ const modelsDevCommit = catalog.source.commit;
 
 <DocsLayout
   title="AI providers"
-  description="The provider architecture and current integration status for Veasel Code."
+  description="Veasel Code model catalog: OpenAI-compatible, Anthropic, Gemini, and Meta presets behind one local session workflow."
 >
   <section class="doc-page">
     <p class="kicker">FIELD GUIDE / PROVIDERS</p>
     <h1>
-      Bring the model
+      One catalog.
       <br />
-      <em>you want to work with.</em>
+      <em>Your credentials.</em>
     </h1>
     <p class="lede">
       Veasel Code keeps model connections behind a small V provider interface.
-      Choose from {providers.length} presets across four wire protocols and use
-      the same persistent session workflow. Presets are not independent native
-      SDK integrations: {modelsDevCount} entries from the pinned Models.dev
-      catalog share Veasel's OpenAI-compatible Chat Completions adapter.
+      Choose from {providers.length} endpoint presets across four wire protocols
+      and use the same persistent session workflow via <code>/connect</code>.
+      Presets are not independent native SDK integrations: {modelsDevCount}{" "}
+      entries from the pinned Models.dev catalog share Veasel's
+      OpenAI-compatible Chat Completions adapter.
     </p>
     <div class="doc-panel">
       <h2>Available in the current source build</h2>
