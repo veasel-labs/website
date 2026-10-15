@@ -90,9 +90,41 @@ const basePath = import.meta.env.BASE_URL.replace(/\/$/, "");
         </div>
         <div class="provider-table-row" role="row">
           <b role="cell">GET · POST</b>
+          <code role="cell">/v1/mcp-servers</code>
+          <span role="cell">
+            List or upsert configured MCP servers (user/project; optional{" "}
+            <code>directory</code> adds project + <code>.mcp.json</code> import;
+            <code>mcp.servers.configured</code>).
+          </span>
+        </div>
+        <div class="provider-table-row" role="row">
+          <b role="cell">PATCH · DELETE</b>
+          <code role="cell">{"/v1/mcp-servers/{name}"}</code>
+          <span role="cell">
+            Enable/disable or remove; <code>scope</code> /{" "}
+            <code>directory</code> select user or project.
+          </span>
+        </div>
+        <div class="provider-table-row" role="row">
+          <b role="cell">GET · POST</b>
+          <code role="cell">/v1/plugins/links</code>
+          <span role="cell">
+            List or add local Agent Plugin directory links (no remote fetch).
+          </span>
+        </div>
+        <div class="provider-table-row" role="row">
+          <b role="cell">DELETE</b>
+          <code role="cell">{"/v1/plugins/links/{name}"}</code>
+          <span role="cell">
+            Remove a managed plugin symlink by package name.
+          </span>
+        </div>
+        <div class="provider-table-row" role="row">
+          <b role="cell">GET · POST</b>
           <code role="cell">{"/v1/sessions/{id}/mcp-servers"}</code>
           <span role="cell">
-            List or update per-session trust for MCP servers.
+            List or update per-session trust for MCP servers (
+            <code>configured/&lt;name&gt;</code> for user-added servers).
           </span>
         </div>
         <div class="provider-table-row" role="row">
@@ -346,10 +378,14 @@ const basePath = import.meta.env.BASE_URL.replace(/\/$/, "");
     <div class="doc-panel">
       <h2>Approve MCP calls individually</h2>
       <p>
-        Per-session trust lets a configured server connect; it does not approve
-        tool effects. Each model-requested call pauses the active turn. Inspect
-        its exact arguments before approval. Rejected calls never reach the
-        server and are not retried.
+        Add user- or project-scoped servers with{" "}
+        <code>POST /v1/mcp-servers</code> or{" "}
+        <code>/mcp add [user|project]</code> (see the{" "}
+        <a href={`${basePath}/docs/mcp/`}>MCP guide</a>). Per-session trust lets
+        a configured server connect; it does not approve tool effects. Each
+        model-requested call pauses the active turn. Inspect its exact arguments
+        before approval. Rejected calls never reach the server and are not
+        retried.
       </p>
       <pre><code>/mcp calls
 /mcp call show CALL_ID

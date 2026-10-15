@@ -1,0 +1,270 @@
+---
+import DocsLayout from "../../layouts/DocsLayout.astro";
+
+const basePath = import.meta.env.BASE_URL.replace(/\/$/, "");
+---
+
+<DocsLayout
+  title="MCP servers"
+  description="Add and manage user- and project-scoped MCP servers in Veasel Code, import portable mcpServers files, trust per session, and approve every tool call."
+>
+  <section class="doc-page">
+    <p class="kicker">FIELD GUIDE / MCP</p>
+    <h1>
+      Connect tools.
+      <br />
+      <em>Keep every call in view.</em>
+    </h1>
+    <p class="lede">
+      Veasel can use Model Context Protocol servers from operator-managed user
+      or project config, read-only portable imports, or experimental Agent
+      Plugin packages. Trust is per session; every model-requested tool call
+      still pauses for inspection and one-time approval.
+    </p>
+
+    <div class="compatibility-banner">
+      <span class="compatibility-mark" aria-hidden="true">
+        ⌘
+      </span>
+      <div>
+        <strong>User + project scope ships today</strong>
+        <p>
+          Add stdio or Streamable HTTP servers with{" "}
+          <code>/mcp add [user|project]</code> or{" "}
+          <code>POST /v1/mcp-servers</code>. User config:{" "}
+          <code>$VEASEL_DATA_DIR/mcp-servers.json</code>. Project config:{" "}
+          <code>&lt;workspace&gt;/.veasel/mcp-servers.json</code>. Portable{" "}
+          <code>.mcp.json</code> / <code>.cursor/mcp.json</code> (
+          <code>mcpServers</code>) import read-only. Capability:{" "}
+          <code>mcp.servers.configured</code>. OAuth remains open.
+        </p>
+      </div>
+    </div>
+
+    <div class="doc-panel">
+      <h2>Scopes and precedence</h2>
+      <ul class="guide-list">
+        <li>
+          <strong>user</strong> — writable{" "}
+          <code>$VEASEL_DATA_DIR/mcp-servers.json</code> (default for{" "}
+          <code>/mcp add</code>).
+        </li>
+        <li>
+          <strong>project</strong> — writable{" "}
+          <code>&lt;workspace&gt;/.veasel/mcp-servers.json</code>.
+        </li>
+        <li>
+          <strong>project-import</strong> — read-only portable{" "}
+          <code>mcpServers</code> from workspace <code>.mcp.json</code> then{" "}
+          <code>.cursor/mcp.json</code>. <code>.vscode/mcp.json</code> (
+          <code>servers</code> key) is not imported.
+        </li>
+        <li>
+          Same name for <code>configured/&lt;name&gt;</code>: project &gt;
+          project-import &gt; user.
+        </li>
+      </ul>
+    </div>
+
+    <div class="doc-panel">
+      <h2>Add and manage (TUI)</h2>
+      <p>
+        In a session, type <code>/</code> for slash suggestions:
+      </p>
+      <pre><code># User scope (default)
+/mcp add stdio memory npx -y @modelcontextprotocol/server-memory
+/mcp add http docs https://mcp.example.com/mcp
+
+# Project scope (session workspace)
+/mcp add project stdio repo-tools ./bin/mcp-server
+/mcp add project http docs https://mcp.example.com/mcp
+
+/mcp
+/mcp enable memory
+/mcp disable project repo-tools
+/mcp remove user memory
+/mcp remove project repo-tools</code></pre>
+      <ul class="guide-list">
+        <li>
+          <code>stdio</code> — bare <code>PATH</code> command or absolute
+          regular file; optional absolute <code>cwd</code> via the API. Veasel
+          does not download packages or run install scripts for you.
+        </li>
+        <li>
+          <code>http</code> — Streamable HTTP URL with the same origin and
+          header rules as plugin MCP (HTTPS or loopback; redirects refused).
+        </li>
+        <li>
+          Names identify the server under the synthetic catalog package{" "}
+          <code>configured</code>. List views omit header/env secret values.
+        </li>
+        <li>
+          Disabled servers leave durable config in place but drop out of the
+          plugin catalog until re-enabled. Imported portable entries are
+          read-only — edit the source file or add a writable project/user
+          override.
+        </li>
+      </ul>
+    </div>
+
+    <div class="doc-panel">
+      <h2>Portable import</h2>
+      <p>
+        Drop a portable <code>mcpServers</code> file at the workspace root.
+        Veasel lists it under scope <code>project-import</code> when the session
+        has a directory (or when the API passes <code>directory</code>):
+      </p>
+      <pre><code>&#123;
+  &quot;mcpServers&quot;: &#123;
+    &quot;memory&quot;: &#123;
+      &quot;command&quot;: &quot;npx&quot;,
+      &quot;args&quot;: [&quot;-y&quot;, &quot;@modelcontextprotocol/server-memory&quot;]
+    &#125;
+  &#125;
+&#125;</code></pre>
+      <p>
+        Prefer <code>.mcp.json</code> (Claude Code / Copilot portable) or{" "}
+        <code>.cursor/mcp.json</code>. Imports never overwrite writable user or
+        project files.
+      </p>
+    </div>
+
+    <div class="doc-panel">
+      <h2>Trust, then approve each call</h2>
+      <p>
+        Adding or importing a server does not grant the model access. Trust it
+        for the current session, then review every tool call:
+      </p>
+      <pre><code>/mcp trust configured/memory
+/mcp untrust configured/memory
+
+/mcp calls
+/mcp call show &lt;id&gt;
+/mcp call approve &lt;id&gt;   # or reject</code></pre>
+      <ul class="guide-list">
+        <li>
+          Plugin-packaged servers still use{" "}
+          <code>/mcp trust &lt;plugin&gt;/&lt;server&gt;</code>.
+        </li>
+        <li>
+          The review screen states that the call has not reached its server yet.
+          Rejected or interrupted calls are not replayed.
+        </li>
+        <li>
+          Trusted stdio processes inherit the server user and are{" "}
+          <strong>not</strong> OS-sandboxed. Inspect effects before approval.
+        </li>
+      </ul>
+    </div>
+
+    <div class="doc-panel">
+      <h2>HTTP API</h2>
+      <p>
+        Operator config is separate from per-session trust and per-call
+        approval:
+      </p>
+      <div
+        class="provider-table api-table"
+        role="table"
+        aria-label="Configured MCP API endpoints"
+      >
+        <div class="provider-table-row provider-table-head" role="row">
+          <b role="columnheader">Method</b>
+          <b role="columnheader">Path</b>
+          <b role="columnheader">Purpose</b>
+        </div>
+        <div class="provider-table-row" role="row">
+          <b role="cell">GET · POST</b>
+          <code role="cell">/v1/mcp-servers</code>
+          <span role="cell">
+            List (optional <code>?directory=</code> for project + imports) or
+            upsert (<code>scope</code> / <code>directory</code> for project).
+          </span>
+        </div>
+        <div class="provider-table-row" role="row">
+          <b role="cell">PATCH · DELETE</b>
+          <code role="cell">{"/v1/mcp-servers/{name}"}</code>
+          <span role="cell">
+            Enable/disable or remove; query <code>scope=user|project</code> and{" "}
+            <code>directory</code> for project.
+          </span>
+        </div>
+        <div class="provider-table-row" role="row">
+          <b role="cell">GET · POST</b>
+          <code role="cell">{"/v1/sessions/{id}/mcp-servers"}</code>
+          <span role="cell">
+            Per-session trust (<code>plugin_name=configured</code>).
+          </span>
+        </div>
+        <div class="provider-table-row" role="row">
+          <b role="cell">GET · POST</b>
+          <code role="cell">{"/v1/sessions/{id}/mcp-tool-calls…"}</code>
+          <span role="cell">
+            Inspect, approve, or reject one pending tool call.
+          </span>
+        </div>
+      </div>
+      <pre><code>curl -sS 'http://127.0.0.1:4097/v1/mcp-servers?directory=/path/to/workspace'
+curl -sS -X POST http://127.0.0.1:4097/v1/mcp-servers \
+  -H 'content-type: application/json' \
+  -d '&#123;&quot;name&quot;:&quot;memory&quot;,&quot;transport&quot;:&quot;stdio&quot;,&quot;command&quot;:&quot;npx&quot;,&quot;args&quot;:[&quot;-y&quot;,&quot;@modelcontextprotocol/server-memory&quot;],&quot;scope&quot;:&quot;project&quot;,&quot;directory&quot;:&quot;/path/to/workspace&quot;&#125;'
+curl -sS -X PATCH 'http://127.0.0.1:4097/v1/mcp-servers/memory?scope=project&amp;directory=/path/to/workspace' \
+  -H 'content-type: application/json' \
+  -d '&#123;&quot;enabled&quot;:false&#125;'</code></pre>
+      <p>
+        Full request and response shapes live in the runtime{" "}
+        <a href="https://github.com/veasel-labs/veasel/blob/main/docs/openapi.yaml">
+          OpenAPI contract
+        </a>
+        .
+      </p>
+    </div>
+
+    <div class="doc-panel">
+      <h2>Plugin-packaged MCP</h2>
+      <p>
+        Agent Plugin packages under <code>$VEASEL_PLUGIN_DIR</code> or{" "}
+        <code>$VEASEL_DATA_DIR/plugins</code> may declare stdio or Streamable
+        HTTP servers in <code>mcp.json</code>. Those appear in the plugin
+        catalog (<code>GET /v1/plugins</code>), not under{" "}
+        <code>/v1/mcp-servers</code>. Local directory links can be managed with{" "}
+        <code>/plugin add|remove</code> and <code>/v1/plugins/links</code> —
+        Veasel does not fetch remote packages. See the{" "}
+        <a href={`${basePath}/docs/plugins/`}>plugins ledger</a> for conformance
+        status.
+      </p>
+    </div>
+
+    <div class="doc-panel">
+      <h2>Still open</h2>
+      <ul class="guide-list">
+        <li>OAuth for remote MCP servers.</li>
+        <li>
+          Import of <code>.vscode/mcp.json</code> (<code>servers</code> layout).
+        </li>
+        <li>
+          Full Agent Plugins v1.0.0 conformance and OS sandboxing for stdio MCP.
+        </li>
+      </ul>
+    </div>
+
+    <aside class="callout">
+      <strong>Untrusted by default.</strong> MCP tool output is reference
+      context for the model. Skill scripts and MCP install scripts are never
+      auto-executed. Prefer reviewing arguments when a call could change files,
+      talk to the network, or touch secrets.
+    </aside>
+
+    <p class="doc-next">
+      <a class="text-link" href={`${basePath}/docs/security/`}>
+        Security boundary <span aria-hidden="true">→</span>
+      </a>
+      <a class="text-link" href={`${basePath}/docs/api/`}>
+        API & headless <span aria-hidden="true">→</span>
+      </a>
+      <a class="text-link" href={`${basePath}/docs/plugins/`}>
+        Plugins ledger <span aria-hidden="true">→</span>
+      </a>
+    </p>
+  </section>
+</DocsLayout>

@@ -15,30 +15,84 @@ const navGroups = [
   {
     label: "Start",
     items: [
-      { href: "/docs/", label: "Overview" },
-      { href: "/docs/install/", label: "Install" },
-      { href: "/docs/quickstart/", label: "First session" },
-      { href: "/docs/tui/", label: "TUI" },
+      { href: "/docs/", label: "Overview", search: "overview adopt guide" },
+      {
+        href: "/docs/install/",
+        label: "Install",
+        search: "install homebrew aur archive",
+      },
+      {
+        href: "/docs/quickstart/",
+        label: "First session",
+        search: "quickstart connect first session",
+      },
+      {
+        href: "/docs/tui/",
+        label: "TUI",
+        search: "terminal ui themes slash keyboard",
+      },
     ],
   },
   {
     label: "Work",
     items: [
-      { href: "/docs/providers/", label: "Providers" },
-      { href: "/docs/skills/", label: "Skills & plugins" },
-      { href: "/docs/plugins/", label: "Plugins ledger" },
-      { href: "/docs/sessions/", label: "Sessions & context" },
-      { href: "/docs/api/", label: "API & headless" },
+      {
+        href: "/docs/providers/",
+        label: "Providers",
+        search: "providers models openai anthropic gemini ollama",
+      },
+      {
+        href: "/docs/skills/",
+        label: "Skills & plugins",
+        search: "skills plugins skill.md",
+      },
+      {
+        href: "/docs/mcp/",
+        label: "MCP servers",
+        search:
+          "mcp add configured servers trust approve tool calls project .mcp.json import",
+      },
+      {
+        href: "/docs/plugins/",
+        label: "Plugins ledger",
+        search: "agent plugins conformance ledger",
+      },
+      {
+        href: "/docs/sessions/",
+        label: "Sessions & context",
+        search: "sessions compaction repository map async",
+      },
+      {
+        href: "/docs/api/",
+        label: "API & headless",
+        search: "api http headless veasel run sse",
+      },
     ],
   },
   {
     label: "Trust",
     items: [
-      { href: "/docs/security/", label: "Security" },
-      { href: "/docs/architecture/", label: "Architecture" },
-      { href: "/docs/troubleshooting/", label: "Troubleshooting" },
-      { href: "/docs/faq/", label: "FAQ" },
-      { href: "/docs/roadmap/", label: "Roadmap" },
+      {
+        href: "/docs/security/",
+        label: "Security",
+        search: "security sandbox approvals privacy",
+      },
+      {
+        href: "/docs/architecture/",
+        label: "Architecture",
+        search: "architecture runtime v api",
+      },
+      {
+        href: "/docs/troubleshooting/",
+        label: "Troubleshooting",
+        search: "troubleshooting fix errors",
+      },
+      { href: "/docs/faq/", label: "FAQ", search: "faq harbor questions" },
+      {
+        href: "/docs/roadmap/",
+        label: "Roadmap",
+        search: "roadmap status plan",
+      },
     ],
   },
 ];
@@ -54,23 +108,43 @@ function isActive(href: string) {
   <div class="docs-shell wrap">
     <aside class="docs-sidebar" aria-label="Documentation">
       <p class="docs-sidebar-kicker">{section}</p>
-      {navGroups.map((group) => (
-        <div class="docs-nav-group">
-          <p class="docs-nav-label">{group.label}</p>
-          <ul>
-            {group.items.map((item) => (
-              <li>
-                <a
-                  href={`${basePath}${item.href}`}
-                  aria-current={isActive(item.href) ? "page" : undefined}
+      <label class="docs-search" for="docs-nav-filter">
+        <span>Search docs</span>
+        <input
+          id="docs-nav-filter"
+          type="search"
+          placeholder="MCP, install, providers…"
+          autocomplete="off"
+          aria-controls="docs-nav-groups"
+        />
+      </label>
+      <p
+        id="docs-search-status"
+        class="docs-search-status"
+        aria-live="polite"
+      ></p>
+      <div id="docs-nav-groups">
+        {navGroups.map((group) => (
+          <div class="docs-nav-group" data-docs-nav-group>
+            <p class="docs-nav-label">{group.label}</p>
+            <ul>
+              {group.items.map((item) => (
+                <li
+                  data-docs-nav-item
+                  data-search={`${item.label} ${item.search}`.toLocaleLowerCase()}
                 >
-                  {item.label}
-                </a>
-              </li>
-            ))}
-          </ul>
-        </div>
-      ))}
+                  <a
+                    href={`${basePath}${item.href}`}
+                    aria-current={isActive(item.href) ? "page" : undefined}
+                  >
+                    {item.label}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
+        ))}
+      </div>
       <p class="docs-sidebar-foot">
         Deep contracts live in the{" "}
         <a href="https://github.com/veasel-labs/veasel/tree/main/docs">
@@ -84,3 +158,42 @@ function isActive(href: string) {
     </div>
   </div>
 </SiteLayout>
+
+<script>
+  const filter = document.querySelector<HTMLInputElement>("#docs-nav-filter");
+  const status = document.querySelector("#docs-search-status");
+  const items = Array.from(
+    document.querySelectorAll<HTMLElement>("[data-docs-nav-item]"),
+  );
+  const groups = Array.from(
+    document.querySelectorAll<HTMLElement>("[data-docs-nav-group]"),
+  );
+  const total = items.length;
+
+  const refresh = () => {
+    const query = filter?.value.trim().toLocaleLowerCase() ?? "";
+    let visible = 0;
+    for (const item of items) {
+      const matches =
+        query.length === 0 || (item.dataset.search?.includes(query) ?? false);
+      item.hidden = !matches;
+      if (matches) visible += 1;
+    }
+    for (const group of groups) {
+      const anyVisible = Array.from(
+        group.querySelectorAll<HTMLElement>("[data-docs-nav-item]"),
+      ).some((item) => !item.hidden);
+      group.hidden = !anyVisible;
+    }
+    if (status) {
+      status.textContent =
+        query.length === 0
+          ? ""
+          : visible === 0
+            ? "No matching pages."
+            : `Showing ${visible} of ${total} pages.`;
+    }
+  };
+
+  filter?.addEventListener("input", refresh);
+</script>

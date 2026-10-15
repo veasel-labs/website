@@ -95,19 +95,25 @@ const basePath = import.meta.env.BASE_URL.replace(/\/$/, "");
     <div class="doc-panel faq-panel">
       <h2>Can I use Agent Plugins already?</h2>
       <p>
-        Support is experimental. Veasel discovers local packages, lets you
+        Support is experimental. Veasel discovers local packages (including
+        operator-managed directory links via <code>/plugin add</code>), lets you
         enable validated Skill instructions per session, and can expose trusted
-        stdio or Streamable HTTP MCP servers as model tools. Use
-        <code>/mcp</code> and <code>/mcp trust plugin/server</code> to trust a
-        server for the session. Trust permits a server to connect; each
-        model-requested tool call pauses the turn until you inspect its exact
-        arguments with <code>/mcp calls</code> and approve or reject it. In the
-        current source, that review says the call has not reached its server
-        before the arguments, and a long argument list keeps the decision on the
-        first screen. Rejected calls are not retried. Trusted stdio processes
-        run with the server user's permissions and remain without an OS sandbox
-        (unlike approved shell). Veasel does not install plugins or claim full
-        Agent Plugins compatibility.
+        stdio or Streamable HTTP MCP servers as model tools. For a standalone
+        server without a plugin package, use{" "}
+        <code>/mcp add [user|project]</code> (user:{" "}
+        <code>$VEASEL_DATA_DIR/mcp-servers.json</code>; project:{" "}
+        <code>.veasel/mcp-servers.json</code>) or drop a portable{" "}
+        <code>.mcp.json</code>, then <code>/mcp trust configured/name</code>.
+        Plugin servers still use <code>/mcp trust plugin/server</code>. Trust
+        permits a server to connect; each model-requested tool call pauses the
+        turn until you inspect its exact arguments with <code>/mcp calls</code>{" "}
+        and approve or reject it. In the current source, that review says the
+        call has not reached its server before the arguments, and a long
+        argument list keeps the decision on the first screen. Rejected calls are
+        not retried. Trusted stdio processes run with the server user's
+        permissions and remain without an OS sandbox (unlike approved shell).
+        Veasel does not fetch remote plugin packages or claim full Agent Plugins
+        compatibility. See the <a href={`${basePath}/docs/mcp/`}>MCP guide</a>.
       </p>
     </div>
     <div class="doc-panel faq-panel">

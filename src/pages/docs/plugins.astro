@@ -78,22 +78,34 @@ const basePath = import.meta.env.BASE_URL.replace(/\/$/, "");
         <code>VEASEL_PLUGIN_DIR</code> to another directory. Start the local
         backend and open a session in the TUI.
       </p>
-      <pre><code>/skills
+      <pre><code>/plugin add /path/to/my-plugin
+/plugin remove my-plugin
+/skills
 /skill on review-tools/review
 /skill off review-tools/review
 /mcp
 /mcp trust review-tools/local
-/mcp untrust review-tools/local</code></pre>
+/mcp untrust review-tools/local
+
+# Or add a standalone configured server (no plugin package):
+/mcp add stdio memory npx -y @modelcontextprotocol/server-memory
+/mcp add project stdio repo-tools ./bin/mcp-server
+/mcp trust configured/memory</code></pre>
       <p>
-        The plugin and Skill names come from the validated package manifest and
-        directory. Skill selection and MCP trust persist with the session.
-        Disabling a Skill removes its instructions from the next model turn. MCP
-        tools from trusted servers are available to the model, but every
-        requested call pauses for review. Use <code>/mcp calls</code>, inspect
-        one with <code>/mcp call show &lt;id&gt;</code>, then approve or reject
-        it. Rejected calls are not retried. While a Skill is active, the model
-        may read UTF-8 files only from that Skill’s directory; path traversal
-        and symlink escapes are rejected. Script files are never executed
+        Local package links use <code>/v1/plugins/links</code> and capability{" "}
+        <code>plugins.links</code>; they never download remote archives.
+        Standalone MCP config uses <code>/v1/mcp-servers</code> (user, project,
+        and read-only <code>.mcp.json</code> import) — see the{" "}
+        <a href={`${basePath}/docs/mcp/`}>MCP guide</a>. The plugin and Skill
+        names come from the validated package manifest and directory. Skill
+        selection and MCP trust persist with the session. Disabling a Skill
+        removes its instructions from the next model turn. MCP tools from
+        trusted servers are available to the model, but every requested call
+        pauses for review. Use <code>/mcp calls</code>, inspect one with{" "}
+        <code>/mcp call show &lt;id&gt;</code>, then approve or reject it.
+        Rejected calls are not retried. While a Skill is active, the model may
+        read UTF-8 files only from that Skill’s directory; path traversal and
+        symlink escapes are rejected. Script files are never executed
         automatically. A declared <code>allowed-tools</code> list restricts
         exact Veasel tool names already available to the session; it cannot
         grant MCP trust or bypass file and shell approvals. When multiple active
@@ -106,8 +118,13 @@ const basePath = import.meta.env.BASE_URL.replace(/\/$/, "");
       <h2>What remains before a conformance claim</h2>
       <ul class="guide-list">
         <li>
-          Managed installation and updates, a registry of source and version,
-          component-level enablement, and persistent per-install data.
+          Managed remote installation and updates, a registry of source and
+          version, component-level enablement beyond local directory links, and
+          broader persistent per-install data surfaces.
+        </li>
+        <li>
+          OAuth for remote MCP servers (<code>/mcp add</code> user/project scope
+          and portable <code>.mcp.json</code> import already ship).
         </li>
         <li>
           The complete spec-derived fixture matrix, Windows junction behavior,
@@ -136,6 +153,9 @@ const basePath = import.meta.env.BASE_URL.replace(/\/$/, "");
         href="https://github.com/veasel-labs/veasel/blob/main/docs/compatibility/agent-plugins.md"
       >
         Review the conformance matrix <span aria-hidden="true">↗</span>
+      </a>
+      <a class="text-link" href={`${basePath}/docs/mcp/`}>
+        MCP user guide <span aria-hidden="true">→</span>
       </a>
       <a class="text-link" href={`${basePath}/docs/security/`}>
         See the security boundary <span aria-hidden="true">→</span>

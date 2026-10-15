@@ -72,8 +72,12 @@ const basePath = import.meta.env.BASE_URL.replace(/\/$/, "");
           remains the authorization gate; sandboxes are defense-in-depth.
         </li>
         <li>
-          MCP requires per-session trust plus per-call approval. Stdio MCP is
-          not OS sandboxed. Streamable HTTP refuses redirects and validates TLS.
+          MCP requires per-session trust plus per-call approval. Configured
+          servers persist via <code>/mcp add</code> /{" "}
+          <code>/v1/mcp-servers</code> (user or project scope; portable{" "}
+          <code>.mcp.json</code> import is read-only — see the{" "}
+          <a href={`${basePath}/docs/mcp/`}>MCP guide</a>). Stdio MCP is not OS
+          sandboxed. Streamable HTTP refuses redirects and validates TLS.
         </li>
       </ul>
     </div>
