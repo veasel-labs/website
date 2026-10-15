@@ -28,7 +28,7 @@ const links = [
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="description" content={description} />
-    <meta name="theme-color" content="#0d1210" />
+    <meta name="theme-color" content="#fbfaf6" />
     <meta property="og:type" content="website" />
     <meta property="og:title" content={`${title} · Veasel Code`} />
     <meta property="og:description" content={description} />
@@ -38,7 +38,7 @@ const links = [
     <script is:inline>
       const themeKey = "veasel-color-theme";
       const themeQuery = window.matchMedia("(prefers-color-scheme: dark)");
-      let themeChoice = "dark";
+      let themeChoice = "system";
       try {
         const savedChoice = localStorage.getItem(themeKey);
         if (["system", "light", "dark"].includes(savedChoice ?? "")) {
@@ -58,9 +58,9 @@ const links = [
           .querySelector('meta[name="theme-color"]')
           ?.setAttribute(
             "content",
-            choice === "light" || (choice === "system" && !themeQuery.matches)
-              ? "#f4f7f5"
-              : "#0d1210",
+            choice === "dark" || (choice === "system" && themeQuery.matches)
+              ? "#141625"
+              : "#fbfaf6",
           );
         document.querySelectorAll("[data-theme-choice]").forEach((button) => {
           button.setAttribute(
@@ -95,10 +95,10 @@ const links = [
     <header class="site-header">
       <a class="wordmark" href={`${basePath}/`} aria-label="Veasel Code home">
         <span class="wordmark-mark" aria-hidden="true">
-          V
+          <img src={`${basePath}/v-logo.png`} alt="" width="28" height="28" />
         </span>
-        <span class="wordmark-text">
-          VEASEL <b>/</b> CODE
+        <span>
+          veasel<span class="wordmark-light">code</span>
         </span>
       </a>
       <nav aria-label="Main navigation">
@@ -112,13 +112,13 @@ const links = [
         ))}
       </nav>
       <div class="theme-switch" role="group" aria-label="Color theme">
-        <button type="button" data-theme-choice="system" aria-pressed="false">
+        <button type="button" data-theme-choice="system" aria-pressed="true">
           System
         </button>
         <button type="button" data-theme-choice="light" aria-pressed="false">
           Light
         </button>
-        <button type="button" data-theme-choice="dark" aria-pressed="true">
+        <button type="button" data-theme-choice="dark" aria-pressed="false">
           Dark
         </button>
       </div>
@@ -132,8 +132,13 @@ const links = [
     <footer class="site-footer">
       <span>Built in V · Local-first coding agent.</span>
       <span>
-        <a href="https://github.com/veasel-labs/veasel">GitHub</a>·
-        <a href={`${basePath}/docs/security/`}>Security</a>· Code MIT
+        <a href="https://github.com/veasel-labs/veasel">GitHub</a>
+        ·
+        <a href={`${basePath}/docs/security/`}>Security</a>
+        · Code MIT ·
+        <a href="https://creativecommons.org/licenses/by-nc/4.0/">
+          Mascot CC BY-NC 4.0
+        </a>
       </span>
     </footer>
   </body>

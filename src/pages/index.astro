@@ -8,137 +8,186 @@ const basePath = import.meta.env.BASE_URL.replace(/\/$/, "");
   title="Veasel Code — local agent, visible steps"
   description="Veasel Code is an open-source coding agent built in V. Local-first sessions, multi-provider chat, and approvals before edits, shell, or MCP."
 >
-  <section class="hero" aria-labelledby="hero-title">
-    <div class="hero-field" aria-hidden="true"></div>
-    <div class="hero-stage wrap">
-      <p class="hero-kicker">
-        <span class="pulse" aria-hidden="true"></span>
-        LOCAL · LOOPBACK · APPROVAL-GATED
+  <section class="hero wrap" aria-labelledby="hero-title">
+    <div class="hero-copy">
+      <p class="kicker">
+        <span class="sparkle">✳</span> LOCAL · LOOPBACK · APPROVAL-GATED
       </p>
-      <h1 id="hero-title" class="hero-brand-title">
-        VEASEL <em>/</em> CODE
+      <h1 id="hero-title">
+        Big ideas.
+        <br />
+        <span>Little steps.</span>
+        <br />
+        Working code.
       </h1>
-      <p class="hero-tagline">Your repo. Your rules.</p>
       <p class="hero-text">
-        A V-native coding agent that keeps sessions on loopback, streams through
-        your provider, and waits for approval before edits, shell, or MCP.
+        Meet <strong>Veasel Code</strong>, a V-native coding agent. Sessions live
+        in local SQLite on loopback. Veasel streams replies, inspects your
+        workspace, and waits for approval before edits, shell, or MCP. Prompts
+        and tool results go to your chosen provider — never an invented agent
+        story.
       </p>
       <div class="hero-actions">
-        <a class="button button-mint" href={`${basePath}/downloads/`}>
+        <a class="button button-dark" href={`${basePath}/downloads/`}>
           Download preview <span aria-hidden="true">↓</span>
         </a>
-        <a class="button button-ghost" href={`${basePath}/docs/`}>
+        <a class="button button-quiet" href={`${basePath}/docs/`}>
           Field guide <span aria-hidden="true">→</span>
         </a>
       </div>
-      <p class="hero-meta">Early preview · Open source · Built in V</p>
-
+      <div class="hero-meta">
+        <span class="pulse"></span> Early preview · Open source · Built in V
+      </div>
+    </div>
+    <div
+      class="hero-art"
+      aria-label="A playful illustrated code workspace with a green V mark"
+    >
+      <div class="sun"></div>
+      <div class="orbit orbit-one"></div>
+      <div class="orbit orbit-two"></div>
+      <div class="spark spark-a">✦</div>
+      <div class="spark spark-b">✳</div>
+      <div class="spark spark-c">✧</div>
+      <div class="sticker sticker-v">
+        <img
+          src={`${basePath}/v-logo.png`}
+          alt="V programming language logo"
+          width="52"
+          height="52"
+        />
+        <small>
+          BUILT
+          <br />
+          IN V
+        </small>
+      </div>
+      <div class="mascot-badge">
+        <img
+          src={`${basePath}/veasel-pixel.svg`}
+          alt="Pixel-art portrait of Veasel, the V language mascot"
+          width="76"
+          height="52"
+        />
+      </div>
       <div
-        class="hero-visual"
+        class="tui-preview"
         aria-label="HTML-rendered preview of Veasel Code running in a terminal"
       >
-        <div class="tui-preview">
-          <div class="tui-titlebar">
-            <div class="tui-window-dots" aria-hidden="true">
-              <i></i>
-              <i></i>
-              <i></i>
-            </div>
-            <span class="tui-window-title">
-              VEASEL <b>/</b> CODE
-            </span>
-            <span class="tui-window-host">~/your-project</span>
-            <span class="tui-live">
-              <i></i> LOCAL
-            </span>
+        <div class="tui-titlebar">
+          <div class="tui-window-dots" aria-hidden="true">
+            <i></i>
+            <i></i>
+            <i></i>
           </div>
-          <div class="tui-screen">
-            <aside class="tui-sessions" aria-label="Session list">
-              <span class="tui-eyebrow">
-                SESSIONS <b>02</b>
+          <span class="tui-window-title">
+            VEASEL <b>/</b> CODE
+          </span>
+          <span class="tui-window-host">~/your-project</span>
+          <span class="tui-live">
+            <i></i> LOCAL
+          </span>
+        </div>
+        <div class="tui-screen">
+          <aside class="tui-sessions" aria-label="Session list">
+            <span class="tui-eyebrow">
+              SESSIONS <b>02</b>
+            </span>
+            <div class="tui-session tui-session-active">
+              <i></i>
+              <span>
+                <b>Polish the landing page</b>
+                <small>~/veasel.dev</small>
               </span>
-              <div class="tui-session tui-session-active">
-                <i></i>
-                <span>
-                  <b>Polish the landing page</b>
-                  <small>~/veasel.dev</small>
-                </span>
-              </div>
-              <div class="tui-session">
-                <i></i>
-                <span>
-                  <b>Explore the V parser</b>
-                  <small>~/vlang</small>
-                </span>
-              </div>
-              <div class="tui-add-session">
-                ＋ <span>new workspace</span>
-              </div>
-              <div class="tui-session-foot">
-                <span class="tui-avatar">V</span>
-                <span>
-                  <b>VEASEL CODE</b>
-                  <small>your local workspace</small>
-                </span>
-              </div>
-            </aside>
-            <div class="tui-conversation">
-              <div class="tui-conversation-head">
-                <span>
-                  <i></i> Polish the landing page
-                </span>
-                <kbd>Esc</kbd>
-              </div>
-              <div class="tui-message tui-user">
-                <span class="tui-message-label">YOU</span>
-                <p>Can you make this hero feel more alive on small screens?</p>
-              </div>
-              <div class="tui-message tui-agent">
-                <span class="tui-message-label">
-                  VEASEL <b>· TRACING LAYOUT</b>
-                </span>
-                <p>
-                  I’ll inspect the responsive styles, then propose a focused
-                  change you can review.
-                </p>
-              </div>
-              <div class="tui-tool">
-                <span>⌕</span>
-                <code>read src/styles/hero.css</code>
-                <b>done</b>
-              </div>
-              <div class="tui-proposal">
-                <div>
-                  <span>✳</span>
-                  <b>Change ready to review</b>
-                  <small>src/styles/hero.css · +8 −3</small>
-                </div>
-                <span class="tui-review">
-                  Review diff <b>↗</b>
-                </span>
-              </div>
-              <div class="tui-composer">
-                <span>›</span>
-                <span>
-                  Ask Veasel to explain or propose a workspace change…
-                </span>
-                <i></i>
-              </div>
-              <div class="tui-status">
-                <span>
-                  <i></i> connected
-                </span>
-                <span>s models&nbsp; · &nbsp;/models chat</span>
-                <span>↑ ↓ navigate</span>
-              </div>
             </div>
-          </div>
-          <div class="tui-caption">
-            <span>THE INTERFACE, BUILT IN CODE</span>
-            <span>Not a screenshot — every panel is live HTML.</span>
+            <div class="tui-session">
+              <i></i>
+              <span>
+                <b>Explore the V parser</b>
+                <small>~/vlang</small>
+              </span>
+            </div>
+            <div class="tui-add-session">
+              ＋ <span>new workspace</span>
+            </div>
+            <div class="tui-session-foot">
+              <span class="tui-avatar">V</span>
+              <span>
+                <b>VEASEL CODE</b>
+                <small>your local workspace</small>
+              </span>
+            </div>
+          </aside>
+          <div class="tui-conversation">
+            <div class="tui-conversation-head">
+              <span>
+                <i></i> Polish the landing page
+              </span>
+              <kbd>Esc</kbd>
+            </div>
+            <div class="tui-message tui-user">
+              <span class="tui-message-label">YOU</span>
+              <p>Can you make this hero feel more alive on small screens?</p>
+            </div>
+            <div class="tui-message tui-agent">
+              <span class="tui-message-label">
+                <img
+                  src={`${basePath}/veasel-pixel.svg`}
+                  alt=""
+                  width="19"
+                  height="14"
+                />{" "}
+                VEASEL <b>· THINKING THROUGH THE LAYOUT</b>
+              </span>
+              <p>
+                I’ll trace the responsive styles first, then propose a focused
+                change you can review.
+              </p>
+            </div>
+            <div class="tui-tool">
+              <span>⌕</span>
+              <code>read src/styles/hero.css</code>
+              <b>done</b>
+            </div>
+            <div class="tui-proposal">
+              <div>
+                <span>✳</span>
+                <b>Change ready to review</b>
+                <small>src/styles/hero.css · +8 −3</small>
+              </div>
+              <span class="tui-review">
+                Review diff <b>↗</b>
+              </span>
+            </div>
+            <div class="tui-composer">
+              <span>›</span>
+              <span>Ask Veasel to explain or propose a workspace change…</span>
+              <i></i>
+            </div>
+            <div class="tui-status">
+              <span>
+                <i></i> connected
+              </span>
+              <span>s models&nbsp; · &nbsp;/theme · /usage</span>
+              <span>↑ ↓ navigate</span>
+            </div>
           </div>
         </div>
+        <div class="tui-caption">
+          <span>THE INTERFACE, BUILT IN CODE</span>
+          <span>Not a screenshot — every panel is live HTML.</span>
+        </div>
       </div>
+      <div class="float-note note-top">
+        <span>⌁</span> ideas welcome
+      </div>
+      <div class="float-note note-bottom">
+        <span>↗</span> your repo, your rules
+      </div>
+    </div>
+    <div class="hero-ribbon" aria-hidden="true">
+      A SMALLER STEP TO YOUR NEXT BIG THING <span>✳</span> A SMALLER STEP TO
+      YOUR NEXT BIG THING <span>✳</span>
     </div>
   </section>
 
@@ -148,7 +197,7 @@ const basePath = import.meta.env.BASE_URL.replace(/\/$/, "");
       <h2 id="welcome-title">
         You steer.
         <br />
-        <em>Veasel waits.</em>
+        <span>Veasel waits.</span>
       </h2>
     </div>
     <p class="section-lede">
@@ -157,24 +206,39 @@ const basePath = import.meta.env.BASE_URL.replace(/\/$/, "");
       every risky action behind your approval.
     </p>
     <div class="value-grid">
-      <article class="value-item">
+      <article class="value-card card-mint">
+        <span class="doodle">⌂</span>
         <p class="card-label">LOCAL FIRST</p>
-        <h3>Workspace stays on your machine.</h3>
+        <h3>
+          Workspace stays
+          <br />
+          on your machine.
+        </h3>
         <p>
           The V backend stores sessions in SQLite and listens on loopback by
           default.
         </p>
       </article>
-      <article class="value-item">
+      <article class="value-card card-yellow">
+        <span class="doodle">⏸</span>
         <p class="card-label">APPROVAL GATED</p>
-        <h3>Edits, shell, and MCP pause for you.</h3>
+        <h3>
+          Edits, shell, and
+          <br />
+          MCP pause for you.
+        </h3>
         <p>
           Review the exact diff, command, or MCP arguments before anything runs.
         </p>
       </article>
-      <article class="value-item">
+      <article class="value-card card-lilac">
+        <span class="doodle">⌘</span>
         <p class="card-label">YOUR PROVIDER</p>
-        <h3>Bring the models you already use.</h3>
+        <h3>
+          Bring the models
+          <br />
+          you already use.
+        </h3>
         <p>
           OpenAI-compatible, Anthropic, Gemini, and Meta Model API adapters
           share one session workflow.
@@ -190,19 +254,39 @@ const basePath = import.meta.env.BASE_URL.replace(/\/$/, "");
         <h2 id="provider-title">
           One agent core.
           <br />
-          <em>Several ways in.</em>
+          <span>Several ways in.</span>
         </h2>
         <p>
           Switch providers in settings while the same local session store and
           review flow stay in place.
         </p>
       </div>
-      <ul class="provider-list">
-        <li>OpenAI-compatible</li>
-        <li>Anthropic</li>
-        <li>Gemini</li>
-        <li>Meta Model API</li>
-      </ul>
+      <div
+        class="provider-orbit"
+        aria-label="Available AI provider integrations"
+      >
+        <span class="provider-chip chip-openai">
+          <i>◌</i> OpenAI-compatible
+        </span>
+        <span class="provider-chip chip-claude">
+          <i>✳</i> Anthropic
+        </span>
+        <span class="provider-chip chip-gemini">
+          <i>✦</i> Gemini
+        </span>
+        <span class="provider-chip chip-meta">
+          <i>◆</i> Meta Model API
+        </span>
+        <div class="provider-core">
+          <b>one</b>
+          <small>
+            agent
+            <br />
+            core
+          </small>
+        </div>
+        <span class="orbit-caption">AVAILABLE IN SOURCE</span>
+      </div>
     </div>
   </section>
 
@@ -212,43 +296,46 @@ const basePath = import.meta.env.BASE_URL.replace(/\/$/, "");
       <h2 id="how-title">
         Open a project.
         <br />
-        <em>Keep the thread.</em>
+        <span>Keep the thread.</span>
       </h2>
       <p>
         Small pieces that keep the conversation and the workspace connected.
       </p>
     </div>
-    <ol class="flow-list">
-      <li>
-        <span class="flow-step">01</span>
+    <div class="flow-list">
+      <article>
+        <span class="flow-icon icon-lime">⌘</span>
         <div>
-          <small>YOU</small>
+          <small>01 · YOU</small>
           <h3>Start in a repository</h3>
           <p>Run Veasel from the project you want to work on.</p>
         </div>
-      </li>
-      <li>
-        <span class="flow-step">02</span>
+        <span class="flow-arrow">↓</span>
+      </article>
+      <article>
+        <span class="flow-icon icon-lavender">☷</span>
         <div>
-          <small>VEASEL</small>
+          <small>02 · VEASEL</small>
           <h3>Keep a lasting session</h3>
           <p>
             Local SQLite storage and a replayable event stream hold the thread.
           </p>
         </div>
-      </li>
-      <li>
-        <span class="flow-step">03</span>
+        <span class="flow-arrow">↓</span>
+      </article>
+      <article>
+        <span class="flow-icon icon-peach">✳</span>
         <div>
-          <small>TOGETHER</small>
+          <small>03 · TOGETHER</small>
           <h3>Review before write</h3>
           <p>
             Veasel streams replies, inspects files, and proposes single-file
             edits. Shell and MCP calls need exact approval first.
           </p>
         </div>
-      </li>
-    </ol>
+        <span class="flow-arrow">✦</span>
+      </article>
+    </div>
   </section>
 
   <section class="reality-band">
@@ -258,7 +345,7 @@ const basePath = import.meta.env.BASE_URL.replace(/\/$/, "");
         <h2>
           What works
           <br />
-          <em>today.</em>
+          <span>today.</span>
         </h2>
         <p>
           Veasel Code is early. We show the foundation as it ships — not a
@@ -323,13 +410,13 @@ const basePath = import.meta.env.BASE_URL.replace(/\/$/, "");
       <h2>
         Install the preview.
         <br />
-        <em>Configure a model.</em>
+        <span>Configure a model.</span>
       </h2>
       <p>
         Download Veasel Code, pick a provider in settings, and start working in
         your repository.
       </p>
-      <a class="button button-mint" href={`${basePath}/downloads/`}>
+      <a class="button button-dark" href={`${basePath}/downloads/`}>
         Download Veasel Code <span>→</span>
       </a>
       <a class="text-link" href={`${basePath}/docs/quickstart/`}>
@@ -346,21 +433,26 @@ const basePath = import.meta.env.BASE_URL.replace(/\/$/, "");
         <small>02&nbsp; CONFIGURE YOUR MODEL IN SETTINGS</small>
         <code>Press s · choose provider and model</code>
       </div>
-      <div class="install-foot">V runtime · OpenTUI client · local SQLite</div>
+      <div class="install-foot">
+        V runtime · OpenTUI client · local SQLite <span>♥</span>
+      </div>
     </div>
   </section>
 
   <section class="finale">
     <div class="wrap finale-inner">
+      <div class="finale-star" aria-hidden="true">
+        ✳
+      </div>
       <p class="kicker">OPEN SOURCE</p>
       <h2>
         Follow the build.
         <br />
-        <em>Shape what ships next.</em>
+        <span>Shape what ships next.</span>
       </h2>
       <a
         href="https://github.com/veasel-labs/veasel"
-        class="button button-ghost-light"
+        class="button button-light"
       >
         Meet us on GitHub <span>↗</span>
       </a>
