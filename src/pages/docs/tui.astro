@@ -81,9 +81,9 @@ const basePath = import.meta.env.BASE_URL.replace(/\/$/, "");
 /command show &lt;id&gt;
 /command approve &lt;id&gt;
 
-/mcp add stdio &lt;name&gt; &lt;command&gt; [args…]
-/mcp add http &lt;name&gt; &lt;url&gt;
-/mcp enable|disable|remove &lt;name&gt;
+/mcp add [user|project] stdio &lt;name&gt; &lt;command&gt; [args…]
+/mcp add [user|project] http &lt;name&gt; &lt;url&gt;
+/mcp enable|disable|remove [user|project] &lt;name&gt;
 /mcp trust configured/&lt;name&gt;
 /mcp calls
 /mcp call show &lt;id&gt;
@@ -96,10 +96,11 @@ const basePath = import.meta.env.BASE_URL.replace(/\/$/, "");
 /usage</code></pre>
       <p>
         File edits, shell, and MCP never take effect until you inspect and
-        approve. User-scoped MCP config persists in{" "}
-        <code>$VEASEL_DATA_DIR/mcp-servers.json</code>; trust is still
-        per-session. Rejected or interrupted work is not replayed automatically.
-        See the <a href={`${basePath}/docs/mcp/`}>MCP guide</a>.
+        approve. Configured MCP persists in user <code>mcp-servers.json</code>{" "}
+        or project <code>.veasel/mcp-servers.json</code>; workspace{" "}
+        <code>.mcp.json</code> imports read-only. Trust is still per-session.
+        Rejected or interrupted work is not replayed automatically. See the{" "}
+        <a href={`${basePath}/docs/mcp/`}>MCP guide</a>.
       </p>
     </div>
 

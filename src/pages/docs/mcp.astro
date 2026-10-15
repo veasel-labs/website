@@ -6,7 +6,7 @@ const basePath = import.meta.env.BASE_URL.replace(/\/$/, "");
 
 <DocsLayout
   title="MCP servers"
-  description="Add and manage user-scoped MCP servers in Veasel Code, trust them per session, and approve every tool call."
+  description="Add and manage user- and project-scoped MCP servers in Veasel Code, import portable mcpServers files, trust per session, and approve every tool call."
 >
   <section class="doc-page">
     <p class="kicker">FIELD GUIDE / MCP</p>
@@ -17,9 +17,9 @@ const basePath = import.meta.env.BASE_URL.replace(/\/$/, "");
     </h1>
     <p class="lede">
       Veasel can use Model Context Protocol servers from operator-managed user
-      config or from experimental Agent Plugin packages. Trust is per session;
-      every model-requested tool call still pauses for inspection and one-time
-      approval.
+      or project config, read-only portable imports, or experimental Agent
+      Plugin packages. Trust is per session; every model-requested tool call
+      still pauses for inspection and one-time approval.
     </p>
 
     <div class="compatibility-banner">
@@ -27,29 +27,63 @@ const basePath = import.meta.env.BASE_URL.replace(/\/$/, "");
         ⌘
       </span>
       <div>
-        <strong>User-scoped add/manage ships today</strong>
+        <strong>User + project scope ships today</strong>
         <p>
-          Add stdio or Streamable HTTP servers with <code>/mcp add</code> or{" "}
-          <code>POST /v1/mcp-servers</code>. Config persists in{" "}
-          <code>$VEASEL_DATA_DIR/mcp-servers.json</code> (owner-only mode when
-          the OS supports it). Capability: <code>mcp.servers.configured</code>.
-          Project-scoped MCP files and OAuth remain open.
+          Add stdio or Streamable HTTP servers with{" "}
+          <code>/mcp add [user|project]</code> or{" "}
+          <code>POST /v1/mcp-servers</code>. User config:{" "}
+          <code>$VEASEL_DATA_DIR/mcp-servers.json</code>. Project config:{" "}
+          <code>&lt;workspace&gt;/.veasel/mcp-servers.json</code>. Portable{" "}
+          <code>.mcp.json</code> / <code>.cursor/mcp.json</code> (
+          <code>mcpServers</code>) import read-only. Capability:{" "}
+          <code>mcp.servers.configured</code>. OAuth remains open.
         </p>
       </div>
     </div>
 
     <div class="doc-panel">
-      <h2>Add a user-scoped server (TUI)</h2>
+      <h2>Scopes and precedence</h2>
+      <ul class="guide-list">
+        <li>
+          <strong>user</strong> — writable{" "}
+          <code>$VEASEL_DATA_DIR/mcp-servers.json</code> (default for{" "}
+          <code>/mcp add</code>).
+        </li>
+        <li>
+          <strong>project</strong> — writable{" "}
+          <code>&lt;workspace&gt;/.veasel/mcp-servers.json</code>.
+        </li>
+        <li>
+          <strong>project-import</strong> — read-only portable{" "}
+          <code>mcpServers</code> from workspace <code>.mcp.json</code> then{" "}
+          <code>.cursor/mcp.json</code>. <code>.vscode/mcp.json</code> (
+          <code>servers</code> key) is not imported.
+        </li>
+        <li>
+          Same name for <code>configured/&lt;name&gt;</code>: project &gt;
+          project-import &gt; user.
+        </li>
+      </ul>
+    </div>
+
+    <div class="doc-panel">
+      <h2>Add and manage (TUI)</h2>
       <p>
-        In a session, type <code>/</code> for slash suggestions, then manage
-        configured servers:
+        In a session, type <code>/</code> for slash suggestions:
       </p>
-      <pre><code>/mcp add stdio memory npx -y @modelcontextprotocol/server-memory
+      <pre><code># User scope (default)
+/mcp add stdio memory npx -y @modelcontextprotocol/server-memory
 /mcp add http docs https://mcp.example.com/mcp
+
+# Project scope (session workspace)
+/mcp add project stdio repo-tools ./bin/mcp-server
+/mcp add project http docs https://mcp.example.com/mcp
+
 /mcp
 /mcp enable memory
-/mcp disable memory
-/mcp remove memory</code></pre>
+/mcp disable project repo-tools
+/mcp remove user memory
+/mcp remove project repo-tools</code></pre>
       <ul class="guide-list">
         <li>
           <code>stdio</code> — bare <code>PATH</code> command or absolute
@@ -66,16 +100,40 @@ const basePath = import.meta.env.BASE_URL.replace(/\/$/, "");
         </li>
         <li>
           Disabled servers leave durable config in place but drop out of the
-          plugin catalog until re-enabled.
+          plugin catalog until re-enabled. Imported portable entries are
+          read-only — edit the source file or add a writable project/user
+          override.
         </li>
       </ul>
     </div>
 
     <div class="doc-panel">
+      <h2>Portable import</h2>
+      <p>
+        Drop a portable <code>mcpServers</code> file at the workspace root.
+        Veasel lists it under scope <code>project-import</code> when the session
+        has a directory (or when the API passes <code>directory</code>):
+      </p>
+      <pre><code>&#123;
+  &quot;mcpServers&quot;: &#123;
+    &quot;memory&quot;: &#123;
+      &quot;command&quot;: &quot;npx&quot;,
+      &quot;args&quot;: [&quot;-y&quot;, &quot;@modelcontextprotocol/server-memory&quot;]
+    &#125;
+  &#125;
+&#125;</code></pre>
+      <p>
+        Prefer <code>.mcp.json</code> (Claude Code / Copilot portable) or{" "}
+        <code>.cursor/mcp.json</code>. Imports never overwrite writable user or
+        project files.
+      </p>
+    </div>
+
+    <div class="doc-panel">
       <h2>Trust, then approve each call</h2>
       <p>
-        Adding a server does not grant the model access. Trust it for the
-        current session, then review every tool call:
+        Adding or importing a server does not grant the model access. Trust it
+        for the current session, then review every tool call:
       </p>
       <pre><code>/mcp trust configured/memory
 /mcp untrust configured/memory
@@ -102,8 +160,8 @@ const basePath = import.meta.env.BASE_URL.replace(/\/$/, "");
     <div class="doc-panel">
       <h2>HTTP API</h2>
       <p>
-        Operator config (user scope) is separate from per-session trust and
-        per-call approval:
+        Operator config is separate from per-session trust and per-call
+        approval:
       </p>
       <div
         class="provider-table api-table"
@@ -119,21 +177,23 @@ const basePath = import.meta.env.BASE_URL.replace(/\/$/, "");
           <b role="cell">GET · POST</b>
           <code role="cell">/v1/mcp-servers</code>
           <span role="cell">
-            List or upsert user-scoped configured servers (secrets omitted from
-            views).
+            List (optional <code>?directory=</code> for project + imports) or
+            upsert (<code>scope</code> / <code>directory</code> for project).
           </span>
         </div>
         <div class="provider-table-row" role="row">
           <b role="cell">PATCH · DELETE</b>
           <code role="cell">{"/v1/mcp-servers/{name}"}</code>
-          <span role="cell">Enable/disable or remove a configured server.</span>
+          <span role="cell">
+            Enable/disable or remove; query <code>scope=user|project</code> and{" "}
+            <code>directory</code> for project.
+          </span>
         </div>
         <div class="provider-table-row" role="row">
           <b role="cell">GET · POST</b>
           <code role="cell">{"/v1/sessions/{id}/mcp-servers"}</code>
           <span role="cell">
-            List or update per-session trust (
-            <code>plugin_name=configured</code> for user-added servers).
+            Per-session trust (<code>plugin_name=configured</code>).
           </span>
         </div>
         <div class="provider-table-row" role="row">
@@ -144,11 +204,11 @@ const basePath = import.meta.env.BASE_URL.replace(/\/$/, "");
           </span>
         </div>
       </div>
-      <pre><code>curl -sS http://127.0.0.1:4097/v1/mcp-servers
+      <pre><code>curl -sS 'http://127.0.0.1:4097/v1/mcp-servers?directory=/path/to/workspace'
 curl -sS -X POST http://127.0.0.1:4097/v1/mcp-servers \
   -H 'content-type: application/json' \
-  -d '&#123;&quot;name&quot;:&quot;memory&quot;,&quot;transport&quot;:&quot;stdio&quot;,&quot;command&quot;:&quot;npx&quot;,&quot;args&quot;:[&quot;-y&quot;,&quot;@modelcontextprotocol/server-memory&quot;]&#125;'
-curl -sS -X PATCH http://127.0.0.1:4097/v1/mcp-servers/memory \
+  -d '&#123;&quot;name&quot;:&quot;memory&quot;,&quot;transport&quot;:&quot;stdio&quot;,&quot;command&quot;:&quot;npx&quot;,&quot;args&quot;:[&quot;-y&quot;,&quot;@modelcontextprotocol/server-memory&quot;],&quot;scope&quot;:&quot;project&quot;,&quot;directory&quot;:&quot;/path/to/workspace&quot;&#125;'
+curl -sS -X PATCH 'http://127.0.0.1:4097/v1/mcp-servers/memory?scope=project&amp;directory=/path/to/workspace' \
   -H 'content-type: application/json' \
   -d '&#123;&quot;enabled&quot;:false&#125;'</code></pre>
       <p>
@@ -178,8 +238,10 @@ curl -sS -X PATCH http://127.0.0.1:4097/v1/mcp-servers/memory \
     <div class="doc-panel">
       <h2>Still open</h2>
       <ul class="guide-list">
-        <li>Project-scoped MCP config files (writable workspace files).</li>
         <li>OAuth for remote MCP servers.</li>
+        <li>
+          Import of <code>.vscode/mcp.json</code> (<code>servers</code> layout).
+        </li>
         <li>
           Full Agent Plugins v1.0.0 conformance and OS sandboxing for stdio MCP.
         </li>

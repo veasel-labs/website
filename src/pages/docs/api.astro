@@ -92,7 +92,8 @@ const basePath = import.meta.env.BASE_URL.replace(/\/$/, "");
           <b role="cell">GET · POST</b>
           <code role="cell">/v1/mcp-servers</code>
           <span role="cell">
-            List or upsert user-scoped configured MCP servers (
+            List or upsert configured MCP servers (user/project; optional{" "}
+            <code>directory</code> adds project + <code>.mcp.json</code> import;
             <code>mcp.servers.configured</code>).
           </span>
         </div>
@@ -100,7 +101,8 @@ const basePath = import.meta.env.BASE_URL.replace(/\/$/, "");
           <b role="cell">PATCH · DELETE</b>
           <code role="cell">{"/v1/mcp-servers/{name}"}</code>
           <span role="cell">
-            Enable/disable or remove a user-scoped configured MCP server.
+            Enable/disable or remove; <code>scope</code> /{" "}
+            <code>directory</code> select user or project.
           </span>
         </div>
         <div class="provider-table-row" role="row">
@@ -376,13 +378,14 @@ const basePath = import.meta.env.BASE_URL.replace(/\/$/, "");
     <div class="doc-panel">
       <h2>Approve MCP calls individually</h2>
       <p>
-        Add user-scoped servers with <code>POST /v1/mcp-servers</code> or{" "}
-        <code>/mcp add</code> (see the{" "}
-        <a href={`${basePath}/docs/mcp/`}>MCP guide</a>
-        ). Per-session trust lets a configured server connect; it does not
-        approve tool effects. Each model-requested call pauses the active turn.
-        Inspect its exact arguments before approval. Rejected calls never reach
-        the server and are not retried.
+        Add user- or project-scoped servers with{" "}
+        <code>POST /v1/mcp-servers</code> or{" "}
+        <code>/mcp add [user|project]</code> (see the{" "}
+        <a href={`${basePath}/docs/mcp/`}>MCP guide</a>). Per-session trust lets
+        a configured server connect; it does not approve tool effects. Each
+        model-requested call pauses the active turn. Inspect its exact arguments
+        before approval. Rejected calls never reach the server and are not
+        retried.
       </p>
       <pre><code>/mcp calls
 /mcp call show CALL_ID

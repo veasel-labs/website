@@ -87,13 +87,15 @@ const basePath = import.meta.env.BASE_URL.replace(/\/$/, "");
 /mcp trust review-tools/local
 /mcp untrust review-tools/local
 
-# Or add a standalone user-scoped server (no plugin package):
+# Or add a standalone configured server (no plugin package):
 /mcp add stdio memory npx -y @modelcontextprotocol/server-memory
+/mcp add project stdio repo-tools ./bin/mcp-server
 /mcp trust configured/memory</code></pre>
       <p>
         Local package links use <code>/v1/plugins/links</code> and capability{" "}
         <code>plugins.links</code>; they never download remote archives.
-        Standalone MCP config uses <code>/v1/mcp-servers</code> — see the{" "}
+        Standalone MCP config uses <code>/v1/mcp-servers</code> (user, project,
+        and read-only <code>.mcp.json</code> import) — see the{" "}
         <a href={`${basePath}/docs/mcp/`}>MCP guide</a>. The plugin and Skill
         names come from the validated package manifest and directory. Skill
         selection and MCP trust persist with the session. Disabling a Skill
@@ -121,8 +123,8 @@ const basePath = import.meta.env.BASE_URL.replace(/\/$/, "");
           broader persistent per-install data surfaces.
         </li>
         <li>
-          Project-scoped MCP config files and OAuth for remote MCP servers
-          (user-scoped <code>/mcp add</code> already ships).
+          OAuth for remote MCP servers (<code>/mcp add</code> user/project scope
+          and portable <code>.mcp.json</code> import already ship).
         </li>
         <li>
           The complete spec-derived fixture matrix, Windows junction behavior,
