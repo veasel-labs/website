@@ -119,14 +119,25 @@ const basePath = import.meta.env.BASE_URL.replace(/\/$/, "");
     <div class="doc-panel faq-panel">
       <h2>What is Harbor support?</h2>
       <p>
-        Veasel ships adapter notes for Harbor’s installed-agent contract
-        (Bubblewrap + verified Linux release inside the task environment). It is
-        for evaluation harnesses, not a public benchmark dashboard claim. See{" "}
+        Veasel ships a <strong>local</strong> Harbor installed-agent adapter
+        pinned to Harbor <code>0.24.0</code>. Inside the task environment it
+        installs Bubblewrap plus the verified Linux x86_64 release (SHA-256
+        checked), then runs <code>veasel run</code> with an isolated data
+        directory, loopback API, and the autonomous opt-in. Supported Harbor
+        providers map to Veasel as <code>openai</code>,{" "}
+        <code>openai-responses</code>, <code>anthropic</code>,{" "}
+        <code>google</code>/<code>gemini</code>, <code>openai-compatible</code>,
+        and Meta Model API as <code>meta</code>. When{" "}
+        <code>veasel run --json</code> reports <code>usage_reported</code>,
+        those counters are copied into Harbor agent metadata; cost stays
+        unavailable without a price schedule. Veasel is not in Harbor’s built-in
+        registry and this site does not claim Index or leaderboard placement.
+        Details:{" "}
         <a href="https://github.com/veasel-labs/veasel/blob/main/docs/compatibility/harbor.md">
           docs/compatibility/harbor.md
-        </a>{" "}
-        and the site <a href={`${basePath}/benchmarks/`}>benchmarks</a> page for
-        measured startup honesty.
+        </a>
+        . Startup microbenchmark honesty lives on the{" "}
+        <a href={`${basePath}/benchmarks/`}>benchmarks</a> page.
       </p>
     </div>
     <div class="doc-panel faq-panel">
