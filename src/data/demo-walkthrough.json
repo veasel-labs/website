@@ -14,7 +14,7 @@
           "text": "# Verify SHA-256 before you run (downloads page links SHA256SUMS)"
         },
         { "kind": "command", "text": "veasel --version" },
-        { "kind": "output", "text": "veasel 0.38.0-next.0" },
+        { "kind": "output", "text": "veasel 0.39.0-next.0" },
         { "kind": "command", "text": "veasel" },
         {
           "kind": "output",
@@ -127,7 +127,7 @@
         { "kind": "command", "text": "/mcp call show <id>" },
         { "kind": "command", "text": "/mcp call approve <id>" }
       ],
-      "note": "Configured MCP shipped after v0.38.0-next.0 on main — package managers sync when the next verified prerelease publishes."
+      "note": "Configured MCP (user/project scope and portable .mcp.json import) ships in v0.39.0-next.0 archives and package-manager installs."
     },
     {
       "id": "headless",
