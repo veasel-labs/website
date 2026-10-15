@@ -58,9 +58,10 @@ through unsandboxed. Every model-requested MCP call pauses for exact-argument
 review and one-time approval; MCP stdio servers run with the server user's
 permissions and remain without an OS sandbox. Session messages support opt-in
 asynchronous responses through `Prefer: respond-async`. Their status is
-persisted and can be queried after reconnect; work interrupted by a restart is
-marked uncertain and never replayed. Durable queued workers and operation
-history management remain in development.
+persisted and can be queried after reconnect; queued async turns resume after
+restart (bounded per session). Mid-flight work interrupted by a restart is
+marked uncertain and never replayed. Operation history management and retention
+policy remain ahead.
 
 ## Community
 

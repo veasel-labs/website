@@ -17,23 +17,55 @@ const basePath = import.meta.env.BASE_URL.replace(/\/$/, "");
     </h1>
     <p class="lede">
       The bundled OpenTUI client talks to the local loopback API. Sessions,
-      reviews, and settings stay on your machine.
+      reviews, and settings stay on your machine. Type <code>/help</code> in a
+      session for the live shortcut list.
     </p>
 
     <div class="doc-panel">
       <h2>Home and sessions</h2>
       <ul class="guide-list">
         <li>
-          <kbd>j</kbd> / <kbd>k</kbd> or arrows move the session list; Enter
-          opens; <kbd>n</kbd> starts a session when the list is empty.
+          <kbd>j</kbd> / <kbd>k</kbd> or arrows move the session list;{" "}
+          <kbd>g</kbd> / <kbd>G</kbd> jump first/last when no filter is active;{" "}
+          <kbd>1</kbd>–<kbd>9</kbd> open the Nth visible session (sidebar labels
+          those slots); Enter opens; <kbd>n</kbd> starts a session when the list
+          is empty.
         </li>
         <li>
-          Long lists keep the selection on screen and show a position such as{" "}
-          <code>8/20</code>.
+          Type to filter by title or directory. <kbd>Ctrl+L</kbd> or Esc clears
+          the filter; the status line states which match is focused. Home/End and
+          PgUp/PgDn page long lists. Selection stays on screen with a plain{" "}
+          <code>Selected N of M</code> cue.
         </li>
         <li>
-          Esc cancels a running turn. Session history and events live in local
-          SQLite.
+          Esc cancels a running turn (it never clears the composer). Session
+          history and events live in local SQLite.
+        </li>
+      </ul>
+    </div>
+
+    <div class="doc-panel">
+      <h2>Composer and transcript</h2>
+      <ul class="guide-list">
+        <li>
+          With an empty composer, <kbd>↑</kbd> / <kbd>↓</kbd> recall earlier
+          submissions. PgUp/PgDn page the transcript; Home/End jump edges. End
+          sticks to the latest reply while streaming.
+        </li>
+        <li>
+          Readline edits: <kbd>Ctrl+A</kbd> / <kbd>Ctrl+E</kbd> ends,{" "}
+          <kbd>Ctrl+←</kbd> / <kbd>Ctrl+→</kbd> by word, <kbd>Ctrl+U</kbd>{" "}
+          clear draft, <kbd>Ctrl+W</kbd> delete previous word,{" "}
+          <kbd>Ctrl+K</kbd> kill to end.
+        </li>
+        <li>
+          <kbd>Ctrl+Y</kbd> copies the latest assistant reply (OSC 52). Esc
+          dismisses a notice or review first; a second Esc returns home.
+        </li>
+        <li>
+          Status uses ● idle, ◌ busy, ▲ attention, and ✖ error. Idle shows the
+          active provider/model when configured. Busy grows from{" "}
+          <code>thinking…</code> to measured <code>streaming · N chars</code>.
         </li>
       </ul>
     </div>
@@ -43,7 +75,8 @@ const basePath = import.meta.env.BASE_URL.replace(/\/$/, "");
       <ul class="guide-list">
         <li>
           <code>/connect</code> — paste an API key, save it locally, pick a
-          model (happy path).
+          model (happy path). Provider lists support the same j/k · g/G · 1–9 ·
+          type-to-filter · Ctrl+L keys.
         </li>
         <li>
           <kbd>s</kbd> or <code>/models</code> — full settings: endpoint
@@ -86,6 +119,8 @@ const basePath = import.meta.env.BASE_URL.replace(/\/$/, "");
 /mcp enable|disable|remove [user|project] &lt;name&gt;
 /mcp credentials
 /mcp credential set|remove …
+/mcp oauth authorize &lt;cred&gt; &lt;auth&gt; &lt;token&gt; &lt;client&gt; &lt;redirect&gt; [scope]
+/mcp oauth complete &lt;cred&gt; &lt;callback_url|state code&gt;
 /mcp trust configured/&lt;name&gt;
 /mcp calls
 /mcp call show &lt;id&gt;
@@ -98,10 +133,15 @@ const basePath = import.meta.env.BASE_URL.replace(/\/$/, "");
 /usage</code></pre>
       <p>
         File edits, shell, and MCP never take effect until you inspect and
-        approve. Configured MCP persists in user <code>mcp-servers.json</code>{" "}
-        or project <code>.veasel/mcp-servers.json</code>; workspace{" "}
-        <code>.mcp.json</code> imports read-only. Trust is still per-session.
-        Rejected or interrupted work is not replayed automatically. See the{" "}
+        approve. Empty-composer review hotkeys include Space multi-select, a/x
+        for the selection, Shift+A / Shift+X for all pending of that kind, and
+        Ctrl+R for the first pending list. Configured MCP persists in user{" "}
+        <code>mcp-servers.json</code> or project{" "}
+        <code>.veasel/mcp-servers.json</code>; workspace <code>.mcp.json</code>{" "}
+        imports read-only. Trust is still per-session. OAuth token values are
+        never shown in the TUI — prefer headless{" "}
+        <code>veasel mcp oauth … --listen</code> when Veasel should own the
+        loopback listener (it still does not open a browser). See the{" "}
         <a href={`${basePath}/docs/mcp/`}>MCP guide</a>.
       </p>
     </div>
@@ -109,8 +149,9 @@ const basePath = import.meta.env.BASE_URL.replace(/\/$/, "");
     <div class="doc-panel">
       <h2>Usage</h2>
       <p>
-        <code>/usage</code> shows provider-reported token totals when adapters
-        set <code>usage.reported</code>. Veasel does not invent cost figures.
+        <code>/usage</code> shows provider-reported token totals, average per
+        reported turn, and optional cache counters when adapters set{" "}
+        <code>usage.reported</code>. Veasel does not invent cost figures.
       </p>
     </div>
 
