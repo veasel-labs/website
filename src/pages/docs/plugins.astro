@@ -137,11 +137,11 @@ const basePath = import.meta.env.BASE_URL.replace(/\/$/, "");
         <li>
           Binary Skill assets and Skill-script execution with explicit approval
           are not supported. MCP stdio defaults to the current user’s OS
-          privileges; on Linux,{" "}
-          <code>VEASEL_MCP_STDIO_SANDBOX=auto|require</code> may wrap trusted
-          stdio in Bubblewrap when <code>bwrap</code> is available.
-          macOS/Windows MCP stdio stay unsandboxed (approved shell may wrap
-          separately).
+          privileges; <code>VEASEL_MCP_STDIO_SANDBOX=auto|require</code> may
+          wrap trusted stdio in Linux Bubblewrap, macOS Seatbelt, or Windows
+          AppContainer when available (honest{" "}
+          <code>mcp.stdio.sandbox.*</code> capabilities; approved shell uses
+          separate knobs).
         </li>
       </ul>
     </div>

@@ -237,10 +237,16 @@ veasel mcp add http docs https://mcp.example.com/mcp --credential my-cred</code>
           Rejected or interrupted calls are not replayed.
         </li>
         <li>
-          Trusted stdio processes inherit the server user by default. On Linux,{" "}
-          <code>VEASEL_MCP_STDIO_SANDBOX=auto|require</code> may wrap them in
-          Bubblewrap when <code>bwrap</code> is available; macOS/Windows stay
-          unsandboxed. Inspect effects before approval.
+          Trusted stdio processes inherit the server user by default (
+          <code>VEASEL_MCP_STDIO_SANDBOX</code> unset/off). Set{" "}
+          <code>auto</code> or <code>require</code> to wrap trusted stdio in
+          Linux Bubblewrap, macOS Seatbelt (
+          <code>/usr/bin/sandbox-exec</code>), or Windows AppContainer + Job
+          when available (capabilities{" "}
+          <code>mcp.stdio.sandbox.bubblewrap</code>,{" "}
+          <code>mcp.stdio.sandbox.seatbelt</code>,{" "}
+          <code>mcp.stdio.sandbox.windows</code> only when wrap will run;
+          network shared). Inspect effects before approval.
         </li>
       </ul>
     </div>
@@ -363,7 +369,8 @@ curl -sS -X PATCH 'http://127.0.0.1:4097/v1/mcp-servers/memory?scope=project&amp
           Import of <code>.vscode/mcp.json</code> (<code>servers</code> layout).
         </li>
         <li>
-          Full Agent Plugins v1.0.0 conformance and OS sandboxing for stdio MCP.
+          Full Agent Plugins v1.0.0 conformance (stdio sandbox opt-in is
+          shipped on Linux/macOS/Windows; default remains off).
         </li>
         <li>
           Product UI for inbound MCP notification streams (transport listen is
