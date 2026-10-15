@@ -72,6 +72,15 @@ const assetUrl = (name: string) => fallbackAssets[name] ?? "#";
         <p>
           Both packages install the same verified release archives listed below.
         </p>
+        <aside class="callout" style="margin-top: 16px">
+          <strong>Release sync wait state.</strong> The site fallback, Homebrew
+          cask, and AUR <code>veasel-code-bin</code> all track{" "}
+          <code>{release}</code> — currently the newest verified public
+          prerelease. Configured MCP (user/project scope, portable{" "}
+          <code>.mcp.json</code>) is on <code>veasel</code> <code>main</code>{" "}
+          after that tag. Package managers will bump automatically when the next
+          verified prerelease publishes; this site does not invent tags.
+        </aside>
       </div>
       <div class="package-commands">
         <div class="terminal-card">
