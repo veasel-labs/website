@@ -48,12 +48,18 @@ const basePath = import.meta.env.BASE_URL.replace(/\/$/, "");
         Veasel reuses a healthy server or starts one at
         <code>127.0.0.1:4097</code> before opening the TUI. Press
         <kbd>s</kbd> on the home screen or enter <code>/models</code> in a
-        session to choose a provider, model, endpoint, and API key. Create a
+        session and choose a provider. A known catalog endpoint is filled in;
+        press <kbd>Ctrl+U</kbd> to replace it. An endpoint that still contains a
+        placeholder, such as a Cloudflare account ID, asks for the URL. Type an
+        API key only when the provider requires one. Veasel then requests that
+        provider's model list, using the key you just typed or a key already
+        saved in the environment or profile. The request does not generate text.
+        If the list does not come back, enter a model ID. The last step sets the
+        output-token budget; 0 keeps Veasel's 4,096-token default, except Meta,
+        which leaves the field unset so Meta applies its own limit. Create a
         session by selecting a workspace directory; messages and events are
-        stored locally in SQLite. Local presets do not need a key by default.
-        For first-time provider setup, enter a model ID manually if the list is
-        not available before you save credentials. To run only the local API
-        server for another client, use <code>veasel serve</code>.
+        stored locally in SQLite. To run only the local API server for another
+        client, use <code>veasel serve</code>.
       </p>
     </div>
     <div class="doc-panel">
