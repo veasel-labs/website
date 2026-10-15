@@ -101,8 +101,11 @@ veasel plugins components enable demo skill review</code></pre>
           one-time approval.
         </li>
         <li>
-          Trusted stdio MCP processes inherit the server user and are not OS
-          sandboxed. Streamable HTTP refuses redirects and validates TLS.
+          Trusted stdio MCP processes inherit the server user by default. On
+          Linux, <code>VEASEL_MCP_STDIO_SANDBOX=auto|require</code> may wrap
+          them in Bubblewrap when <code>bwrap</code> is available;
+          macOS/Windows stay unsandboxed. Streamable HTTP refuses redirects and
+          validates TLS.
         </li>
       </ul>
     </div>

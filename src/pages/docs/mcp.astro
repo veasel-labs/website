@@ -237,8 +237,10 @@ veasel mcp add http docs https://mcp.example.com/mcp --credential my-cred</code>
           Rejected or interrupted calls are not replayed.
         </li>
         <li>
-          Trusted stdio processes inherit the server user and are{" "}
-          <strong>not</strong> OS-sandboxed. Inspect effects before approval.
+          Trusted stdio processes inherit the server user by default. On Linux,{" "}
+          <code>VEASEL_MCP_STDIO_SANDBOX=auto|require</code> may wrap them in
+          Bubblewrap when <code>bwrap</code> is available; macOS/Windows stay
+          unsandboxed. Inspect effects before approval.
         </li>
       </ul>
     </div>
