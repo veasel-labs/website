@@ -86,6 +86,14 @@ const basePath = import.meta.env.BASE_URL.replace(/\/$/, "");
           Status uses ● idle, ◌ busy, ▲ attention, and ✖ error. Idle shows the
           active provider/model when configured. Busy grows from{" "}
           <code>thinking…</code> to measured <code>streaming · N chars</code>.
+          While scrolled above a live stream, the cue reads{" "}
+          <code>streaming below · End follows</code>; End restores follow.
+        </li>
+        <li>
+          <strong>Reduced motion:</strong> set{" "}
+          <code>VEASEL_TUI_REDUCED_MOTION=1</code> (or GTK{" "}
+          <code>gtk-enable-animations=false</code>) to keep the busy glyph and
+          streaming cursor static instead of blinking.
         </li>
       </ul>
     </div>
@@ -114,11 +122,34 @@ const basePath = import.meta.env.BASE_URL.replace(/\/$/, "");
     <div class="doc-panel">
       <h2>Themes</h2>
       <p>
-        Use <code>/theme</code> to switch among <code>mint</code>,{" "}
-        <code>ember</code>, <code>slate</code>, <code>mono</code>, and{" "}
-        <code>aurora</code>. The default mint theme matches the product mock
-        (charcoal panels, mint accents, LOCAL cue).
+        Use <code>/theme</code> to list and switch themes. Builtins:{" "}
+        <code>mint</code> (default product look), <code>ember</code>,{" "}
+        <code>slate</code>, <code>mono</code>, <code>aurora</code>,{" "}
+        <code>day</code> (light), and <code>contrast</code> (high-contrast
+        light). The choice is stored in{" "}
+        <code>~/.config/veasel/tui-theme</code> (override with{" "}
+        <code>VEASEL_TUI_THEME</code>). While the <code>/theme</code> menu is
+        open, ↑/↓ preview colors live; Enter keeps the choice and Esc restores
+        the saved theme.
       </p>
+      <p>
+        <strong>Custom JSON themes:</strong> drop <code>*.json</code> files
+        under <code>~/.config/veasel/themes/</code> or{" "}
+        <code>&lt;workspace&gt;/.veasel/themes/</code>. Each file needs{" "}
+        <code>id</code>, <code>name</code>, and optional{" "}
+        <code>extends</code> (a builtin id) plus hex color overrides.{" "}
+        <code>/theme</code> lists those directories (missing, empty, or with
+        filenames) and surfaces clear errors for bad JSON. Project themes
+        override user themes with the same id; builtins cannot be replaced.
+      </p>
+      <pre><code>{
+  "id": "ocean",
+  "name": "Ocean",
+  "description": "Deep blue workspace",
+  "extends": "mint",
+  "brand": "#7dd3fc",
+  "shellBg": "#0a1628"
+}</code></pre>
     </div>
 
     <div class="doc-panel">
@@ -141,6 +172,7 @@ const basePath = import.meta.env.BASE_URL.replace(/\/$/, "");
 /mcp credential set|remove …
 /mcp oauth authorize &lt;cred&gt; &lt;auth&gt; &lt;token&gt; &lt;client&gt; &lt;redirect&gt; [scope]
 /mcp oauth complete &lt;cred&gt; &lt;callback_url|state code&gt;
+/mcp oauth refresh &lt;cred&gt;
 /mcp trust configured/&lt;name&gt;
 /mcp calls
 /mcp call show &lt;id&gt;
@@ -171,6 +203,10 @@ const basePath = import.meta.env.BASE_URL.replace(/\/$/, "");
           between pending reviews
         </li>
         <li>
+          <kbd>v</kbd> toggles OpenTUI DiffRenderable split view (synced scroll,
+          themed +/- signs, filetype SyntaxStyle) without leaving the review
+        </li>
+        <li>
           <kbd>Ctrl+R</kbd> opens the first pending review list (patches,
           commands, or MCP calls)
         </li>
@@ -178,10 +214,11 @@ const basePath = import.meta.env.BASE_URL.replace(/\/$/, "");
       <p>
         Configured MCP persists in user <code>mcp-servers.json</code> or project{" "}
         <code>.veasel/mcp-servers.json</code>; workspace <code>.mcp.json</code>{" "}
-        imports read-only. Trust is still per-session. OAuth token values are
-        never shown in the TUI — prefer headless{" "}
-        <code>veasel mcp oauth … --listen</code> when Veasel should own the
-        loopback listener (it still does not open a browser). See the{" "}
+        imports read-only. Trust is still per-session. OAuth:{" "}
+        <code>/mcp oauth authorize|complete|refresh</code> — refresh uses a
+        stored refresh token when present. Token values are never shown. Prefer
+        headless <code>veasel mcp oauth … --listen</code> when Veasel should own
+        the loopback listener (it still does not open a browser). See the{" "}
         <a href={`${basePath}/docs/mcp/`}>MCP guide</a>.
       </p>
     </div>
