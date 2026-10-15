@@ -101,13 +101,13 @@ const basePath = import.meta.env.BASE_URL.replace(/\/$/, "");
     <div class="doc-panel faq-panel">
       <h2>Can I use Agent Plugins already?</h2>
       <p>
-        Support is experimental. Veasel discovers local packages (including
-        operator-managed directory links via <code>/plugin add</code>), lets you
-        enable validated Skill instructions per session, and can expose trusted
-        stdio or Streamable HTTP MCP servers as model tools. For a standalone
-        server without a plugin package, use{" "}
-        <code>/mcp add [user|project]</code> (user:{" "}
-        <code>$VEASEL_DATA_DIR/mcp-servers.json</code>; project:{" "}
+        Yes for local packages. Veasel discovers directories (including durable
+        operator-managed links via <code>/plugin add [--replace]</code> with
+        install summaries), lets you enable validated Skill instructions per
+        session, toggle package components, and expose trusted stdio or
+        Streamable HTTP MCP servers as model tools. For a standalone server
+        without a plugin package, use <code>/mcp add [user|project]</code>{" "}
+        (user: <code>$VEASEL_DATA_DIR/mcp-servers.json</code>; project:{" "}
         <code>.veasel/mcp-servers.json</code>) or drop a portable{" "}
         <code>.mcp.json</code>, then <code>/mcp trust configured/name</code>.
         Named credentials and OAuth PKCE use <code>/mcp credentials</code> /{" "}
@@ -119,12 +119,10 @@ const basePath = import.meta.env.BASE_URL.replace(/\/$/, "");
         reject it. In the current source, that review says the call has not
         reached its server before the arguments, and a long argument list keeps
         the decision on the first screen. Rejected calls are not retried.
-        Trusted stdio processes default to the server user's permissions. On
-        Linux they may opt into Bubblewrap via{" "}
-        <code>VEASEL_MCP_STDIO_SANDBOX=auto|require</code> when{" "}
-        <code>bwrap</code> is available; macOS/Windows MCP stdio stay
-        unsandboxed (unlike approved shell). Veasel does not fetch remote plugin
-        packages or claim full Agent Plugins compatibility.
+        Trusted stdio processes default to the server user's permissions; set{" "}
+        <code>VEASEL_MCP_STDIO_SANDBOX=auto|require</code> for
+        Linux/macOS/Windows wraps when available. Veasel does not fetch remote
+        plugin packages or claim a marketplace.
       </p>
     </div>
     <div class="doc-panel faq-panel">

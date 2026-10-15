@@ -26,18 +26,20 @@ const basePath = import.meta.env.BASE_URL.replace(/\/$/, "");
       </span>
       <div>
         <strong>
-          Experimental Skills and MCP support · no compatibility claim yet
+          Local Agent Plugins READY · no remote marketplace claim
         </strong>
         <p>
-          Veasel discovers local packages, can activate validated Skills per
-          session, and can expose trusted stdio or Streamable HTTP MCP servers
-          as model tools. Active Skills can expose bounded UTF-8 resources from
-          their own directory for on-demand reading. Experimental
-          <code>allowed-tools</code> declarations restrict the exact tool names
-          available to the session; they cannot add tools or bypass approvals.
-          Skill text and resource files are untrusted, and scripts are not run
-          automatically. Veasel does not install packages or claim full v1.0.0
-          conformance.
+          Veasel loads local packages (including durable{" "}
+          <code>/plugin add [--replace]</code> directory links with install
+          summaries), activates validated Skills per session, toggles package
+          components, and exposes trusted stdio or Streamable HTTP MCP servers
+          as model tools behind per-call review. Active Skills can expose
+          bounded UTF-8 resources from their own directory for on-demand
+          reading. Experimental <code>allowed-tools</code> declarations restrict
+          the exact tool names available to the session; they cannot add tools
+          or bypass approvals. Skill text and resource files are untrusted, and
+          scripts are not run automatically. Veasel does not fetch remote plugin
+          archives or claim an upstream marketplace.
         </p>
       </div>
     </div>
@@ -79,6 +81,7 @@ const basePath = import.meta.env.BASE_URL.replace(/\/$/, "");
         backend and open a session in the TUI.
       </p>
       <pre><code>/plugin add /path/to/my-plugin
+/plugin add --replace /path/to/updated-plugin
 /plugin remove my-plugin
 /skills
 /skill on review-tools/review
@@ -117,12 +120,11 @@ const basePath = import.meta.env.BASE_URL.replace(/\/$/, "");
       </p>
     </div>
     <div class="doc-panel">
-      <h2>What remains before a conformance claim</h2>
+      <h2>Still open (not blocking local READY)</h2>
       <ul class="guide-list">
         <li>
-          Managed remote installation and updates, a registry of source and
-          version, component-level enablement beyond local directory links, and
-          broader persistent per-install data surfaces.
+          Remote marketplace install/update and an upstream package registry
+          (local durable links + component toggles already ship).
         </li>
         <li>
           Automatic browser launch for MCP OAuth (PKCE authorize/complete, named
@@ -130,9 +132,9 @@ const basePath = import.meta.env.BASE_URL.replace(/\/$/, "");
           <a href={`${basePath}/docs/mcp/`}>MCP guide</a>).
         </li>
         <li>
-          The complete spec-derived fixture matrix, Windows junction behavior,
-          additional transport lifecycle cases, and the documented
-          <code>com.veasel.code</code> extension contract.
+          Upstream-published cross-implementation fixtures (none at the pinned
+          v1.0.0 revision); Veasel’s CI-gated local corpus remains the evidence
+          base.
         </li>
         <li>
           Binary Skill assets and Skill-script execution with explicit approval

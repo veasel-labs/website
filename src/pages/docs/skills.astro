@@ -6,7 +6,7 @@ const basePath = import.meta.env.BASE_URL.replace(/\/$/, "");
 
 <DocsLayout
   title="Skills and plugins"
-  description="Universal SKILL.md discovery, model-catalog trust, one-shot invoke, and experimental Agent Plugins in Veasel Code."
+  description="Universal SKILL.md discovery, model-catalog trust, one-shot invoke, and local Agent Plugins in Veasel Code."
 >
   <section class="doc-page">
     <p class="kicker">FIELD GUIDE / SKILLS</p>
@@ -17,8 +17,8 @@ const basePath = import.meta.env.BASE_URL.replace(/\/$/, "");
     </h1>
     <p class="lede">
       Veasel discovers standalone <code>SKILL.md</code> folders from the project
-      and user roots other agents already use, plus experimental Agent Plugin
-      packages. Instructions are reference context — scripts are never
+      and user roots other agents already use, plus local Agent Plugin packages.
+      Instructions are reference context — scripts are never
       auto-executed. Enable for a session, or one-shot invoke for the next turn
       only.
     </p>
@@ -111,15 +111,15 @@ veasel plugins components enable demo skill review</code></pre>
     </div>
 
     <div class="doc-panel">
-      <h2>Agent Plugins (experimental)</h2>
+      <h2>Agent Plugins (local READY)</h2>
       <p>
         Packages are discovered from <code>$VEASEL_PLUGIN_DIR</code> or{" "}
         <code>$VEASEL_DATA_DIR/plugins</code>. Link a local package directory
-        with <code>/plugin add &lt;path&gt;</code> (or{" "}
+        with <code>/plugin add [--replace] &lt;path&gt;</code> (or{" "}
         <code>/v1/plugins/links</code>) — Veasel does not fetch remote packages.
-        Support covers Skills plus trusted stdio / Streamable HTTP MCP —{" "}
-        <strong>not full Agent Plugins v1.0.0 conformance</strong>. Track the
-        ledger:{" "}
+        Support covers Skills plus trusted stdio / Streamable HTTP MCP with
+        durable links, install summaries, and component toggles. A remote
+        marketplace is <strong>not</strong> claimed. Track the ledger:{" "}
         <a href="https://github.com/veasel-labs/veasel/blob/main/docs/compatibility/agent-plugins.md">
           docs/compatibility/agent-plugins.md
         </a>

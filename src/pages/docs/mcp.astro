@@ -17,7 +17,7 @@ const basePath = import.meta.env.BASE_URL.replace(/\/$/, "");
     </h1>
     <p class="lede">
       Configure stdio or Streamable HTTP servers from user/project config,
-      portable imports, or experimental Agent Plugins. Named credentials and
+      portable imports, or local Agent Plugins. Named credentials and
       authorization-code + PKCE OAuth (with refresh) ship for Streamable HTTP.
       Trust is per session; every model-requested tool call still pauses for
       inspection and one-time approval.
@@ -386,8 +386,8 @@ curl -sS -X PATCH 'http://127.0.0.1:4097/v1/mcp-servers/memory?scope=project&amp
           Import of <code>.vscode/mcp.json</code> (<code>servers</code> layout).
         </li>
         <li>
-          Full Agent Plugins v1.0.0 conformance (stdio sandbox opt-in is shipped
-          on Linux/macOS/Windows; default remains off).
+          Remote Agent Plugins marketplace (local host is READY; stdio sandbox
+          opt-in is shipped on Linux/macOS/Windows; default remains off).
         </li>
         <li>
           Product UI for inbound MCP notification streams (transport listen is
