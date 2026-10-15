@@ -25,11 +25,14 @@ const basePath = import.meta.env.BASE_URL.replace(/\/$/, "");
         It can propose a bounded edit to one text file at a time. In the TUI,
         inspect the saved diff with <code>/patch show &lt;id&gt;</code> and
         explicitly approve it with <code>/patch approve &lt;id&gt;</code>. The
-        loopback API has no application token, so same-user processes can call
-        its review and approval routes. Veasel can also propose shell commands;
-        each one must be opened and approved with its exact command, working
-        directory, and timeout. Approved commands run with the server user's
-        permissions and without an OS sandbox.
+        diff review starts with how many lines were added and removed, and a
+        long diff keeps that summary on the first screen. A shell review states
+        the missing sandbox before the command text. The loopback API has no
+        application token, so same-user processes can call its review and
+        approval routes. Veasel can also propose shell commands; each one must
+        be opened and approved with its exact command, working directory, and
+        timeout. Approved commands run with the server user's permissions and
+        without an OS sandbox.
       </p>
     </div>
     <div class="doc-panel faq-panel">
