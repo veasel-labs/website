@@ -29,8 +29,7 @@ const veaselStartup = startupResults.find(
 const tuiVersionP50 = tuiStartupReport.cli.version.wall.medianMs;
 const tuiHelpP50 = tuiStartupReport.cli.help.wall.medianMs;
 const tuiPtyP50 = tuiStartupReport.ptyConnectedMs.wall.medianMs;
-const tuiVersionRssMiB =
-  tuiStartupReport.cli.version.rssKb.medianKb / 1024;
+const tuiVersionRssMiB = tuiStartupReport.cli.version.rssKb.medianKb / 1024;
 const tuiHelpRssMiB = tuiStartupReport.cli.help.rssKb.medianKb / 1024;
 const tuiReportDate = new Date(tuiStartupReport.measuredAt).toLocaleDateString(
   "en-US",
@@ -283,11 +282,11 @@ const fmtMs = (value: number) => value.toFixed(1);
         <span aria-hidden="true">↳</span>
         <p>
           Binary line <code>{tuiStartupReport.binaries.tuiVersionLine}</code>.
-          Medians on this Linux x64 host only:{" "}
-          <code>--version</code> {fmtMs(tuiVersionP50)} ms ·{" "}
-          <code>--help</code> {fmtMs(tuiHelpP50)} ms · PTY connected{" "}
-          {fmtMs(tuiPtyP50)} ms. Windows ConPTY interactive smoke is still open
-          in the product checklist — this page does not claim it.
+          Medians on this Linux x64 host only: <code>--version</code>{" "}
+          {fmtMs(tuiVersionP50)} ms · <code>--help</code> {fmtMs(tuiHelpP50)} ms
+          · PTY connected {fmtMs(tuiPtyP50)} ms. Windows ConPTY interactive
+          smoke is still open in the product checklist — this page does not
+          claim it.
         </p>
       </div>
 
