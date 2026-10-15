@@ -97,14 +97,17 @@ const basePath = import.meta.env.BASE_URL.replace(/\/$/, "");
         </li>
         <li>
           <strong>MCP stdio containment.</strong> Default is unsandboxed (full
-          Veasel OS user). On Linux, trusted stdio may wrap in Bubblewrap when{" "}
+          Veasel OS user; stderr warns when starting unsandboxed). When{" "}
           <code>VEASEL_MCP_STDIO_SANDBOX</code> is <code>auto</code> or{" "}
-          <code>require</code> and <code>bwrap</code> is available (capability{" "}
-          <code>mcp.stdio.sandbox.bubblewrap</code>); missing <code>bwrap</code>{" "}
-          under auto falls back honestly; require fails closed. Network is
-          shared inside that wrap. macOS/Windows MCP stdio stay unsandboxed. Do
-          not treat a shell-sandbox review as covering MCP. OAuth PKCE is for
-          Streamable HTTP only — it does not contain stdio.
+          <code>require</code>, trusted stdio may wrap in Linux Bubblewrap (
+          <code>mcp.stdio.sandbox.bubblewrap</code>), macOS Seatbelt (
+          <code>mcp.stdio.sandbox.seatbelt</code>), or Windows AppContainer +
+          Job (<code>mcp.stdio.sandbox.windows</code>) when that backend is
+          available. Missing backends under auto fall back honestly; require
+          fails closed. Network is shared inside those wraps;
+          PLUGIN_ROOT/PLUGIN_DATA stay writable. Do not treat a shell-sandbox
+          review as covering MCP. OAuth PKCE is for Streamable HTTP only — it
+          does not contain stdio.
         </li>
       </ul>
     </div>

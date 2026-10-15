@@ -46,4 +46,21 @@ describe("MCP OAuth and runtime docs honesty", () => {
     assert.match(roadmap, /no\s+automatic browser launch/i);
     assert.match(roadmap, /automatic OAuth browser\s+launch/);
   });
+
+  it("documents three-OS MCP stdio sandbox opt-in", async () => {
+    const mcp = await readDoc("src/pages/docs/mcp.astro");
+    const plugins = await readDoc("src/pages/docs/plugins.astro");
+    const security = await readDoc("src/pages/docs/security.astro");
+    for (const doc of [mcp, plugins, security]) {
+      assert.match(doc, /VEASEL_MCP_STDIO_SANDBOX/);
+      assert.match(doc, /Bubblewrap/);
+      assert.match(doc, /Seatbelt/);
+      assert.match(doc, /AppContainer/);
+      assert.doesNotMatch(doc, /macOS\/Windows (MCP )?stdio stay unsandboxed/i);
+    }
+    assert.match(mcp, /mcp\.stdio\.sandbox\.bubblewrap/);
+    assert.match(mcp, /mcp\.stdio\.sandbox\.seatbelt/);
+    assert.match(mcp, /mcp\.stdio\.sandbox\.windows/);
+    assert.doesNotMatch(mcp, /OS sandboxing for stdio MCP/);
+  });
 });
