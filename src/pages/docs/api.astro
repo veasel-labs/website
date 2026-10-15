@@ -414,11 +414,14 @@ const basePath = import.meta.env.BASE_URL.replace(/\/$/, "");
         <code>session.turn_completed</code>, or query
         <code>/v1/sessions/SESSION_ID/operations/OPERATION_ID</code> after
         reconnecting. A completed turn stores its operation status and chat
-        history together. Queued async turns resume after restart (bounded per
-        session). If the server restarts after a worker claimed the turn but
-        before recording a result, the operation becomes <code>uncertain</code>;
-        Veasel never repeats possible provider or tool effects. Operation
-        history management and retention policy remain ahead.
+        history together. Queued async turns resume after restart (at most 32
+        queued rows per session) when request, workspace, and model still
+        validate. <code>autonomous:true</code> queued rows resume only when{" "}
+        <code>VEASEL_ALLOW_AUTONOMOUS_EXECUTION=1</code> is set — otherwise they
+        cancel without claim. If the server restarts after a worker claimed the
+        turn but before recording a result, the operation becomes{" "}
+        <code>uncertain</code>; Veasel never repeats possible provider or tool
+        effects. Operation history management and retention policy remain ahead.
       </p>
       <pre><code>curl -X POST \
   -H 'Content-Type: application/json' \

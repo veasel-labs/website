@@ -75,10 +75,14 @@ VEASEL_SESSION_COMPACTION_SUMMARIZER=llm         # optional provider summary</co
       <h2>Durable async turns</h2>
       <p>
         Clients that send <code>Prefer: respond-async</code> get a durable
-        operation ID. Queued turns resume after restart. If the process dies
-        after a worker claimed the turn, startup marks it <code>uncertain</code>{" "}
-        and never replays provider calls or tool effects. Inspect the workspace
-        before retrying.
+        operation ID (at most 32 queued rows per session). Queued turns resume
+        after restart when the request, workspace, and model still validate.{" "}
+        <code>autonomous:true</code> rows are not claimed unless the server
+        opted in with <code>VEASEL_ALLOW_AUTONOMOUS_EXECUTION=1</code> (same
+        gate as the HTTP turn path); otherwise they cancel without starting
+        work. If the process dies after a worker claimed the turn, startup marks
+        it <code>uncertain</code> and never replays provider calls or tool
+        effects. Inspect the workspace before retrying.
       </p>
     </div>
 

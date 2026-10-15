@@ -66,11 +66,14 @@ const basePath = import.meta.env.BASE_URL.replace(/\/$/, "");
       <p>
         Async session turns have a durable operation ID and status you can query
         after reconnecting. Queued <code>Prefer: respond-async</code> turns
-        resume after restart (bounded per session). If the server stops after a
-        worker claimed the turn but before storing a result, Veasel marks it{" "}
-        <code>uncertain</code> and never retries a provider call or possible
-        tool effect automatically. Inspect your workspace and operation status
-        before deciding whether to try again.
+        resume after restart (at most 32 queued per session) when the request
+        still validates. Autonomous queued rows need{" "}
+        <code>VEASEL_ALLOW_AUTONOMOUS_EXECUTION=1</code> or they cancel without
+        starting. If the server stops after a worker claimed the turn but before
+        storing a result, Veasel marks it <code>uncertain</code> and never
+        retries a provider call or possible tool effect automatically. Inspect
+        your workspace and operation status before deciding whether to try
+        again.
       </p>
     </div>
     <div class="doc-panel faq-panel">
