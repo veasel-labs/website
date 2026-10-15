@@ -17,6 +17,7 @@ const links = [
   { href: "/demo/", label: "Demo" },
   { href: "/docs/", label: "Docs" },
   { href: "/benchmarks/", label: "Benchmarks" },
+  { href: "/evals/", label: "Evals" },
   { href: "/downloads/", label: "Downloads" },
 ];
 
@@ -26,6 +27,9 @@ function navCurrent(href: string, path: string) {
   }
   if (href === "/demo/") {
     return path === "/demo/" || path.startsWith("/demo/");
+  }
+  if (href === "/evals/") {
+    return path === "/evals/" || path.startsWith("/evals/");
   }
   return path === href;
 }

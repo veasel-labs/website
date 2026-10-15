@@ -45,17 +45,20 @@ const steps = walkthrough.steps;
 
     <div class="demo-shell">
       <nav class="demo-steps" aria-label="Walkthrough steps">
-        <p class="demo-steps-label">Steps</p>
-        <ol id="demo-step-list">
+        <p class="demo-steps-label" id="demo-steps-label">
+          Steps
+        </p>
+        <ol id="demo-step-list" aria-labelledby="demo-steps-label">
           {steps.map((step, index) => (
             <li>
               <button
                 type="button"
                 class="demo-step-button"
                 data-demo-step={index}
+                aria-controls="demo-stage"
                 aria-current={index === 0 ? "step" : undefined}
               >
-                <span class="demo-step-index">
+                <span class="demo-step-index" aria-hidden="true">
                   {String(index + 1).padStart(2, "0")}
                 </span>
                 <span>
@@ -68,12 +71,20 @@ const steps = walkthrough.steps;
         </ol>
       </nav>
 
-      <div class="demo-stage">
+      <div
+        class="demo-stage"
+        id="demo-stage"
+        role="region"
+        aria-labelledby="demo-title"
+        tabindex="-1"
+      >
         <div class="demo-stage-head">
           <p id="demo-kicker" class="demo-kicker">
             {steps[0].kicker}
           </p>
-          <h2 id="demo-title">{steps[0].title}</h2>
+          <h2 id="demo-title" tabindex="-1">
+            {steps[0].title}
+          </h2>
           <p id="demo-summary" class="demo-summary">
             {steps[0].summary}
           </p>
@@ -83,6 +94,7 @@ const steps = walkthrough.steps;
           class="demo-terminal"
           aria-live="polite"
           aria-atomic="true"
+          aria-relevant="text"
           aria-label="Walkthrough terminal script"
         >
           <div class="demo-terminal-bar">
@@ -116,19 +128,30 @@ const steps = walkthrough.steps;
         </div>
 
         <div class="demo-controls">
-          <button type="button" id="demo-prev" class="button button-quiet">
+          <button
+            type="button"
+            id="demo-prev"
+            class="button button-quiet"
+            aria-label="Previous walkthrough step"
+          >
             Previous
           </button>
           <p id="demo-progress" class="demo-progress" aria-live="polite">
             Step 1 of {steps.length}
           </p>
-          <button type="button" id="demo-next" class="button button-dark">
+          <button
+            type="button"
+            id="demo-next"
+            class="button button-dark"
+            aria-label="Next walkthrough step"
+          >
             Next step <span aria-hidden="true">→</span>
           </button>
         </div>
-        <p class="demo-keys">
+        <p class="demo-keys" id="demo-keys-help">
           Keyboard: <kbd>←</kbd> <kbd>→</kbd> or <kbd>j</kbd> <kbd>k</kbd> ·
-          <kbd>1</kbd>–<kbd>{Math.min(steps.length, 9)}</kbd> jump
+          <kbd>Home</kbd> <kbd>End</kbd> · <kbd>1</kbd>–
+          <kbd>{Math.min(steps.length, 9)}</kbd> jump
         </p>
       </div>
     </div>
@@ -139,6 +162,9 @@ const steps = walkthrough.steps;
       </a>
       <a class="text-link" href={`${basePath}/docs/mcp/`}>
         MCP guide <span aria-hidden="true">→</span>
+      </a>
+      <a class="text-link" href={`${basePath}/evals/`}>
+        Evals & ATIF status <span aria-hidden="true">→</span>
       </a>
       <a class="text-link" href={`${basePath}/downloads/`}>
         Downloads <span aria-hidden="true">→</span>
@@ -175,9 +201,10 @@ const steps = walkthrough.steps;
       })
       .join("\n");
 
-  const show = (nextIndex) => {
+  const show = (nextIndex, { focusTitle = false } = {}) => {
     index = Math.max(0, Math.min(steps.length - 1, nextIndex));
     const step = steps[index];
+    if (!step) return;
     if (title) title.textContent = step.title;
     if (kicker) kicker.textContent = step.kicker;
     if (summary) summary.textContent = step.summary;
@@ -190,44 +217,68 @@ const steps = walkthrough.steps;
       if (selected) button.setAttribute("aria-current", "step");
       else button.removeAttribute("aria-current");
     }
+    buttons[index]?.scrollIntoView({
+      block: "nearest",
+      inline: "nearest",
+      behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches
+        ? "auto"
+        : "smooth",
+    });
     if (prev instanceof HTMLButtonElement) prev.disabled = index === 0;
     if (next instanceof HTMLButtonElement) {
-      next.disabled = index === steps.length - 1;
-      next.innerHTML =
-        index === steps.length - 1
-          ? "Done"
-          : 'Next step <span aria-hidden="true">→</span>';
+      const atEnd = index === steps.length - 1;
+      next.disabled = false;
+      next.innerHTML = atEnd
+        ? "Done"
+        : 'Next step <span aria-hidden="true">→</span>';
+      next.setAttribute(
+        "aria-label",
+        atEnd ? "Last walkthrough step" : "Next walkthrough step",
+      );
+    }
+    if (focusTitle && title instanceof HTMLElement) {
+      title.focus({ preventScroll: true });
     }
   };
 
   for (const button of buttons) {
     button.addEventListener("click", () => {
-      show(Number(button.dataset.demoStep));
+      show(Number(button.dataset.demoStep), { focusTitle: true });
     });
   }
-  prev?.addEventListener("click", () => show(index - 1));
-  next?.addEventListener("click", () => show(index + 1));
+  prev?.addEventListener("click", () => show(index - 1, { focusTitle: true }));
+  next?.addEventListener("click", () => {
+    if (index >= steps.length - 1) return;
+    show(index + 1, { focusTitle: true });
+  });
   window.addEventListener("keydown", (event) => {
     const target = event.target;
     if (
       target instanceof HTMLElement &&
       (target.tagName === "INPUT" ||
         target.tagName === "TEXTAREA" ||
+        target.tagName === "SELECT" ||
         target.isContentEditable)
     ) {
       return;
     }
     if (event.key === "ArrowRight" || event.key === "j") {
       event.preventDefault();
-      show(index + 1);
+      show(index + 1, { focusTitle: true });
     } else if (event.key === "ArrowLeft" || event.key === "k") {
       event.preventDefault();
-      show(index - 1);
+      show(index - 1, { focusTitle: true });
+    } else if (event.key === "Home") {
+      event.preventDefault();
+      show(0, { focusTitle: true });
+    } else if (event.key === "End") {
+      event.preventDefault();
+      show(steps.length - 1, { focusTitle: true });
     } else if (/^[1-9]$/.test(event.key)) {
       const jump = Number(event.key) - 1;
       if (jump < steps.length) {
         event.preventDefault();
-        show(jump);
+        show(jump, { focusTitle: true });
       }
     }
   });
@@ -297,6 +348,7 @@ const steps = walkthrough.steps;
     grid-template-columns: auto 1fr;
     gap: 10px;
     width: 100%;
+    min-height: 44px;
     padding: 10px 12px;
     border: 0;
     border-radius: 12px;
@@ -309,9 +361,14 @@ const steps = walkthrough.steps;
   .demo-step-button[aria-current="step"] {
     background: var(--mint);
   }
-  .demo-step-button:focus-visible {
+  .demo-step-button:focus-visible,
+  .demo-controls .button:focus-visible,
+  #demo-title:focus-visible {
     outline: 2px solid var(--green);
     outline-offset: 2px;
+  }
+  #demo-title:focus {
+    outline: none;
   }
   .demo-step-index {
     color: var(--green-dark);
@@ -423,6 +480,10 @@ const steps = walkthrough.steps;
     justify-content: space-between;
     margin-top: 18px;
   }
+  .demo-controls .button {
+    min-height: 44px;
+    min-width: 7rem;
+  }
   .demo-progress {
     margin: 0;
     color: var(--muted);
@@ -454,6 +515,48 @@ const steps = walkthrough.steps;
     }
     .demo-steps {
       position: static;
+      padding: 12px;
+    }
+    .demo-steps ol {
+      display: flex;
+      gap: 8px;
+      overflow-x: auto;
+      padding-bottom: 4px;
+      scroll-snap-type: x proximity;
+      -webkit-overflow-scrolling: touch;
+    }
+    .demo-steps li {
+      flex: 0 0 auto;
+      scroll-snap-align: start;
+    }
+    .demo-steps li + li {
+      margin-top: 0;
+    }
+    .demo-step-button {
+      width: max-content;
+      max-width: min(72vw, 280px);
+      grid-template-columns: auto;
+      gap: 4px;
+    }
+    .demo-step-button small {
+      white-space: nowrap;
+    }
+    .demo-controls {
+      flex-direction: column;
+      align-items: stretch;
+    }
+    .demo-controls .button {
+      width: 100%;
+    }
+    .demo-progress {
+      order: -1;
+      text-align: center;
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .demo-step-button,
+    .demo-terminal {
+      transition: none;
     }
   }
   :root[data-theme="dark"] .demo-banner {
