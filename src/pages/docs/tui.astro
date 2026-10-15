@@ -6,7 +6,7 @@ const basePath = import.meta.env.BASE_URL.replace(/\/$/, "");
 
 <DocsLayout
   title="Terminal UI"
-  description="The Veasel Code TUI: multiline composer, DiffRenderable reviews, custom themes, @ paths, reduced motion, and keyboard excellence."
+  description="The Veasel Code TUI: MarkdownRenderable replies, $skill and fuzzy @ autocomplete, Diff content washes, context footers, custom themes, and reduced motion."
 >
   <section class="doc-page">
     <p class="kicker">FIELD GUIDE / TUI</p>
@@ -17,10 +17,11 @@ const basePath = import.meta.env.BASE_URL.replace(/\/$/, "");
     </h1>
     <p class="lede">
       The bundled OpenTUI client talks to the local loopback API. Multiline
-      drafts, DiffRenderable split reviews, custom JSON themes,{" "}
-      <code>@</code> path autocomplete, reduced-motion mode, and status cues
-      that stay honest. Type <code>/help</code> in a session for the live
-      shortcut list.
+      drafts, live + completed MarkdownRenderable replies, DiffRenderable
+      reviews with content washes, <code>$</code> skill and fuzzy{" "}
+      <code>@</code> path autocomplete, mode-aware context footers, dedicated
+      system/tool theme tokens, custom JSON themes, and reduced-motion mode.
+      Type <code>/help</code> in a session for the live shortcut list.
     </p>
 
     <div class="compatibility-banner">
@@ -30,10 +31,13 @@ const basePath = import.meta.env.BASE_URL.replace(/\/$/, "");
       <div>
         <strong>Keyboard excellence · visible reviews · a11y cues</strong>
         <p>
-          Shift+Enter newlines · <kbd>v</kbd> toggles DiffRenderable · builtin
-          + project/user JSON themes · <code>VEASEL_TUI_REDUCED_MOTION</code>{" "}
-          keeps busy glyphs static · status uses ● idle / ◌ busy / ▲ attention /
-          ✖ error without inventing progress bars.
+          Shift+Enter newlines · <kbd>$</kbd> skills / fuzzy <kbd>@</kbd> paths
+          · <kbd>v</kbd> DiffRenderable with content washes · Markdown for the
+          latest live and completed turn · context footers by mode · builtin +
+          project/user JSON themes (system/tool tokens) ·{" "}
+          <code>VEASEL_TUI_REDUCED_MOTION</code> keeps busy glyphs static ·
+          status uses ● idle / ◌ busy / ▲ attention / ✖ error without inventing
+          progress bars.
         </p>
       </div>
     </div>
@@ -77,6 +81,14 @@ const basePath = import.meta.env.BASE_URL.replace(/\/$/, "");
         <li>
           Type <kbd>@</kbd> to autocomplete workspace paths under the session
           directory (<kbd>Tab</kbd> / <kbd>Enter</kbd> inserts; Esc dismisses).
+          Ranking is typo-tolerant: exact / prefix / substring first, then
+          one-edit fuzzy matches.
+        </li>
+        <li>
+          Type <kbd>$</kbd> to autocomplete discovered Skills as a one-shot{" "}
+          <code>$source/skill</code> token (same Tab/Enter/Esc keys;
+          typo-tolerant ranking). This inserts a mention for the turn — it does
+          not replace <code>/skill on</code> for lasting session enablement.
         </li>
         <li>
           Readline edits: <kbd>Ctrl+A</kbd> / <kbd>Ctrl+E</kbd> ends,{" "}
@@ -94,10 +106,27 @@ const basePath = import.meta.env.BASE_URL.replace(/\/$/, "");
           also cancels an in-flight turn — it never clears the composer.
         </li>
         <li>
+          <strong>MarkdownRenderable:</strong> while stick-to-bottom follows the
+          latest assistant body, live streaming and the completed turn both
+          render through OpenTUI <code>MarkdownRenderable</code> (themed markup
+          + fenced code). Scrolling earlier lines falls back to TextChunk
+          markdown tones so Home/PgUp still page history; End remounts Markdown
+          for the latest reply.
+        </li>
+        <li>
           Transcript chrome tones fenced-code language tags, blockquotes, and
           muted diff context separately; add/remove diff lines use bold chrome.
           Truncated review summaries say how many lines remain (and{" "}
-          <code>{"}"}</code> when more hunks exist).
+          <code>{"}"}</code> when more hunks exist). Role labels keep dedicated{" "}
+          <code>system</code> / <code>tool</code> theme tokens so hierarchy
+          stays readable beside assistant/user colors.
+        </li>
+        <li>
+          <strong>Context footers:</strong> the always-visible footer swaps by
+          mode — default discovery, <code>@</code>-path / <code>$</code>-skill /
+          slash completion keys, pending-review hotkeys, or Esc cancel · End
+          follow while streaming — so the row stays under ~72 columns without
+          stuffing every hotkey at once.
         </li>
         <li>
           Status uses ● idle, ◌ busy, ▲ attention, and ✖ error. Idle shows the
@@ -154,7 +183,9 @@ const basePath = import.meta.env.BASE_URL.replace(/\/$/, "");
         under <code>~/.config/veasel/themes/</code> or{" "}
         <code>&lt;workspace&gt;/.veasel/themes/</code>. Each file needs{" "}
         <code>id</code>, <code>name</code>, and optional{" "}
-        <code>extends</code> (a builtin id) plus hex color overrides.{" "}
+        <code>extends</code> (a builtin id) plus hex color overrides — including
+        dedicated <code>systemLabel</code> / <code>systemText</code> /{" "}
+        <code>toolLabel</code> / <code>toolText</code> tokens.{" "}
         <code>/theme</code> lists those directories (missing, empty, or with
         filenames) and surfaces clear errors for bad JSON. Project themes
         override user themes with the same id; builtins cannot be replaced.
@@ -165,7 +196,9 @@ const basePath = import.meta.env.BASE_URL.replace(/\/$/, "");
   "description": "Deep blue workspace",
   "extends": "mint",
   "brand": "#7dd3fc",
-  "shellBg": "#0a1628"
+  "shellBg": "#0a1628",
+  "systemLabel": "#7dd3fc",
+  "toolLabel": "#e6c07b"
 }</code></pre>
     </div>
 
@@ -221,7 +254,8 @@ const basePath = import.meta.env.BASE_URL.replace(/\/$/, "");
         </li>
         <li>
           <kbd>v</kbd> toggles OpenTUI DiffRenderable split view (synced scroll,
-          themed +/- signs, filetype SyntaxStyle) without leaving the review
+          themed +/- signs, separate gutter/content washes, selection colors,
+          filetype SyntaxStyle) without leaving the review
         </li>
         <li>
           <kbd>Ctrl+R</kbd> opens the first pending review list (patches,
