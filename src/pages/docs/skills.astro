@@ -41,11 +41,33 @@ const basePath = import.meta.env.BASE_URL.replace(/\/$/, "");
       <pre><code>/skills              # list discovered skills
 /skills auth         # filter
 /skill on my-skill   # enable for this session
-/skill off my-skill</code></pre>
+/skill off my-skill
+
+# Headless (metadata only — never prints instruction bodies)
+veasel skills list
+veasel skills list --directory /path/to/project --json</code></pre>
       <p>
-        HTTP: <code>GET /v1/skills</code>. Capability discovery also lists
-        synthetic plugin catalog entries when skills exist without{" "}
-        <code>plugin.json</code>.
+        HTTP: <code>GET /v1/skills</code> (<code>skills.discovery</code>).
+        Capability discovery also lists synthetic plugin catalog entries when
+        skills exist without <code>plugin.json</code>. Skill scripts are never
+        auto-executed.
+      </p>
+    </div>
+
+    <div class="doc-panel">
+      <h2>Plugin component toggles</h2>
+      <p>
+        Disable individual skill or MCP components from a linked Agent Plugin
+        without removing the package link. Overrides live in{" "}
+        <code>$VEASEL_DATA_DIR/plugin-components.json</code> (
+        <code>plugins.components</code>):
+      </p>
+      <pre><code>veasel plugins components list
+veasel plugins components disable demo mcp local
+veasel plugins components enable demo skill review</code></pre>
+      <p>
+        Disabled skills cannot be session-activated; disabled MCP servers cannot
+        be trusted. HTTP: <code>GET/PATCH /v1/plugins/components</code>.
       </p>
     </div>
 

@@ -104,16 +104,28 @@ const basePath = import.meta.env.BASE_URL.replace(/\/$/, "");
         <code>$VEASEL_DATA_DIR/mcp-servers.json</code>; project:{" "}
         <code>.veasel/mcp-servers.json</code>) or drop a portable{" "}
         <code>.mcp.json</code>, then <code>/mcp trust configured/name</code>.
-        Plugin servers still use <code>/mcp trust plugin/server</code>. Trust
-        permits a server to connect; each model-requested tool call pauses the
-        turn until you inspect its exact arguments with <code>/mcp calls</code>{" "}
-        and approve or reject it. In the current source, that review says the
-        call has not reached its server before the arguments, and a long
-        argument list keeps the decision on the first screen. Rejected calls are
-        not retried. Trusted stdio processes run with the server user's
-        permissions and remain without an OS sandbox (unlike approved shell).
-        Veasel does not fetch remote plugin packages or claim full Agent Plugins
-        compatibility. See the <a href={`${basePath}/docs/mcp/`}>MCP guide</a>.
+        Named credentials and OAuth PKCE use <code>/mcp credentials</code> /{" "}
+        <code>veasel mcp oauth</code> (see the{" "}
+        <a href={`${basePath}/docs/mcp/`}>MCP guide</a>). Plugin servers still
+        use <code>/mcp trust plugin/server</code>. Trust permits a server to
+        connect; each model-requested tool call pauses the turn until you
+        inspect its exact arguments with <code>/mcp calls</code> and approve or
+        reject it. In the current source, that review says the call has not
+        reached its server before the arguments, and a long argument list keeps
+        the decision on the first screen. Rejected calls are not retried.
+        Trusted stdio processes run with the server user's permissions and
+        remain without an OS sandbox (unlike approved shell). Veasel does not
+        fetch remote plugin packages or claim full Agent Plugins compatibility.
+      </p>
+    </div>
+    <div class="doc-panel faq-panel">
+      <h2>Does MCP OAuth open my browser automatically?</h2>
+      <p>
+        No. <code>veasel mcp oauth authorize … --listen</code> starts a loopback
+        callback listener and prints the authorize URL to stderr. You open that
+        URL yourself; Veasel does not launch a browser. After the redirect,
+        complete the flow with the printed instructions (or{" "}
+        <code>veasel mcp oauth complete</code> when you already have a code).
       </p>
     </div>
     <div class="doc-panel faq-panel">

@@ -107,6 +107,41 @@ const basePath = import.meta.env.BASE_URL.replace(/\/$/, "");
         </div>
         <div class="provider-table-row" role="row">
           <b role="cell">GET · POST</b>
+          <code role="cell">/v1/mcp-credentials</code>
+          <span role="cell">
+            Named Streamable HTTP credentials (<code>mcp.credentials</code>;
+            header names only in responses).
+          </span>
+        </div>
+        <div class="provider-table-row" role="row">
+          <b role="cell">DELETE</b>
+          <code role="cell">{"/v1/mcp-credentials/{name}"}</code>
+          <span role="cell">Remove a named MCP credential.</span>
+        </div>
+        <div class="provider-table-row" role="row">
+          <b role="cell">POST</b>
+          <code role="cell">/v1/mcp-oauth/authorize</code>
+          <span role="cell">
+            PKCE S256 authorize (<code>mcp.oauth</code>); returns browser URL.
+          </span>
+        </div>
+        <div class="provider-table-row" role="row">
+          <b role="cell">POST</b>
+          <code role="cell">/v1/mcp-oauth/complete</code>
+          <span role="cell">
+            Finish OAuth with code/state or loopback <code>callback_url</code>.
+          </span>
+        </div>
+        <div class="provider-table-row" role="row">
+          <b role="cell">GET · PATCH</b>
+          <code role="cell">/v1/plugins/components</code>
+          <span role="cell">
+            List or toggle plugin skill/MCP components (
+            <code>plugins.components</code>).
+          </span>
+        </div>
+        <div class="provider-table-row" role="row">
+          <b role="cell">GET · POST</b>
           <code role="cell">/v1/plugins/links</code>
           <span role="cell">
             List or add local Agent Plugin directory links (no remote fetch).
@@ -259,6 +294,21 @@ const basePath = import.meta.env.BASE_URL.replace(/\/$/, "");
           <span role="cell">Reject a proposed command.</span>
         </div>
         <div class="provider-table-row" role="row">
+          <b role="cell">GET · POST</b>
+          <code role="cell">{"/v1/sessions/{id}/workspace/git/worktrees"}</code>
+          <span role="cell">
+            List git worktrees (filesystem) or add one (argv-only{" "}
+            <code>git worktree</code>).
+          </span>
+        </div>
+        <div class="provider-table-row" role="row">
+          <b role="cell">PATCH · DELETE</b>
+          <code role="cell">{"/v1/sessions/{id}/workspace/git/worktrees"}</code>
+          <span role="cell">
+            Lock/unlock or remove a worktree by absolute path.
+          </span>
+        </div>
+        <div class="provider-table-row" role="row">
           <b role="cell">GET</b>
           <code role="cell">
             {"/v1/sessions/{id}/operations/{operation_id}"}
@@ -381,16 +431,31 @@ const basePath = import.meta.env.BASE_URL.replace(/\/$/, "");
         Add user- or project-scoped servers with{" "}
         <code>POST /v1/mcp-servers</code> or{" "}
         <code>/mcp add [user|project]</code> (see the{" "}
-        <a href={`${basePath}/docs/mcp/`}>MCP guide</a>). Per-session trust lets
-        a configured server connect; it does not approve tool effects. Each
-        model-requested call pauses the active turn. Inspect its exact arguments
-        before approval. Rejected calls never reach the server and are not
-        retried.
+        <a href={`${basePath}/docs/mcp/`}>MCP guide</a>). Named credentials and
+        OAuth PKCE use <code>/v1/mcp-credentials</code> and{" "}
+        <code>/v1/mcp-oauth/*</code>. Per-session trust lets a configured server
+        connect; it does not approve tool effects. Each model-requested call
+        pauses the active turn. Inspect its exact arguments before approval.
+        Rejected calls never reach the server and are not retried.
       </p>
       <pre><code>/mcp calls
 /mcp call show CALL_ID
 /mcp call approve CALL_ID
 /mcp call reject CALL_ID</code></pre>
+    </div>
+    <div class="doc-panel">
+      <h2>Headless CLI companions</h2>
+      <p>
+        These commands talk to the same loopback API as the TUI (no invented
+        scores):
+      </p>
+      <pre><code>veasel run --prompt "…" --workspace . --json
+veasel mcp list
+veasel mcp credentials list
+veasel mcp oauth authorize &lt;cred&gt; … --listen   # prints URL; no auto browser
+veasel skills list [--directory .]
+veasel worktrees list
+veasel plugins components list</code></pre>
     </div>
     <aside class="callout">
       <strong>Loopback is the boundary.</strong> The API has no application

@@ -6,7 +6,7 @@ const basePath = import.meta.env.BASE_URL.replace(/\/$/, "");
 
 <DocsLayout
   title="MCP servers"
-  description="Add and manage user- and project-scoped MCP servers in Veasel Code, import portable mcpServers files, trust per session, and approve every tool call."
+  description="Configure MCP servers, named HTTP credentials, and OAuth PKCE authorize/complete in Veasel Code — trust per session and approve every tool call."
 >
   <section class="doc-page">
     <p class="kicker">FIELD GUIDE / MCP</p>
@@ -18,8 +18,10 @@ const basePath = import.meta.env.BASE_URL.replace(/\/$/, "");
     <p class="lede">
       Veasel can use Model Context Protocol servers from operator-managed user
       or project config, read-only portable imports, or experimental Agent
-      Plugin packages. Trust is per session; every model-requested tool call
-      still pauses for inspection and one-time approval.
+      Plugin packages. Named HTTP credentials and authorization-code + PKCE
+      OAuth are available for Streamable HTTP. Trust is per session; every
+      model-requested tool call still pauses for inspection and one-time
+      approval.
     </p>
 
     <div class="compatibility-banner">
@@ -27,16 +29,15 @@ const basePath = import.meta.env.BASE_URL.replace(/\/$/, "");
         ⌘
       </span>
       <div>
-        <strong>User + project scope ships today</strong>
+        <strong>Configured MCP + OAuth ship on main</strong>
         <p>
           Add stdio or Streamable HTTP servers with{" "}
           <code>/mcp add [user|project]</code> or{" "}
-          <code>POST /v1/mcp-servers</code>. User config:{" "}
-          <code>$VEASEL_DATA_DIR/mcp-servers.json</code>. Project config:{" "}
-          <code>&lt;workspace&gt;/.veasel/mcp-servers.json</code>. Portable{" "}
-          <code>.mcp.json</code> / <code>.cursor/mcp.json</code> (
-          <code>mcpServers</code>) import read-only. Capability:{" "}
-          <code>mcp.servers.configured</code>. OAuth remains open.
+          <code>POST /v1/mcp-servers</code>. Capabilities:{" "}
+          <code>mcp.servers.configured</code>, <code>mcp.credentials</code>,{" "}
+          <code>mcp.oauth</code>. Portable <code>.mcp.json</code> /{" "}
+          <code>.cursor/mcp.json</code> import read-only. OAuth prints an
+          authorize URL for you to open — Veasel does not auto-launch a browser.
         </p>
       </div>
     </div>
@@ -79,6 +80,10 @@ const basePath = import.meta.env.BASE_URL.replace(/\/$/, "");
 /mcp add project stdio repo-tools ./bin/mcp-server
 /mcp add project http docs https://mcp.example.com/mcp
 
+# Optional named HTTP credential (header names only in list views)
+/mcp credentials
+/mcp credential set gh-pat --header Authorization=Bearer …
+
 /mcp
 /mcp enable memory
 /mcp disable project repo-tools
@@ -92,7 +97,8 @@ const basePath = import.meta.env.BASE_URL.replace(/\/$/, "");
         </li>
         <li>
           <code>http</code> — Streamable HTTP URL with the same origin and
-          header rules as plugin MCP (HTTPS or loopback; redirects refused).
+          header rules as plugin MCP (HTTPS or loopback; redirects refused). May
+          reference a named credential; literal server headers win on conflicts.
         </li>
         <li>
           Names identify the server under the synthetic catalog package{" "}
@@ -103,6 +109,86 @@ const basePath = import.meta.env.BASE_URL.replace(/\/$/, "");
           plugin catalog until re-enabled. Imported portable entries are
           read-only — edit the source file or add a writable project/user
           override.
+        </li>
+        <li>
+          Headless: <code>veasel mcp list|add|…</code>,{" "}
+          <code>veasel mcp credentials …</code>, <code>veasel mcp oauth …</code>{" "}
+          (same loopback API).
+        </li>
+      </ul>
+    </div>
+
+    <div class="doc-panel">
+      <h2>Named credentials and OAuth (PKCE)</h2>
+      <p>
+        Streamable HTTP servers can attach a named credential from{" "}
+        <code>$VEASEL_DATA_DIR/mcp-credentials.json</code> (
+        <code>mcp.credentials</code>). Authorization-code + PKCE S256 stores the
+        verifier in owner-only{" "}
+        <code>$VEASEL_DATA_DIR/mcp-oauth-pending.json</code> and upserts{" "}
+        <code>Authorization: Bearer</code> into that credential on complete.
+        Secret values are never returned by the API or printed by the CLI.
+      </p>
+      <pre><code># Headless — print authorize URL, then complete manually
+veasel mcp oauth authorize my-cred \
+  --authorization-endpoint https://auth.example/authorize \
+  --token-endpoint https://auth.example/token \
+  --client-id veasel-local \
+  --redirect-uri http://127.0.0.1:PORT/callback
+# Open the printed URL yourself (no automatic browser launch)
+veasel mcp oauth complete my-cred --state … --code …
+# or: --callback-url 'http://127.0.0.1:PORT/callback?code=…&amp;state=…'
+
+# Headless — single-shot 127.0.0.1 loopback listener (still prints the URL)
+veasel mcp oauth authorize my-cred \
+  --authorization-endpoint https://auth.example/authorize \
+  --token-endpoint https://auth.example/token \
+  --client-id veasel-local \
+  --listen
+# Wait for the browser redirect to /callback, then the CLI completes for you
+
+# Attach credential when adding HTTP MCP
+veasel mcp add http docs https://mcp.example.com/mcp --credential my-cred</code></pre>
+      <ul class="guide-list">
+        <li>
+          API: <code>POST /v1/mcp-oauth/authorize</code> and{" "}
+          <code>POST /v1/mcp-oauth/complete</code> (<code>mcp.oauth</code>).{" "}
+          <code>redirect_uri</code> must be loopback HTTP.
+        </li>
+        <li>
+          <code>--listen</code> binds a one-shot <code>127.0.0.1</code> listener
+          on path <code>/callback</code>, prints <code>authorize_url</code> to
+          stderr, waits for the browser callback, then calls complete. It does{" "}
+          <strong>not</strong> open a browser for you.
+        </li>
+        <li>
+          Without <code>--listen</code>, copy the printed URL, finish login in a
+          browser, then run <code>oauth complete</code> with <code>code</code>+
+          <code>state</code> or <code>callback_url</code>.
+        </li>
+        <li>
+          On HTTP 401, Veasel parses Bearer challenges and may fetch protected
+          resource / authorization-server metadata to help you fill authorize
+          and token endpoints — it still does not start a dance until you call
+          authorize.
+        </li>
+      </ul>
+    </div>
+
+    <div class="doc-panel">
+      <h2>Transport notifications (honest scope)</h2>
+      <p>
+        These are MCP protocol behaviors, not a product notification center:
+      </p>
+      <ul class="guide-list">
+        <li>
+          On turn cancel, stdio and Streamable HTTP emit best-effort{" "}
+          <code>notifications/cancelled</code> for the in-flight request id.
+        </li>
+        <li>
+          Trusted Streamable HTTP may open a GET SSE notification stream after
+          initialize (<code>listen_notifications</code>); 405/404 means
+          unsupported. Messages go to an internal queue, not the chat UI.
         </li>
       </ul>
     </div>
@@ -191,6 +277,35 @@ const basePath = import.meta.env.BASE_URL.replace(/\/$/, "");
         </div>
         <div class="provider-table-row" role="row">
           <b role="cell">GET · POST</b>
+          <code role="cell">/v1/mcp-credentials</code>
+          <span role="cell">
+            List or upsert named HTTP header credentials (
+            <code>mcp.credentials</code>; values never returned).
+          </span>
+        </div>
+        <div class="provider-table-row" role="row">
+          <b role="cell">DELETE</b>
+          <code role="cell">{"/v1/mcp-credentials/{name}"}</code>
+          <span role="cell">Remove a named credential.</span>
+        </div>
+        <div class="provider-table-row" role="row">
+          <b role="cell">POST</b>
+          <code role="cell">/v1/mcp-oauth/authorize</code>
+          <span role="cell">
+            Start PKCE S256 authorize (<code>mcp.oauth</code>; returns URL +
+            state).
+          </span>
+        </div>
+        <div class="provider-table-row" role="row">
+          <b role="cell">POST</b>
+          <code role="cell">/v1/mcp-oauth/complete</code>
+          <span role="cell">
+            Exchange code/state or <code>callback_url</code>; upsert Bearer into
+            the named credential.
+          </span>
+        </div>
+        <div class="provider-table-row" role="row">
+          <b role="cell">GET · POST</b>
           <code role="cell">{"/v1/sessions/{id}/mcp-servers"}</code>
           <span role="cell">
             Per-session trust (<code>plugin_name=configured</code>).
@@ -238,12 +353,19 @@ curl -sS -X PATCH 'http://127.0.0.1:4097/v1/mcp-servers/memory?scope=project&amp
     <div class="doc-panel">
       <h2>Still open</h2>
       <ul class="guide-list">
-        <li>OAuth for remote MCP servers.</li>
+        <li>
+          Automatic browser launch for OAuth (today: print URL + optional
+          loopback <code>--listen</code>).
+        </li>
         <li>
           Import of <code>.vscode/mcp.json</code> (<code>servers</code> layout).
         </li>
         <li>
           Full Agent Plugins v1.0.0 conformance and OS sandboxing for stdio MCP.
+        </li>
+        <li>
+          Product UI for inbound MCP notification streams (transport listen is
+          internal).
         </li>
       </ul>
     </div>
