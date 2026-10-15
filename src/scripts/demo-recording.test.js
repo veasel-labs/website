@@ -6,18 +6,18 @@ import { fileURLToPath } from "node:url";
 
 const demoPath = fileURLToPath(new URL("../pages/demo.astro", import.meta.url));
 const castPath = fileURLToPath(
-  new URL("../../public/demo/veasel-0.40.0-next.0-demo.cast", import.meta.url),
+  new URL("../../public/demo/veasel-0.41.0-next.0-demo.cast", import.meta.url),
 );
 const metaPath = fileURLToPath(
   new URL(
-    "../../public/demo/veasel-0.40.0-next.0-demo.meta.json",
+    "../../public/demo/veasel-0.41.0-next.0-demo.meta.json",
     import.meta.url,
   ),
 );
 
-test("demo page embeds authentic asciinema recording for 0.40.0-next.0", async () => {
+test("demo page embeds authentic asciinema recording for 0.41.0-next.0", async () => {
   const source = await readFile(demoPath, "utf8");
-  assert.match(source, /veasel-0\.40\.0-next\.0-demo\.cast/);
+  assert.match(source, /veasel-0\.41\.0-next\.0-demo\.cast/);
   assert.match(source, /asciinema-player/);
   assert.match(source, /Terminal capture from the real binary/i);
   assert.doesNotMatch(source, /leaderboard score|99%|solved all tasks/i);
@@ -28,7 +28,7 @@ test("public demo cast is asciicast v2 with real CLI/TUI markers", async () => {
   const lines = raw.toString("utf8").trimEnd().split("\n");
   const header = JSON.parse(lines[0]);
   assert.equal(header.version, 2);
-  assert.match(header.title, /0\.40\.0-next\.0/);
+  assert.match(header.title, /0\.41\.0-next\.0/);
   const blob = lines
     .slice(1)
     .map((line) => JSON.parse(line))
@@ -36,7 +36,7 @@ test("public demo cast is asciicast v2 with real CLI/TUI markers", async () => {
     .map((event) => event[2])
     .join("");
   assert.match(blob, /\$ veasel --version/);
-  assert.match(blob, /Veasel Code 0\.40\.0-next\.0/);
+  assert.match(blob, /Veasel Code 0\.41\.0-next\.0/);
   assert.match(blob, /\$ veasel mcp list/);
   assert.match(blob, /Configured MCP/);
   assert.match(blob, /\/help/);
@@ -48,7 +48,7 @@ test("public demo cast is asciicast v2 with real CLI/TUI markers", async () => {
   assert.doesNotMatch(blob, /\/home\//);
 
   const meta = JSON.parse(await readFile(metaPath, "utf8"));
-  assert.equal(meta.veasel_version, "0.40.0-next.0");
+  assert.equal(meta.veasel_version, "0.41.0-next.0");
   assert.equal(meta.sha256, createHash("sha256").update(raw).digest("hex"));
   assert.match(meta.disclaimer, /No live model calls/i);
 });
