@@ -48,6 +48,7 @@ function navCurrent(href: string, path: string) {
     <link rel="canonical" href={canonicalUrl} />
     <link rel="icon" type="image/svg+xml" href={`${basePath}/mark.svg`} />
     <title>{title} · Veasel Code</title>
+    <slot name="head" />
     <script is:inline>
       const themeKey = "veasel-color-theme";
       const themeQuery = window.matchMedia("(prefers-color-scheme: dark)");

@@ -4,3 +4,7 @@ dist/
 .playwright-cli/
 .DS_Store
 .design-evidence/
+
+# Local asciinema capture workspace (binaries/venv)
+.demo-recording/
+.rec-test.txt

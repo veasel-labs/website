@@ -30,6 +30,7 @@ test("evals page refuses invented scores and links public ATIF sample", async ()
   assert.match(source, /validate-harbor-atif\.py/);
   assert.match(source, /dc933be707feafbb9efcdf092cb8a0e391332617/);
   assert.match(source, /VEASEL_VERSION=0\.39\.0-next\.0/);
+  assert.match(source, /terminal asciinema on \/demo\//i);
   assert.doesNotMatch(
     source,
     /leaderboard score|99%|solved all tasks|Index rank/i,

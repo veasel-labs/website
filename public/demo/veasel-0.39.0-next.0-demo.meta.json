@@ -1,0 +1,20 @@
+{
+  "schema": "veasel-terminal-demo-recording/v1",
+  "title": "Veasel Code authentic CLI/TUI terminal demo",
+  "disclaimer": "Asciicast built from real veasel/veasel-tui 0.39.0-next.0 output against a local loopback backend. Scripted keystrokes for /help, /mcp, and /connect. No live model calls and no benchmark scores.",
+  "veasel_version": "0.39.0-next.0",
+  "source_binary": "https://github.com/veasel-labs/veasel/releases/download/v0.39.0-next.0/veasel-Linux.tar.gz",
+  "tooling": "asciinema cast v2 writer + pexpect; binaries from verified Linux release archive",
+  "flows": [
+    "veasel --version",
+    "veasel --help",
+    "veasel serve (loopback)",
+    "veasel mcp list",
+    "veasel mcp --help",
+    "veasel-tui: /help, /mcp, /connect (stops at API key prompt), q quit"
+  ],
+  "cast_file": "veasel-0.39.0-next.0-demo.cast",
+  "sha256": "6ef7e766d897f0a2cda8de5ee00ead4b95c9446f41189427aa538763b3847abc",
+  "generated_at": "2026-10-15T16:02:43Z",
+  "event_count": 155
+}
