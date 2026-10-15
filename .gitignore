@@ -3,3 +3,4 @@ dist/
 .astro/
 .playwright-cli/
 .DS_Store
+.design-evidence/
