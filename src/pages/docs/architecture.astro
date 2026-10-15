@@ -1,23 +1,44 @@
 ---
 import DocsLayout from "../../layouts/DocsLayout.astro";
+
+const basePath = import.meta.env.BASE_URL.replace(/\/$/, "");
 ---
 
 <DocsLayout
   title="Architecture notes"
-  description="The boundaries behind Veasel Code's V-native server and client API."
+  description="V-native Veasel Code: loopback HTTP/SSE, SQLite sessions, json2 contracts, and permission-before-effect."
 >
   <section class="doc-page">
-    <p class="eyebrow">FIELD GUIDE / 02</p>
+    <p class="kicker">FIELD GUIDE / ARCHITECTURE</p>
     <h1>
-      Keep the core
+      V-native core.
       <br />
-      <em>close to the work.</em>
+      <em>Versioned clients.</em>
     </h1>
     <p class="lede">
-      Veasel is server-first. Clients use a versioned API; the V application
-      owns session state, storage, event history, bounded workspace tools, and
-      the provider loop.
+      Veasel is server-first. The V application owns session state, storage,
+      event history, bounded workspace tools, and the provider loop. Clients —
+      OpenTUI today, anything on the HTTP API tomorrow — stay behind that
+      boundary.
     </p>
+
+    <div class="compatibility-banner">
+      <span class="compatibility-mark" aria-hidden="true">
+        ◆
+      </span>
+      <div>
+        <strong>
+          Builder · SSE · json2 — performance without fake numbers
+        </strong>
+        <p>
+          Hot paths use <code>strings.Builder</code>, resumable events ride SSE
+          with monotonic IDs, and contracts decode through <code>json2</code>.
+          We publish process-startup microbenchmarks when measured — never
+          invented agent-quality scores or Harbor Index claims.
+        </p>
+      </div>
+    </div>
+
     <div
       class="architecture-map"
       role="img"
@@ -68,6 +89,16 @@ import DocsLayout from "../../layouts/DocsLayout.astro";
         through unsandboxed. The loopback API has no application token, so
         same-user processes can call approval routes. Interrupted file writes
         and shell commands are not replayed automatically.
+      </p>
+    </div>
+    <div class="doc-panel">
+      <h2>What stays out of marketing math</h2>
+      <p>
+        Feature presence is not a task-resolution score. Cross-agent latency,
+        cost-per-solved-task, and Harbor Index / Terminal-Bench / SWE-bench
+        leaderboards are not claimed here. See{" "}
+        <a href={`${basePath}/benchmarks/`}>Benchmarks</a> for measured
+        process-startup artifacts only.
       </p>
     </div>
     <a

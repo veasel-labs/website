@@ -6,19 +6,36 @@ const basePath = import.meta.env.BASE_URL.replace(/\/$/, "");
 
 <DocsLayout
   title="Privacy and security"
-  description="What stays local, what reaches your provider, approvals, and platform shell sandboxes in Veasel Code."
+  description="The Veasel Code trust model: loopback storage, graduated execution policy, and shell/MCP sandboxes on Linux, macOS, and Windows."
 >
   <section class="doc-page">
-    <p class="kicker">TRUST / DATA FLOW</p>
+    <p class="kicker">TRUST / THE STANDARD</p>
     <h1>
-      Know what moves.
+      Approval is the product.
       <br />
-      <em>Keep the reins.</em>
+      <em>Sandboxes are the depth.</em>
     </h1>
     <p class="lede">
       Veasel runs on loopback and stores history in SQLite. Model prompts go to
-      the provider you configure. Local storage is not local inference.
+      the provider you configure — local storage is not local inference. The
+      standard path is inspect-then-approve; graduated policies and three-OS
+      sandboxes deepen containment when you opt in.
     </p>
+
+    <div class="compatibility-banner">
+      <span class="compatibility-mark" aria-hidden="true">
+        ⌂
+      </span>
+      <div>
+        <strong>Graduated policy · three-OS containment</strong>
+        <p>
+          Default <code>ask</code> gates edits, shell, and MCP.{" "}
+          <code>auto-edit</code> and <code>sandbox-auto</code> require explicit
+          env gates. Shell sandboxes and opt-in MCP stdio sandboxes advertise
+          capabilities only when wrap will run — never a silent claim.
+        </p>
+      </div>
+    </div>
 
     <div class="data-flow" aria-label="Current message data flow">
       <div>

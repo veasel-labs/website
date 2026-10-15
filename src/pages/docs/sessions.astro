@@ -6,19 +6,38 @@ const basePath = import.meta.env.BASE_URL.replace(/\/$/, "");
 
 <DocsLayout
   title="Sessions and context"
-  description="Local SQLite sessions, repository map, adaptive compaction, and durable async turns."
+  description="Veasel Code sessions: SQLite history, repository map, adaptive compaction, prompt-cache accounting, parallel reads, durable jobs, and honest cost."
 >
   <section class="doc-page">
     <p class="kicker">FIELD GUIDE / SESSIONS</p>
     <h1>
-      Keep the thread
+      Long work.
       <br />
-      <em>on your machine.</em>
+      <em>Measured context.</em>
     </h1>
     <p class="lede">
-      Sessions store messages and events in local SQLite. Context helpers help
-      long work stay useful without inventing provider-native compaction APIs.
+      Sessions store messages and events in local SQLite. Compaction, repository
+      map, prompt-cache accounting, parallel read-only tools, and durable async
+      turns keep long work useful — without inventing provider savings or Harbor
+      Index scores.
     </p>
+
+    <div class="compatibility-banner">
+      <span class="compatibility-mark" aria-hidden="true">
+        ☷
+      </span>
+      <div>
+        <strong>
+          Compaction · map · cache · parallel reads · durable jobs
+        </strong>
+        <p>
+          Measured <code>session.compaction</code> events, extractive{" "}
+          <code>/map</code>, provider-reported cache counters when adapters set
+          them, concurrent list/read/search with ordered transcript append, and{" "}
+          <code>Prefer: respond-async</code> recovery after restart.
+        </p>
+      </div>
+    </div>
 
     <div class="doc-panel">
       <h2>Local session store</h2>
@@ -59,6 +78,7 @@ const basePath = import.meta.env.BASE_URL.replace(/\/$/, "");
         Optional summarizer:
       </p>
       <pre><code>VEASEL_SESSION_COMPACTION_SUMMARIZER=extractive   # default
+VEASEL_SESSION_COMPACTION_SUMMARIZER=native       # structured local summary
 VEASEL_SESSION_COMPACTION_SUMMARIZER=llm         # optional provider summary</code></pre>
       <p>
         LLM mode falls back on error, empty, or growth. Capability{" "}
@@ -68,6 +88,38 @@ VEASEL_SESSION_COMPACTION_SUMMARIZER=llm         # optional provider summary</co
           session-compaction-summarizer.md
         </a>
         .
+      </p>
+    </div>
+
+    <div class="doc-panel">
+      <h2>Prompt-cache accounting</h2>
+      <p>
+        When providers report cache read/write tokens, Veasel persists them (
+        <code>sessions.usage.prompt_cache</code>) and surfaces them on{" "}
+        <code>/usage</code> and operation resources. Anthropic Messages emit{" "}
+        <code>cache_control</code> markers by default; OpenAI Chat/Responses
+        emit <code>prompt_cache_key</code> by default for catalog endpoints —
+        hits remain provider-reported only. No invented % savings.
+      </p>
+    </div>
+
+    <div class="doc-panel">
+      <h2>Parallel read-only tools</h2>
+      <p>
+        Multi-tool rounds of workspace list/read/search run concurrently with
+        ordered transcript append. Skill load, edits, shell, and MCP stay
+        sequential. Mid-flight work interrupted by a restart is fail-closed as{" "}
+        <code>uncertain</code> — never silently replayed.
+      </p>
+    </div>
+
+    <div class="doc-panel">
+      <h2>Cost schedule honesty</h2>
+      <p>
+        USD cost appears only when every reported turn matches the pinned
+        schedule (embedded from <code>tools/cost-schedule/schedule.json</code>,
+        overridable via env). Otherwise cost stays unavailable. Veasel does not
+        invent prices, Harbor Index scores, or cross-agent rankings.
       </p>
     </div>
 

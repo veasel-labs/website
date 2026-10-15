@@ -6,20 +6,40 @@ const basePath = import.meta.env.BASE_URL.replace(/\/$/, "");
 
 <DocsLayout
   title="Skills and plugins"
-  description="Discover Agent Skills and experimental Agent Plugins MCP in Veasel Code."
+  description="Universal SKILL.md discovery, model-catalog trust, one-shot invoke, and experimental Agent Plugins in Veasel Code."
 >
   <section class="doc-page">
     <p class="kicker">FIELD GUIDE / SKILLS</p>
     <h1>
-      Skills you already
+      Universal skills.
       <br />
-      <em>keep nearby.</em>
+      <em>Explicit trust.</em>
     </h1>
     <p class="lede">
-      Veasel discovers standalone <code>SKILL.md</code> folders from project and
-      user roots used by other agents, plus experimental Agent Plugin packages.
-      Instructions are reference context — scripts are never auto-executed.
+      Veasel discovers standalone <code>SKILL.md</code> folders from the project
+      and user roots other agents already use, plus experimental Agent Plugin
+      packages. Instructions are reference context — scripts are never
+      auto-executed. Enable for a session, or one-shot invoke for the next turn
+      only.
     </p>
+
+    <div class="compatibility-banner">
+      <span class="compatibility-mark" aria-hidden="true">
+        ✳
+      </span>
+      <div>
+        <strong>Discovery · catalog · trust · one-shot invoke</strong>
+        <p>
+          Scan Claude/Codex/Cursor/OpenCode/Gemini/Pi/Qwen/GitHub roots (and{" "}
+          <code>VEASEL_SKILLS_DIRS</code>). List with <code>/skills</code> or{" "}
+          <code>veasel skills list</code>. Session enable via{" "}
+          <code>/skill on</code>, or queue{" "}
+          <code>POST /v1/sessions/&#123;id&#125;/skills/invoke</code> (
+          <code>sessions.skills.invoke</code>) for a single turn without lasting
+          activation.
+        </p>
+      </div>
+    </div>
 
     <div class="doc-panel">
       <h2>Standalone skill discovery</h2>
@@ -51,6 +71,25 @@ veasel skills list --directory /path/to/project --json</code></pre>
         Capability discovery also lists synthetic plugin catalog entries when
         skills exist without <code>plugin.json</code>. Skill scripts are never
         auto-executed.
+      </p>
+    </div>
+
+    <div class="doc-panel">
+      <h2>One-shot invoke</h2>
+      <p>
+        Queue instruction injection for the <strong>next turn only</strong>{" "}
+        without a lasting <code>/skill on</code>. Explicit user invoke is the
+        trust act for project-scoped skills that stay fail-closed for
+        progressive enable:
+      </p>
+      <pre><code
+        >{`curl -sS -X POST http://127.0.0.1:4097/v1/sessions/$SESSION/skills/invoke \\
+  -H 'content-type: application/json' \\
+  -d '{"plugin_name":"$source","skill_name":"my-skill"}'`}</code
+      ></pre>
+      <p>
+        Capability <code>sessions.skills.invoke</code>. Bodies remain untrusted
+        reference context for the configured provider once invoked.
       </p>
     </div>
 
@@ -101,11 +140,10 @@ veasel plugins components enable demo skill review</code></pre>
           one-time approval.
         </li>
         <li>
-          Trusted stdio MCP processes inherit the server user by default. On
-          Linux, <code>VEASEL_MCP_STDIO_SANDBOX=auto|require</code> may wrap
-          them in Bubblewrap when <code>bwrap</code> is available;
-          macOS/Windows stay unsandboxed. Streamable HTTP refuses redirects and
-          validates TLS.
+          Trusted stdio MCP processes inherit the server user by default. Set{" "}
+          <code>VEASEL_MCP_STDIO_SANDBOX=auto|require</code> to wrap them in
+          Linux Bubblewrap, macOS Seatbelt, or Windows AppContainer + Job when
+          available. Streamable HTTP refuses redirects and validates TLS.
         </li>
       </ul>
     </div>

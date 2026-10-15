@@ -1,42 +1,43 @@
 ---
 import SiteLayout from "../layouts/SiteLayout.astro";
+import verifiedRelease from "../data/verified-release.json";
 
 const basePath = import.meta.env.BASE_URL.replace(/\/$/, "");
+const release = verifiedRelease.tag;
 ---
 
 <SiteLayout
-  title="Veasel Code — local agent, visible steps"
-  description="Veasel Code is an open-source coding agent built in V. Local-first sessions, multi-provider chat, and approvals before edits, shell, or MCP."
+  title="Veasel Code — the local coding agent standard"
+  description="Veasel Code is the V-native coding agent: universal skills, graduated sandboxes, MCP with OAuth, a keyboard-first TUI, and honest usage — on your machine, under your approval."
 >
   <section class="hero wrap" aria-labelledby="hero-title">
     <div class="hero-copy">
       <p class="kicker">
-        <span class="sparkle">✳</span> LOCAL · LOOPBACK · APPROVAL-GATED
+        <span class="sparkle">✳</span> LOCAL · APPROVAL-GATED · V-NATIVE
       </p>
       <h1 id="hero-title">
-        Big ideas.
+        The new standard
         <br />
-        <span>Little steps.</span>
-        <br />
-        Working code.
+        <span>coding agent.</span>
       </h1>
       <p class="hero-text">
-        Meet <strong>Veasel Code</strong>, a V-native coding agent. Sessions
-        live in local SQLite on loopback. Veasel streams replies, inspects your
-        workspace, and waits for approval before edits, shell, or MCP. Prompts
-        and tool results go to your chosen provider — never an invented agent
-        story.
+        <strong>Veasel Code</strong> is built in V for the people who refuse
+        black-box agents. Sessions stay on loopback SQLite. Skills, sandboxes,
+        MCP, compaction, and a serious TUI ship today — with approvals before
+        edits, shell, or tool calls. No invented Harbor Index scores. No fake
+        latency charts. Just the product, as it runs.
       </p>
       <div class="hero-actions">
         <a class="button button-dark" href={`${basePath}/downloads/`}>
-          Download preview <span aria-hidden="true">↓</span>
+          Download {release} <span aria-hidden="true">↓</span>
         </a>
-        <a class="button button-quiet" href={`${basePath}/demo/`}>
-          Walk through the product <span aria-hidden="true">→</span>
+        <a class="button button-quiet" href={`${basePath}/docs/`}>
+          Read the field guide <span aria-hidden="true">→</span>
         </a>
       </div>
       <div class="hero-meta">
-        <span class="pulse"></span> Early preview · Open source · Built in V
+        <span class="pulse"></span> Verified prerelease · Open source · Built in
+        V
       </div>
     </div>
     <div
@@ -96,15 +97,15 @@ const basePath = import.meta.env.BASE_URL.replace(/\/$/, "");
             <div class="tui-session tui-session-active">
               <i></i>
               <span>
-                <b>Polish the landing page</b>
+                <b>Ship the standard agent</b>
                 <small>~/veasel.dev</small>
               </span>
             </div>
             <div class="tui-session">
               <i></i>
               <span>
-                <b>Explore the V parser</b>
-                <small>~/vlang</small>
+                <b>Review MCP trust</b>
+                <small>~/workspace</small>
               </span>
             </div>
             <div class="tui-add-session">
@@ -121,13 +122,13 @@ const basePath = import.meta.env.BASE_URL.replace(/\/$/, "");
           <div class="tui-conversation">
             <div class="tui-conversation-head">
               <span>
-                <i></i> Polish the landing page
+                <i></i> Ship the standard agent
               </span>
               <kbd>Esc</kbd>
             </div>
             <div class="tui-message tui-user">
               <span class="tui-message-label">YOU</span>
-              <p>Can you make this hero feel more alive on small screens?</p>
+              <p>Trace the sandbox policy, then propose a focused patch.</p>
             </div>
             <div class="tui-message tui-agent">
               <span class="tui-message-label">
@@ -137,23 +138,23 @@ const basePath = import.meta.env.BASE_URL.replace(/\/$/, "");
                   width="19"
                   height="14"
                 />{" "}
-                VEASEL <b>· THINKING THROUGH THE LAYOUT</b>
+                VEASEL <b>· READING · MAPPING · WAITING</b>
               </span>
               <p>
-                I’ll trace the responsive styles first, then propose a focused
-                change you can review.
+                Parallel reads first. Diff ready when you are — nothing writes
+                until you approve.
               </p>
             </div>
             <div class="tui-tool">
               <span>⌕</span>
-              <code>read src/styles/hero.css</code>
+              <code>read · search · /map</code>
               <b>done</b>
             </div>
             <div class="tui-proposal">
               <div>
                 <span>✳</span>
                 <b>Change ready to review</b>
-                <small>src/styles/hero.css · +8 −3</small>
+                <small>DiffRenderable · Space · a / x</small>
               </div>
               <span class="tui-review">
                 Review diff <b>↗</b>
@@ -161,14 +162,14 @@ const basePath = import.meta.env.BASE_URL.replace(/\/$/, "");
             </div>
             <div class="tui-composer">
               <span>›</span>
-              <span>Ask Veasel to explain or propose a workspace change…</span>
+              <span>@path · /theme · /usage · Shift+Enter multiline…</span>
               <i></i>
             </div>
             <div class="tui-status">
               <span>
                 <i></i> connected
               </span>
-              <span>s models&nbsp; · &nbsp;/theme · /usage</span>
+              <span>s models&nbsp; · &nbsp;/mcp · /skills</span>
               <span>↑ ↓ navigate</span>
             </div>
           </div>
@@ -182,103 +183,106 @@ const basePath = import.meta.env.BASE_URL.replace(/\/$/, "");
         </div>
       </div>
       <div class="float-note note-top">
-        <span>⌁</span> ideas welcome
+        <span>⌁</span> your repo, your rules
       </div>
       <div class="float-note note-bottom">
-        <span>↗</span> your repo, your rules
+        <span>↗</span> approve before effect
       </div>
     </div>
     <div class="hero-ribbon" aria-hidden="true">
-      A SMALLER STEP TO YOUR NEXT BIG THING <span>✳</span> A SMALLER STEP TO
-      YOUR NEXT BIG THING <span>✳</span>
+      THE STANDARD IS LOCAL AND VISIBLE <span>✳</span> THE STANDARD IS LOCAL AND
+      VISIBLE <span>✳</span>
     </div>
   </section>
 
   <section class="welcome wrap section-pad" aria-labelledby="welcome-title">
     <div class="section-intro">
-      <p class="kicker">VISIBLE STEPS</p>
+      <p class="kicker">WHAT SHIPS</p>
       <h2 id="welcome-title">
-        You steer.
+        Declarative claims.
         <br />
-        <span>Veasel waits.</span>
+        <span>Real capabilities.</span>
       </h2>
     </div>
     <p class="section-lede">
-      Coding with an agent should feel like a careful pair, not a handoff.
-      Veasel Code keeps every step inspectable, every session resumable, and
-      every risky action behind your approval.
+      Every headline below maps to code on the <code>{release}</code> verified
+      channel. Footnotes stay honest where platforms differ or conformance is
+      still partial.
     </p>
     <div class="value-grid">
       <article class="value-card card-mint">
-        <span class="doodle">⌂</span>
-        <p class="card-label">LOCAL FIRST</p>
+        <span class="doodle">✳</span>
+        <p class="card-label">SKILLS · CATALOG · TRUST</p>
         <h3>
-          Workspace stays
+          Universal skills.
           <br />
-          on your machine.
+          One-shot invoke.
         </h3>
         <p>
-          The V backend stores sessions in SQLite and listens on loopback by
-          default.
+          Discover <code>SKILL.md</code> roots from Claude, Codex, Cursor,
+          OpenCode, Gemini, and more. Model catalog + <code>/connect</code>.
+          Session trust, then <code>POST …/skills/invoke</code> for a single
+          turn — scripts never auto-run.
         </p>
       </article>
       <article class="value-card card-yellow">
-        <span class="doodle">⏸</span>
-        <p class="card-label">APPROVAL GATED</p>
+        <span class="doodle">⌂</span>
+        <p class="card-label">SANDBOX · MCP · POLICY</p>
         <h3>
-          Edits, shell, and
+          Graduated policy.
           <br />
-          MCP pause for you.
+          Three-OS containment.
         </h3>
         <p>
-          Review the exact diff, command, or MCP arguments before anything runs.
+          <code>ask</code> → <code>auto-edit</code> → <code>sandbox-auto</code>.
+          Shell sandboxes on Linux/macOS/Windows. MCP stdio sandbox is opt-in
+          via <code>VEASEL_MCP_STDIO_SANDBOX</code> on all three OSes.
         </p>
       </article>
       <article class="value-card card-lilac">
-        <span class="doodle">⌘</span>
-        <p class="card-label">YOUR PROVIDER</p>
+        <span class="doodle">☷</span>
+        <p class="card-label">CONTEXT · JOBS · COST</p>
         <h3>
-          Bring the models
+          Compaction. Repo map.
           <br />
-          you already use.
+          Honest dollars.
         </h3>
         <p>
-          OpenAI-compatible, Anthropic, Gemini, and Meta Model API adapters
-          share one session workflow.
+          Adaptive compaction, extractive repository map, prompt-cache
+          accounting, parallel read-only tools, durable async jobs. USD cost
+          only from the pinned schedule — never invented savings.
         </p>
       </article>
     </div>
   </section>
 
-  <section class="provider-band" aria-labelledby="provider-title">
+  <section class="provider-band" aria-labelledby="standard-title">
     <div class="wrap provider-inner">
       <div>
-        <p class="kicker">MODEL ROUTING</p>
-        <h2 id="provider-title">
-          One agent core.
+        <p class="kicker">THE STACK</p>
+        <h2 id="standard-title">
+          One local core.
           <br />
-          <span>Several ways in.</span>
+          <span>Every surface sharp.</span>
         </h2>
         <p>
-          Switch providers in settings while the same local session store and
-          review flow stay in place.
+          Plugins, OAuth refresh, and a keyboard-first TUI sit on the same
+          loopback API — so headless <code>veasel run</code> and the terminal
+          client never drift apart.
         </p>
       </div>
-      <div
-        class="provider-orbit"
-        aria-label="Available AI provider integrations"
-      >
+      <div class="provider-orbit" aria-label="Product surfaces that ship today">
         <span class="provider-chip chip-openai">
-          <i>◌</i> OpenAI-compatible
+          <i>◌</i> Model catalog
         </span>
         <span class="provider-chip chip-claude">
-          <i>✳</i> Anthropic
+          <i>✳</i> MCP + OAuth
         </span>
         <span class="provider-chip chip-gemini">
-          <i>✦</i> Gemini
+          <i>✦</i> DiffRenderable
         </span>
         <span class="provider-chip chip-meta">
-          <i>◆</i> Meta Model API
+          <i>◆</i> V · json2 · SSE
         </span>
         <div class="provider-core">
           <b>one</b>
@@ -288,52 +292,106 @@ const basePath = import.meta.env.BASE_URL.replace(/\/$/, "");
             core
           </small>
         </div>
-        <span class="orbit-caption">AVAILABLE IN SOURCE</span>
+        <span class="orbit-caption">SHIPPED ON {release}</span>
       </div>
     </div>
   </section>
 
-  <section class="how wrap section-pad" aria-labelledby="how-title">
+  <section class="how wrap section-pad" aria-labelledby="claims-title">
     <div class="how-heading">
-      <p class="kicker">A CLEAR PATH</p>
-      <h2 id="how-title">
-        Open a project.
+      <p class="kicker">SCAN THE STANDARD</p>
+      <h2 id="claims-title">
+        Feature claims
         <br />
-        <span>Keep the thread.</span>
+        <span>you can verify.</span>
       </h2>
-      <p>
-        Small pieces that keep the conversation and the workspace connected.
-      </p>
+      <p>Product language first. Technical footnotes where honesty matters.</p>
     </div>
     <div class="flow-list">
       <article>
-        <span class="flow-icon icon-lime">⌘</span>
+        <span class="flow-icon icon-lime">01</span>
         <div>
-          <small>01 · YOU</small>
-          <h3>Start in a repository</h3>
-          <p>Run Veasel from the project you want to work on.</p>
-        </div>
-        <span class="flow-arrow">↓</span>
-      </article>
-      <article>
-        <span class="flow-icon icon-lavender">☷</span>
-        <div>
-          <small>02 · VEASEL</small>
-          <h3>Keep a lasting session</h3>
+          <small>SKILLS &amp; MODELS</small>
+          <h3>Universal discovery · catalog · trust · one-shot invoke</h3>
           <p>
-            Local SQLite storage and a replayable event stream hold the thread.
+            Standalone skills from the roots you already keep;{" "}
+            <code>/skills</code> / <code>veasel skills list</code>; session
+            enable or one-shot <code>…/skills/invoke</code>. Two-hundred-plus
+            endpoint presets across four protocols — presets are not
+            vendor-native SDKs.
           </p>
         </div>
         <span class="flow-arrow">↓</span>
       </article>
       <article>
-        <span class="flow-icon icon-peach">✳</span>
+        <span class="flow-icon icon-lavender">02</span>
         <div>
-          <small>03 · TOGETHER</small>
-          <h3>Review before write</h3>
+          <small>EXECUTION BOUNDARY</small>
+          <h3>Graduated sandbox policy · MCP stdio on Linux/macOS/Windows</h3>
           <p>
-            Veasel streams replies, inspects files, and proposes single-file
-            edits. Shell and MCP calls need exact approval first.
+            Default <code>ask</code> pauses edits, shell, and MCP. Opt into
+            auto-edit or sandbox-auto with explicit env gates. Shell wraps
+            Bubblewrap / Seatbelt / AppContainer+Job when available. MCP stdio
+            sandbox is opt-in; default stays unsandboxed with an honest warning.
+          </p>
+        </div>
+        <span class="flow-arrow">↓</span>
+      </article>
+      <article>
+        <span class="flow-icon icon-peach">03</span>
+        <div>
+          <small>LONG WORK</small>
+          <h3>Compaction · repo map · prompt cache · parallel reads · jobs</h3>
+          <p>
+            Measured compaction events, extractive <code>/map</code>,
+            provider-reported cache counters (Anthropic/OpenAI markers by
+            default), concurrent list/read/search, durable{" "}
+            <code>Prefer: respond-async</code> recovery after restart.
+          </p>
+        </div>
+        <span class="flow-arrow">↓</span>
+      </article>
+      <article>
+        <span class="flow-icon icon-lime">04</span>
+        <div>
+          <small>OPERATOR SURFACE</small>
+          <h3>Cost honesty · OAuth refresh · plugins</h3>
+          <p>
+            Pinned USD schedule when every reported turn matches; otherwise
+            unavailable — never guessed. MCP OAuth PKCE with refresh + one-shot
+            401 auto-refresh. Experimental Agent Plugins with component toggles;
+            full v1.0.0 conformance still open.
+          </p>
+        </div>
+        <span class="flow-arrow">↓</span>
+      </article>
+      <article>
+        <span class="flow-icon icon-lavender">05</span>
+        <div>
+          <small>TERMINAL UI</small>
+          <h3>
+            Multiline · DiffRenderable · themes · reduced-motion · @ paths ·
+            a11y
+          </h3>
+          <p>
+            Shift+Enter newlines, OpenTUI DiffRenderable split reviews, builtin
+            + custom JSON themes, <code>VEASEL_TUI_REDUCED_MOTION</code>,{" "}
+            <code>@</code> path autocomplete, readline kills, and status cues
+            that say idle / busy / attention without blinking when you ask.
+          </p>
+        </div>
+        <span class="flow-arrow">↓</span>
+      </article>
+      <article>
+        <span class="flow-icon icon-peach">06</span>
+        <div>
+          <small>V-NATIVE RUNTIME</small>
+          <h3>Builder · SSE · json2 — performance without fake numbers</h3>
+          <p>
+            The agent core is V: string builders for hot paths, SSE for
+            resumable events, <code>json2</code> for contracts. We publish
+            process-startup microbenchmarks when measured — never invented
+            agent-quality scores or Harbor Index claims.
           </p>
         </div>
         <span class="flow-arrow">✦</span>
@@ -344,79 +402,69 @@ const basePath = import.meta.env.BASE_URL.replace(/\/$/, "");
   <section class="reality-band">
     <div class="wrap reality-inner">
       <div>
-        <p class="kicker">HONEST STATUS</p>
+        <p class="kicker">READY NOW</p>
         <h2>
-          What works
+          The board
           <br />
-          <span>today.</span>
+          <span>is green where it counts.</span>
         </h2>
         <p>
-          Veasel Code is early. We show the foundation as it ships — not a
-          promise dressed as a feature.
+          Verified prerelease <code>{release}</code>. Packages and docs track
+          this tag — not a future cut that does not exist yet.
         </p>
       </div>
       <div class="status-board">
         <div class="status-head">
-          <b>BUILD BOARD</b>
-          <span>TRACKED WITH THE REPO</span>
+          <b>SHIPPED CAPABILITIES</b>
+          <span>TIED TO THE REPO</span>
         </div>
         <div class="status-row">
           <span class="status-symbol done">✓</span>
-          <b>V backend on loopback</b>
+          <b>Universal skills + one-shot invoke</b>
           <small>READY</small>
         </div>
         <div class="status-row">
           <span class="status-symbol done">✓</span>
-          <b>SQLite sessions + event history</b>
+          <b>Model catalog + /connect trust</b>
           <small>READY</small>
         </div>
         <div class="status-row">
           <span class="status-symbol done">✓</span>
-          <b>OpenTUI session client</b>
-          <small>EARLY</small>
-        </div>
-        <div class="status-row">
-          <span class="status-symbol done">✓</span>
-          <b>Multi-provider session chat</b>
+          <b>Graduated execution policy</b>
           <small>READY</small>
         </div>
         <div class="status-row">
           <span class="status-symbol done">✓</span>
-          <b>Bounded workspace inspection</b>
+          <b>Shell + MCP stdio sandboxes (3 OS)</b>
+          <small>OPT-IN</small>
+        </div>
+        <div class="status-row">
+          <span class="status-symbol done">✓</span>
+          <b>Compaction · repo map · prompt cache</b>
           <small>READY</small>
         </div>
         <div class="status-row">
           <span class="status-symbol done">✓</span>
-          <b>Review-gated file edits</b>
+          <b>Parallel reads · durable jobs</b>
           <small>READY</small>
         </div>
         <div class="status-row">
           <span class="status-symbol done">✓</span>
-          <b>Reviewed shell + MCP calls</b>
-          <small>PREVIEW</small>
-        </div>
-        <div class="status-row">
-          <span class="status-symbol done">✓</span>
-          <b>Platform shell sandboxes</b>
+          <b>Cost schedule honesty · OAuth refresh</b>
           <small>READY</small>
         </div>
         <div class="status-row">
           <span class="status-symbol done">✓</span>
-          <b>Skills discovery + /connect</b>
+          <b>TUI excellence (Diff · themes · a11y)</b>
           <small>READY</small>
         </div>
         <div class="status-row">
           <span class="status-symbol done">✓</span>
-          <b>Repo map + session compaction</b>
-          <small>READY</small>
-        </div>
-        <div class="status-row">
-          <span class="status-symbol done">✓</span>
-          <b>Experimental Agent Plugins</b>
+          <b>Agent Plugins (experimental)</b>
           <small>PARTIAL</small>
         </div>
         <a href={`${basePath}/docs/`}>
-          Open the docs <span>↗</span>
+          Open the field guide <span>↗</span>
         </a>
       </div>
     </div>
@@ -426,13 +474,13 @@ const basePath = import.meta.env.BASE_URL.replace(/\/$/, "");
     <div class="start-copy">
       <p class="kicker">GET STARTED</p>
       <h2>
-        Install the preview.
+        Install the standard.
         <br />
-        <span>Configure a model.</span>
+        <span>Connect a model.</span>
       </h2>
       <p>
-        Download Veasel Code, run <code>/connect</code> for credentials, and
-        start working in your repository.
+        Download the verified prerelease, run <code>/connect</code>, and work
+        inside your repository with approvals you can see.
       </p>
       <a class="button button-dark" href={`${basePath}/downloads/`}>
         Download Veasel Code <span>→</span>
@@ -443,16 +491,21 @@ const basePath = import.meta.env.BASE_URL.replace(/\/$/, "");
       <a class="text-link" href={`${basePath}/docs/quickstart/`}>
         Read the quickstart <span aria-hidden="true">↗</span>
       </a>
+      <a class="text-link" href={`${basePath}/docs/security/`}>
+        Security model <span aria-hidden="true">↗</span>
+      </a>
     </div>
     <div class="install-card">
       <div class="install-top">
-        <span class="live-dot"></span> CURRENT PREVIEW
+        <span class="live-dot"></span> VERIFIED PREVIEW · {release}
       </div>
       <div class="install-code">
         <small>01&nbsp; DOWNLOAD FOR YOUR PLATFORM</small>
         <code>veasel</code>
         <small>02&nbsp; CONNECT A PROVIDER</small>
         <code>/connect · paste key · pick model</code>
+        <small>03&nbsp; WORK WITH APPROVALS</small>
+        <code>/patches · /commands · /mcp · /skills</code>
       </div>
       <div class="install-foot">
         V runtime · OpenTUI client · local SQLite <span>♥</span>
@@ -467,7 +520,7 @@ const basePath = import.meta.env.BASE_URL.replace(/\/$/, "");
       </div>
       <p class="kicker">OPEN SOURCE</p>
       <h2>
-        Follow the build.
+        Adopt the standard.
         <br />
         <span>Shape what ships next.</span>
       </h2>
@@ -478,7 +531,8 @@ const basePath = import.meta.env.BASE_URL.replace(/\/$/, "");
         Meet us on GitHub <span>↗</span>
       </a>
       <p class="finale-note">
-        Prereleases only — verify checksums before you run them.
+        Prereleases only — verify checksums. No Harbor Index or invented
+        benchmark claims on this site.
       </p>
     </div>
   </section>
