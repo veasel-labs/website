@@ -14,7 +14,7 @@
     "veasel-tui: /help, /mcp, /connect (stops at API key prompt), q quit"
   ],
   "cast_file": "veasel-0.41.0-next.0-demo.cast",
-  "sha256": "5bfc62a7d1f2fc3369b061befd7e76969ba5b43b10ac6fa5700932acc3d25c95",
-  "generated_at": "2026-10-15T23:46:21Z",
+  "sha256": "b8d4fa1a847b8d539799e490aa8326cf2c7ef566530d7e127cbea8949fa2dd68",
+  "generated_at": "2026-10-16T02:12:43Z",
   "event_count": 129
 }

@@ -28,6 +28,8 @@ test("public demo cast is asciicast v2 with real CLI/TUI markers", async () => {
   const lines = raw.toString("utf8").trimEnd().split("\n");
   const header = JSON.parse(lines[0]);
   assert.equal(header.version, 2);
+  assert.equal(header.width, 80);
+  assert.equal(header.height, 30);
   assert.match(header.title, /0\.41\.0-next\.0/);
   const blob = lines
     .slice(1)
