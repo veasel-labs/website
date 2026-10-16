@@ -162,15 +162,17 @@ const basePath = import.meta.env.BASE_URL.replace(/\/$/, "");
       </p>
     </div>
     <div class="doc-panel faq-panel">
-      <h2>Why is the terminal client TypeScript?</h2>
+      <h2>Why is the terminal client SolidJS + OpenTUI?</h2>
       <p>
-        The TUI uses OpenTUI for terminal rendering and talks to a versioned
-        API. The server, agent runtime, and persistence are V; the client
-        remains a separate API consumer. Recent surfaces include
-        MarkdownRenderable for the latest live and completed turn,{" "}
-        <code>$</code> skill autocomplete, fuzzy <code>@</code> paths, Diff
-        content washes, context footers, system/tool theme tokens, custom JSON
-        themes, and reduced-motion mode — see the{" "}
+        The product TUI is a SolidJS application on OpenTUI (
+        <code>@opentui/solid</code> + <code>@opentui/core</code>) with Veasel
+        mint chrome, pixel splash, Compose, <kbd>Ctrl+P</kbd> command palette,
+        review overlays, and <code>/</code> · <code>@</code> · <code>$</code>{" "}
+        autocomplete. It talks to a versioned loopback API. The server, agent
+        runtime, and persistence stay in V; the client remains a separate API
+        consumer. Surfaces also include MarkdownRenderable for the latest live
+        and completed turn, Diff content washes, context footers, system/tool
+        theme tokens, custom JSON themes, and reduced-motion mode — see the{" "}
         <a href={`${basePath}/docs/tui/`}>TUI guide</a>.
       </p>
     </div>

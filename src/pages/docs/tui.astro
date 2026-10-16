@@ -6,7 +6,7 @@ const basePath = import.meta.env.BASE_URL.replace(/\/$/, "");
 
 <DocsLayout
   title="Terminal UI"
-  description="The Veasel Code TUI: MarkdownRenderable replies, $skill and fuzzy @ autocomplete, Diff content washes, context footers, custom themes, and reduced motion."
+  description="The Veasel Code TUI is SolidJS + OpenTUI: mint chrome, pixel splash, Compose, Ctrl+P command palette, reviews, and / @ $ autocomplete."
 >
   <section class="doc-page">
     <p class="kicker">FIELD GUIDE / TUI</p>
@@ -16,12 +16,14 @@ const basePath = import.meta.env.BASE_URL.replace(/\/$/, "");
       <em>worth standardizing on.</em>
     </h1>
     <p class="lede">
-      The bundled OpenTUI client talks to the local loopback API. Multiline
-      drafts, live + completed MarkdownRenderable replies, DiffRenderable
-      reviews with content washes, <code>$</code> skill and fuzzy <code>@</code>{" "}
-      path autocomplete, mode-aware context footers, dedicated system/tool theme
-      tokens, custom JSON themes, and reduced-motion mode. Type{" "}
-      <code>/help</code> in a session for the live shortcut list.
+      The terminal client is <strong>SolidJS + OpenTUI</strong> — Veasel mint
+      chrome, pixel splash, a Compose panel, <kbd>Ctrl+P</kbd> command palette,
+      review overlays, and <code>/</code> · <code>@</code> · <code>$</code>{" "}
+      autocomplete — talking to the local loopback API. Multiline drafts, live +
+      completed MarkdownRenderable replies, DiffRenderable reviews with content
+      washes, mode-aware context footers, dedicated system/tool theme tokens,
+      custom JSON themes, and reduced-motion mode. Type <code>/help</code> in a
+      session for the live shortcut list.
     </p>
 
     <div class="compatibility-banner">
@@ -29,15 +31,19 @@ const basePath = import.meta.env.BASE_URL.replace(/\/$/, "");
         ⌘
       </span>
       <div>
-        <strong>Keyboard excellence · visible reviews · a11y cues</strong>
+        <strong>
+          SolidJS + OpenTUI · mint · Ctrl+P · reviews · / @ $ autocomplete
+        </strong>
         <p>
-          Shift+Enter newlines · <kbd>$</kbd> skills / fuzzy <kbd>@</kbd> paths
-          · <kbd>v</kbd> DiffRenderable with content washes · Markdown for the
-          latest live and completed turn · context footers by mode · builtin +
-          project/user JSON themes (system/tool tokens) ·{" "}
-          <code>VEASEL_TUI_REDUCED_MOTION</code> keeps busy glyphs static ·
-          status uses ● idle / ◌ busy / ▲ attention / ✖ error without inventing
-          progress bars.
+          Veasel-branded shell (not OpenCode) · pixel splash on home · Compose
+          with Shift+Enter newlines · <kbd>Ctrl+P</kbd> command palette ·{" "}
+          <kbd>Ctrl+R</kbd> pending reviews · <kbd>$</kbd> skills / fuzzy{" "}
+          <kbd>@</kbd> paths / slash suggestions · <kbd>v</kbd> DiffRenderable
+          with content washes · Markdown for the latest live and completed turn
+          · context footers by mode · builtin + project/user JSON themes
+          (system/tool tokens) · <code>VEASEL_TUI_REDUCED_MOTION</code> keeps
+          busy glyphs static · status uses ● idle / ◌ busy / ▲ attention / ✖
+          error without inventing progress bars.
         </p>
       </div>
     </div>
@@ -66,12 +72,23 @@ const basePath = import.meta.env.BASE_URL.replace(/\/$/, "");
     </div>
 
     <div class="doc-panel">
-      <h2>Composer and transcript</h2>
+      <h2>Compose, palette, and transcript</h2>
       <ul class="guide-list">
         <li>
-          With an empty composer, <kbd>↑</kbd> / <kbd>↓</kbd> recall earlier
-          submissions. PgUp/PgDn page the transcript; Home/End jump edges. End
-          sticks to the latest reply while streaming.
+          <strong>Architecture:</strong> the client is SolidJS on{" "}
+          <code>@opentui/solid</code> / <code>@opentui/core</code>. Product
+          chrome stays Veasel mint; the pixel Veasel splash is the home identity
+          cue (CC BY-NC 4.0 mascot adaptation).
+        </li>
+        <li>
+          <kbd>Ctrl+P</kbd> opens the command palette (Ctrl+K stays kill-line in
+          Compose). <kbd>Ctrl+R</kbd> jumps to pending reviews;{" "}
+          <kbd>Ctrl+G</kbd> toggles the latest activity group when present.
+        </li>
+        <li>
+          With an empty Compose panel, <kbd>↑</kbd> / <kbd>↓</kbd> recall
+          earlier submissions. PgUp/PgDn page the transcript; Home/End jump
+          edges. End sticks to the latest reply while streaming.
         </li>
         <li>
           <strong>Multiline drafts:</strong> <kbd>Enter</kbd> submits.{" "}

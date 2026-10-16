@@ -30,24 +30,30 @@ describe("Marketing claims stay declarative and honest", () => {
       /Reviewed shell \+ MCP calls[\s\S]*?<small>PREVIEW<\/small>/,
     );
     assert.match(index, /DiffRenderable/);
-    assert.match(index, /MarkdownRenderable/);
-    assert.match(index, /\$skill|\$<\/code> skill/);
-    assert.match(index, /fuzzy/);
-    assert.match(index, /content washes/);
-    assert.match(index, /context footers/);
+    assert.match(index, /MarkdownRenderable|SolidJS \+ OpenTUI/);
+    assert.match(index, /Ctrl\+P/);
+    assert.match(index, /Compose/);
+    assert.match(index, /mint/i);
+    assert.match(index, /pixel/i);
+    assert.match(index, /\$skill|\$<\/code> skill|\$<\/code>/);
+    assert.match(index, /\/<\/code>.*@|autocomplete/i);
     assert.match(index, /VEASEL_MCP_STDIO_SANDBOX|MCP stdio sandbox/);
     assert.match(
       index,
       /cost schedule honesty|Honest dollars|pinned schedule/i,
     );
     assert.match(index, /Builder · SSE · json2|json2/);
-    // Build Board: OpenTUI session client is READY (not EARLY) once Markdown,
-    // $, Diff, themes, and Linux PTY smoke ship — ConPTY stays explicitly open.
-    assert.match(index, /OpenTUI session client[\s\S]*?<small>READY<\/small>/);
+    // Build Board: SolidJS + OpenTUI session client is READY (not EARLY) —
+    // mint shell, Ctrl+P, reviews, / @ $ autocomplete. ConPTY stays open.
+    assert.match(
+      index,
+      /SolidJS \+ OpenTUI session client[\s\S]*?<small>READY<\/small>/,
+    );
     assert.doesNotMatch(
       index,
-      /OpenTUI session client[\s\S]*?<small>EARLY<\/small>/,
+      /SolidJS \+ OpenTUI session client[\s\S]*?<small>EARLY<\/small>/,
     );
+    assert.doesNotMatch(index, /dual-path|experimental Solid/i);
     assert.match(index, /Harbor Index/);
     assert.match(index, /No Harbor Index|never invented|without inventing/i);
     assert.doesNotMatch(index, /Harbor Index score of|#\d+ on Harbor/i);
@@ -67,6 +73,10 @@ describe("Marketing claims stay declarative and honest", () => {
     assert.match(security, /Approval is the product/);
     assert.match(mcp, /mcp-oauth\/refresh/);
     assert.match(mcp, /VEASEL_MCP_STDIO_SANDBOX/);
+    assert.match(tui, /SolidJS \+ OpenTUI|SolidJS on/);
+    assert.match(tui, /Ctrl\+P/);
+    assert.match(tui, /Compose/);
+    assert.match(tui, /mint/);
     assert.match(tui, /DiffRenderable/);
     assert.match(tui, /MarkdownRenderable/);
     assert.match(tui, /\$source\/skill|\$<\/kbd> to autocomplete/);
@@ -75,6 +85,16 @@ describe("Marketing claims stay declarative and honest", () => {
     assert.match(tui, /Context footers/);
     assert.match(tui, /systemLabel|system\/tool/);
     assert.match(tui, /VEASEL_TUI_REDUCED_MOTION/);
+    assert.doesNotMatch(tui, /dual-path|experimental Solid/i);
+    assert.match(docs, /SolidJS \+ OpenTUI/);
+    const architecture = await readDoc("src/pages/docs/architecture.astro");
+    const faq = await readDoc("src/pages/docs/faq.astro");
+    const downloads = await readDoc("src/pages/downloads.astro");
+    assert.match(architecture, /Solid \+ OpenTUI|SolidJS \+ OpenTUI/);
+    assert.match(faq, /SolidJS \+ OpenTUI/);
+    assert.match(downloads, /SolidJS \+ OpenTUI/);
+    assert.match(downloads, /0\.42|verified tag|does not invent/);
+    assert.doesNotMatch(downloads, /v0\.43\.0/);
     assert.match(skills, /skills\/invoke/);
     assert.match(skills, /VEASEL_MCP_STDIO_SANDBOX/);
     assert.doesNotMatch(skills, /macOS\/Windows stay unsandboxed/i);
