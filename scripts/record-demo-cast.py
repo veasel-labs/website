@@ -19,8 +19,11 @@ from pathlib import Path
 import pexpect
 
 VERSION = "0.41.0-next.0"
-WIDTH = 100
-HEIGHT = 28
+# Minimum-good terminal for Veasel Code TUI: footers are budgeted ≤72 cols so
+# an 80-wide terminal still shows the quit cue (see tui/src/footer-hints.ts);
+# rows < 30 force compact /help. Avoid 100-wide padding and sub-30 height.
+WIDTH = 80
+HEIGHT = 30
 REPO = Path(__file__).resolve().parents[1]
 OUT_CAST = REPO / "public" / "demo" / f"veasel-{VERSION}-demo.cast"
 OUT_META = REPO / "public" / "demo" / f"veasel-{VERSION}-demo.meta.json"
