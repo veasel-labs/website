@@ -14,7 +14,9 @@ describe("Marketing claims stay declarative and honest", () => {
   it("landing page declares the standard without Harbor Index claims", async () => {
     const index = await readDoc("src/pages/index.astro");
     const release = JSON.parse(await readDoc("src/data/verified-release.json"));
-    assert.equal(release.tag, "v0.43.0-next.0");
+    // Tag advances via refresh-release automation; assert shape, not a pin.
+    assert.match(release.tag, /^v\d+\.\d+\.\d+-next\.\d+$/);
+    assert.match(release.source_commit, /^[0-9a-f]{40}$/);
     assert.match(index, /verified-release\.json/);
     assert.match(index, /\{release\}/);
     assert.match(index, /The new standard/);
