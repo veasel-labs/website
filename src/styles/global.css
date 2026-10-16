@@ -504,6 +504,72 @@ p {
   display: grid;
   grid-template-columns: 35% 65%;
 }
+.tui-screen-solid {
+  grid-template-columns: 1fr;
+}
+.tui-session-bar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 8px 14px;
+  border-bottom: 1px solid #28342e;
+  background: #141b17;
+  color: #8eaa99;
+  font-size: 0.55rem;
+  letter-spacing: 0.04em;
+}
+.tui-session-bar b {
+  color: #dff5e7;
+  font-weight: 600;
+  letter-spacing: 0;
+}
+.tui-session-hotkeys {
+  color: #7e9085;
+}
+.tui-session-hotkeys kbd {
+  color: #9bd8b0;
+  font: inherit;
+}
+.tui-splash {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 4px;
+  padding: 8px 10px;
+  border: 1px dashed #3b5948;
+  border-radius: 8px;
+  background: #152019;
+  color: #8eaa99;
+  font-size: 0.52rem;
+  letter-spacing: 0.08em;
+}
+.tui-splash img {
+  image-rendering: pixelated;
+  object-fit: contain;
+}
+.tui-compose-panel {
+  flex-direction: column;
+  align-items: stretch;
+  gap: 6px;
+  border-color: #4a6b58;
+}
+.tui-compose-title {
+  color: #8fe6a9;
+  font: 700 0.5rem/1 var(--mono);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+.tui-compose-row {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+}
+.tui-compose-row code {
+  color: #a9d8b8;
+  font: inherit;
+}
 .tui-sessions {
   position: relative;
   padding: 18px 12px 54px;

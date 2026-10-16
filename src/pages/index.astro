@@ -23,9 +23,11 @@ const release = verifiedRelease.tag;
       <p class="hero-text">
         <strong>Veasel Code</strong> is built in V for the people who refuse
         black-box agents. Sessions stay on loopback SQLite. Skills, sandboxes,
-        MCP, compaction, and a serious TUI ship today — with approvals before
-        edits, shell, or tool calls. No invented Harbor Index scores. No fake
-        latency charts. Just the product, as it runs.
+        MCP, compaction, and a SolidJS + OpenTUI terminal client ship today —
+        mint chrome, pixel splash, Ctrl+P command palette, reviews, and{" "}
+        <code>/</code> <code>@</code> <code>$</code> autocomplete — with
+        approvals before edits, shell, or tool calls. No invented Harbor Index
+        scores. No fake latency charts. Just the product, as it runs.
       </p>
       <div class="hero-actions">
         <a class="button button-dark" href={`${basePath}/downloads/`}>
@@ -73,7 +75,7 @@ const release = verifiedRelease.tag;
       </div>
       <div
         class="tui-preview"
-        aria-label="HTML-rendered preview of Veasel Code running in a terminal"
+        aria-label="HTML-rendered preview of the SolidJS + OpenTUI Veasel terminal client"
       >
         <div class="tui-titlebar">
           <div class="tui-window-dots" aria-hidden="true">
@@ -82,49 +84,32 @@ const release = verifiedRelease.tag;
             <i></i>
           </div>
           <span class="tui-window-title">
-            VEASEL <b>/</b> CODE
+            VEASEL <b>code</b>
           </span>
           <span class="tui-window-host">~/your-project</span>
           <span class="tui-live">
-            <i></i> LOCAL
+            <i></i> LOCAL · mint
           </span>
         </div>
-        <div class="tui-screen">
-          <aside class="tui-sessions" aria-label="Session list">
-            <span class="tui-eyebrow">
-              SESSIONS <b>02</b>
+        <div class="tui-screen tui-screen-solid">
+          <div class="tui-session-bar" aria-label="Session chrome">
+            <span>
+              SESSION <b>Ship the standard agent</b>
             </span>
-            <div class="tui-session tui-session-active">
-              <i></i>
-              <span>
-                <b>Ship the standard agent</b>
-                <small>~/veasel.dev</small>
-              </span>
-            </div>
-            <div class="tui-session">
-              <i></i>
-              <span>
-                <b>Review MCP trust</b>
-                <small>~/workspace</small>
-              </span>
-            </div>
-            <div class="tui-add-session">
-              ＋ <span>new workspace</span>
-            </div>
-            <div class="tui-session-foot">
-              <span class="tui-avatar">V</span>
-              <span>
-                <b>VEASEL CODE</b>
-                <small>your local workspace</small>
-              </span>
-            </div>
-          </aside>
+            <span class="tui-session-hotkeys">
+              <kbd>Ctrl+P</kbd> commands · <kbd>Ctrl+G</kbd> activity ·{" "}
+              <kbd>Ctrl+R</kbd> reviews
+            </span>
+          </div>
           <div class="tui-conversation">
-            <div class="tui-conversation-head">
-              <span>
-                <i></i> Ship the standard agent
-              </span>
-              <kbd>Esc</kbd>
+            <div class="tui-splash" aria-hidden="true">
+              <img
+                src={`${basePath}/veasel-pixel.svg`}
+                alt=""
+                width="42"
+                height="28"
+              />
+              <span>pixel Veasel · mint splash</span>
             </div>
             <div class="tui-message tui-user">
               <span class="tui-message-label">YOU</span>
@@ -142,7 +127,8 @@ const release = verifiedRelease.tag;
               </span>
               <p>
                 Parallel reads + repo map first. Patch, shell, and MCP stay
-                queued — nothing takes effect until you approve.
+                queued — nothing takes effect until you approve. Press{" "}
+                <kbd>Ctrl+P</kbd> for the command palette.
               </p>
             </div>
             <div class="tui-tool">
@@ -160,24 +146,30 @@ const release = verifiedRelease.tag;
                 Review diff <b>↗</b>
               </span>
             </div>
-            <div class="tui-composer">
-              <span>›</span>
-              <span>@path · $skill · /theme · /usage · Shift+Enter…</span>
-              <i></i>
+            <div class="tui-composer tui-compose-panel">
+              <span class="tui-compose-title">Compose</span>
+              <div class="tui-compose-row">
+                <span>›</span>
+                <span>
+                  Message Veasel… <code>/</code> <code>@</code> <code>$</code> ·
+                  Shift+Enter…
+                </span>
+                <i></i>
+              </div>
             </div>
             <div class="tui-status">
               <span>
                 <i></i> local · reviewed
               </span>
-              <span>s models · /mcp · /skills · /plugin</span>
+              <span>Solid · OpenTUI · mint</span>
               <span>↑ ↓ navigate</span>
             </div>
           </div>
         </div>
         <div class="tui-caption">
-          <span>OPENTUI · REVIEW-GATED · LOCAL</span>
+          <span>SOLID · OPENTUI · MINT</span>
           <span>
-            HTML preview of the shipped session client — walk the real CLI/TUI
+            HTML preview of the Veasel terminal client — walk the real CLI/TUI
             on <a href={`${basePath}/demo/`}>Demo</a>.
           </span>
         </div>
@@ -266,9 +258,9 @@ const release = verifiedRelease.tag;
           <span>Every surface sharp.</span>
         </h2>
         <p>
-          Plugins, OAuth refresh, and a keyboard-first TUI sit on the same
-          loopback API — so headless <code>veasel run</code> and the terminal
-          client never drift apart.
+          Plugins, OAuth refresh, and the SolidJS + OpenTUI terminal client sit
+          on the same loopback API — so headless <code>veasel run</code> and the
+          TUI never drift apart.
         </p>
       </div>
       <div class="provider-orbit" aria-label="Product surfaces that ship today">
@@ -370,16 +362,15 @@ const release = verifiedRelease.tag;
         <div>
           <small>TERMINAL UI</small>
           <h3>
-            Markdown · $skills · fuzzy @ · Diff washes · footers · themes ·
-            reduced-motion
+            SolidJS + OpenTUI · mint · Ctrl+P · reviews · / @ $ autocomplete
           </h3>
           <p>
-            Shift+Enter newlines; OpenTUI MarkdownRenderable for the latest live
-            and completed turn; DiffRenderable with content washes;{" "}
-            <code>$</code> skill and fuzzy <code>@</code> path autocomplete;
-            mode-aware context footers; system/tool theme tokens; builtin +
-            custom JSON themes; <code>VEASEL_TUI_REDUCED_MOTION</code>; status
-            cues that say idle / busy / attention without blinking when you ask.
+            Veasel-branded Solid shell on OpenTUI: mint identity, pixel splash,
+            Compose drafts (Shift+Enter), <kbd>Ctrl+P</kbd> command palette,
+            review overlays, slash / <code>@</code> path / <code>$</code> skill
+            autocomplete, MarkdownRenderable replies, DiffRenderable washes,
+            context footers, builtin + custom JSON themes, and{" "}
+            <code>VEASEL_TUI_REDUCED_MOTION</code>.
           </p>
         </div>
         <span class="flow-arrow">↓</span>
@@ -462,7 +453,7 @@ const release = verifiedRelease.tag;
         </div>
         <div class="status-row">
           <span class="status-symbol done">✓</span>
-          <b>OpenTUI session client</b>
+          <b>SolidJS + OpenTUI session client</b>
           <small>READY</small>
         </div>
         <div class="status-row">
@@ -517,7 +508,7 @@ const release = verifiedRelease.tag;
         <code>/patches · /commands · /mcp · /skills</code>
       </div>
       <div class="install-foot">
-        V runtime · OpenTUI client · local SQLite <span>♥</span>
+        V runtime · SolidJS + OpenTUI · local SQLite <span>♥</span>
       </div>
     </div>
   </section>
