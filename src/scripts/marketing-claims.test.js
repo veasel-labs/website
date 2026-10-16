@@ -14,7 +14,7 @@ describe("Marketing claims stay declarative and honest", () => {
   it("landing page declares the standard without Harbor Index claims", async () => {
     const index = await readDoc("src/pages/index.astro");
     const release = JSON.parse(await readDoc("src/data/verified-release.json"));
-    assert.equal(release.tag, "v0.42.0-next.0");
+    assert.equal(release.tag, "v0.43.0-next.0");
     assert.match(index, /verified-release\.json/);
     assert.match(index, /\{release\}/);
     assert.match(index, /The new standard/);
@@ -93,8 +93,8 @@ describe("Marketing claims stay declarative and honest", () => {
     assert.match(architecture, /Solid \+ OpenTUI|SolidJS \+ OpenTUI/);
     assert.match(faq, /SolidJS \+ OpenTUI/);
     assert.match(downloads, /SolidJS \+ OpenTUI/);
-    assert.match(downloads, /0\.42|verified tag|does not invent/);
-    assert.doesNotMatch(downloads, /v0\.43\.0/);
+    assert.match(downloads, /0\.43|verified tag|does not invent/);
+    assert.doesNotMatch(downloads, /v0\.44\.0/);
     assert.match(skills, /skills\/invoke/);
     assert.match(skills, /VEASEL_MCP_STDIO_SANDBOX/);
     assert.doesNotMatch(skills, /macOS\/Windows stay unsandboxed/i);
