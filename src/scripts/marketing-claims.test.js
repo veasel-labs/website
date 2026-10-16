@@ -14,7 +14,7 @@ describe("Marketing claims stay declarative and honest", () => {
   it("landing page declares the standard without Harbor Index claims", async () => {
     const index = await readDoc("src/pages/index.astro");
     const release = JSON.parse(await readDoc("src/data/verified-release.json"));
-    assert.equal(release.tag, "v0.41.0-next.0");
+    assert.equal(release.tag, "v0.42.0-next.0");
     assert.match(index, /verified-release\.json/);
     assert.match(index, /\{release\}/);
     assert.match(index, /The new standard/);
@@ -51,7 +51,7 @@ describe("Marketing claims stay declarative and honest", () => {
     assert.match(index, /Harbor Index/);
     assert.match(index, /No Harbor Index|never invented|without inventing/i);
     assert.doesNotMatch(index, /Harbor Index score of|#\d+ on Harbor/i);
-    assert.doesNotMatch(index, /v0\.42\.0|v1\.0\.0-next/);
+    assert.doesNotMatch(index, /v0\.43\.0|v1\.0\.0-next/);
     assert.doesNotMatch(index, /ConPTY.*(done|complete|READY)/i);
   });
 
