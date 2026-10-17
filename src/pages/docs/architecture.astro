@@ -42,29 +42,55 @@ const basePath = import.meta.env.BASE_URL.replace(/\/$/, "");
     <div
       class="architecture-map"
       role="img"
-      aria-label="Terminal client connects to the loopback API, which connects to session storage, workspace tools, and the V agent runtime"
+      aria-label="Diagram: the Solid terminal client and the headless CLI talk over loopback HTTP and SSE to the V runtime, which owns the agent loop, bounded tools and provider calls; sessions and events persist in SQLite, and workspace files change only through reviewed approvals"
     >
-      <div class="map-node">
-        <small>CLIENT</small>
-        <strong>Solid + OpenTUI</strong>
-        <span>TypeScript</span>
-      </div>
-      <div class="map-arrow" aria-hidden="true">
-        →
-      </div>
-      <div class="map-node map-core">
-        <small>BOUNDARY</small>
-        <strong>HTTP · SSE</strong>
-        <span>127.0.0.1</span>
-      </div>
-      <div class="map-arrow" aria-hidden="true">
-        →
-      </div>
-      <div class="map-node">
-        <small>RUNTIME</small>
-        <strong>V + SQLite</strong>
-        <span>sessions / events / tools</span>
-      </div>
+      <svg viewBox="0 0 760 340" width="100%" role="presentation" aria-hidden="true">
+        <defs>
+          <marker id="arch-arrow" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto">
+            <path d="M0,0 L8,4 L0,8 z" fill="#ffe180"></path>
+          </marker>
+        </defs>
+        <!-- clients -->
+        <rect x="10" y="60" width="150" height="72" rx="9" fill="none" stroke="#777990"></rect>
+        <text x="26" y="86" fill="#afe9c1" font-size="10" letter-spacing="1">CLIENT</text>
+        <text x="26" y="106" fill="#ffffff" font-size="14" font-weight="bold">Solid + OpenTUI</text>
+        <text x="26" y="122" fill="#c1c2d3" font-size="10">terminal UI</text>
+        <rect x="10" y="208" width="150" height="72" rx="9" fill="none" stroke="#777990"></rect>
+        <text x="26" y="234" fill="#afe9c1" font-size="10" letter-spacing="1">CLIENT</text>
+        <text x="26" y="254" fill="#ffffff" font-size="14" font-weight="bold">veasel run</text>
+        <text x="26" y="270" fill="#c1c2d3" font-size="10">headless CLI</text>
+        <!-- boundary -->
+        <rect x="215" y="120" width="150" height="100" rx="9" fill="none" stroke="#ffe180"></rect>
+        <text x="231" y="146" fill="#afe9c1" font-size="10" letter-spacing="1">BOUNDARY</text>
+        <text x="231" y="166" fill="#ffffff" font-size="14" font-weight="bold">HTTP · SSE</text>
+        <text x="231" y="182" fill="#c1c2d3" font-size="10">127.0.0.1 · versioned</text>
+        <text x="231" y="198" fill="#c1c2d3" font-size="10">events with cursors</text>
+        <!-- runtime -->
+        <rect x="420" y="105" width="160" height="130" rx="9" fill="none" stroke="#777990"></rect>
+        <text x="436" y="131" fill="#afe9c1" font-size="10" letter-spacing="1">RUNTIME · V</text>
+        <text x="436" y="151" fill="#ffffff" font-size="14" font-weight="bold">Agent loop</text>
+        <text x="436" y="169" fill="#c1c2d3" font-size="10">bounded tools</text>
+        <text x="436" y="185" fill="#c1c2d3" font-size="10">provider calls</text>
+        <text x="436" y="201" fill="#c1c2d3" font-size="10">compaction · repo map</text>
+        <text x="436" y="217" fill="#ffe180" font-size="10">approval gate ◆</text>
+        <!-- storage -->
+        <rect x="620" y="60" width="130" height="72" rx="9" fill="none" stroke="#777990"></rect>
+        <text x="634" y="86" fill="#afe9c1" font-size="10" letter-spacing="1">STATE</text>
+        <text x="634" y="106" fill="#ffffff" font-size="13" font-weight="bold">SQLite</text>
+        <text x="634" y="122" fill="#c1c2d3" font-size="10">sessions · events</text>
+        <rect x="620" y="208" width="130" height="72" rx="9" fill="none" stroke="#777990"></rect>
+        <text x="634" y="234" fill="#afe9c1" font-size="10" letter-spacing="1">WORKSPACE</text>
+        <text x="634" y="254" fill="#ffffff" font-size="13" font-weight="bold">Your files</text>
+        <text x="634" y="270" fill="#c1c2d3" font-size="10">reviewed edits only</text>
+        <!-- arrows -->
+        <line x1="160" y1="96" x2="215" y2="150" stroke="#ffe180" marker-end="url(#arch-arrow)"></line>
+        <line x1="160" y1="244" x2="215" y2="190" stroke="#ffe180" marker-end="url(#arch-arrow)"></line>
+        <line x1="365" y1="170" x2="420" y2="170" stroke="#ffe180" marker-end="url(#arch-arrow)"></line>
+        <line x1="580" y1="130" x2="620" y2="100" stroke="#ffe180" marker-end="url(#arch-arrow)"></line>
+        <line x1="580" y1="210" x2="620" y2="240" stroke="#ffe180" marker-end="url(#arch-arrow)"></line>
+        <text x="255" y="112" fill="#c1c2d3" font-size="10">same API, no drift</text>
+        <text x="596" y="160" fill="#ffe180" font-size="10">◆</text>
+      </svg>
     </div>
     <div class="doc-panel">
       <h2>State change first, event alongside it</h2>
