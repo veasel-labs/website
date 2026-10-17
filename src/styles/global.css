@@ -1835,6 +1835,11 @@ pre {
   border: 1px solid #777990;
   border-radius: 9px;
 }
+.architecture-map svg {
+  display: block;
+  width: 100%;
+  height: auto;
+}
 .map-node small {
   color: #afe9c1;
   font: 0.55rem var(--mono);
@@ -2294,7 +2299,12 @@ pre {
     font-size: 0.64rem;
   }
   .map-node span,
-  .map-node small {
+  .architecture-map svg {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+.map-node small {
     font-size: 0.47rem;
   }
 }

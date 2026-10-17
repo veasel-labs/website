@@ -293,6 +293,47 @@ const basePath = import.meta.env.BASE_URL.replace(/\/$/, "");
     </div>
 
     <div class="doc-panel">
+      <h2>Fresh on main — landing in the next verified release</h2>
+      <p>
+        These terminal improvements are merged on <code>main</code> and ship
+        with the next verified prerelease; the current verified channel tag is
+        in the site footer.
+      </p>
+      <ul>
+        <li>
+          <strong>Drafts survive restarts.</strong> Pending composer text and
+          attachments are kept per session in a local state file (0600), so
+          closing the TUI no longer loses a half-written prompt.
+        </li>
+        <li>
+          <strong>API keys never render.</strong> The key prompt masks every
+          character — the secret never reaches the terminal buffer or a
+          captured frame.
+        </li>
+        <li>
+          <strong>Real Markdown replies.</strong> Assistant messages and
+          streaming render headings, lists, tables, and syntax-highlighted
+          code fences; role labels stay readable without color.
+        </li>
+        <li>
+          <strong>Cursor-aware completion.</strong> Moving back into an{" "}
+          <code>@</code> path or <code>$</code> skill mention reopens its menu
+          and completing keeps the text after the mention.
+        </li>
+        <li>
+          <strong>Approvals require inspection.</strong> Review details load
+          when you open an item; batch approval stays blocked until every
+          target was actually shown.
+        </li>
+        <li>
+          <strong>Reduced motion honored.</strong> The streaming cursor goes
+          static when <code>VEASEL_TUI_REDUCED_MOTION</code> or the OS asks
+          for less motion.
+        </li>
+      </ul>
+    </div>
+
+    <div class="doc-panel">
       <h2>Usage and cost honesty</h2>
       <p>
         <code>/usage</code> shows provider-reported token totals, average per
