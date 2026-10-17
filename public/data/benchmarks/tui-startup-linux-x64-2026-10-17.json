@@ -1,0 +1,73 @@
+{
+  "kind": "tui-startup",
+  "measuredAt": "2026-10-17T23:28:26.898Z",
+  "host": {
+    "platform": "linux",
+    "arch": "x64",
+    "release": "7.2.9-arch1-1",
+    "cpus": "24"
+  },
+  "binaries": {
+    "tui": "/tmp/veasel-main-tui",
+    "server": "/tmp/veasel-main-backend",
+    "tuiVersionLine": "Veasel Code Terminal development",
+    "tuiPath": "/tmp/veasel-main-tui",
+    "serverPath": "/tmp/veasel-main-backend"
+  },
+  "method": {
+    "cli": "2 warmups + 15 samples per --version/--help; wall via performance.now(); Linux RSS via RUSAGE_CHILDREN.ru_maxrss (kB)",
+    "ptyConnected": "5 samples; Python pty.fork against isolated veasel serve; wall until visible markers connected+SESSIONS+VEASEL",
+    "exclusions": "Not interactive render FPS, not model/token latency, not coding-task quality."
+  },
+  "cli": {
+    "version": {
+      "wall": {
+        "count": 15,
+        "minMs": 71.43090200000006,
+        "medianMs": 84.04344899999978,
+        "p95Ms": 90.15726229999997,
+        "maxMs": 92.95407799999998,
+        "meanMs": 82.34865579999997
+      },
+      "rssKb": {
+        "count": 15,
+        "minKb": 64740,
+        "medianKb": 65316,
+        "p95Kb": 65527.2,
+        "maxKb": 65572,
+        "meanKb": 65237.333333333336
+      },
+      "failures": 0
+    },
+    "help": {
+      "wall": {
+        "count": 15,
+        "minMs": 77.33445499999925,
+        "medianMs": 84.18043699999998,
+        "p95Ms": 87.59066039999998,
+        "maxMs": 88.21614399999999,
+        "meanMs": 84.17060919999992
+      },
+      "rssKb": {
+        "count": 15,
+        "minKb": 64628,
+        "medianKb": 65124,
+        "p95Kb": 65366.4,
+        "maxKb": 65484,
+        "meanKb": 65074.933333333334
+      },
+      "failures": 0
+    }
+  },
+  "ptyConnectedMs": {
+    "wall": {
+      "count": 5,
+      "minMs": 129.641,
+      "medianMs": 135.306,
+      "p95Ms": 137.06699999999998,
+      "maxMs": 137.408,
+      "meanMs": 134.372
+    },
+    "failures": 0
+  }
+}
