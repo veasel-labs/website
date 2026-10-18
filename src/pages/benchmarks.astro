@@ -368,16 +368,17 @@ const fmtMs = (value: number) => value.toFixed(1);
             <p>
               The same externally-checked edit fixture runs against Veasel, Pi,
               Codex, mini-SWE-agent and OpenCode with scripted provider replies
-              (<code>benchmarks/deterministic</code>). Veasel 264 ms, Pi 492 ms,
-              Codex 4,132 ms, mini-SWE-agent 4,281 ms, OpenCode 4,588 ms cold
-              wall — all passing. Veasel additionally runs search,
-              autonomous-shell, sequential multi-file edit, read-then-edit,
-              edit-then-shell-verify, failed-shell recovery and failed-edit
-              recovery fixtures plus outside-workspace read and write rejections
-              (11 of 11 passing), including a check that the provider API key
-              never reaches a shell command's environment. This measures harness
-              and startup orchestration only; scripted replies say nothing about
-              model quality, and no task-superiority claim is made from it.
+              (<code>benchmarks/deterministic</code>). Latest wall times
+              (2026-10-18 reports, all passing): Veasel 264 ms, Pi 1,687 ms,
+              OpenCode 3,597 ms, Codex 4,423 ms, mini-SWE-agent 6,205 ms. Veasel
+              additionally runs search, autonomous-shell, sequential multi-file
+              edit, read-then-edit, edit-then-shell-verify, failed-shell
+              recovery and failed-edit recovery fixtures plus outside-workspace
+              read and write rejections (11 of 11 passing), including a check
+              that the provider API key never reaches a shell command's
+              environment. This measures harness and startup orchestration only;
+              scripted replies say nothing about model quality, and no
+              task-superiority claim is made from it.
             </p>
           </div>
           <strong>Measured</strong>
