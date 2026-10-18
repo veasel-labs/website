@@ -371,13 +371,13 @@ const fmtMs = (value: number) => value.toFixed(1);
               (<code>benchmarks/deterministic</code>). Veasel 264 ms, Pi 492 ms,
               Codex 4,132 ms, mini-SWE-agent 4,281 ms, OpenCode 4,588 ms cold
               wall — all passing. Veasel additionally runs search,
-              autonomous-shell, sequential multi-file edit, read-then-edit and
-              edit-then-shell-verify fixtures plus outside-workspace read and
-              write rejections (9 of 9 passing), including a check that the
-              provider API key never reaches a shell command's environment. This
-              measures harness and startup orchestration only; scripted replies
-              say nothing about model quality, and no task-superiority claim is
-              made from it.
+              autonomous-shell, sequential multi-file edit, read-then-edit,
+              edit-then-shell-verify and failed-shell recovery fixtures plus
+              outside-workspace read and write rejections (10 of 10 passing),
+              including a check that the provider API key never reaches a shell
+              command's environment. This measures harness and startup
+              orchestration only; scripted replies say nothing about model
+              quality, and no task-superiority claim is made from it.
             </p>
           </div>
           <strong>Measured</strong>
