@@ -370,13 +370,13 @@ const fmtMs = (value: number) => value.toFixed(1);
               Codex, mini-SWE-agent and OpenCode with scripted provider replies
               (<code>benchmarks/deterministic</code>). Veasel 264 ms, Pi 492 ms,
               Codex 4,132 ms, mini-SWE-agent 4,281 ms, OpenCode 4,588 ms cold
-              wall — all passing. Veasel additionally runs search and
-              autonomous-shell fixtures plus outside-workspace read and write
-              rejections (6 of 6 passing), including a check that the provider
-              API key never reaches a shell command's environment. This measures
-              harness and startup orchestration only; scripted replies say
-              nothing about model quality, and no task-superiority claim is made
-              from it.
+              wall — all passing. Veasel additionally runs search,
+              autonomous-shell and sequential multi-file edit fixtures plus
+              outside-workspace read and write rejections (7 of 7 passing),
+              including a check that the provider API key never reaches a shell
+              command's environment. This measures harness and startup
+              orchestration only; scripted replies say nothing about model
+              quality, and no task-superiority claim is made from it.
             </p>
           </div>
           <strong>Measured</strong>
