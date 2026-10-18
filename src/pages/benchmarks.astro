@@ -359,6 +359,25 @@ const fmtMs = (value: number) => value.toFixed(1);
           <strong>Measured</strong>
         </article>
         <article class="bench-status-row">
+          <span
+            class="bench-status-dot status-measured"
+            aria-hidden="true"
+          ></span>
+          <div>
+            <h3>Deterministic cross-agent fixtures</h3>
+            <p>
+              The same externally-checked edit fixture runs against Veasel, Pi,
+              Codex, mini-SWE-agent and OpenCode with scripted provider replies
+              (<code>benchmarks/deterministic</code>). Veasel 264 ms, Pi 492 ms,
+              Codex 4,132 ms, mini-SWE-agent 4,281 ms, OpenCode 4,588 ms cold
+              wall — all passing. This measures harness and startup
+              orchestration only; scripted replies say nothing about model
+              quality, and no task-superiority claim is made from it.
+            </p>
+          </div>
+          <strong>Measured</strong>
+        </article>
+        <article class="bench-status-row">
           <span class="bench-status-dot" aria-hidden="true"></span>
           <div>
             <h3>Harbor Index</h3>
