@@ -2300,11 +2300,11 @@ pre {
   }
   .map-node span,
   .architecture-map svg {
-  display: block;
-  width: 100%;
-  height: auto;
-}
-.map-node small {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+  .map-node small {
     font-size: 0.47rem;
   }
 }
