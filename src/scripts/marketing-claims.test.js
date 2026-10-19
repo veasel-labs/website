@@ -103,7 +103,7 @@ describe("Marketing claims stay declarative and honest", () => {
     assert.match(sessions, /Parallel read-only/);
     assert.match(sessions, /Cost schedule honesty/);
     assert.match(sessions, /prompt_cache_key|prompt-cache|cache counters/i);
-    assert.match(benchmarks, /tui-startup-linux-x64-2026-10-17\.json/);
+    assert.match(benchmarks, /tui-startup-linux-x64-2026-10-19\.json/);
     assert.match(benchmarks, /tuiVersionP50|cli\.version\.wall\.medianMs/);
     assert.match(benchmarks, /tuiHelpP50|cli\.help\.wall\.medianMs/);
     assert.match(benchmarks, /tuiPtyP50|ptyConnectedMs\.wall\.medianMs/);

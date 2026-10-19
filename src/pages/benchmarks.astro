@@ -1,7 +1,7 @@
 ---
 import SiteLayout from "../layouts/SiteLayout.astro";
 import startupReport from "../../public/data/benchmarks/cli-startup-linux-x64-2026-10-18.json";
-import tuiStartupReport from "../../public/data/benchmarks/tui-startup-linux-x64-2026-10-17.json";
+import tuiStartupReport from "../../public/data/benchmarks/tui-startup-linux-x64-2026-10-19.json";
 
 const basePath = import.meta.env.BASE_URL.replace(/\/$/, "");
 const startupResults = startupReport.operations.version;
@@ -310,7 +310,7 @@ const fmtMs = (value: number) => value.toFixed(1);
           <dt>Raw report</dt>
           <dd>
             <a
-              href={`${basePath}/data/benchmarks/tui-startup-linux-x64-2026-10-17.json`}
+              href={`${basePath}/data/benchmarks/tui-startup-linux-x64-2026-10-19.json`}
             >
               JSON · full measurements ↗
             </a>
