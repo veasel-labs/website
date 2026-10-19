@@ -70,6 +70,24 @@ const basePath = import.meta.env.BASE_URL.replace(/\/$/, "");
           <span role="cell">Read session metadata.</span>
         </div>
         <div class="provider-table-row" role="row">
+          <b role="cell">GET</b>
+          <code role="cell">{"/v1/sessions/{id}/usage"}</code>
+          <span role="cell">
+            Provider-reported token totals for one session. Nothing is
+            estimated; cost is USD only when every reported turn matches the
+            pinned schedule, otherwise unavailable.
+          </span>
+        </div>
+        <div class="provider-table-row" role="row">
+          <b role="cell">GET</b>
+          <code role="cell">/v1/usage</code>
+          <span role="cell">
+            The same reported-only aggregation across every session: session and
+            turn counts, token, cache and reasoning totals, and the
+            pinned-schedule cost label.
+          </span>
+        </div>
+        <div class="provider-table-row" role="row">
           <b role="cell">GET · POST</b>
           <code role="cell">{"/v1/sessions/{id}/messages"}</code>
           <span role="cell">
