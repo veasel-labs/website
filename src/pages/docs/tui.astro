@@ -334,6 +334,18 @@ const basePath = import.meta.env.BASE_URL.replace(/\/$/, "");
     </div>
 
     <div class="doc-panel">
+      <h2>Forks and attention</h2>
+      <p>
+        <code>/fork</code> copies the current session's chat history into a new
+        session (title suffixed “ (fork)”) and switches to it, so you can try a
+        different direction without losing the original thread. Usage and tool
+        state stay with the source session. When the terminal window is not
+        focused, a finished or failed turn raises a desktop notification;
+        focused terminals stay quiet and rely on the status line.
+      </p>
+    </div>
+
+    <div class="doc-panel">
       <h2>Usage and cost honesty</h2>
       <p>
         <code>/usage</code> shows provider-reported token totals, average per
