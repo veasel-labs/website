@@ -1,0 +1,379 @@
+---
+import SiteLayout from "../layouts/SiteLayout.astro";
+
+type Ack = {
+  name: string;
+  href: string;
+  license: string;
+  learned: string;
+  veasel: string;
+};
+
+const dependencies: Ack[] = [
+  {
+    name: "OpenTUI",
+    href: "https://github.com/anomalyco/opentui",
+    license: "MIT",
+    learned:
+      "The terminal renderer under Veasel's interface: SolidJS bindings, focus/blur events, and OS notifications through triggerNotification.",
+    veasel:
+      "Direct dependency (@opentui/core and @opentui/solid 0.6.2). Veasel builds its own components, theme, and attention behavior on top of it.",
+  },
+  {
+    name: "SolidJS",
+    href: "https://github.com/solidjs/solid",
+    license: "MIT",
+    learned:
+      "Fine-grained reactivity without a virtual DOM, which keeps streaming transcript updates cheap in a terminal.",
+    veasel:
+      "Direct dependency (solid-js 1.9.17). Every production TUI screen is Solid; the legacy renderer was removed.",
+  },
+  {
+    name: "V",
+    href: "https://github.com/vlang/v",
+    license: "MIT",
+    learned:
+      "A small native language with fast builds and a batteries-included standard library for HTTP, SQLite, and subprocesses.",
+    veasel:
+      "The whole backend — agent loop, tools, store, and versioned HTTP API — is written in V (pinned to 0.5.2 abc7886 in CI).",
+  },
+];
+
+const standards: Ack[] = [
+  {
+    name: "models.dev",
+    href: "https://github.com/anomalyco/models.dev",
+    license: "MIT",
+    learned:
+      "A community-maintained catalog of provider endpoints, model capabilities, context limits, and pricing.",
+    veasel:
+      "Pinned snapshots generate Veasel's model context and cost-schedule tables; unknown models stay unknown instead of inventing limits.",
+  },
+  {
+    name: "Agent Skills",
+    href: "https://github.com/agentskills/agentskills",
+    license: "Apache-2.0",
+    learned:
+      "The SKILL.md format: discoverable skill packages with progressive disclosure of instructions and resources.",
+    veasel:
+      "Veasel discovers, validates, enables, and one-shot invokes SKILL.md packages from project and user roots, with its own trust model.",
+  },
+  {
+    name: "Agent Plugins spec",
+    href: "https://github.com/agentplugins/agent-plugins-spec",
+    license: "Spec CC BY 4.0 · software Apache-2.0",
+    learned:
+      "Portable plugin manifests and schemas so agent extensions can move between tools.",
+    veasel:
+      "Veasel's plugin linking, MCP server declarations, and per-session Skill enablement follow the spec's manifest ideas with Veasel-specific review gates.",
+  },
+];
+
+const adapted: Ack[] = [
+  {
+    name: "Aider",
+    href: "https://github.com/Aider-AI/aider",
+    license: "Apache-2.0",
+    learned:
+      "RepoMap: rank repository files by a PageRank-style graph over cross-file symbol references, not just text matches.",
+    veasel:
+      "Reimplemented natively in V (repository_map.v): one bounded cross-reference boost over Veasel's extractive symbol index, with definer caps and no tree-sitter dependency.",
+  },
+  {
+    name: "OpenCode",
+    href: "https://github.com/anomalyco/opencode",
+    license: "MIT",
+    learned:
+      "Its SolidJS + OpenTUI client sets the bar: session UX, permissions, and an attention system that notifies when a turn finishes while the terminal is blurred.",
+    veasel:
+      "Veasel's attention.ts is an original implementation on the same OpenTUI primitives (focus/blur + triggerNotification), tuned to Veasel's turn lifecycle. OpenCode is a studied reference, not a dependency.",
+  },
+  {
+    name: "Pi",
+    href: "https://github.com/earendil-works/pi",
+    license: "MIT",
+    learned:
+      "A minimal agent core with session branching: fork a conversation to explore another direction without losing the original.",
+    veasel:
+      "POST /v1/sessions/{id}/fork and the TUI /fork command copy chat history under a new id on Veasel's own store; usage and tool state stay with the source session.",
+  },
+];
+
+const inspiration: Ack[] = [
+  {
+    name: "Codex",
+    href: "https://github.com/openai/codex",
+    license: "Apache-2.0",
+    learned:
+      "Sandboxed execution, approval flows, and a disciplined app-server event model.",
+    veasel:
+      "Studied for Veasel's fail-closed tool review and durable operation states; no code shared.",
+  },
+  {
+    name: "mini-SWE-agent",
+    href: "https://github.com/SWE-agent/mini-swe-agent",
+    license: "MIT",
+    learned:
+      "How far a minimal execution loop with honest cost accounting can go.",
+    veasel:
+      "Veasel's deterministic harness compares against it with scripted providers; real same-model runs wait for an authorized budget.",
+  },
+  {
+    name: "Goose",
+    href: "https://github.com/aaif-goose/goose",
+    license: "Apache-2.0",
+    learned: "MCP-first extensibility, recipes, and durable sessions.",
+    veasel:
+      "Informed Veasel's MCP trust and review design; implementation is Veasel-native.",
+  },
+  {
+    name: "SWE-agent",
+    href: "https://github.com/SWE-agent/SWE-agent",
+    license: "MIT",
+    learned:
+      "The agent-computer interface and task-verification discipline behind SWE-bench results.",
+    veasel:
+      "Shaped Veasel's verify-after-edit loop: scripted checks must fail first, pass after, on external state.",
+  },
+  {
+    name: "Gemini CLI",
+    href: "https://github.com/google-gemini/gemini-cli",
+    license: "Apache-2.0",
+    learned: "Tool breadth, checkpoints, and security policy surface at scale.",
+    veasel:
+      "Studied for gaps in Veasel's tool catalog and policy docs; no code shared.",
+  },
+  {
+    name: "Cline",
+    href: "https://github.com/cline/cline",
+    license: "Apache-2.0",
+    learned: "Approvals and checkpoints shared between IDE and CLI runtimes.",
+    veasel:
+      "Contrasted with Veasel's HTTP-first session model during the tools audit.",
+  },
+  {
+    name: "Continue",
+    href: "https://github.com/continuedev/continue",
+    license: "Apache-2.0",
+    learned: "Codebase indexing and context providers as composable pieces.",
+    veasel:
+      "Informed the repository-map roadmap (labeled recall before embeddings); current map stays extractive.",
+  },
+  {
+    name: "Kilo Code",
+    href: "https://github.com/Kilo-Org/kilocode",
+    license: "MIT",
+    learned: "Agent modes, model selection, and onboarding polish.",
+    veasel:
+      "Benchmarked as UX reference for provider setup; Veasel keeps its own flow.",
+  },
+  {
+    name: "Qwen Code",
+    href: "https://github.com/QwenLM/qwen-code",
+    license: "Apache-2.0",
+    learned: "Skills, automatic memory, and subagent teams in one CLI.",
+    veasel:
+      "Studied while scoping Veasel's bounded delegation spike; isolation design remains Veasel's.",
+  },
+  {
+    name: "OpenHands + software-agent-sdk",
+    href: "https://github.com/OpenHands/OpenHands",
+    license: "MIT",
+    learned:
+      "Workspace/session experience and a typed, sandboxed agent server with event streams.",
+    veasel:
+      "Contrasted with Veasel's single-binary local-first design; no code shared.",
+  },
+  {
+    name: "Crush",
+    href: "https://github.com/charmbracelet/crush",
+    license: "FSL-1.1-MIT",
+    learned:
+      "Exceptional terminal craft: keyboard handling, rendering, and themes.",
+    veasel:
+      "UX inspiration only. Crush's Functional Source License is not MIT, so Veasel reimplements any similar ideas from scratch.",
+  },
+];
+
+const evaluation: Ack[] = [
+  {
+    name: "Harbor",
+    href: "https://github.com/harbor-framework/harbor",
+    license: "Apache-2.0",
+    learned:
+      "Isolated agent evaluation with ATIF trajectory traces and reproducible scoring.",
+    veasel:
+      "Veasel ships a Harbor installed-agent adapter and validates ATIF traces in CI; no leaderboard score is claimed yet.",
+  },
+  {
+    name: "SWE-bench",
+    href: "https://github.com/SWE-bench/SWE-bench",
+    license: "MIT",
+    learned:
+      "Real GitHub issues with external patch verification as the ground truth for coding agents.",
+    veasel:
+      "The methodology behind Veasel's deterministic fixtures: success is scored on workspace state, never on agent prose.",
+  },
+  {
+    name: "HorneroOS/qa",
+    href: "https://github.com/HorneroOS/qa",
+    license: "MIT",
+    learned:
+      "Real interactive QA journeys with screenshots and reproducible acceptance tests.",
+    veasel:
+      "The model for Veasel's PTY startup measurements and interactive TUI validation roadmap.",
+  },
+  {
+    name: "agent-toolkit",
+    href: "https://github.com/ulises-jeremias/agent-toolkit",
+    license: "MIT",
+    learned:
+      "Reusable Skills, orchestration conventions, and workspace knowledge management.",
+    veasel:
+      "Veasel itself is developed with agent-toolkit workflows; the projects share an author, listed here for completeness.",
+  },
+];
+
+const groups = [
+  {
+    id: "dependencies",
+    title: "Direct dependencies",
+    note: "Code Veasel actually runs. Thank you for shipping it.",
+    items: dependencies,
+  },
+  {
+    id: "standards",
+    title: "Data & standards",
+    note: "Shared catalogs and formats Veasel implements or pins.",
+    items: standards,
+  },
+  {
+    id: "adapted",
+    title: "Adapted ideas, reimplemented natively",
+    note: "Concepts traced in their source, then written from scratch in V or TypeScript for Veasel's architecture.",
+    items: adapted,
+  },
+  {
+    id: "inspiration",
+    title: "Conceptual inspiration",
+    note: "Source we studied closely while designing Veasel. No code is copied; the lessons are architectural.",
+    items: inspiration,
+  },
+  {
+    id: "evaluation",
+    title: "Evaluation & workflow",
+    note: "How Veasel proves (and refuses to fake) its results.",
+    items: evaluation,
+  },
+];
+---
+
+<SiteLayout
+  title="Built on open source — Acknowledgments"
+  description="The open-source projects Veasel Code depends on, implements, adapts, and learns from — with licenses and honest notes on what was borrowed and what is original."
+>
+  <section class="doc-page ack-page">
+    <p class="kicker">
+      <span class="sparkle" aria-hidden="true">
+        ✳
+      </span>{" "}
+      ACKNOWLEDGMENTS
+    </p>
+    <h1>
+      Built on open source.
+      <br />
+      <em>Proudly, and by name.</em>
+    </h1>
+    <p class="lede">
+      Veasel Code did not appear by magic. It stands on renderers, languages,
+      standards, and hard-won agent designs from an incredible community. This
+      page separates what Veasel <strong>depends on</strong>, what it
+      <strong>implements</strong>, what it <strong>adapted</strong> from ideas
+      traced in source, and what it merely <strong>studied</strong> — because
+      credit is only meaningful when it is precise.
+    </p>
+
+    {groups.map((group) => (
+      <section class="ack-group" aria-labelledby={`ack-${group.id}`}>
+        <h2 id={`ack-${group.id}`}>{group.title}</h2>
+        <p class="ack-note">{group.note}</p>
+        <div class="ack-grid">
+          {group.items.map((item) => (
+            <article class="ack-card">
+              <header>
+                <h3>
+                  <a href={item.href}>{item.name}</a>
+                </h3>
+                <span class="ack-license">{item.license}</span>
+              </header>
+              <p>
+                <strong>What we learned:</strong> {item.learned}
+              </p>
+              <p>
+                <strong>In Veasel:</strong> {item.veasel}
+              </p>
+            </article>
+          ))}
+        </div>
+      </section>
+    ))}
+
+    <aside class="compatibility-banner" role="note">
+      <span class="compatibility-mark" aria-hidden="true">
+        ⌀
+      </span>
+      <p>
+        <strong>License accuracy matters.</strong> Every license label above was
+        read from the project's own LICENSE file at the revision Veasel studied.
+        Where a license restricts reuse (for example Crush's FSL-1.1-MIT),
+        Veasel treats the project as inspiration only. If you maintain one of
+        these projects and want a correction,{" "}
+        <a href="https://github.com/veasel-labs/website/issues">
+          open an issue
+        </a>{" "}
+        — we will fix it fast.
+      </p>
+    </aside>
+  </section>
+</SiteLayout>
+
+<style>
+  .ack-group {
+    margin-top: 44px;
+  }
+  .ack-note {
+    color: var(--muted, #535c55);
+    margin-top: 4px;
+  }
+  .ack-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
+    gap: 16px;
+    margin-top: 18px;
+  }
+  .ack-card {
+    border: 1px solid #243e3422;
+    border-radius: 18px;
+    padding: 20px;
+    background: #ffffff88;
+  }
+  .ack-card header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 12px;
+  }
+  .ack-card h3 {
+    margin: 0;
+  }
+  .ack-license {
+    font-size: 0.72rem;
+    white-space: nowrap;
+    border: 1px solid #243e3433;
+    border-radius: 999px;
+    padding: 2px 8px;
+  }
+  .ack-card p {
+    margin: 10px 0 0;
+  }
+</style>
