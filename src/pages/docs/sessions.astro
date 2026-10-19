@@ -54,6 +54,13 @@ const basePath = import.meta.env.BASE_URL.replace(/\/$/, "");
           Chat messages are capped at 1 MiB (1,048,576 bytes) of text. That is
           not Muse’s advertised token context window.
         </li>
+        <li>
+          Fork a session with <code>POST /v1/sessions/{"{id}"}/fork</code> (or
+          <code>/fork</code> in the TUI) to copy its history into a new session.
+          Delete one with <code>DELETE /v1/sessions/{"{id}"}</code> or{" "}
+          <code>d</code> twice in the Sessions dialog; deletion removes the
+          session's stored state and never touches workspace files.
+        </li>
       </ul>
     </div>
 
