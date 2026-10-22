@@ -456,10 +456,12 @@ const castMetaHref = `${basePath}/demo/veasel-0.41.0-next.0-demo.meta.json`;
     grid-template-columns: minmax(220px, 280px) minmax(0, 1fr);
     gap: 28px;
     align-items: start;
+    min-width: 0;
   }
   .demo-steps {
     position: sticky;
     top: 96px;
+    min-width: 0;
     padding: 16px;
     border: 1px solid var(--line);
     border-radius: 16px;
@@ -652,7 +654,10 @@ const castMetaHref = `${basePath}/demo/veasel-0.41.0-next.0-demo.meta.json`;
       padding: 18px;
     }
     .demo-shell {
-      grid-template-columns: 1fr;
+      grid-template-columns: minmax(0, 1fr);
+    }
+    .demo-stage {
+      min-width: 0;
     }
     .demo-steps {
       position: static;
