@@ -23,16 +23,16 @@ const basePath = import.meta.env.BASE_URL.replace(/\/$/, "");
       <h2>Can Veasel Code change files in my repository?</h2>
       <p>
         It can propose a bounded edit to one text file at a time. In the TUI,
-        inspect the saved diff with <code>/patch show &lt;id&gt;</code> and
-        explicitly approve it with <code>/patch approve &lt;id&gt;</code>. The
-        diff review starts with how many lines were added and removed, and a
-        long diff keeps that summary on the first screen. A shell review shows
-        whether a platform sandbox will wrap the command. The loopback API has
-        no application token, so same-user processes can call its review and
-        approval routes. Veasel can also propose shell commands; each one must
-        be opened and approved with its exact command, working directory, and
-        timeout. Approved commands may wrap with Bubblewrap, Seatbelt, or
-        Windows AppContainer+Job when available — otherwise they fall through
+        open reviews with Ctrl+R or <code>/patches</code>, select the saved
+        diff, then explicitly approve or reject it. The diff review starts with
+        how many lines were added and removed, and a long diff keeps that
+        summary on the first screen. A shell review shows whether a platform
+        sandbox will wrap the command. The loopback API has no application
+        token, so same-user processes can call its review and approval routes.
+        Veasel can also propose shell commands; each one must be opened and
+        approved with its exact command, working directory, and timeout.
+        Approved commands may wrap with Bubblewrap, Seatbelt, or Windows
+        AppContainer+Job when available — otherwise they fall through
         unsandboxed.
       </p>
     </div>
@@ -106,21 +106,21 @@ const basePath = import.meta.env.BASE_URL.replace(/\/$/, "");
         install summaries), lets you enable validated Skill instructions per
         session, toggle package components, and expose trusted stdio or
         Streamable HTTP MCP servers as model tools. For a standalone server
-        without a plugin package, use <code>/mcp add [user|project]</code>{" "}
+        without a plugin package, use <code>veasel mcp add [user|project]</code>{" "}
         (user: <code>$VEASEL_DATA_DIR/mcp-servers.json</code>; project:{" "}
         <code>.veasel/mcp-servers.json</code>) or drop a portable{" "}
         <code>.mcp.json</code>, then <code>/mcp trust configured/name</code>.
-        Named credentials and OAuth PKCE use <code>/mcp credentials</code> /{" "}
-        <code>veasel mcp oauth</code> (see the{" "}
+        Named credentials and OAuth PKCE use <code>veasel mcp credentials</code>{" "}
+        / <code>veasel mcp oauth</code> (see the{" "}
         <a href={`${basePath}/docs/mcp/`}>MCP guide</a>). Plugin servers still
         use <code>/mcp trust plugin/server</code>. Trust permits a server to
         connect; each model-requested tool call pauses the turn until you
-        inspect its exact arguments with <code>/mcp calls</code> and approve or
-        reject it. In the current source, that review says the call has not
-        reached its server before the arguments, and a long argument list keeps
-        the decision on the first screen. Rejected calls are not retried.
-        Trusted stdio processes default to the server user's permissions; set{" "}
-        <code>VEASEL_MCP_STDIO_SANDBOX=auto|require</code> for
+        inspect its exact arguments with <code>/mcp calls</code> or Ctrl+R, then
+        approve or reject it. In the current source, that review says the call
+        has not reached its server before the arguments, and a long argument
+        list keeps the decision on the first screen. Rejected calls are not
+        retried. Trusted stdio processes default to the server user's
+        permissions; set <code>VEASEL_MCP_STDIO_SANDBOX=auto|require</code> for
         Linux/macOS/Windows wraps when available. Veasel does not fetch remote
         plugin packages or claim a marketplace.
       </p>

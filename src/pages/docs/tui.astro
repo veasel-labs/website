@@ -226,25 +226,18 @@ const basePath = import.meta.env.BASE_URL.replace(/\/$/, "");
         Type <code>/</code> for suggestions. Common flows:
       </p>
       <pre><code>/patches
-/patch show &lt;id&gt;
-/patch approve &lt;id&gt;   # or reject
+Ctrl+R   # select a patch to inspect and approve/reject
 
 /commands
-/command show &lt;id&gt;
-/command approve &lt;id&gt;
+Ctrl+R   # inspect and approve/reject a shell command
 
-/mcp add [user|project] stdio &lt;name&gt; &lt;command&gt; [args…]
-/mcp add [user|project] http &lt;name&gt; &lt;url&gt;
-/mcp enable|disable|remove [user|project] &lt;name&gt;
-/mcp credentials
-/mcp credential set|remove …
-/mcp oauth authorize &lt;cred&gt; &lt;auth&gt; &lt;token&gt; &lt;client&gt; &lt;redirect&gt; [scope]
-/mcp oauth complete &lt;cred&gt; &lt;callback_url|state code&gt;
-/mcp oauth refresh &lt;cred&gt;
+veasel mcp add [user|project] stdio &lt;name&gt; &lt;command&gt; [args…]
+veasel mcp add [user|project] http &lt;name&gt; &lt;url&gt;
+veasel mcp enable|disable|remove [user|project] &lt;name&gt;
+veasel mcp credentials … · veasel mcp oauth …
+/mcp   # browse configured and session-trusted servers
 /mcp trust configured/&lt;name&gt;
-/mcp calls
-/mcp call show &lt;id&gt;
-/mcp call approve &lt;id&gt;
+/mcp calls or Ctrl+R   # inspect and approve/reject a tool call
 
 /skills [filter]
 /skill on|off &lt;name&gt;
@@ -253,8 +246,9 @@ const basePath = import.meta.env.BASE_URL.replace(/\/$/, "");
 /usage</code></pre>
       <p>
         File edits, shell, and MCP never take effect until you inspect and
-        approve. After <code>/patch show</code> (or shell/MCP review) with an
-        empty composer:
+        approve. Open the unified review panel with <code>Ctrl+R</code> (or the
+        matching <code>/patches</code>, <code>/commands</code>, or{" "}
+        <code>/mcp calls</code> command), then select a pending item:
       </p>
       <ul class="guide-list">
         <li>
@@ -284,11 +278,11 @@ const basePath = import.meta.env.BASE_URL.replace(/\/$/, "");
         Configured MCP persists in user <code>mcp-servers.json</code> or project{" "}
         <code>.veasel/mcp-servers.json</code>; workspace <code>.mcp.json</code>{" "}
         imports read-only. Trust is still per-session. OAuth:{" "}
-        <code>/mcp oauth authorize|complete|refresh</code> — refresh uses a
-        stored refresh token when present. Token values are never shown. Prefer
-        headless <code>veasel mcp oauth … --listen</code> when Veasel should own
-        the loopback listener (it still does not open a browser). See the{" "}
-        <a href={`${basePath}/docs/mcp/`}>MCP guide</a>.
+        <code>veasel mcp oauth authorize|complete|refresh</code> — refresh uses
+        a stored refresh token when present. Token values are never shown.
+        Prefer headless <code>veasel mcp oauth … --listen</code> when Veasel
+        should own the loopback listener (it still does not open a browser). See
+        the <a href={`${basePath}/docs/mcp/`}>MCP guide</a>.
       </p>
     </div>
 

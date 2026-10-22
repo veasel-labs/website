@@ -5,7 +5,17 @@ import verifiedRelease from "../data/verified-release.json";
 import recordingMeta from "../../public/demo/veasel-0.41.0-next.0-demo.meta.json";
 
 const basePath = import.meta.env.BASE_URL.replace(/\/$/, "");
-const steps = walkthrough.steps;
+const verifiedVersion = verifiedRelease.tag.replace(/^v/, "");
+const steps = walkthrough.steps.map((step) => ({
+  ...step,
+  summary: step.summary.replaceAll("{{version}}", verifiedVersion),
+  prompt: step.prompt.replaceAll("{{version}}", verifiedVersion),
+  note: step.note.replaceAll("{{version}}", verifiedVersion),
+  lines: step.lines.map((line) => ({
+    ...line,
+    text: line.text.replaceAll("{{version}}", verifiedVersion),
+  })),
+}));
 const castHref = `${basePath}/demo/veasel-0.41.0-next.0-demo.cast`;
 const castMetaHref = `${basePath}/demo/veasel-0.41.0-next.0-demo.meta.json`;
 ---
@@ -27,9 +37,9 @@ const castMetaHref = `${basePath}/demo/veasel-0.41.0-next.0-demo.meta.json`;
       <em>Not a fake run.</em>
     </h1>
     <p class="lede">
-      Watch a real <code>{recordingMeta.veasel_version}</code> CLI/TUI session,
-      then step through the product the way it ships: loopback API,
-      approval-gated edits and shell, configured MCP with credentials/OAuth
+      Watch an authentic historical <code>{recordingMeta.veasel_version}</code>
+      CLI/TUI capture, then step through the product the way it ships: loopback
+      API, approval-gated edits and shell, configured MCP with credentials/OAuth
       PKCE, and headless <code>veasel run</code>. Nothing here invents benchmark
       scores or pretends to be a live model run.
     </p>
@@ -50,10 +60,13 @@ const castMetaHref = `${basePath}/demo/veasel-0.41.0-next.0-demo.meta.json`;
     <section class="demo-recording" aria-labelledby="recording-title">
       <div class="demo-recording-copy">
         <p class="demo-steps-label" id="recording-kicker">
-          Recorded session · {recordingMeta.veasel_version}
+          Historical recording · {recordingMeta.veasel_version}
         </p>
         <h2 id="recording-title">Terminal capture from the real binary.</h2>
-        <p>{recordingMeta.disclaimer}</p>
+        <p>
+          {recordingMeta.disclaimer} This capture is intentionally historical;
+          the guided walkthrough below follows the verified release above.
+        </p>
         <ul class="demo-recording-flows">
           {recordingMeta.flows.map((flow) => (
             <li>
@@ -214,7 +227,7 @@ const castMetaHref = `${basePath}/demo/veasel-0.41.0-next.0-demo.meta.json`;
         class="text-link"
         href={`${basePath}/data/evals/atif-smoke-0.40.0-next.0.json`}
       >
-        Download ATIF smoke JSON <span aria-hidden="true">↓</span>
+        Download historical ATIF smoke JSON <span aria-hidden="true">↓</span>
       </a>
       <a class="text-link" href={`${basePath}/downloads/`}>
         Downloads <span aria-hidden="true">→</span>

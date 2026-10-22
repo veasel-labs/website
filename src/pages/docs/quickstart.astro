@@ -69,26 +69,22 @@ const basePath = import.meta.env.BASE_URL.replace(/\/$/, "");
         <a href={`${basePath}/docs/security/`}>security</a>. Interactive review:
       </p>
       <pre><code>/patches
-/patch show &lt;id&gt;
-/patch approve &lt;id&gt;
+Ctrl+R   # select a patch to inspect and approve/reject
 
 /commands
-/command show &lt;id&gt;
-/command approve &lt;id&gt;
+Ctrl+R   # inspect and approve/reject a command
 
-/mcp add [user|project] stdio &lt;name&gt; &lt;command&gt; [args…]
+veasel mcp add [user|project] stdio &lt;name&gt; &lt;command&gt; [args…]
 /mcp trust configured/&lt;name&gt;
-/mcp calls
-/mcp call approve &lt;id&gt;</code></pre>
+/mcp calls or Ctrl+R   # select an MCP call to inspect and approve/reject</code></pre>
       <p>
         Diff reviews lead with add/remove line counts. Shell reviews show the
         exact command, working directory, timeout, and whether a platform
         sandbox will wrap the process. MCP needs per-session trust plus per-call
-        argument review (user/project config or portable <code>.mcp.json</code>
-        ). For Streamable HTTP auth, use named credentials, TUI{" "}
-        <code>/mcp oauth authorize|complete</code>, or headless{" "}
-        <code>veasel mcp oauth … --listen</code> (prints the authorize URL; no
-        automatic browser launch — see the{" "}
+        argument review (configure via <code>veasel mcp</code> or portable{" "}
+        <code>.mcp.json</code>). For Streamable HTTP auth, use named credentials
+        or headless <code>veasel mcp oauth … --listen</code> (prints the
+        authorize URL; no automatic browser launch — see the{" "}
         <a href={`${basePath}/docs/mcp/`}>MCP guide</a>). Interrupted or
         rejected work is not replayed automatically.
       </p>
