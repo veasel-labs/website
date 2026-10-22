@@ -38,7 +38,7 @@ test("demo walkthrough stays a labeled script of authentic commands", async () =
   assert.doesNotMatch(joined, /leaderboard score|99%|solved all tasks/i);
 });
 
-test("TUI guides use live review routes and headless MCP configuration", async () => {
+test("TUI guides use live review routes and distinguish interactive MCP setup", async () => {
   const paths = [
     "api.astro",
     "faq.astro",
@@ -55,10 +55,16 @@ test("TUI guides use live review routes and headless MCP configuration", async (
   const joined = pages.join("\n");
   assert.doesNotMatch(
     joined,
-    /\/mcp (?:add|remove|enable|disable|credential|credentials|oauth)\b/,
+    /\/mcp (?:remove|enable|disable|credential|credentials|oauth)\b/,
   );
   assert.doesNotMatch(joined, /\/(?:patch|command) (?:show|approve|reject)\b/);
   assert.doesNotMatch(joined, /\/mcp call (?:show|approve|reject)\b/);
   assert.match(joined, /veasel mcp add/);
   assert.match(joined, /Ctrl\+R/);
+  const mcp = pages[2];
+  assert.match(mcp, /Enter <code>\/mcp add<\/code>/);
+  assert.match(mcp, /Project options appear only inside a session/);
+  assert.match(mcp, /Remote endpoints need HTTPS; HTTP is limited to loopback/);
+  assert.match(mcp, /No server starts or\s+connects until you trust it/);
+  assert.match(mcp, /asks before\s+replacing\s+its\s+saved configuration/);
 });

@@ -117,6 +117,32 @@ veasel mcp remove project repo-tools</code></pre>
     </div>
 
     <div class="doc-panel">
+      <h2>Add a server in the Solid TUI</h2>
+      <p>
+        Enter <code>/mcp add</code> to choose user or project scope, then stdio
+        or Streamable HTTP. Project options appear only inside a session with an
+        active workspace.
+      </p>
+      <ul class="guide-list">
+        <li>
+          For <code>stdio</code>, enter the server name, executable, and
+          optional arguments. For Streamable HTTP, enter the name and endpoint.
+          Remote endpoints need HTTPS; HTTP is limited to loopback.
+        </li>
+        <li>
+          Adding a server only saves its configuration. No server starts or
+          connects until you trust it in the session with{" "}
+          <code>/mcp trust configured/&lt;name&gt;</code>. Review every tool
+          call before approval.
+        </li>
+        <li>
+          If the name already exists in that scope, Veasel asks before replacing
+          its saved configuration.
+        </li>
+      </ul>
+    </div>
+
+    <div class="doc-panel">
       <h2>Named credentials and OAuth (PKCE)</h2>
       <p>
         Streamable HTTP servers can attach a named credential from{" "}
