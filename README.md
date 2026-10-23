@@ -12,11 +12,9 @@ npm lockfile, and build/check workflows. The site's visual identity and copy
 are original. Pages are content-first; the only browser code is a small inline
 color-theme switcher (System, Light, Dark) that remembers the preference
 without adding a UI framework.
-The pixel companion is an AI-generated adaptation of the Veasel mascot from
-[`vlang/v-mascot`](https://github.com/vlang/v-mascot), licensed under
-[CC BY-NC 4.0](https://creativecommons.org/licenses/by-nc/4.0/). The original
-artist and V project retain their rights; this attribution does not grant
-commercial-use permission for the source mascot.
+The pixel companion is a new, independently generated Veasel design. It does
+not use or adapt the V language project's official mascot artwork and is
+included under this site's MIT license.
 The downloads page uses a checked-in, integrity-verified preview-release
 fallback. Site builds refresh it only after the release manifest and
 `SHA256SUMS` match GitHub's SHA-256 asset digests. A scheduled release sync
