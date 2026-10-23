@@ -2,7 +2,7 @@
 
 ## Veasel Code pixel companion
 
-The original robot pixel art was created specifically for Veasel Code. It is
+The original mustelid pixel companion was created from scratch specifically for Veasel Code. It is
 distributed under this repository's MIT license and does not include or adapt
 the official V language mascot artwork. The upstream artwork is available from
 the [V mascot repository](https://github.com/vlang/v-mascot) under
