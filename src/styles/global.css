@@ -880,7 +880,7 @@ p {
   font: 500 0.47rem/1.2 var(--mono);
   transform: rotate(12deg);
 }
-.mascot-badge {
+.companion-badge {
   position: absolute;
   z-index: 2;
   left: 5%;
@@ -895,7 +895,7 @@ p {
   box-shadow: 0 5px 0 #20223814;
   transform: rotate(-8deg);
 }
-.mascot-badge img {
+.companion-badge img {
   width: 74px;
   height: auto;
   image-rendering: pixelated;
@@ -2491,6 +2491,6 @@ pre {
 :root[data-theme="dark"] .provider-table-head {
   color: #b7b8c9;
 }
-:root[data-theme="dark"] .mascot-badge {
+:root[data-theme="dark"] .companion-badge {
   border-color: #fff;
 }
