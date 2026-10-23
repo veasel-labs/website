@@ -2,10 +2,11 @@
 import SiteLayout from "../layouts/SiteLayout.astro";
 import walkthrough from "../data/demo-walkthrough.json";
 import verifiedRelease from "../data/verified-release.json";
-import recordingMeta from "../../public/demo/veasel-0.41.0-next.0-demo.meta.json";
+import recordingMeta from "../../public/demo/recording.meta.json";
 
 const basePath = import.meta.env.BASE_URL.replace(/\/$/, "");
 const verifiedVersion = verifiedRelease.tag.replace(/^v/, "");
+const recordingIsCurrent = recordingMeta.veasel_version === verifiedVersion;
 const steps = walkthrough.steps.map((step) => ({
   ...step,
   summary: step.summary.replaceAll("{{version}}", verifiedVersion),
@@ -16,8 +17,8 @@ const steps = walkthrough.steps.map((step) => ({
     text: line.text.replaceAll("{{version}}", verifiedVersion),
   })),
 }));
-const castHref = `${basePath}/demo/veasel-0.41.0-next.0-demo.cast`;
-const castMetaHref = `${basePath}/demo/veasel-0.41.0-next.0-demo.meta.json`;
+const castHref = `${basePath}/demo/${recordingMeta.cast_file}`;
+const castMetaHref = `${basePath}/demo/recording.meta.json`;
 ---
 
 <SiteLayout
@@ -37,9 +38,13 @@ const castMetaHref = `${basePath}/demo/veasel-0.41.0-next.0-demo.meta.json`;
       <em>Not a fake run.</em>
     </h1>
     <p class="lede">
-      Watch an authentic historical <code>{recordingMeta.veasel_version}</code>
-      CLI/TUI capture, then step through the product the way it ships: loopback
-      API, approval-gated edits and shell, configured MCP with credentials/OAuth
+      Watch an authentic <code>{recordingMeta.veasel_version}</code> CLI/TUI
+      capture
+      {recordingIsCurrent
+        ? " from the current verified release"
+        : " from a historical release"}
+      , then step through the product the way it ships: loopback API,
+      approval-gated edits and shell, configured MCP with credentials/OAuth
       PKCE, and headless <code>veasel run</code>. Nothing here invents benchmark
       scores or pretends to be a live model run.
     </p>
@@ -60,12 +65,17 @@ const castMetaHref = `${basePath}/demo/veasel-0.41.0-next.0-demo.meta.json`;
     <section class="demo-recording" aria-labelledby="recording-title">
       <div class="demo-recording-copy">
         <p class="demo-steps-label" id="recording-kicker">
-          Historical recording · {recordingMeta.veasel_version}
+          {recordingIsCurrent
+            ? "Verified release recording"
+            : "Historical recording"}{" "}
+          · {recordingMeta.veasel_version}
         </p>
-        <h2 id="recording-title">Terminal capture from the real binary.</h2>
+        <h2 id="recording-title">Terminal capture from the verified binary.</h2>
         <p>
-          {recordingMeta.disclaimer} This capture is intentionally historical;
-          the guided walkthrough below follows the verified release above.
+          {recordingMeta.disclaimer}
+          {recordingIsCurrent
+            ? " The capture matches the verified release linked above."
+            : ` The guided walkthrough follows ${verifiedRelease.tag}; this capture is intentionally historical.`}
         </p>
         <ul class="demo-recording-flows">
           {recordingMeta.flows.map((flow) => (

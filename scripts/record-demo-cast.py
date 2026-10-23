@@ -7,26 +7,26 @@ No live model calls — /connect stops at the API key prompt.
 
 from __future__ import annotations
 
+import argparse
 import hashlib
 import json
 import os
 import re
 import shutil
+import socket
+import subprocess
 import tempfile
 import time
 from pathlib import Path
 
 import pexpect
 
-VERSION = "0.41.0-next.0"
 # Minimum-good terminal for Veasel Code TUI: footers are budgeted ≤72 cols so
 # an 80-wide terminal still shows the quit cue (see tui/src/footer-hints.ts);
 # rows < 30 force compact /help. Avoid 100-wide padding and sub-30 height.
 WIDTH = 80
 HEIGHT = 30
 REPO = Path(__file__).resolve().parents[1]
-OUT_CAST = REPO / "public" / "demo" / f"veasel-{VERSION}-demo.cast"
-OUT_META = REPO / "public" / "demo" / f"veasel-{VERSION}-demo.meta.json"
 # Prefer bare command names so the cast never embeds host home paths.
 VEASEL = "veasel"
 VEASEL_TUI = "veasel-tui"
@@ -40,7 +40,7 @@ def redact(text: str) -> str:
 
 
 class CastWriter:
-  def __init__(self) -> None:
+  def __init__(self, version: str) -> None:
     self.t0 = time.monotonic()
     self.events: list[list] = []
     self.header = {
@@ -50,7 +50,7 @@ class CastWriter:
       "timestamp": int(time.time()),
       "idle_time_limit": 1.5,
       "env": {"SHELL": "/bin/sh", "TERM": "xterm-256color"},
-      "title": f"Veasel Code {VERSION} — authentic CLI/TUI demo",
+      "title": f"Veasel Code {version} — authentic CLI/TUI demo",
     }
 
   def emit(self, text: str) -> None:
@@ -68,22 +68,82 @@ class CastWriter:
     time.sleep(0.05)
 
 
+def parse_args() -> argparse.Namespace:
+  release = json.loads(
+    (REPO / "src" / "data" / "verified-release.json").read_text(
+      encoding="utf-8"
+    )
+  )
+  version = release["tag"].removeprefix("v")
+  parser = argparse.ArgumentParser(description=__doc__)
+  parser.add_argument("--version", default=version)
+  parser.add_argument("--bin-dir", type=Path, required=True)
+  parser.add_argument("--source-commit", default=release["source_commit"])
+  parser.add_argument("--archive-sha256", required=True)
+  return parser.parse_args()
+
+
+def free_loopback_port() -> str:
+  with socket.socket() as listener:
+    listener.bind(("127.0.0.1", 0))
+    return str(listener.getsockname()[1])
+
+
 def run() -> None:
+  args = parse_args()
+  if not re.fullmatch(r"\d+\.\d+\.\d+(?:-[0-9A-Za-z.-]+)?", args.version):
+    raise SystemExit("--version must be a semantic release version")
+  if not re.fullmatch(r"[0-9a-f]{40}", args.source_commit):
+    raise SystemExit("--source-commit must be a full lowercase Git commit")
+  if not re.fullmatch(r"[0-9a-f]{64}", args.archive_sha256):
+    raise SystemExit("--archive-sha256 must be a SHA-256 digest")
+
   data_dir = Path(tempfile.mkdtemp(prefix="veasel-demo-"))
-  port = "14097"
-  env = os.environ.copy()
+  port = free_loopback_port()
+  config_dir = data_dir / "config"
+  home_dir = data_dir / "home"
+  config_dir.mkdir()
+  home_dir.mkdir()
+  binary_dir = args.bin_dir.resolve()
+  inherited_path = os.environ.get("PATH", os.defpath)
+  env = {
+    "PATH": f"{binary_dir}{os.pathsep}{inherited_path}",
+    "HOME": str(home_dir),
+    "XDG_CONFIG_HOME": str(config_dir),
+    "LANG": os.environ.get("LANG", "C.UTF-8"),
+    "TERM": "xterm-256color",
+    "NO_COLOR": "1",
+  }
+  veasel_path = shutil.which(VEASEL, path=env["PATH"])
+  tui_path = shutil.which(VEASEL_TUI, path=env["PATH"])
+  if not veasel_path or Path(veasel_path).parent != binary_dir:
+    raise SystemExit(f"--bin-dir must contain the veasel binary: {binary_dir}")
+  if not tui_path or Path(tui_path).parent != binary_dir:
+    raise SystemExit(f"--bin-dir must contain the veasel-tui binary: {binary_dir}")
+  version_result = subprocess.run(
+    [veasel_path, "--version"],
+    check=True,
+    capture_output=True,
+    text=True,
+    timeout=15,
+  )
+  if version_result.stdout.strip() != f"Veasel Code {args.version}":
+    raise SystemExit(
+      f"binary version mismatch: expected {args.version}, got {version_result.stdout.strip()}"
+    )
   env.update(
     {
       "VEASEL_DATA_DIR": str(data_dir),
       "VEASEL_PORT": port,
-      "TERM": "xterm-256color",
-      "NO_COLOR": "1",
     }
   )
-  cast = CastWriter()
+  version = args.version
+  out_cast = REPO / "public" / "demo" / f"veasel-{version}-demo.cast"
+  out_meta = REPO / "public" / "demo" / "recording.meta.json"
+  cast = CastWriter(version)
   cast.emit("# Veasel Code — authentic terminal demo\r\n")
   time.sleep(0.35)
-  cast.emit(f"# Binary: {VERSION} (verified release archive)\r\n")
+  cast.emit(f"# Binary: {version} (verified release archive)\r\n")
   time.sleep(0.35)
   cast.emit("# Fixture loopback only — no live model, no benchmark scores\r\n")
   time.sleep(0.85)
@@ -142,7 +202,7 @@ def run() -> None:
   shell_cmd(f"{VEASEL} mcp list", wait=0.5)
   shell_cmd(f"{VEASEL} mcp --help", wait=0.5)
 
-  # Scripted TUI: /help → /mcp → /connect → quit at API key
+  # Scripted TUI: /help → /mcp → OpenCode Go connect → quit at API key
   cast.emit("$ ")
   cast.type_line(f"{VEASEL_TUI}")
   tui = pexpect.spawn(
@@ -180,6 +240,8 @@ def run() -> None:
   tui_keys("/mcp\r", pause=0.05)
   time.sleep(0.8)
   tui_keys("/connect\r", pause=0.05)
+  time.sleep(0.4)
+  tui_keys("OpenCode Go\r", pause=0.04)
   time.sleep(1.0)
   try:
     chunk = tui.read_nonblocking(size=50000, timeout=1.5)
@@ -208,44 +270,47 @@ def run() -> None:
     except pexpect.TIMEOUT:
       serve.close(force=True)
 
-  OUT_CAST.parent.mkdir(parents=True, exist_ok=True)
+  out_cast.parent.mkdir(parents=True, exist_ok=True)
   lines = [json.dumps(cast.header, separators=(",", ": "))]
   for event in cast.events:
     lines.append(json.dumps(event, ensure_ascii=False, separators=(",", ": ")))
   raw = ("\n".join(lines) + "\n").encode("utf-8")
-  OUT_CAST.write_bytes(raw)
+  out_cast.write_bytes(raw)
   sha = hashlib.sha256(raw).hexdigest()
   meta = {
     "schema": "veasel-terminal-demo-recording/v1",
     "title": "Veasel Code authentic CLI/TUI terminal demo",
     "disclaimer": (
-      f"Asciicast built from real veasel/veasel-tui {VERSION} output against a "
+      f"Asciicast built from real veasel/veasel-tui {version} output against a "
       "local loopback backend. Scripted keystrokes for /help, /mcp, and /connect. "
       "No live model calls and no benchmark scores."
     ),
-    "veasel_version": VERSION,
+    "veasel_version": version,
+    "source_commit": args.source_commit,
+    "source_archive_sha256": args.archive_sha256,
     "source_binary": (
-      f"https://github.com/veasel-labs/veasel/releases/download/v{VERSION}/veasel-Linux.tar.gz"
+      f"https://github.com/veasel-labs/veasel/releases/download/v{version}/veasel-Linux.tar.gz"
     ),
-    "tooling": "asciinema cast v2 writer + pexpect; binaries from verified local install matching release tag",
+    "tooling": "asciicast v2 writer + pexpect; binaries from the SHA-256-verified release archive",
+    "credential_policy": "isolated temporary HOME and XDG_CONFIG_HOME; provider API-key environment variables are not inherited",
     "flows": [
       "veasel --version",
       "veasel --help",
       "veasel serve (loopback)",
       "veasel mcp list",
       "veasel mcp --help",
-      "veasel-tui: /help, /mcp, /connect (stops at API key prompt), q quit",
+      "veasel-tui: /help, /mcp, /connect OpenCode Go (stops at API key prompt), q quit",
     ],
-    "cast_file": OUT_CAST.name,
+    "cast_file": out_cast.name,
     "sha256": sha,
     "generated_at": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()),
     "event_count": len(cast.events),
   }
-  OUT_META.write_text(json.dumps(meta, indent=2) + "\n", encoding="utf-8")
+  out_meta.write_text(json.dumps(meta, indent=2) + "\n", encoding="utf-8")
   shutil.rmtree(data_dir, ignore_errors=True)
   shutil.rmtree(workdir, ignore_errors=True)
-  print(f"wrote {OUT_CAST} ({len(cast.events)} events)")
-  print(f"wrote {OUT_META}")
+  print(f"wrote {out_cast} ({len(cast.events)} events)")
+  print(f"wrote {out_meta}")
   print(f"sha256 {sha}")
 
 
