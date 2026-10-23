@@ -30,7 +30,7 @@ const basePath = import.meta.env.BASE_URL.replace(/\/$/, "");
       <div>
         <strong>Configured MCP · OAuth refresh · three-OS stdio sandbox</strong>
         <p>
-          Add servers with <code>/mcp add [user|project]</code> or{" "}
+          Add servers with <code>veasel mcp add [user|project]</code> or{" "}
           <code>POST /v1/mcp-servers</code>. Capabilities:{" "}
           <code>mcp.servers.configured</code>, <code>mcp.credentials</code>,{" "}
           <code>mcp.oauth</code>. Portable <code>.mcp.json</code> /{" "}
@@ -48,7 +48,7 @@ const basePath = import.meta.env.BASE_URL.replace(/\/$/, "");
         <li>
           <strong>user</strong> — writable{" "}
           <code>$VEASEL_DATA_DIR/mcp-servers.json</code> (default for{" "}
-          <code>/mcp add</code>).
+          <code>veasel mcp add</code>).
         </li>
         <li>
           <strong>project</strong> — writable{" "}
@@ -68,27 +68,25 @@ const basePath = import.meta.env.BASE_URL.replace(/\/$/, "");
     </div>
 
     <div class="doc-panel">
-      <h2>Add and manage (TUI)</h2>
-      <p>
-        In a session, type <code>/</code> for slash suggestions:
-      </p>
+      <h2>Configure servers from the CLI</h2>
+      <p>Run these commands in a terminal connected to the local Veasel API:</p>
       <pre><code># User scope (default)
-/mcp add stdio memory npx -y @modelcontextprotocol/server-memory
-/mcp add http docs https://mcp.example.com/mcp
+veasel mcp add stdio memory npx -y @modelcontextprotocol/server-memory
+veasel mcp add http docs https://mcp.example.com/mcp
 
 # Project scope (session workspace)
-/mcp add project stdio repo-tools ./bin/mcp-server
-/mcp add project http docs https://mcp.example.com/mcp
+veasel mcp add project stdio repo-tools ./bin/mcp-server
+veasel mcp add project http docs https://mcp.example.com/mcp
 
 # Optional named HTTP credential (header names only in list views)
-/mcp credentials
-/mcp credential set gh-pat --header Authorization=Bearer …
+veasel mcp credentials list
+veasel mcp credentials set gh-pat --header Authorization=Bearer …
 
-/mcp
-/mcp enable memory
-/mcp disable project repo-tools
-/mcp remove user memory
-/mcp remove project repo-tools</code></pre>
+veasel mcp list
+veasel mcp enable memory
+veasel mcp disable project repo-tools
+veasel mcp remove user memory
+veasel mcp remove project repo-tools</code></pre>
       <ul class="guide-list">
         <li>
           <code>stdio</code> — bare <code>PATH</code> command or absolute
@@ -114,6 +112,32 @@ const basePath = import.meta.env.BASE_URL.replace(/\/$/, "");
           Headless: <code>veasel mcp list|add|…</code>,{" "}
           <code>veasel mcp credentials …</code>, <code>veasel mcp oauth …</code>{" "}
           (same loopback API).
+        </li>
+      </ul>
+    </div>
+
+    <div class="doc-panel">
+      <h2>Add a server in the Solid TUI</h2>
+      <p>
+        Enter <code>/mcp add</code> to choose user or project scope, then stdio
+        or Streamable HTTP. Project options appear only inside a session with an
+        active workspace.
+      </p>
+      <ul class="guide-list">
+        <li>
+          For <code>stdio</code>, enter the server name, executable, and
+          optional arguments. For Streamable HTTP, enter the name and endpoint.
+          Remote endpoints need HTTPS; HTTP is limited to loopback.
+        </li>
+        <li>
+          Adding a server only saves its configuration. No server starts or
+          connects until you trust it in the session with{" "}
+          <code>/mcp trust configured/&lt;name&gt;</code>. Review every tool
+          call before approval.
+        </li>
+        <li>
+          If the name already exists in that scope, Veasel asks before replacing
+          its saved configuration.
         </li>
       </ul>
     </div>
@@ -175,7 +199,7 @@ veasel mcp add http docs https://mcp.example.com/mcp --credential my-cred</code>
         <li>
           <strong>Refresh.</strong> When a refresh token is stored (owner-only{" "}
           <code>mcp-oauth-refresh.json</code>),{" "}
-          <code>/mcp oauth refresh &lt;cred&gt;</code> or{" "}
+          <code>veasel mcp oauth refresh &lt;cred&gt;</code> or{" "}
           <code>POST /v1/mcp-oauth/refresh</code> exchanges it. On HTTP 401,
           Veasel may auto-refresh once per call path, then clear or fail closed
           — it does not invent silent multi-retry loops. Dynamic Client
@@ -234,17 +258,15 @@ veasel mcp add http docs https://mcp.example.com/mcp --credential my-cred</code>
       <pre><code>/mcp trust configured/memory
 /mcp untrust configured/memory
 
-/mcp calls
-/mcp call show &lt;id&gt;
-/mcp call approve &lt;id&gt;   # or reject</code></pre>
+Ctrl+R   # review MCP calls; select one to inspect, approve, or reject</code></pre>
       <ul class="guide-list">
         <li>
           Plugin-packaged servers still use{" "}
           <code>/mcp trust &lt;plugin&gt;/&lt;server&gt;</code>.
         </li>
         <li>
-          The review screen states that the call has not reached its server yet.
-          Rejected or interrupted calls are not replayed.
+          The TUI review screen states that the call has not reached its server
+          yet. Rejected or interrupted calls are not replayed.
         </li>
         <li>
           Trusted stdio processes inherit the server user by default (

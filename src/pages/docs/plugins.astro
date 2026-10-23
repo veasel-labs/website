@@ -89,8 +89,8 @@ const basePath = import.meta.env.BASE_URL.replace(/\/$/, "");
 /mcp untrust review-tools/local
 
 # Or add a standalone configured server (no plugin package):
-/mcp add stdio memory npx -y @modelcontextprotocol/server-memory
-/mcp add project stdio repo-tools ./bin/mcp-server
+veasel mcp add stdio memory npx -y @modelcontextprotocol/server-memory
+veasel mcp add project stdio repo-tools ./bin/mcp-server
 /mcp trust configured/memory</code></pre>
       <p>
         Local package links use <code>/v1/plugins/links</code> and capability{" "}
@@ -104,8 +104,8 @@ const basePath = import.meta.env.BASE_URL.replace(/\/$/, "");
         selection and MCP trust persist with the session. Disabling a Skill
         removes its instructions from the next model turn. MCP tools from
         trusted servers are available to the model, but every requested call
-        pauses for review. Use <code>/mcp calls</code>, inspect one with{" "}
-        <code>/mcp call show &lt;id&gt;</code>, then approve or reject it.
+        pauses for review. Use <code>/mcp calls</code> or Ctrl+R to open the
+        review panel, then select the call to inspect, approve, or reject it.
         Rejected calls are not retried. While a Skill is active, the model may
         read UTF-8 files only from that Skill’s directory; path traversal and
         symlink escapes are rejected. Script files are never executed

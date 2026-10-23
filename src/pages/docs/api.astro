@@ -484,7 +484,7 @@ const basePath = import.meta.env.BASE_URL.replace(/\/$/, "");
       <p>
         Add user- or project-scoped servers with{" "}
         <code>POST /v1/mcp-servers</code> or{" "}
-        <code>/mcp add [user|project]</code> (see the{" "}
+        <code>veasel mcp add [user|project]</code> (see the{" "}
         <a href={`${basePath}/docs/mcp/`}>MCP guide</a>). Named credentials and
         OAuth PKCE use <code>/v1/mcp-credentials</code> and{" "}
         <code>/v1/mcp-oauth/*</code>. Per-session trust lets a configured server
@@ -493,9 +493,7 @@ const basePath = import.meta.env.BASE_URL.replace(/\/$/, "");
         Rejected calls never reach the server and are not retried.
       </p>
       <pre><code>/mcp calls
-/mcp call show CALL_ID
-/mcp call approve CALL_ID
-/mcp call reject CALL_ID</code></pre>
+Ctrl+R   # select the call to inspect its arguments, approve, or reject</code></pre>
     </div>
     <div class="doc-panel">
       <h2>Headless CLI companions</h2>

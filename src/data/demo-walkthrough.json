@@ -1,6 +1,6 @@
 {
   "label": "Guided walkthrough",
-  "disclaimer": "This is an interactive script of shipped product commands — not a live Veasel session, not a recorded model run, and not a benchmark. Every line matches the current field guide and runtime docs.",
+  "disclaimer": "This guided script describes the current verified release. It is not a live Veasel session, recorded model run, or benchmark; the terminal recording below is a separate historical capture.",
   "steps": [
     {
       "id": "install",
@@ -19,7 +19,7 @@
         },
         {
           "kind": "output",
-          "text": "Veasel Code 0.41.0-next.0"
+          "text": "Veasel Code {{version}}"
         },
         {
           "kind": "command",
@@ -100,12 +100,12 @@
           "text": "/patches"
         },
         {
-          "kind": "command",
-          "text": "/patch show <id>"
+          "kind": "output",
+          "text": "Ctrl+R"
         },
         {
-          "kind": "command",
-          "text": "/patch approve <id>"
+          "kind": "output",
+          "text": "Select an edit to inspect its diff, then approve or reject it."
         },
         {
           "kind": "output",
@@ -126,34 +126,34 @@
           "text": "/commands"
         },
         {
-          "kind": "command",
-          "text": "/command show <id>"
+          "kind": "output",
+          "text": "Select a command to inspect its exact text and execution details."
         },
         {
           "kind": "output",
           "text": "cwd ~/project · timeout 60s · sandbox bubblewrap (when available)"
         },
         {
-          "kind": "command",
-          "text": "/command approve <id>"
+          "kind": "output",
+          "text": "Approve or reject from the review panel after inspection."
         }
       ],
       "note": "Platform sandboxes are defense-in-depth; approval remains the authorization gate."
     },
     {
       "id": "mcp",
-      "title": "Add and approve MCP",
+      "title": "Configure and review MCP",
       "kicker": "06 · /MCP",
       "summary": "User or project scope, portable .mcp.json import, then trust + per-call approval.",
       "prompt": "Tools stay visible — every call pauses.",
       "lines": [
         {
           "kind": "command",
-          "text": "/mcp add stdio memory npx -y @modelcontextprotocol/server-memory"
+          "text": "veasel mcp add stdio memory npx -y @modelcontextprotocol/server-memory"
         },
         {
           "kind": "command",
-          "text": "/mcp add project http docs https://mcp.example.com/mcp"
+          "text": "veasel mcp add project http docs https://mcp.example.com/mcp"
         },
         {
           "kind": "comment",
@@ -164,15 +164,15 @@
           "text": "/mcp trust configured/memory"
         },
         {
-          "kind": "command",
-          "text": "/mcp call show <id>"
+          "kind": "output",
+          "text": "Ctrl+R"
         },
         {
-          "kind": "command",
-          "text": "/mcp call approve <id>"
+          "kind": "output",
+          "text": "Select an MCP call to inspect and approve or reject it."
         }
       ],
-      "note": "Configured MCP, named credentials, and OAuth PKCE ship in v0.41.0-next.0 archives and package-manager installs."
+      "note": "The default Solid TUI lists and trusts servers; configure servers with the headless veasel mcp commands. Each tool call still needs review."
     },
     {
       "id": "headless",
