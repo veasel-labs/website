@@ -11,7 +11,7 @@ const docsRoot = new URL("../pages/docs/", import.meta.url);
 test("demo walkthrough stays a labeled script of authentic commands", async () => {
   const walkthrough = JSON.parse(await readFile(walkthroughPath, "utf8"));
   assert.match(walkthrough.disclaimer, /not a live Veasel session/i);
-  assert.match(walkthrough.disclaimer, /historical capture/i);
+  assert.match(walkthrough.disclaimer, /authentic CLI\/TUI output/i);
   assert.ok(walkthrough.steps.length >= 5);
   for (const step of walkthrough.steps) {
     assert.ok(step.id);

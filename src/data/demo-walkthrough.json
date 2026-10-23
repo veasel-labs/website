@@ -1,6 +1,6 @@
 {
   "label": "Guided walkthrough",
-  "disclaimer": "This guided script describes the current verified release. It is not a live Veasel session, recorded model run, or benchmark; the terminal recording below is a separate historical capture.",
+  "disclaimer": "This guided script describes the verified release named on the page. It is not a live Veasel session, recorded model run, or benchmark. The terminal recording is authentic CLI/TUI output and makes no model calls.",
   "steps": [
     {
       "id": "install",
@@ -36,8 +36,8 @@
       "id": "connect",
       "title": "Connect a provider",
       "kicker": "02 · /CONNECT",
-      "summary": "Paste a key once, pick a model, keep credentials local.",
-      "prompt": "Authenticate without sending keys back through the API.",
+      "summary": "Choose a provider such as OpenCode Go, paste its API key once, and keep credentials local.",
+      "prompt": "Choose OpenCode Go and authenticate without sending keys back through the API.",
       "lines": [
         {
           "kind": "command",
@@ -45,7 +45,7 @@
         },
         {
           "kind": "output",
-          "text": "Paste API key → discover models → choose one"
+          "text": "OpenCode Go → paste API key → discover models → choose one"
         },
         {
           "kind": "command",
