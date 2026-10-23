@@ -1,16 +1,13 @@
 # Third-party notices
 
-## Veasel mascot
+## Veasel Code pixel companion
 
-The pixel portrait on the home page is an adaptation of **Veasel**, the
-official mascot of the V programming language. The original artwork is
-credited to the V contributors and is available from the
-[V mascot repository](https://github.com/vlang/v-mascot).
-
-The original and this pixel-art adaptation are provided under the
-[Creative Commons Attribution-NonCommercial 4.0 International license](https://creativecommons.org/licenses/by-nc/4.0/).
-The adaptation is not covered by this website's MIT license. Commercial use
-requires separate permission from the rights holder.
+The original robot pixel art was created specifically for Veasel Code. It is
+distributed under this repository's MIT license and does not include or adapt
+the official V language mascot artwork. The upstream artwork is available from
+the [V mascot repository](https://github.com/vlang/v-mascot) under
+[CC BY-NC 4.0](https://creativecommons.org/licenses/by-nc/4.0/); that artwork is
+not included on this website.
 
 ## V programming language logo
 
