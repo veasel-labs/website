@@ -18,11 +18,11 @@ included under this site's MIT license.
 The downloads page uses a checked-in, integrity-verified preview-release
 fallback. Site builds refresh it only after the release manifest and
 `SHA256SUMS` match GitHub's SHA-256 asset digests. A scheduled release sync
-checks for newer previews each hour, opens a focused website PR when the
-verified release changes, runs the full website CI on that branch, and merges
-only after required checks pass. The merge triggers the normal Vercel
-production deployment. If GitHub is unavailable, the build keeps the previous
-verified fallback and the next scheduled sync retries.
+checks for newer previews each hour, opens a focused draft website PR when the
+verified release changes, and runs the full website CI on that branch. A human
+reviews and merges the PR after checks pass; the merge triggers the normal
+Vercel production deployment. If GitHub is unavailable, the build keeps the
+previous verified fallback and the next scheduled sync retries.
 
 ## Develop
 
