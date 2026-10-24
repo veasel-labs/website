@@ -2,10 +2,11 @@
 
 ## Veasel Code pixel companion
 
-The Veasel Code pixel companion in `public/veasel-companion-v4.png` was generated
-from a text-only prompt without using the official V mascot artwork as an image
-input. This generated asset is distributed under this repository's MIT license.
-The upstream artwork is available from the [V mascot repository](https://github.com/vlang/v-mascot)
+The Veasel Code pixel companion in `public/veasel-companion-v6.png` was generated
+from a text prompt using the previous Veasel Code sprite as a visual reference.
+No official V mascot artwork was used as an image input. This generated asset is
+distributed under this repository's MIT license. The upstream artwork is
+available from the [V mascot repository](https://github.com/vlang/v-mascot)
 under [CC BY-NC 4.0](https://creativecommons.org/licenses/by-nc/4.0/); no upstream
 mascot file is included on this website.
 
