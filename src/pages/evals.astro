@@ -292,12 +292,16 @@ VEASEL_VERSION=0.64.7-next.0 benchmarks/harbor/smoke.sh
     padding: 0;
   }
   .evals-checklist li {
-    display: grid;
-    grid-template-columns: auto 1fr;
-    gap: 12px;
-    align-items: start;
+    position: relative;
+    padding-left: calc(3.4rem + 12px);
+  }
+  .evals-checklist code {
+    overflow-wrap: anywhere;
   }
   .evals-check {
+    position: absolute;
+    top: 0;
+    left: 0;
     display: inline-block;
     min-width: 3.4rem;
     padding: 2px 8px;
