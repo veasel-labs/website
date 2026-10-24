@@ -37,6 +37,9 @@ body {
   min-width: 320px;
   background: var(--paper);
 }
+main {
+  overflow-x: clip;
+}
 a {
   color: inherit;
 }
