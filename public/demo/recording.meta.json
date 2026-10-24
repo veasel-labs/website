@@ -1,11 +1,11 @@
 {
   "schema": "veasel-terminal-demo-recording/v1",
   "title": "Veasel Code authentic CLI/TUI terminal demo",
-  "disclaimer": "Asciicast built from real veasel/veasel-tui 0.64.5-next.0 output against a local loopback backend. Scripted keystrokes for /help, /mcp, and /connect. No live model calls and no benchmark scores.",
-  "veasel_version": "0.64.5-next.0",
-  "source_commit": "d8f22edd30124fc6d489493e7933925df7d6ae3d",
-  "source_archive_sha256": "61bd6559792e437d69cc320d52f1ceed7c9075d50e8dbe9afc8dff763774a37d",
-  "source_binary": "https://github.com/veasel-labs/veasel/releases/download/v0.64.5-next.0/veasel-Linux.tar.gz",
+  "disclaimer": "Asciicast built from real veasel/veasel-tui 0.64.7-next.0 output against a local loopback backend. Scripted keystrokes for /help, /mcp, and /connect. No live model calls and no benchmark scores.",
+  "veasel_version": "0.64.7-next.0",
+  "source_commit": "38ea5b59e1baff1537af77b1c6362703cd8ab171",
+  "source_archive_sha256": "9928c26e4ebafd45133fa2c279717f79caa44c71735418065841d05f09eb5488",
+  "source_binary": "https://github.com/veasel-labs/veasel/releases/download/v0.64.7-next.0/veasel-Linux.tar.gz",
   "tooling": "asciicast v2 writer + pexpect; binaries from the SHA-256-verified release archive",
   "credential_policy": "isolated temporary HOME and XDG_CONFIG_HOME; provider API-key environment variables are not inherited",
   "flows": [
@@ -16,8 +16,8 @@
     "veasel mcp --help",
     "veasel-tui: /help, /mcp, /connect OpenCode Go (stops at API key prompt), q quit"
   ],
-  "cast_file": "veasel-0.64.5-next.0-demo.cast",
-  "sha256": "5e267500897e11c9b3ef6398ca06579c878e388640cff7193d2833e21a3a5e08",
-  "generated_at": "2026-10-23T17:45:51Z",
+  "cast_file": "veasel-0.64.7-next.0-demo.cast",
+  "sha256": "4c3263fb71b34980e4493085d8a0637a048b045a60e42b3429b554dae3601798",
+  "generated_at": "2026-10-24T04:17:05Z",
   "event_count": 142
 }
