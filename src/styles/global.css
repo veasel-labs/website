@@ -2057,6 +2057,12 @@ pre {
     min-height: 282px;
     grid-template-columns: 31% 69%;
   }
+  .tui-screen-solid {
+    grid-template-columns: 1fr;
+  }
+  .tui-session-hotkeys {
+    display: none;
+  }
   .tui-sessions {
     padding: 14px 7px 50px;
   }
