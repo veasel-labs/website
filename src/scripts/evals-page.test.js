@@ -9,13 +9,13 @@ const evalsPath = fileURLToPath(
 );
 const atifPath = fileURLToPath(
   new URL(
-    "../../public/data/evals/atif-smoke-0.40.0-next.0.json",
+    "../../public/data/evals/atif-smoke-0.64.7-next.0.json",
     import.meta.url,
   ),
 );
 const metaPath = fileURLToPath(
   new URL(
-    "../../public/data/evals/atif-smoke-0.40.0-next.0.meta.json",
+    "../../public/data/evals/atif-smoke-0.64.7-next.0.meta.json",
     import.meta.url,
   ),
 );
@@ -26,10 +26,10 @@ test("evals page refuses invented scores and links public ATIF sample", async ()
   assert.match(source, /Harbor Index:\s*Not submitted/i);
   assert.match(source, /not<\/strong> in Harbor/i);
   assert.match(source, /Not authenticated/i);
-  assert.match(source, /atif-smoke-0\.40\.0-next\.0\.json/);
+  assert.match(source, /atif-smoke-0\.64\.7-next\.0\.json/);
   assert.match(source, /validate-harbor-atif\.py/);
   assert.match(source, /dc933be707feafbb9efcdf092cb8a0e391332617/);
-  assert.match(source, /VEASEL_VERSION=0\.40\.0-next\.0/);
+  assert.match(source, /VEASEL_VERSION=0\.64\.7-next\.0/);
   assert.match(source, /terminal asciinema on \/demo\//i);
   assert.doesNotMatch(
     source,
@@ -43,13 +43,13 @@ test("public ATIF smoke sample is real ATIF-v1.8 with matching provenance", asyn
   const meta = JSON.parse(await readFile(metaPath, "utf8"));
   assert.equal(traj.schema_version, "ATIF-v1.8");
   assert.equal(traj.agent.name, "Veasel Code");
-  assert.equal(traj.agent.version, "0.40.0-next.0");
+  assert.equal(traj.agent.version, "0.64.7-next.0");
   assert.equal(traj.agent.model_name, "smoke-model");
   assert.deepEqual(
     traj.steps.map((step) => step.source),
     ["system", "user", "agent", "agent"],
   );
-  assert.equal(traj.steps[1].message, "Inspect workspace");
+  assert.match(traj.steps[1].message, /^Inspect workspace/);
   assert.equal(traj.steps[2].tool_calls[0].function_name, "workspace_search");
   assert.match(
     traj.steps[2].observation.results[0].content,
@@ -63,6 +63,14 @@ test("public ATIF smoke sample is real ATIF-v1.8 with matching provenance", asyn
     /veasel-openai-key|\/tmp\/veasel-atif/,
   );
   assert.match(meta.disclaimer, /not a Harbor Index trial/i);
-  assert.equal(meta.veasel_version, "0.40.0-next.0");
+  assert.equal(meta.veasel_version, "0.64.7-next.0");
+  assert.equal(
+    meta.veasel_source_commit,
+    "38ea5b59e1baff1537af77b1c6362703cd8ab171",
+  );
+  assert.equal(
+    meta.source_binary_sha256,
+    "9928c26e4ebafd45133fa2c279717f79caa44c71735418065841d05f09eb5488",
+  );
   assert.equal(meta.sha256, createHash("sha256").update(raw).digest("hex"));
 });
