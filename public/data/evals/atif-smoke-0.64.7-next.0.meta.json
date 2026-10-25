@@ -13,7 +13,7 @@
     "Credential redaction already applied by Veasel (extra.redaction=credentials)",
     "No private host paths retained"
   ],
-  "sha256": "edaa19df544c32a8f0ffb6cbb3298501cba7d3a83b7de15177ad4997a1976f93",
-  "generated_at": "2026-10-25T03:13:42Z",
+  "sha256": "1f64bfb93c160cf75aa2a7112d5aac8cdbaf86f66722bf0fa77ee394f3e43396",
+  "generated_at": "2026-10-25T03:22:38Z",
   "source_binary": "https://github.com/veasel-labs/veasel/releases/download/v0.64.7-next.0/veasel-Linux.tar.gz"
 }

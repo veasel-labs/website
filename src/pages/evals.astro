@@ -70,12 +70,11 @@ const mockProvider =
           A real four-step <code>ATIF-v1.8</code> trajectory from Veasel{" "}
           <code>{atifMeta.veasel_version}</code> (source{" "}
           <code>{atifMeta.veasel_source_commit.slice(0, 12)}</code>) + the
-          deterministic{" "}
-          <a href={mockProvider}>mock-provider</a> path (same contract Linux CI
-          validates, then discards). Harbor <code>0.24.0</code> validator passed
-          locally. This is <strong>plumbing only</strong> — not an Index trial
-          and not a capability score.{" "}
-          <a href={atifSampleHref}>Download sample JSON</a>
+          deterministic <a href={mockProvider}>mock-provider</a> path (same
+          contract Linux CI validates, then discards). Harbor{" "}
+          <code>0.24.0</code> validator passed locally. This is{" "}
+          <strong>plumbing only</strong> — not an Index trial and not a
+          capability score. <a href={atifSampleHref}>Download sample JSON</a>
           {" · "}
           <a href={atifMetaHref}>Provenance</a>
           {" · "}
@@ -106,8 +105,8 @@ const mockProvider =
           Uploaded CI artifacts include platform binaries,{" "}
           <code>benchmark-session-store</code>, and Trivy results —{" "}
           <strong>not</strong> ATIF JSON (CI still discards the raw smoke
-          trace). The public sample above is a separately regenerated,
-          sanitized copy of that same deterministic path.
+          trace). The public sample above is a separately regenerated, sanitized
+          copy of that same deterministic path.
         </li>
       </ul>
       <p>
