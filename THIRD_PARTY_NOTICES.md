@@ -2,12 +2,15 @@
 
 ## Veasel Code pixel companion
 
-The original mustelid pixel companion was created from scratch specifically for Veasel Code. It is
-distributed under this repository's MIT license and does not include or adapt
-the official V language mascot artwork. The upstream artwork is available from
-the [V mascot repository](https://github.com/vlang/v-mascot) under
-[CC BY-NC 4.0](https://creativecommons.org/licenses/by-nc/4.0/); that artwork is
-not included on this website.
+The Veasel Code pixel companion in `public/veasel-companion-v8.png` is a
+generated pixel-art refinement of the project-owned Veasel companion. Its image
+reference was the existing Veasel artwork; no official V mascot artwork was
+included or used as an image input. This asset is distributed under this
+repository's MIT license.
+The upstream artwork is
+available from the [V mascot repository](https://github.com/vlang/v-mascot)
+under [CC BY-NC 4.0](https://creativecommons.org/licenses/by-nc/4.0/); no upstream
+mascot file is included on this website.
 
 ## V programming language logo
 
