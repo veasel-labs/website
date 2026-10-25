@@ -9,9 +9,11 @@ The official static website and field guide for Veasel Code.
 The architecture follows the inspected `HorneroOS/website` implementation:
 Astro static output, filesystem routes, a shared layout, pinned Node with an
 npm lockfile, and build/check workflows. The site's visual identity and copy
-are original. Pages are content-first; the only browser code is a small inline
-color-theme switcher (System, Light, Dark) that remembers the preference
-without adding a UI framework.
+are original. Pages are content-first; browser-side enhancement is limited to
+the remembered System/Light/Dark theme switcher and `/demo`'s guided stepper
+with an Asciinema player, without adding a UI framework. The walkthrough is
+clearly labeled as a script for a verified release, not a live model session;
+the adjacent terminal recording is genuine Veasel CLI/TUI output.
 The pixel companion is a new, independently generated Veasel design. It does
 not use or adapt the V language project's official mascot artwork and is
 included under this site's MIT license.
