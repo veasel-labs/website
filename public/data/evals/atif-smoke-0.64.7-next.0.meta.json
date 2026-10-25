@@ -1,0 +1,19 @@
+{
+  "schema": "veasel-public-atif-sample/v1",
+  "title": "Sanitized ATIF smoke sample",
+  "disclaimer": "Plumbing sample from the deterministic OpenAI-compatible mock provider path used by Linux CI api-smoke. Not a Harbor Index trial, not a capability score, not a live model run.",
+  "veasel_version": "0.64.7-next.0",
+  "veasel_source_commit": "38ea5b59e1baff1537af77b1c6362703cd8ab171",
+  "source_binary_sha256": "9928c26e4ebafd45133fa2c279717f79caa44c71735418065841d05f09eb5488",
+  "harbor_validator_pin": "0.24.0 @ dc933be707feafbb9efcdf092cb8a0e391332617",
+  "method": "Published Linux binary + scripts/mock-provider.py; veasel run --prompt 'Inspect workspace' --trace-file \u2026",
+  "prompt": "Inspect workspace",
+  "workspace_fixture": "api-smoke workspace (README.md + src/main.v with workspace-search-sentinel)",
+  "sanitization": [
+    "Credential redaction already applied by Veasel (extra.redaction=credentials)",
+    "No private host paths retained"
+  ],
+  "sha256": "edaa19df544c32a8f0ffb6cbb3298501cba7d3a83b7de15177ad4997a1976f93",
+  "generated_at": "2026-10-25T03:13:42Z",
+  "source_binary": "https://github.com/veasel-labs/veasel/releases/download/v0.64.7-next.0/veasel-Linux.tar.gz"
+}

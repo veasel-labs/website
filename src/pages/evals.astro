@@ -1,6 +1,6 @@
 ---
 import SiteLayout from "../layouts/SiteLayout.astro";
-import atifMeta from "../../public/data/evals/atif-smoke-0.40.0-next.0.meta.json";
+import atifMeta from "../../public/data/evals/atif-smoke-0.64.7-next.0.meta.json";
 
 const basePath = import.meta.env.BASE_URL.replace(/\/$/, "");
 const harborCommit = "dc933be707feafbb9efcdf092cb8a0e391332617";
@@ -16,8 +16,8 @@ const adapter =
   "https://github.com/veasel-labs/veasel/blob/main/benchmarks/harbor/veasel_agent.py";
 const benchmarking =
   "https://github.com/veasel-labs/veasel/blob/main/docs/benchmarking.md";
-const atifSampleHref = `${basePath}/data/evals/atif-smoke-0.40.0-next.0.json`;
-const atifMetaHref = `${basePath}/data/evals/atif-smoke-0.40.0-next.0.meta.json`;
+const atifSampleHref = `${basePath}/data/evals/atif-smoke-0.64.7-next.0.json`;
+const atifMetaHref = `${basePath}/data/evals/atif-smoke-0.64.7-next.0.meta.json`;
 const mockProvider =
   "https://github.com/veasel-labs/veasel/blob/main/scripts/mock-provider.py";
 ---
@@ -68,7 +68,9 @@ const mockProvider =
         <strong>Public ATIF smoke sample (sanitized)</strong>
         <p>
           A real four-step <code>ATIF-v1.8</code> trajectory from Veasel{" "}
-          <code>{atifMeta.veasel_version}</code> + the deterministic{" "}
+          <code>{atifMeta.veasel_version}</code> (source{" "}
+          <code>{atifMeta.veasel_source_commit.slice(0, 12)}</code>) + the
+          deterministic{" "}
           <a href={mockProvider}>mock-provider</a> path (same contract Linux CI
           validates, then discards). Harbor <code>0.24.0</code> validator passed
           locally. This is <strong>plumbing only</strong> — not an Index trial
@@ -105,7 +107,7 @@ const mockProvider =
           <code>benchmark-session-store</code>, and Trivy results —{" "}
           <strong>not</strong> ATIF JSON (CI still discards the raw smoke
           trace). The public sample above is a separately regenerated,
-          path-scrubbed copy of that same deterministic path.
+          sanitized copy of that same deterministic path.
         </li>
       </ul>
       <p>
@@ -143,7 +145,7 @@ const mockProvider =
         </li>
       </ul>
       <pre class="evals-pre"><code># From a veasel checkout, after a verified release exists:
-VEASEL_VERSION=0.40.0-next.0 benchmarks/harbor/smoke.sh
+VEASEL_VERSION=0.64.7-next.0 benchmarks/harbor/smoke.sh
 # Inspect the Harbor job directory locally — do not upload raw ATIF.</code></pre>
     </div>
 
@@ -197,12 +199,12 @@ VEASEL_VERSION=0.40.0-next.0 benchmarks/harbor/smoke.sh
             <code>benchmarks/harbor/smoke-task</code>
           </a>{" "}
           via{" "}
-          <code>VEASEL_VERSION=0.40.0-next.0 benchmarks/harbor/smoke.sh</code>{" "}
+          <code>VEASEL_VERSION=0.64.7-next.0 benchmarks/harbor/smoke.sh</code>{" "}
           (fixture model; reward plumbing only — not an Index score).
         </li>
         <li>
           <strong>Public ATIF evidence:</strong>{" "}
-          <a href={atifSampleHref}>atif-smoke-0.40.0-next.0.json</a> validated
+          <a href={atifSampleHref}>atif-smoke-0.64.7-next.0.json</a> validated
           with Harbor’s trajectory models.
         </li>
         <li>
