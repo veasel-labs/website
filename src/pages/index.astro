@@ -227,8 +227,10 @@ const release = verifiedRelease.tag;
         </h3>
         <p>
           <code>ask</code> → <code>auto-edit</code> → <code>sandbox-auto</code>.
-          Shell sandboxes on Linux/macOS/Windows. MCP stdio sandbox is opt-in
-          via <code>VEASEL_MCP_STDIO_SANDBOX</code> on all three OSes.
+          Shell and trusted MCP stdio sandboxes default to fail-closed
+          <code>require</code> on all three OSes; explicit
+          <code>VEASEL_MCP_STDIO_SANDBOX=auto|off</code> permits fallback or no
+          wrap.
         </p>
       </article>
       <article class="value-card card-lilac">
@@ -322,9 +324,10 @@ const release = verifiedRelease.tag;
           <h3>Graduated sandbox policy · MCP stdio on Linux/macOS/Windows</h3>
           <p>
             Default <code>ask</code> pauses edits, shell, and MCP. Opt into
-            auto-edit or sandbox-auto with explicit env gates. Shell wraps
-            Bubblewrap / Seatbelt / AppContainer+Job when available. MCP stdio
-            sandbox is opt-in; default stays unsandboxed with an honest warning.
+            auto-edit or sandbox-auto with explicit env gates. Shell and trusted
+            MCP stdio wrap in Bubblewrap / Seatbelt / AppContainer+Job by
+            default. Missing backends refuse to start unless explicit
+            <code>auto|off</code> permits fallback or no wrap.
           </p>
         </div>
         <span class="flow-arrow">↓</span>
@@ -434,7 +437,7 @@ const release = verifiedRelease.tag;
         <div class="status-row">
           <span class="status-symbol done">✓</span>
           <b>Shell + MCP stdio sandboxes (3 OS)</b>
-          <small>OPT-IN</small>
+          <small>DEFAULT · FAIL-CLOSED</small>
         </div>
         <div class="status-row">
           <span class="status-symbol done">✓</span>

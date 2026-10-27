@@ -249,12 +249,13 @@ if ($actual -ne $expected) &#123; throw 'Checksum mismatch' &#125;
           propose bounded, single-file edits; open each saved diff and
           explicitly approve it before Veasel writes. Proposed shell commands
           also need exact review of the command, working directory, and timeout.
-          Approved commands may wrap with platform sandboxes when available
-          (Bubblewrap, Seatbelt, or Windows AppContainer+Job). The loopback API
-          has no application token, so same-user processes can also call its
-          review and approval routes. Prompts, requested excerpts, and tool
-          results go to your provider. Agent Plugins support is experimental and
-          does not claim full v1.0.0 compatibility.
+          Approved commands default to fail-closed platform sandboxes
+          (Bubblewrap, Seatbelt, or Windows AppContainer+Job); missing backends
+          refuse execution unless explicit <code>auto|off</code> is selected.
+          The loopback API has no application token, so same-user processes can
+          also call its review and approval routes. Prompts, requested excerpts,
+          and tool results go to your provider. Agent Plugins support is
+          experimental and does not claim full v1.0.0 compatibility.
         </p>
         <div class="note-links">
           <a href={`${basePath}/docs/quickstart/`}>

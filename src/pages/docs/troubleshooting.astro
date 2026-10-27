@@ -57,9 +57,9 @@ const basePath = import.meta.env.BASE_URL.replace(/\/$/, "");
         <li>Windows: AppContainer + Job Object when wrap can be created</li>
       </ul>
       <p>
-        <code>VEASEL_SHELL_SANDBOX=auto</code> (default) falls through
-        unsandboxed when a backend is missing and does not advertise that
-        capability. <code>require</code> fails closed. <code>off</code> never
+        The default is <code>require</code>: a missing backend fails closed.
+        Explicit <code>VEASEL_SHELL_SANDBOX=auto</code> permits unsandboxed
+        fallback and does not advertise that capability. <code>off</code> never
         wraps. Network is denied unless{" "}
         <code>VEASEL_SHELL_SANDBOX_NETWORK=allow</code>. See{" "}
         <a href={`${basePath}/docs/security/`}>security</a> and{" "}

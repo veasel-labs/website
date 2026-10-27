@@ -92,10 +92,11 @@ veasel mcp add [user|project] stdio &lt;name&gt; &lt;command&gt; [args…]
 
     <aside class="callout">
       <strong>Know the boundary.</strong> Session history stays local; prompts
-      and tool excerpts go to your configured provider. Approved shell uses
-      Bubblewrap / Seatbelt / Windows AppContainer+Job when available — best
-      effort, not a VM. MCP stdio defaults unsandboxed; Linux can opt into
-      Bubblewrap with <code>VEASEL_MCP_STDIO_SANDBOX</code>. Read the{" "}
+      and tool excerpts go to your configured provider. Approved shell and
+      trusted MCP stdio default to fail-closed Bubblewrap / Seatbelt / Windows
+      AppContainer+Job containment — best effort, not a VM. Missing backends
+      refuse to start unless <code>VEASEL_MCP_STDIO_SANDBOX=auto|off</code> (or
+      the shell equivalent) is explicitly selected. Read the{" "}
       <a href={`${basePath}/docs/security/`}>security notes</a> before sensitive
       work.
     </aside>

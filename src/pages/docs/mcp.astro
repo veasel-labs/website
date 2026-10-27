@@ -6,7 +6,7 @@ const basePath = import.meta.env.BASE_URL.replace(/\/$/, "");
 
 <DocsLayout
   title="MCP servers"
-  description="Veasel Code MCP: configured servers, credentials, OAuth PKCE with refresh, per-session trust, per-call approval, and opt-in stdio sandbox on Linux/macOS/Windows."
+  description="Veasel Code MCP: configured servers, credentials, OAuth PKCE with refresh, per-session trust, per-call approval, and fail-closed stdio sandboxing on Linux/macOS/Windows."
 >
   <section class="doc-page">
     <p class="kicker">FIELD GUIDE / MCP</p>
@@ -35,9 +35,11 @@ const basePath = import.meta.env.BASE_URL.replace(/\/$/, "");
           <code>mcp.servers.configured</code>, <code>mcp.credentials</code>,{" "}
           <code>mcp.oauth</code>. Portable <code>.mcp.json</code> /{" "}
           <code>.cursor/mcp.json</code> import read-only. OAuth prints an
-          authorize URL — Veasel does not auto-launch a browser. Opt-in{" "}
-          <code>VEASEL_MCP_STDIO_SANDBOX</code> wraps trusted stdio on
-          Linux/macOS/Windows when backends are available.
+          authorize URL — Veasel does not auto-launch a browser. Trusted stdio
+          defaults to <code>require</code> ({" "}
+          <code>VEASEL_MCP_STDIO_SANDBOX</code>): Linux Bubblewrap, macOS
+          Seatbelt, or Windows AppContainer wrap MCP child processes — or they
+          refuse to start.
         </p>
       </div>
     </div>
@@ -269,11 +271,12 @@ Ctrl+R   # review MCP calls; select one to inspect, approve, or reject</code></p
           yet. Rejected or interrupted calls are not replayed.
         </li>
         <li>
-          Trusted stdio processes inherit the server user by default (
-          <code>VEASEL_MCP_STDIO_SANDBOX</code> unset/off). Set{" "}
-          <code>auto</code> or <code>require</code> to wrap trusted stdio in
-          Linux Bubblewrap, macOS Seatbelt (<code>/usr/bin/sandbox-exec</code>),
-          or Windows AppContainer + Job when available (capabilities{" "}
+          Trusted stdio defaults to{" "}
+          <code>VEASEL_MCP_STDIO_SANDBOX=require</code>: Linux Bubblewrap, macOS
+          Seatbelt (<code>/usr/bin/sandbox-exec</code>), or Windows AppContainer
+          + Job is required, and a missing backend refuses to start. Explicit{" "}
+          <code>auto</code> permits unsandboxed fallback and <code>off</code>{" "}
+          disables wrapping (capabilities{" "}
           <code>mcp.stdio.sandbox.bubblewrap</code>,{" "}
           <code>mcp.stdio.sandbox.seatbelt</code>,{" "}
           <code>mcp.stdio.sandbox.windows</code> only when wrap will run;
@@ -408,8 +411,9 @@ curl -sS -X PATCH 'http://127.0.0.1:4097/v1/mcp-servers/memory?scope=project&amp
           Import of <code>.vscode/mcp.json</code> (<code>servers</code> layout).
         </li>
         <li>
-          Remote Agent Plugins marketplace (local host is READY; stdio sandbox
-          opt-in is shipped on Linux/macOS/Windows; default remains off).
+          Remote Agent Plugins marketplace (local host is READY; fail-closed
+          stdio sandboxing ships on Linux/macOS/Windows with
+          <code>require</code> as the default).
         </li>
         <li>
           Product UI for inbound MCP notification streams (transport listen is

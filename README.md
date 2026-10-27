@@ -57,11 +57,14 @@ applied. Provider responses stream through replayable session events. The local
 API has no application token, so same-user processes can also access its review
 and approval routes.
 Shell commands require review of the exact command, working directory, and
-timeout before approval. When available, approved shell wraps with Bubblewrap
-(Linux), Seatbelt (macOS), or AppContainer+Job (Windows); otherwise it falls
-through unsandboxed. Every model-requested MCP call pauses for exact-argument
-review and one-time approval; MCP stdio servers run with the server user's
-permissions and remain without an OS sandbox. Session messages support opt-in
+timeout before approval. Approved shell defaults to fail-closed OS sandboxing
+with Bubblewrap (Linux), Seatbelt (macOS), or AppContainer+Job (Windows).
+Missing backends refuse execution by default; explicit
+`VEASEL_SHELL_SANDBOX=auto` permits unsandboxed fallback and `off` disables
+wrapping. Every model-requested MCP call pauses for exact-argument review and
+one-time approval. Trusted MCP stdio also defaults to fail-closed OS sandboxing
+(`VEASEL_MCP_STDIO_SANDBOX=require`); explicit `auto` permits unsandboxed
+fallback and `off` disables wrapping. Session messages support opt-in
 asynchronous responses through `Prefer: respond-async`. Their status is
 persisted and can be queried after reconnect; queued async turns resume after
 restart (bounded per session). Mid-flight work interrupted by a restart is
