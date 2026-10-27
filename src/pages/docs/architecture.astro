@@ -252,10 +252,11 @@ const basePath = import.meta.env.BASE_URL.replace(/\/$/, "");
         application verifies the reviewed file snapshot and uses an atomic
         replacement. Shell commands require a separate review of the exact
         command, workspace directory, and timeout before a one-time approval.
-        Commands inherit the server user's environment. When a platform sandbox
-        backend is available, approved shell wraps with Bubblewrap (Linux),
-        Seatbelt (macOS), or AppContainer+Job (Windows); otherwise it falls
-        through unsandboxed. The loopback API has no application token, so
+        Approved shell defaults to Bubblewrap (Linux), Seatbelt (macOS), or
+        AppContainer+Job (Windows), with a missing backend refusing execution.
+        Explicit <code>VEASEL_SHELL_SANDBOX=auto</code> permits unsandboxed
+        fallback and <code>off</code> disables wrapping; those modes inherit the
+        server environment. The loopback API has no application token, so
         same-user processes can call approval routes. Interrupted file writes
         and shell commands are not replayed automatically.
       </p>

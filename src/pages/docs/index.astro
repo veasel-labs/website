@@ -31,13 +31,13 @@ const release = verifiedRelease.tag;
         <strong>Product claims, tied to code</strong>
         <p>
           Universal skills discovery and one-shot invoke · graduated execution
-          policy · shell + opt-in MCP stdio sandboxes on Linux/macOS/Windows ·
-          compaction, repo map, prompt-cache accounting, parallel reads, durable
-          jobs · cost schedule honesty · OAuth refresh · SolidJS + OpenTUI TUI
-          (mint, pixel splash, Ctrl+P, reviews, <code>/</code> <code>@</code>{" "}
-          <code>$</code>) with MarkdownRenderable, Diff washes, context footers,
-          and custom themes. Local Agent Plugins are READY (no remote
-          marketplace claim).
+          policy · fail-closed shell + MCP stdio sandboxes on
+          Linux/macOS/Windows · compaction, repo map, prompt-cache accounting,
+          parallel reads, durable jobs · cost schedule honesty · OAuth refresh ·
+          SolidJS + OpenTUI TUI (mint, pixel splash, Ctrl+P, reviews,{" "}
+          <code>/</code> <code>@</code> <code>$</code>) with MarkdownRenderable,
+          Diff washes, context footers, and custom themes. Local Agent Plugins
+          are READY (no remote marketplace claim).
         </p>
       </div>
     </div>
@@ -181,9 +181,10 @@ const release = verifiedRelease.tag;
           compaction, prompt-cache accounting, durable async turns
         </li>
         <li>
-          Graduated <code>execution_policy</code>; platform shell sandboxes;
-          opt-in MCP stdio sandbox on Linux/macOS/Windows (
-          <code>VEASEL_MCP_STDIO_SANDBOX</code>)
+          Graduated <code>execution_policy</code>; fail-closed platform shell
+          and MCP stdio sandboxes on Linux/macOS/Windows (
+          <code>VEASEL_MCP_STDIO_SANDBOX=require</code> by default; explicit
+          <code>auto|off</code> permits fallback or no wrap)
         </li>
         <li>
           Configured MCP (user/project + portable <code>.mcp.json</code>), named

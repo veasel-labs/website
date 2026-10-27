@@ -18,8 +18,9 @@ const basePath = import.meta.env.BASE_URL.replace(/\/$/, "");
     <p class="lede">
       Veasel runs on loopback and stores history in SQLite. Model prompts go to
       the provider you configure — local storage is not local inference. The
-      standard path is inspect-then-approve; graduated policies and three-OS
-      sandboxes deepen containment when you opt in.
+      standard path is inspect-then-approve; graduated policies and fail-closed
+      three-OS sandboxes deepen containment. Explicit compatibility modes remain
+      your choice.
     </p>
 
     <div class="compatibility-banner">
@@ -31,8 +32,10 @@ const basePath = import.meta.env.BASE_URL.replace(/\/$/, "");
         <p>
           Default <code>ask</code> gates edits, shell, and MCP.{" "}
           <code>auto-edit</code> and <code>sandbox-auto</code> require explicit
-          env gates. Shell sandboxes and opt-in MCP stdio sandboxes advertise
-          capabilities only when wrap will run — never a silent claim.
+          env gates. Approved shell and trusted MCP stdio run{" "}
+          <code>require</code> (default): Linux Bubblewrap, macOS Seatbelt, or
+          Windows AppContainer + Job wrap the command or fail closed —
+          capabilities advertise only when wrap will run, never a silent claim.
         </p>
       </div>
     </div>
@@ -278,18 +281,16 @@ const basePath = import.meta.env.BASE_URL.replace(/\/$/, "");
           redirects and validates TLS.
         </li>
         <li>
-          <strong>MCP stdio containment.</strong> Default is unsandboxed (full
-          Veasel OS user; stderr warns when starting unsandboxed). When{" "}
-          <code>VEASEL_MCP_STDIO_SANDBOX</code> is <code>auto</code> or{" "}
-          <code>require</code>, trusted stdio may wrap in Linux Bubblewrap (
-          <code>mcp.stdio.sandbox.bubblewrap</code>), macOS Seatbelt (
-          <code>mcp.stdio.sandbox.seatbelt</code>), or Windows AppContainer +
-          Job (<code>mcp.stdio.sandbox.windows</code>) when that backend is
-          available. Missing backends under auto fall back honestly; require
-          fails closed. Network is shared inside those wraps;
-          PLUGIN_ROOT/PLUGIN_DATA stay writable. Do not treat a shell-sandbox
-          review as covering MCP. OAuth PKCE is for Streamable HTTP only — it
-          does not contain stdio.
+          <strong>MCP stdio containment.</strong> The default is{" "}
+          <code>VEASEL_MCP_STDIO_SANDBOX=require</code>: trusted stdio must wrap
+          in Linux Bubblewrap (<code>mcp.stdio.sandbox.bubblewrap</code>), macOS
+          Seatbelt (<code>mcp.stdio.sandbox.seatbelt</code>), or Windows
+          AppContainer + Job (<code>mcp.stdio.sandbox.windows</code>); a missing
+          backend refuses to start. Explicit <code>auto</code> permits
+          unsandboxed fallback and <code>off</code> disables wrapping with a
+          warning. Network is shared inside those wraps; PLUGIN_ROOT/PLUGIN_DATA
+          stay writable. Do not treat a shell-sandbox review as covering MCP.
+          OAuth PKCE is for Streamable HTTP only — it does not contain stdio.
         </li>
       </ul>
     </div>

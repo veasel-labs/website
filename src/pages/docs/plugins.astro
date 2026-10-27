@@ -136,11 +136,13 @@ veasel mcp add project stdio repo-tools ./bin/mcp-server
         </li>
         <li>
           Binary Skill assets and Skill-script execution with explicit approval
-          are not supported. MCP stdio defaults to the current user’s OS
-          privileges; <code>VEASEL_MCP_STDIO_SANDBOX=auto|require</code> may
-          wrap trusted stdio in Linux Bubblewrap, macOS Seatbelt, or Windows
-          AppContainer when available (honest <code>mcp.stdio.sandbox.*</code>{" "}
-          capabilities; approved shell uses separate knobs).
+          are not supported. Trusted MCP stdio defaults to
+          <code>VEASEL_MCP_STDIO_SANDBOX=require</code>: Linux Bubblewrap, macOS
+          Seatbelt, or Windows AppContainer is required, and a missing backend
+          refuses to start. Explicit <code>auto</code> permits unsandboxed
+          fallback and <code>off</code> disables wrapping (honest
+          <code>mcp.stdio.sandbox.*</code> capabilities; approved shell uses
+          separate knobs).
         </li>
       </ul>
     </div>

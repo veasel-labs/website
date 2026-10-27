@@ -31,9 +31,9 @@ const basePath = import.meta.env.BASE_URL.replace(/\/$/, "");
         token, so same-user processes can call its review and approval routes.
         Veasel can also propose shell commands; each one must be opened and
         approved with its exact command, working directory, and timeout.
-        Approved commands may wrap with Bubblewrap, Seatbelt, or Windows
-        AppContainer+Job when available — otherwise they fall through
-        unsandboxed.
+        Approved commands default to Bubblewrap, Seatbelt, or Windows
+        AppContainer+Job; missing backends refuse execution unless explicit
+        <code>VEASEL_SHELL_SANDBOX=auto|off</code> permits fallback or no wrap.
       </p>
     </div>
     <div class="doc-panel faq-panel">
