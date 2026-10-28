@@ -39,6 +39,12 @@ body {
   overflow-x: clip;
   background: var(--paper);
 }
+main {
+  overflow-x: clip;
+}
+.value-card code {
+  overflow-wrap: anywhere;
+}
 a {
   color: inherit;
 }
