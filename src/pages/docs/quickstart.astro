@@ -35,10 +35,10 @@ const basePath = import.meta.env.BASE_URL.replace(/\/$/, "");
       <pre><code>veasel
 # then in the TUI:
 /connect</code></pre>
+      <p>From home, press <kbd>s</kbd> for model settings.</p>
       <p>
-        From the home screen, press <kbd>s</kbd> to open model settings,
-        or type <code>/connect</code> to start the guided connection flow.
-        Paste an API key when needed, save it on this machine, and pick a model. For endpoint and
+        <code>/connect</code> is the happy path: paste an API key when needed,
+        save it on this machine, and pick a model. For endpoint and
         output-budget controls, press <kbd>s</kbd> or use <code>/models</code>{" "}
         (Ctrl+U / Ctrl+O). Local presets such as Ollama do not need a key.
         Choosing a model saves the provider profile. Zero output budget keeps
@@ -49,12 +49,10 @@ const basePath = import.meta.env.BASE_URL.replace(/\/$/, "");
 
     <div class="doc-panel">
       <h2>3. Open a workspace session</h2>
+      <p>Press <kbd>n</kbd> to create a session before chatting.</p>
       <p>
-        From the home screen, press <kbd>n</kbd> to create a session or
-        select an existing session bound to an existing project directory.
-        The home screen is a navigator, not a conversation composer: open a
-        session before sending your first prompt. Messages and events store
-        in local SQLite. On the home screen,{" "}
+        Create or select a session bound to an existing project directory.
+        Messages and events store in local SQLite. On the home screen,{" "}
         <kbd>j</kbd>/<kbd>k</kbd> (or arrows) move, type to filter, <kbd>1</kbd>
         –<kbd>9</kbd> jump labeled slots, and Enter opens. Ask a question about
         the repo — Veasel may request bounded list/read/search tools inside that
