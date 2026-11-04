@@ -124,6 +124,16 @@ function isActive(href: string) {
         class="docs-search-status"
         aria-live="polite"
       ></p>
+      <button
+        id="docs-nav-toggle"
+        class="docs-nav-toggle"
+        type="button"
+        aria-controls="docs-nav-groups"
+        aria-expanded="true"
+        hidden
+      >
+        Browse sections <span aria-hidden="true">⌄</span>
+      </button>
       <div id="docs-nav-groups">
         {navGroups.map((group) => (
           <div class="docs-nav-group" data-docs-nav-group>
@@ -170,6 +180,29 @@ function isActive(href: string) {
     document.querySelectorAll<HTMLElement>("[data-docs-nav-group]"),
   );
   const total = items.length;
+  const navToggle = document.querySelector<HTMLButtonElement>(
+    "#docs-nav-toggle",
+  );
+  const navContainer = document.querySelector<HTMLElement>("#docs-nav-groups");
+  const mobileDocs = window.matchMedia("(max-width: 850px)");
+
+  const setNavExpanded = (expanded: boolean) => {
+    if (navContainer) navContainer.hidden = !expanded;
+    navToggle?.setAttribute("aria-expanded", String(expanded));
+  };
+
+  const syncMobileNavigation = () => {
+    if (navToggle) navToggle.hidden = !mobileDocs.matches;
+    // The desktop sidebar must always be fully visible. Mobile users start
+    // with a compact navigator and can expose links with one tap or by searching.
+    setNavExpanded(!mobileDocs.matches);
+  };
+
+  navToggle?.addEventListener("click", () => {
+    setNavExpanded(navToggle.getAttribute("aria-expanded") !== "true");
+  });
+  mobileDocs.addEventListener("change", syncMobileNavigation);
+  syncMobileNavigation();
 
   const refresh = () => {
     const query = filter?.value.trim().toLocaleLowerCase() ?? "";
@@ -196,5 +229,8 @@ function isActive(href: string) {
     }
   };
 
-  filter?.addEventListener("input", refresh);
+  filter?.addEventListener("input", () => {
+    if (mobileDocs.matches && filter?.value.trim()) setNavExpanded(true);
+    refresh();
+  });
 </script>
