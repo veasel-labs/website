@@ -180,9 +180,8 @@ function isActive(href: string) {
     document.querySelectorAll<HTMLElement>("[data-docs-nav-group]"),
   );
   const total = items.length;
-  const navToggle = document.querySelector<HTMLButtonElement>(
-    "#docs-nav-toggle",
-  );
+  const navToggle =
+    document.querySelector<HTMLButtonElement>("#docs-nav-toggle");
   const navContainer = document.querySelector<HTMLElement>("#docs-nav-groups");
   const mobileDocs = window.matchMedia("(max-width: 850px)");
 
