@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 1200 630" width="1200" height="630">
+  <!-- Social share card. Regenerate og-card.png with:
+       rsvg-convert -w 1200 -h 630 public/og-card.svg -o public/og-card.png -->
+  <rect width="1200" height="630" fill="#fbfaf6"/>
+  <rect x="0" y="566" width="1200" height="64" fill="#176344"/>
+  <text x="600" y="608" text-anchor="middle" font-family="'DM Mono', 'Noto Sans Mono', monospace" font-size="24" letter-spacing="6" fill="#ffffff">LOCAL · APPROVAL-GATED · V-NATIVE</text>
+
+  <g transform="translate(84 108)">
+    <rect width="112" height="112" rx="35" fill="#24996b"/>
+    <path d="M21 24.5h17.5L56 72l17.5-47.5H91L63 91H49z" fill="#fff"/>
+    <circle cx="87.5" cy="85.75" r="8.75" fill="#ffe180"/>
+  </g>
+  <image xlink:href="veasel-companion-v8.png" x="876" y="120" width="240" height="240"/>
+
+  <text x="84" y="332" font-family="Fredoka, 'Trebuchet MS', 'Noto Sans', sans-serif" font-size="104" font-weight="700" fill="#202238">Veasel Code</text>
+  <text x="88" y="408" font-family="'DM Sans', 'Noto Sans', sans-serif" font-size="37" fill="#60637a">The V-native coding agent — universal skills,</text>
+  <text x="88" y="458" font-family="'DM Sans', 'Noto Sans', sans-serif" font-size="37" fill="#60637a">graduated sandboxes, MCP with OAuth, and a</text>
+  <text x="88" y="508" font-family="'DM Sans', 'Noto Sans', sans-serif" font-size="37" fill="#60637a">keyboard-first TUI, under your approval.</text>
+</svg>

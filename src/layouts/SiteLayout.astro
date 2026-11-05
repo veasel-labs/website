@@ -12,6 +12,9 @@ const currentPath = Astro.url.pathname.replace(basePath, "") || "/";
 const canonicalUrl = Astro.site
   ? new URL(Astro.url.pathname, Astro.site).toString()
   : undefined;
+const ogImageUrl = Astro.site
+  ? new URL(`${basePath}/og-card.png`, Astro.site).toString()
+  : undefined;
 const links = [
   { href: "/", label: "Overview" },
   { href: "/demo/", label: "Demo" },
@@ -45,6 +48,15 @@ function navCurrent(href: string, path: string) {
     <meta property="og:type" content="website" />
     <meta property="og:title" content={`${title} · Veasel Code`} />
     <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonicalUrl} />
+    <meta property="og:image" content={ogImageUrl} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta
+      property="og:image:alt"
+      content="Veasel Code — the V-native coding agent, local and approval-gated"
+    />
+    <meta name="twitter:card" content="summary_large_image" />
     <link rel="canonical" href={canonicalUrl} />
     <link rel="icon" type="image/svg+xml" href={`${basePath}/mark.svg`} />
     <title>{title} · Veasel Code</title>
