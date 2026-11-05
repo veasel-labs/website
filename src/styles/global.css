@@ -66,7 +66,7 @@ p {
   left: 1rem;
   padding: 0.8rem 1rem;
   background: var(--ink);
-  color: white;
+  color: var(--paper);
   transform: translateY(-130%);
 }
 .skip-link:focus {
@@ -279,7 +279,7 @@ p {
 }
 .hero-meta {
   margin-top: 24px;
-  color: #76778a;
+  color: #707183;
   font: 0.65rem var(--mono);
 }
 .pulse,
@@ -883,7 +883,7 @@ p {
   bottom: -14px;
   padding: 5px 7px;
   background: var(--coral);
-  color: white;
+  color: #202238;
   border-radius: 8px;
   font: 500 0.47rem/1.2 var(--mono);
   transform: rotate(12deg);
@@ -935,6 +935,7 @@ p {
   z-index: 2;
   padding: 10px 14px;
   background: white;
+  color: #202238;
   border: 1px solid #ece9e2;
   border-radius: 11px;
   box-shadow: 0 5px 0 #2022380a;
@@ -967,7 +968,7 @@ p {
   justify-content: center;
   gap: 29px;
   overflow: hidden;
-  background: var(--green);
+  background: var(--green-dark);
   color: #fff;
   font: 500 0.65rem var(--mono);
   letter-spacing: 0.12em;
@@ -1192,20 +1193,20 @@ p {
 }
 .icon-lime {
   background: #e2f5e8;
-  color: #319168;
+  color: #297a57;
 }
 .icon-lavender {
   background: #ece8ff;
-  color: #7868c6;
+  color: #6b5db1;
 }
 .icon-peach {
   background: #ffebe1;
-  color: #e4785f;
+  color: #a35644;
 }
 .flow-list small {
   font: 0.57rem var(--mono);
   letter-spacing: 0.08em;
-  color: #87889b;
+  color: #707181;
 }
 .flow-list h3 {
   margin: 4px 0 2px;
@@ -1258,7 +1259,7 @@ p {
   color: #4d5265;
 }
 .status-head span {
-  color: #999aab;
+  color: #71717e;
 }
 .status-row {
   min-height: 51px;
@@ -1272,14 +1273,14 @@ p {
   font-size: 0.72rem;
 }
 .status-row small {
-  color: #9294a3;
+  color: #737580;
   font: 0.53rem var(--mono);
 }
 .status-symbol {
   font-size: 0.85rem;
 }
 .status-symbol.done {
-  color: #38a46c;
+  color: #2d8457;
 }
 .status-symbol.next {
   color: #daaa2e;
@@ -1337,7 +1338,7 @@ p {
 .install-code small {
   display: block;
   margin: 5px 0 8px;
-  color: #8b8b9c;
+  color: #71717f;
   font: 0.53rem var(--mono);
   letter-spacing: 0.04em;
 }
@@ -1355,7 +1356,7 @@ p {
 .install-foot {
   padding: 11px 19px;
   border-top: 1px solid #eeece6;
-  color: #858595;
+  color: #747482;
   font-size: 0.61rem;
 }
 .install-foot span {
@@ -1402,7 +1403,7 @@ p {
 }
 .finale .kicker {
   margin-top: 10px;
-  color: #d4f3df;
+  color: #effff4;
 }
 .finale h2 {
   margin: 13px 0 23px;
@@ -1420,7 +1421,7 @@ p {
 }
 .finale-note {
   margin: 20px 0 0;
-  color: #c8ead7;
+  color: #effff4;
   font-size: 0.62rem;
 }
 .docs-shell {
@@ -1911,7 +1912,7 @@ pre {
   color: var(--muted);
 }
 .provider-table-head {
-  color: #848697;
+  color: #737483;
   font: 0.55rem var(--mono);
   letter-spacing: 0.06em;
 }
@@ -2540,4 +2541,18 @@ pre {
 }
 :root[data-theme="dark"] .companion-badge {
   border-color: #fff;
+}
+
+/* Dark counterparts for text darkened to meet AA on light surfaces. */
+:root[data-theme="dark"] .hero-meta,
+:root[data-theme="dark"] .status-row small,
+:root[data-theme="dark"] .status-head span,
+:root[data-theme="dark"] .install-code small {
+  color: var(--muted);
+}
+:root[data-theme="dark"] .status-symbol.done {
+  color: #65d398;
+}
+:root[data-theme="dark"] .provider-chip i {
+  color: #a99df0;
 }

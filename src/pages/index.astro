@@ -13,7 +13,10 @@ const release = verifiedRelease.tag;
   <section class="hero wrap" aria-labelledby="hero-title">
     <div class="hero-copy">
       <p class="kicker">
-        <span class="sparkle">✳</span> LOCAL · APPROVAL-GATED · V-NATIVE
+        <span class="sparkle" aria-hidden="true">
+          ✳
+        </span>{" "}
+        LOCAL · APPROVAL-GATED · V-NATIVE
       </p>
       <h1 id="hero-title">
         The new standard
@@ -49,9 +52,15 @@ const release = verifiedRelease.tag;
       <div class="sun"></div>
       <div class="orbit orbit-one"></div>
       <div class="orbit orbit-two"></div>
-      <div class="spark spark-a">✦</div>
-      <div class="spark spark-b">✳</div>
-      <div class="spark spark-c">✧</div>
+      <div class="spark spark-a" aria-hidden="true">
+        ✦
+      </div>
+      <div class="spark spark-b" aria-hidden="true">
+        ✳
+      </div>
+      <div class="spark spark-c" aria-hidden="true">
+        ✧
+      </div>
       <div class="sticker sticker-v">
         <img
           src={`${basePath}/v-logo.png`}
@@ -175,10 +184,10 @@ const release = verifiedRelease.tag;
         </div>
       </div>
       <div class="float-note note-top">
-        <span>⌁</span> your repo, your rules
+        <span aria-hidden="true">⌁</span> your repo, your rules
       </div>
       <div class="float-note note-bottom">
-        <span>↗</span> approve before effect
+        <span aria-hidden="true">↗</span> approve before effect
       </div>
     </div>
     <div class="hero-ribbon" aria-hidden="true">
@@ -267,16 +276,16 @@ const release = verifiedRelease.tag;
       </div>
       <div class="provider-orbit" aria-label="Product surfaces that ship today">
         <span class="provider-chip chip-openai">
-          <i>◌</i> Model catalog
+          <i aria-hidden="true">◌</i> Model catalog
         </span>
         <span class="provider-chip chip-claude">
-          <i>✳</i> MCP + OAuth
+          <i aria-hidden="true">✳</i> MCP + OAuth
         </span>
         <span class="provider-chip chip-gemini">
-          <i>✦</i> DiffRenderable
+          <i aria-hidden="true">✦</i> DiffRenderable
         </span>
         <span class="provider-chip chip-meta">
-          <i>◆</i> V · json2 · SSE
+          <i aria-hidden="true">◆</i> V · json2 · SSE
         </span>
         <div class="provider-core">
           <b>one</b>
@@ -315,7 +324,9 @@ const release = verifiedRelease.tag;
             vendor-native SDKs.
           </p>
         </div>
-        <span class="flow-arrow">↓</span>
+        <span class="flow-arrow" aria-hidden="true">
+          ↓
+        </span>
       </article>
       <article>
         <span class="flow-icon icon-lavender">02</span>
@@ -330,7 +341,9 @@ const release = verifiedRelease.tag;
             <code>auto|off</code> permits fallback or no wrap.
           </p>
         </div>
-        <span class="flow-arrow">↓</span>
+        <span class="flow-arrow" aria-hidden="true">
+          ↓
+        </span>
       </article>
       <article>
         <span class="flow-icon icon-peach">03</span>
@@ -344,7 +357,9 @@ const release = verifiedRelease.tag;
             <code>Prefer: respond-async</code> recovery after restart.
           </p>
         </div>
-        <span class="flow-arrow">↓</span>
+        <span class="flow-arrow" aria-hidden="true">
+          ↓
+        </span>
       </article>
       <article>
         <span class="flow-icon icon-lime">04</span>
@@ -358,7 +373,9 @@ const release = verifiedRelease.tag;
             component toggles, CI fixtures); no remote marketplace claim.
           </p>
         </div>
-        <span class="flow-arrow">↓</span>
+        <span class="flow-arrow" aria-hidden="true">
+          ↓
+        </span>
       </article>
       <article>
         <span class="flow-icon icon-lavender">05</span>
@@ -376,7 +393,9 @@ const release = verifiedRelease.tag;
             <code>VEASEL_TUI_REDUCED_MOTION</code>.
           </p>
         </div>
-        <span class="flow-arrow">↓</span>
+        <span class="flow-arrow" aria-hidden="true">
+          ↓
+        </span>
       </article>
       <article>
         <span class="flow-icon icon-peach">06</span>
@@ -390,7 +409,9 @@ const release = verifiedRelease.tag;
             agent-quality scores or Harbor Index claims.
           </p>
         </div>
-        <span class="flow-arrow">✦</span>
+        <span class="flow-arrow" aria-hidden="true">
+          ✦
+        </span>
       </article>
     </div>
   </section>
@@ -465,7 +486,7 @@ const release = verifiedRelease.tag;
           <small>READY</small>
         </div>
         <a href={`${basePath}/docs/`}>
-          Open the field guide <span>↗</span>
+          Open the field guide <span aria-hidden="true">↗</span>
         </a>
       </div>
     </div>
@@ -485,7 +506,7 @@ const release = verifiedRelease.tag;
       </p>
       <div class="start-actions">
         <a class="button button-dark" href={`${basePath}/downloads/`}>
-          Download Veasel Code <span>→</span>
+          Download Veasel Code <span aria-hidden="true">→</span>
         </a>
         <a class="text-link" href={`${basePath}/demo/`}>
           Interactive walkthrough <span aria-hidden="true">↗</span>
@@ -511,7 +532,8 @@ const release = verifiedRelease.tag;
         <code>/patches · /commands · /mcp · /skills</code>
       </div>
       <div class="install-foot">
-        V runtime · SolidJS + OpenTUI · local SQLite <span>♥</span>
+        V runtime · SolidJS + OpenTUI · local SQLite{" "}
+        <span aria-hidden="true">♥</span>
       </div>
     </div>
   </section>
@@ -531,7 +553,7 @@ const release = verifiedRelease.tag;
         href="https://github.com/veasel-labs/veasel"
         class="button button-light"
       >
-        Meet us on GitHub <span>↗</span>
+        Meet us on GitHub <span aria-hidden="true">↗</span>
       </a>
       <p class="finale-note">
         Prereleases only — verify checksums. No Harbor Index or invented
