@@ -108,7 +108,7 @@ p {
   object-fit: contain;
 }
 .wordmark-light {
-  color: var(--green);
+  color: var(--green-dark);
   font-weight: 500;
 }
 .site-header nav {
