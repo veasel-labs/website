@@ -1799,7 +1799,7 @@ p {
   border-color: #e5ce70;
 }
 .roadmap-next .roadmap-symbol {
-  color: #9698a8;
+  color: var(--muted);
 }
 .doc-panel {
   padding: 25px 28px;
