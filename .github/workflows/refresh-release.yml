@@ -58,6 +58,10 @@ jobs:
           if [[ -n "$pull_request" ]]; then
             gh pr update-branch "$pull_request" --repo "$GITHUB_REPOSITORY" --rebase
             git fetch origin "+refs/heads/$RELEASE_BRANCH:refs/remotes/origin/$RELEASE_BRANCH"
+            # The refresh step modified this file on main; the existing PR branch
+            # already owns its verified copy. Discard only that generated change
+            # before switching branches, then validate the branch tag below.
+            git restore -- src/data/verified-release.json
             git switch --create "$RELEASE_BRANCH" --track "origin/$RELEASE_BRANCH"
           else
             if git ls-remote --exit-code origin "refs/heads/$RELEASE_BRANCH" >/dev/null 2>&1; then
