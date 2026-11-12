@@ -1460,9 +1460,12 @@ p {
   outline: 2px solid var(--green);
   outline-offset: 2px;
 }
-.docs-nav-toggle span {
-  font-size: 1rem;
-  transition: transform 150ms ease;
+.docs-nav-toggle-current {
+  display: block;
+  margin-top: 2px;
+  color: var(--muted);
+  font-size: 0.7rem;
+  font-weight: 500;
 }
 #docs-nav-groups[hidden] {
   display: none;
@@ -1947,8 +1950,10 @@ pre {
   .docs-nav-toggle:not([hidden]) {
     display: flex;
   }
-  .docs-nav-toggle[aria-expanded="true"] span {
-    transform: rotate(180deg);
+  .docs-nav-toggle {
+    align-items: flex-start;
+    flex-direction: column;
+    justify-content: center;
   }
   .wrap {
     width: min(100% - 48px, 700px);

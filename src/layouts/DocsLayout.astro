@@ -103,6 +103,10 @@ function isActive(href: string) {
     return currentPath === "/docs/" || currentPath === "/docs";
   return currentPath === href || currentPath.startsWith(href);
 }
+
+const activePage = navGroups
+  .flatMap((group) => group.items)
+  .find((item) => isActive(item.href))?.label;
 ---
 
 <SiteLayout title={title} description={description}>
@@ -129,10 +133,13 @@ function isActive(href: string) {
         class="docs-nav-toggle"
         type="button"
         aria-controls="docs-nav-groups"
-        aria-expanded="true"
+        aria-expanded="false"
         hidden
       >
-        Browse sections <span aria-hidden="true">⌄</span>
+        Browse sections
+        {activePage && (
+          <span class="docs-nav-toggle-current">Current: {activePage}</span>
+        )}
       </button>
       <div id="docs-nav-groups">
         {navGroups.map((group) => (
@@ -184,6 +191,7 @@ function isActive(href: string) {
     document.querySelector<HTMLButtonElement>("#docs-nav-toggle");
   const navContainer = document.querySelector<HTMLElement>("#docs-nav-groups");
   const mobileDocs = window.matchMedia("(max-width: 850px)");
+  document.documentElement.classList.add("docs-js");
 
   const setNavExpanded = (expanded: boolean) => {
     if (navContainer) navContainer.hidden = !expanded;
@@ -191,7 +199,21 @@ function isActive(href: string) {
   };
 
   const syncMobileNavigation = () => {
-    if (navToggle) navToggle.hidden = !mobileDocs.matches;
+    if (mobileDocs.matches) {
+      if (navToggle) navToggle.hidden = false;
+      const searching = (filter?.value.trim().length ?? 0) > 0;
+      if (
+        !searching &&
+        navContainer?.contains(document.activeElement) &&
+        navToggle
+      ) {
+        navToggle.focus();
+      }
+      setNavExpanded(searching);
+      return;
+    }
+    if (document.activeElement === navToggle) filter?.focus();
+    if (navToggle) navToggle.hidden = true;
     // The desktop sidebar must always be fully visible. Mobile users start
     // with a compact navigator and can expose links with one tap or by searching.
     setNavExpanded(!mobileDocs.matches);
@@ -225,6 +247,9 @@ function isActive(href: string) {
           : visible === 0
             ? "No matching pages."
             : `Showing ${visible} of ${total} pages.`;
+    }
+    if (mobileDocs.matches) {
+      setNavExpanded(query.length > 0);
     }
   };
 
