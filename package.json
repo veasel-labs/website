@@ -17,8 +17,8 @@
   },
   "dependencies": {
     "@astrojs/sitemap": "^3.7.4",
-    "asciinema-player": "^3.17.0",
-    "astro": "^7.4.5"
+    "asciinema-player": "^3.18.0",
+    "astro": "^7.4.8"
   },
   "devDependencies": {
     "@astrojs/check": "^0.9.12",
