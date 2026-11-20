@@ -15,11 +15,16 @@ const destination = fileURLToPath(
 const maxMetadataBytes = 1_000_000;
 
 async function fetchBytes(url, limit = maxMetadataBytes) {
+  // Authenticate GitHub API calls when a token is available: unauthenticated
+  // requests from shared CI runner IPs hit the 60/h rate limit (HTTP 403),
+  // which silently kept the stale fallback in the refresh workflow.
+  const githubToken = process.env.GITHUB_TOKEN || process.env.GH_TOKEN;
   const response = await fetch(url, {
     headers: url.startsWith("https://api.github.com/")
       ? {
           Accept: "application/vnd.github+json",
           "X-GitHub-Api-Version": "2026-03-10",
+          ...(githubToken ? { Authorization: `Bearer ${githubToken}` } : {}),
         }
       : undefined,
     signal: AbortSignal.timeout(15_000),
