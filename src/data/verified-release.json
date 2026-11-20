@@ -1,12 +1,12 @@
 {
-  "tag": "v0.79.13-next.0",
-  "release_url": "https://github.com/veasel-labs/veasel/releases/tag/v0.79.13-next.0",
-  "source_commit": "100da8dde93a6844df888405d2656fb36a0f5f88",
+  "tag": "v0.97.0-next.0",
+  "release_url": "https://github.com/veasel-labs/veasel/releases/tag/v0.97.0-next.0",
+  "source_commit": "04ad0d6ce557a44376678b39a0ca32de4ea0f2f5",
   "assets": {
-    "SHA256SUMS": "https://github.com/veasel-labs/veasel/releases/download/v0.79.13-next.0/SHA256SUMS",
-    "release.json": "https://github.com/veasel-labs/veasel/releases/download/v0.79.13-next.0/release.json",
-    "veasel-Linux.tar.gz": "https://github.com/veasel-labs/veasel/releases/download/v0.79.13-next.0/veasel-Linux.tar.gz",
-    "veasel-macOS.tar.gz": "https://github.com/veasel-labs/veasel/releases/download/v0.79.13-next.0/veasel-macOS.tar.gz",
-    "veasel-Windows.zip": "https://github.com/veasel-labs/veasel/releases/download/v0.79.13-next.0/veasel-Windows.zip"
+    "SHA256SUMS": "https://github.com/veasel-labs/veasel/releases/download/v0.97.0-next.0/SHA256SUMS",
+    "release.json": "https://github.com/veasel-labs/veasel/releases/download/v0.97.0-next.0/release.json",
+    "veasel-Linux.tar.gz": "https://github.com/veasel-labs/veasel/releases/download/v0.97.0-next.0/veasel-Linux.tar.gz",
+    "veasel-macOS.tar.gz": "https://github.com/veasel-labs/veasel/releases/download/v0.97.0-next.0/veasel-macOS.tar.gz",
+    "veasel-Windows.zip": "https://github.com/veasel-labs/veasel/releases/download/v0.97.0-next.0/veasel-Windows.zip"
   }
 }
