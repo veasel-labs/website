@@ -15,16 +15,12 @@
     "macos": {
       "arch": "arm64",
       "signed": false,
-      "assets": [
-        "veasel-desktop-0.102.4-next.0-mac-arm64.dmg"
-      ]
+      "assets": ["veasel-desktop-0.102.4-next.0-mac-arm64.dmg"]
     },
     "windows": {
       "arch": "x86_64",
       "signed": false,
-      "assets": [
-        "veasel-desktop-0.102.4-next.0-win-x64.exe"
-      ]
+      "assets": ["veasel-desktop-0.102.4-next.0-win-x64.exe"]
     }
   },
   "assets": {

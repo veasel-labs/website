@@ -1,6 +1,7 @@
 import { createHash } from "node:crypto";
 import { readFile, rename, writeFile } from "node:fs/promises";
 import { fileURLToPath } from "node:url";
+import { format } from "prettier";
 import {
   orderedPreviewReleases,
   verifiedPreviewRelease,
@@ -91,7 +92,10 @@ async function main() {
       try {
         const verified = await verifiedDataForRelease(release);
         const temporary = `${destination}.tmp`;
-        await writeFile(temporary, `${JSON.stringify(verified, null, 2)}\n`, {
+        const formatted = await format(`${JSON.stringify(verified)}\n`, {
+          parser: "json",
+        });
+        await writeFile(temporary, formatted, {
           encoding: "utf8",
           mode: 0o644,
         });
