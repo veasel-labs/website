@@ -5,8 +5,33 @@ import verifiedRelease from "../data/verified-release.json";
 const basePath = import.meta.env.BASE_URL.replace(/\/$/, "");
 const release = verifiedRelease.tag;
 const releaseUrl = verifiedRelease.release_url;
-const fallbackAssets: Record<string, string> = verifiedRelease.assets;
+const desktopMetadata = verifiedRelease as typeof verifiedRelease & {
+  immutable?: boolean;
+  assets: Record<string, string>;
+  desktop?: {
+    [platform: string]: {
+      arch: string;
+      signed: boolean;
+      assets: string[];
+    };
+  };
+};
+const hasVerifiedImmutableRelease = desktopMetadata.immutable === true;
+const fallbackAssets: Record<string, string> = desktopMetadata.assets;
 const assetUrl = (name: string) => fallbackAssets[name] ?? "#";
+const desktopPlatforms = desktopMetadata.desktop ?? {};
+const desktopLabels: Record<string, { name: string; arch: string }> = {
+  linux: { name: "Linux", arch: "x86_64" },
+  macos: { name: "macOS", arch: "Apple silicon" },
+  windows: { name: "Windows", arch: "x86_64" },
+};
+const desktopAssetLabel = (name: string) => {
+  if (name.endsWith(".deb")) return "Debian / Ubuntu package";
+  if (name.endsWith(".AppImage")) return "AppImage";
+  if (name.endsWith(".dmg")) return "Disk image";
+  if (name.endsWith(".exe")) return "Windows installer";
+  return "Desktop installer";
+};
 ---
 
 <SiteLayout
@@ -17,7 +42,10 @@ const assetUrl = (name: string) => fallbackAssets[name] ?? "#";
     <div class="download-hero">
       <div class="hero-copy">
         <p class="download-kicker">
-          <span aria-hidden="true">●</span> VERIFIED PRERELEASE / NEXT CHANNEL
+          <span aria-hidden="true">●</span>
+          {hasVerifiedImmutableRelease
+            ? "VERIFIED IMMUTABLE PRERELEASE"
+            : "DOWNLOADS PAUSED / NO IMMUTABLE RELEASE"}
         </p>
         <h1>
           Install the standard.
@@ -25,24 +53,31 @@ const assetUrl = (name: string) => fallbackAssets[name] ?? "#";
           <em>Verify the archive.</em>
         </h1>
         <p class="download-lede">
-          Download Veasel Code for your machine. The current verified prerelease
-          ships the local coding-agent standard — skills, sandboxes, MCP with
-          OAuth, compaction, and the SolidJS + OpenTUI terminal client (mint
-          chrome, reviews, <code>/</code> <code>@</code> <code>$</code>{" "}
-          autocomplete) — on the <code>next</code> channel. Version strings
-          track the verified tag only; this page does not invent a{" "}
-          <code>0.44</code> cut before it exists. Checksums first; no invented
-          benchmark claims.
+          Choose Veasel Desktop for Focus and the optional World, or Veasel
+          Terminal for keyboard-first coding. Both are interfaces to Veasel
+          Code's local coding runtime. This page links only installers and
+          archives recorded by the verified next release; each platform's
+          signing status is shown beside its download.
         </p>
         <div class="release-meta">
           <span class="release-pill">
             <span aria-hidden="true">✳</span>
-            <span data-release-tag>{release}</span>
+            {hasVerifiedImmutableRelease ? (
+              <span data-release-tag>{release}</span>
+            ) : (
+              <span>Waiting for an immutable release</span>
+            )}
           </span>
-          <a href={releaseUrl} data-release-page>
-            Release notes <span aria-hidden="true">↗</span>
-          </a>
-          <span>Linux · macOS · Windows</span>
+          {hasVerifiedImmutableRelease && (
+            <a href={releaseUrl}>
+              Release notes <span aria-hidden="true">↗</span>
+            </a>
+          )}
+          <span>
+            {hasVerifiedImmutableRelease
+              ? "Desktop + Terminal · Linux · macOS · Windows"
+              : "Download links stay hidden until the release passes immutability and digest checks."}
+          </span>
         </div>
       </div>
       <div
@@ -56,7 +91,9 @@ const assetUrl = (name: string) => fallbackAssets[name] ?? "#";
           <span class="sticker-top">VEASEL CODE</span>
           <strong>NEXT</strong>
           <span class="sticker-bottom">
-            PREVIEW BUILD · <span data-release-tag>{release}</span>
+            {hasVerifiedImmutableRelease
+              ? "VERIFIED · " + release
+              : "AWAITING VERIFIED RELEASE"}
           </span>
         </div>
         <span class="art-spark spark-a" aria-hidden="true">
@@ -70,43 +107,171 @@ const assetUrl = (name: string) => fallbackAssets[name] ?? "#";
       </div>
     </div>
 
-    <section class="package-panel" aria-labelledby="package-title">
-      <div>
-        <p class="section-index">00 / OR USE A PACKAGE MANAGER</p>
-        <h2 id="package-title">Install in one line.</h2>
+    <section class="surface-chooser" aria-labelledby="surface-title">
+      <div class="surface-intro">
+        <p class="section-index">ONE PRODUCT / TWO WAYS TO WORK</p>
+        <h2 id="surface-title">Start where you like.</h2>
         <p>
-          Both packages install the same verified release archives listed below.
+          Focus and World live in Veasel Desktop. Veasel Terminal brings the
+          product to your shell. Both connect to Veasel's local runtime and
+          approval model.
         </p>
-        <aside class="callout" style="margin-top: 16px">
-          <strong>Synced to {release}.</strong> The site fallback, Homebrew
-          cask, and AUR <code>veasel-code-bin</code> track this verified
-          prerelease. It includes configured MCP (user/project scope and
-          portable <code>.mcp.json</code> import), named credentials, and OAuth
-          PKCE authorize/complete. Package managers bump from the next verified
-          tag automatically — this site does not invent releases.
-        </aside>
       </div>
-      <div class="package-commands">
-        <div class="terminal-card">
-          <div class="terminal-title">
-            <span aria-hidden="true">›</span> HOMEBREW / MACOS APPLE SILICON
+      <div class="surface-grid">
+        <article class="surface-card desktop-surface">
+          <div class="surface-glyph" aria-hidden="true">
+            ▱
           </div>
-          <pre><code>brew tap veasel-labs/tap
-brew install --cask veasel-code</code></pre>
-        </div>
-        <div class="terminal-card">
-          <div class="terminal-title">
-            <span aria-hidden="true">›</span> AUR / ARCH LINUX X86_64
+          <p class="surface-label">VEASEL DESKTOP</p>
+          <h3>Focus, with the World nearby.</h3>
+          <p>
+            Start and review coding sessions in Focus. Open World when you want
+            a visual map of real projects and running sessions.
+          </p>
+          <a href="#desktop-installers" class="surface-link">
+            Desktop installers <span aria-hidden="true">↓</span>
+          </a>
+        </article>
+        <article class="surface-card terminal-surface">
+          <div class="surface-glyph" aria-hidden="true">
+            ›_
           </div>
-          <pre><code>yay -S veasel-code-bin</code></pre>
-        </div>
+          <p class="surface-label">VEASEL TERMINAL</p>
+          <h3>Keep your hands on the keys.</h3>
+          <p>
+            Launch <code>veasel</code> for the terminal client or
+            <code>veasel serve</code> to run the local API without opening the
+            interface.
+          </p>
+          <a href="#terminal-downloads" class="surface-link">
+            Terminal downloads <span aria-hidden="true">↓</span>
+          </a>
+        </article>
       </div>
     </section>
 
-    <div class="download-section-heading">
+    <section
+      id="desktop-installers"
+      class="desktop-installer-section"
+      aria-labelledby="desktop-title"
+    >
+      <div class="download-section-heading">
+        <div>
+          <p class="section-index">DESKTOP / FOCUS + OPTIONAL WORLD</p>
+          <h2 id="desktop-title">Install Veasel Desktop.</h2>
+        </div>
+        <p>
+          These installers are separate from the terminal archives and package
+          manager builds.
+        </p>
+      </div>
+      {hasVerifiedImmutableRelease &&
+      Object.entries(desktopPlatforms).length > 0 ? (
+        <div class="desktop-platform-grid">
+          {Object.entries(desktopPlatforms).map(([platform, metadata]) => {
+            const label = desktopLabels[platform];
+            if (!label) return null;
+            return (
+              <article
+                class={"desktop-platform-card " + platform + "-desktop-card"}
+              >
+                <p class="platform-label">
+                  {platform.toUpperCase()} / {label.arch.toUpperCase()}
+                </p>
+                <h3>{label.name}</h3>
+                <p class="platform-detail">Veasel Desktop · {label.arch}</p>
+                <div class="desktop-asset-list">
+                  {metadata.assets.map((name) => (
+                    <a class="desktop-download" href={assetUrl(name)}>
+                      <span>{desktopAssetLabel(name)}</span>
+                      <span aria-hidden="true">↓</span>
+                    </a>
+                  ))}
+                </div>
+                <p class="platform-footnote">
+                  {metadata.signed
+                    ? "Signed installer."
+                    : "Unsigned preview installer."}
+                  {platform === "macos" && !metadata.signed
+                    ? " macOS may ask you to approve opening it."
+                    : ""}
+                </p>
+              </article>
+            );
+          })}
+        </div>
+      ) : (
+        <p class="no-desktop-assets">
+          {hasVerifiedImmutableRelease
+            ? "Desktop installers are not listed in this verified release. No missing platform is filled in with a guessed link."
+            : "The pinned release is not immutable, so its installer links are withheld. The next verified release will appear here after its manifest and checksums pass."}
+        </p>
+      )}
+    </section>
+
+    <section
+      id="terminal-downloads"
+      class="package-panel"
+      aria-labelledby="package-title"
+    >
       <div>
-        <p class="section-index">01 / PICK YOUR PLATFORM</p>
-        <h2>Choose your build.</h2>
+        <p class="section-index">TERMINAL / PACKAGE MANAGERS</p>
+        <h2 id="package-title">Install in one line.</h2>
+        <p>
+          Homebrew and the AUR package install Veasel Terminal (CLI/TUI), not
+          the graphical Desktop app.
+        </p>
+        <aside class="callout" style="margin-top: 16px">
+          {hasVerifiedImmutableRelease ? (
+            <>
+              <strong>Terminal builds for {release}.</strong> The Homebrew cask
+              and AUR <code>veasel-code-bin</code> provide the command-line
+              client, not Desktop. This page does not construct links for assets
+              absent from verified release metadata.
+            </>
+          ) : (
+            <>
+              <strong>Package links are paused.</strong> The pinned release is
+              mutable and no longer qualifies for the immutable download
+              channel. The package repositories will be refreshed from the next
+              verified release.
+            </>
+          )}
+        </aside>
+      </div>
+      {hasVerifiedImmutableRelease ? (
+        <div class="package-commands">
+          <div class="terminal-card">
+            <div class="terminal-title">
+              <span aria-hidden="true">›</span> TERMINAL / HOMEBREW / MACOS
+              APPLE SILICON
+            </div>
+            <pre><code>brew tap veasel-labs/tap
+brew install --cask veasel-code</code></pre>
+          </div>
+          <div class="terminal-card">
+            <div class="terminal-title">
+              <span aria-hidden="true">›</span> TERMINAL / AUR / ARCH LINUX
+              X86_64
+            </div>
+            <pre><code>yay -S veasel-code-bin</code></pre>
+          </div>
+        </div>
+      ) : (
+        <p class="no-desktop-assets">
+          Homebrew and AUR commands will return when their exact package
+          versions point to the verified immutable release.
+        </p>
+      )}
+    </section>
+
+    <div
+      id="terminal-archives"
+      class="download-section-heading terminal-archive-heading"
+    >
+      <div>
+        <p class="section-index">TERMINAL / ARCHIVES</p>
+        <h2>Get the CLI and TUI.</h2>
       </div>
       <p>Each archive includes the Veasel backend and terminal client.</p>
     </div>
@@ -119,14 +284,19 @@ brew install --cask veasel-code</code></pre>
         <p class="platform-label">LINUX / X86_64</p>
         <h3>Linux</h3>
         <p class="platform-detail">64-bit · GNU/Linux · tar.gz</p>
-        <a
-          class="platform-download"
-          href={assetUrl("veasel-Linux.tar.gz")}
-          data-release-asset="veasel-Linux.tar.gz"
-          aria-label="Download the Linux x86_64 build"
-        >
-          Download archive <span aria-hidden="true">↓</span>
-        </a>
+        {hasVerifiedImmutableRelease ? (
+          <a
+            class="platform-download"
+            href={assetUrl("veasel-Linux.tar.gz")}
+            aria-label="Download the Linux x86_64 terminal build"
+          >
+            Download terminal archive <span aria-hidden="true">↓</span>
+          </a>
+        ) : (
+          <span class="platform-download unavailable-download">
+            Waiting for immutable release
+          </span>
+        )}
         <p class="platform-footnote">
           SQLite development library required to build from source; bundled
           binary is ready to run.
@@ -139,14 +309,19 @@ brew install --cask veasel-code</code></pre>
         <p class="platform-label">MACOS / APPLE SILICON</p>
         <h3>macOS</h3>
         <p class="platform-detail">ARM64 · macOS · tar.gz</p>
-        <a
-          class="platform-download"
-          href={assetUrl("veasel-macOS.tar.gz")}
-          data-release-asset="veasel-macOS.tar.gz"
-          aria-label="Download the macOS Apple Silicon build"
-        >
-          Download archive <span aria-hidden="true">↓</span>
-        </a>
+        {hasVerifiedImmutableRelease ? (
+          <a
+            class="platform-download"
+            href={assetUrl("veasel-macOS.tar.gz")}
+            aria-label="Download the macOS Apple Silicon terminal build"
+          >
+            Download terminal archive <span aria-hidden="true">↓</span>
+          </a>
+        ) : (
+          <span class="platform-download unavailable-download">
+            Waiting for immutable release
+          </span>
+        )}
         <p class="platform-footnote">
           Apple Silicon build. This preview is not signed or notarized.
         </p>
@@ -158,14 +333,19 @@ brew install --cask veasel-code</code></pre>
         <p class="platform-label">WINDOWS / X86_64</p>
         <h3>Windows</h3>
         <p class="platform-detail">64-bit · Windows · zip</p>
-        <a
-          class="platform-download"
-          href={assetUrl("veasel-Windows.zip")}
-          data-release-asset="veasel-Windows.zip"
-          aria-label="Download the Windows x86_64 build"
-        >
-          Download archive <span aria-hidden="true">↓</span>
-        </a>
+        {hasVerifiedImmutableRelease ? (
+          <a
+            class="platform-download"
+            href={assetUrl("veasel-Windows.zip")}
+            aria-label="Download the Windows x86_64 terminal build"
+          >
+            Download terminal archive <span aria-hidden="true">↓</span>
+          </a>
+        ) : (
+          <span class="platform-download unavailable-download">
+            Waiting for immutable release
+          </span>
+        )}
         <p class="platform-footnote">
           Extract the ZIP, then run <code>veasel.exe --help</code> in
           PowerShell.
@@ -173,47 +353,50 @@ brew install --cask veasel-code</code></pre>
       </article>
     </div>
 
-    <section class="verify-panel" aria-labelledby="verify-title">
-      <div class="verify-copy">
-        <p class="section-index">02 / CHECK YOUR DOWNLOAD</p>
-        <h2 id="verify-title">A tiny checksum check.</h2>
-        <p>
-          Download the checksum file beside your archive. Match its filename to
-          the one you chose, then compare the SHA-256 digest before extracting.
-        </p>
-        <a
-          class="manifest-link"
-          href={assetUrl("SHA256SUMS")}
-          data-release-asset="SHA256SUMS"
-        >
-          Get SHA256SUMS <span aria-hidden="true">↗</span>
-        </a>
-        <a
-          class="manifest-link"
-          href={assetUrl("release.json")}
-          data-release-asset="release.json"
-        >
-          View release manifest <span aria-hidden="true">↗</span>
-        </a>
-      </div>
-      <div class="terminal-card">
-        <div class="terminal-title">
-          <span aria-hidden="true">● ● ●</span> VERIFY / UNIX
+    {hasVerifiedImmutableRelease && (
+      <section class="verify-panel" aria-labelledby="verify-title">
+        <div class="verify-copy">
+          <p class="section-index">02 / CHECK YOUR DOWNLOAD</p>
+          <h2 id="verify-title">A tiny checksum check.</h2>
+          <p>
+            Download the checksum file beside your archive. Match its filename
+            to the one you chose, then compare the SHA-256 digest before
+            extracting.
+          </p>
+          <a
+            class="manifest-link"
+            href={assetUrl("SHA256SUMS")}
+            data-release-asset="SHA256SUMS"
+          >
+            Get SHA256SUMS <span aria-hidden="true">↗</span>
+          </a>
+          <a
+            class="manifest-link"
+            href={assetUrl("release.json")}
+            data-release-asset="release.json"
+          >
+            View release manifest <span aria-hidden="true">↗</span>
+          </a>
         </div>
-        <pre><code># run from the folder with both files
+        <div class="terminal-card">
+          <div class="terminal-title">
+            <span aria-hidden="true">● ● ●</span> VERIFY / UNIX
+          </div>
+          <pre><code># run from the folder with both files
 grep '  veasel-Linux.tar.gz$' SHA256SUMS | sha256sum --check
 
 # macOS uses shasum
 grep '  veasel-macOS.tar.gz$' SHA256SUMS | shasum -a 256 --check</code></pre>
-        <div class="terminal-title windows-title">
-          <span aria-hidden="true">›</span> VERIFY / WINDOWS POWERSHELL
-        </div>
-        <pre><code>$expected = ((Get-Content .\SHA256SUMS | Where-Object &#123; $_ -match '  veasel-Windows\.zip$' &#125;) -split '\s+')[0]
+          <div class="terminal-title windows-title">
+            <span aria-hidden="true">›</span> VERIFY / WINDOWS POWERSHELL
+          </div>
+          <pre><code>$expected = ((Get-Content .\SHA256SUMS | Where-Object &#123; $_ -match '  veasel-Windows\.zip$' &#125;) -split '\s+')[0]
 $actual = (Get-FileHash .\veasel-Windows.zip -Algorithm SHA256).Hash.ToLowerInvariant()
 if ($actual -ne $expected) &#123; throw 'Checksum mismatch' &#125;
 'Checksum OK'</code></pre>
-      </div>
-    </section>
+        </div>
+      </section>
+    )}
 
     <section class="first-run">
       <div class="first-run-mark" aria-hidden="true">
@@ -274,52 +457,21 @@ if ($actual -ne $expected) &#123; throw 'Checksum mismatch' &#125;
       </div>
     </section>
     <p class="release-footer">
-      Checksums help detect damaged downloads. This preview is not code-signed.{" "}
-      <a href={releaseUrl} data-release-page>
-        See every asset and the source commit <span aria-hidden="true">↗</span>
-      </a>
-      .
+      {hasVerifiedImmutableRelease
+        ? "Checksums help detect damaged downloads. Installers show their signing status above."
+        : "The previous release pin is mutable, so download links remain paused until the next immutable release is verified."}
+      {hasVerifiedImmutableRelease && (
+        <>
+          {" "}
+          <a href={releaseUrl}>
+            See every asset and the source commit{" "}
+            <span aria-hidden="true">↗</span>
+          </a>
+          .
+        </>
+      )}
     </p>
   </section>
-  <script>
-    import { newestPreviewRelease } from "../scripts/releases.js";
-
-    const releaseApi =
-      "https://api.github.com/repos/veasel-labs/veasel/releases?per_page=100";
-    const releaseRoot = "https://github.com/veasel-labs/veasel/releases";
-
-    try {
-      const response = await fetch(releaseApi, {
-        headers: {
-          Accept: "application/vnd.github+json",
-          "X-GitHub-Api-Version": "2026-03-10",
-        },
-      });
-      if (!response.ok) throw new Error("Release metadata is unavailable");
-
-      const release = newestPreviewRelease(await response.json());
-      if (!release) throw new Error("No complete preview release is available");
-
-      const tag = release.tag_name;
-      document.querySelectorAll("[data-release-tag]").forEach((element) => {
-        element.textContent = tag;
-      });
-      document.querySelectorAll("[data-release-page]").forEach((element) => {
-        element.setAttribute("href", `${releaseRoot}/tag/${tag}`);
-      });
-      document.querySelectorAll("[data-release-asset]").forEach((element) => {
-        const asset = element.getAttribute("data-release-asset");
-        if (asset) {
-          element.setAttribute(
-            "href",
-            `${releaseRoot}/download/${tag}/${asset}`,
-          );
-        }
-      });
-    } catch {
-      // The page keeps its last verified release links when the API is unavailable.
-    }
-  </script>
 </SiteLayout>
 <style>
   .downloads-shell {
@@ -474,6 +626,154 @@ if ($actual -ne $expected) &#123; throw 'Checksum mismatch' &#125;
     gap: 24px;
     margin: 22px 0 24px;
   }
+  .surface-chooser {
+    margin: 8px 0 62px;
+    padding: 30px;
+    display: grid;
+    grid-template-columns: 0.72fr 1.28fr;
+    gap: 30px;
+    align-items: center;
+    border: 1px solid var(--line);
+    border-radius: 16px;
+    background: var(--surface-soft);
+  }
+  .surface-intro h2 {
+    margin: 10px 0;
+    font: 600 clamp(2rem, 3.4vw, 2.8rem)/1.05 var(--display);
+    letter-spacing: -0.045em;
+  }
+  .surface-intro > p:last-child,
+  .surface-card > p:not(.surface-label) {
+    color: var(--muted);
+    font-size: 0.8rem;
+    line-height: 1.7;
+  }
+  .surface-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 13px;
+  }
+  .surface-card {
+    min-height: 250px;
+    padding: 21px;
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    border: 1px solid var(--line);
+    border-radius: 11px;
+    background: var(--surface);
+  }
+  .desktop-surface {
+    box-shadow: inset 0 4px var(--lilac);
+  }
+  .terminal-surface {
+    box-shadow: inset 0 4px var(--green);
+  }
+  .surface-glyph {
+    width: 37px;
+    height: 37px;
+    margin-bottom: 14px;
+    display: grid;
+    place-items: center;
+    border-radius: 9px;
+    background: var(--surface-soft);
+    color: var(--green-dark);
+    font: 1.25rem var(--mono);
+  }
+  .surface-label {
+    margin: 0;
+    color: var(--green-dark);
+    font: 500 0.58rem var(--mono);
+    letter-spacing: 0.11em;
+  }
+  .surface-card h3 {
+    margin: 7px 0 0;
+    font: 600 1.3rem/1.15 var(--display);
+    letter-spacing: -0.025em;
+  }
+  .surface-card > p:not(.surface-label) {
+    margin: 9px 0 14px;
+  }
+  .surface-link {
+    margin-top: auto;
+    color: var(--green-dark);
+    font-size: 0.73rem;
+    font-weight: 700;
+    text-underline-offset: 3px;
+  }
+  .surface-link:focus-visible,
+  .desktop-download:focus-visible {
+    outline: 3px solid var(--green);
+    outline-offset: 3px;
+  }
+  .desktop-installer-section {
+    margin: 0 0 45px;
+    scroll-margin-top: 26px;
+  }
+  .desktop-platform-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 15px;
+  }
+  .desktop-platform-card {
+    min-height: 270px;
+    padding: 23px;
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    border: 1px solid var(--line);
+    border-radius: 13px;
+    background: var(--surface);
+  }
+  .linux-desktop-card {
+    box-shadow: inset 0 4px var(--green);
+  }
+  .macos-desktop-card {
+    box-shadow: inset 0 4px var(--lilac);
+  }
+  .windows-desktop-card {
+    box-shadow: inset 0 4px var(--coral);
+  }
+  .desktop-platform-card h3 {
+    margin: 5px 0 0;
+    font: 600 1.65rem var(--display);
+  }
+  .desktop-asset-list {
+    width: 100%;
+    margin-top: auto;
+    display: grid;
+    gap: 7px;
+  }
+  .desktop-download {
+    min-height: 42px;
+    padding: 0 12px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border: 1px solid var(--line);
+    border-radius: 6px;
+    color: var(--ink);
+    font-size: 0.7rem;
+    font-weight: 700;
+    text-decoration: none;
+  }
+  .desktop-download:hover {
+    border-color: var(--green);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+  .desktop-download span:last-child {
+    color: var(--green-dark);
+    font: 1.1rem var(--mono);
+  }
+  .no-desktop-assets {
+    padding: 18px 20px;
+    border: 1px dashed var(--line);
+    border-radius: 10px;
+    color: var(--muted);
+    font-size: 0.8rem;
+    line-height: 1.6;
+  }
   .download-section-heading h2,
   .package-panel h2,
   .verify-copy h2,
@@ -552,6 +852,14 @@ if ($actual -ne $expected) &#123; throw 'Checksum mismatch' &#125;
   .platform-download span {
     color: var(--yellow);
     font-size: 1.1rem;
+  }
+  .unavailable-download {
+    justify-content: center;
+    background: var(--surface-soft);
+    color: var(--muted);
+    cursor: not-allowed;
+    font-size: 0.65rem;
+    text-align: center;
   }
   .platform-download:hover,
   .manifest-link:hover,
@@ -749,8 +1057,12 @@ if ($actual -ne $expected) &#123; throw 'Checksum mismatch' &#125;
       min-height: 310px;
     }
     .verify-panel,
-    .package-panel {
+    .package-panel,
+    .surface-chooser {
       grid-template-columns: 1fr;
+    }
+    .surface-chooser {
+      gap: 16px;
     }
     .first-run {
       grid-template-columns: 48px 1fr;
@@ -796,6 +1108,16 @@ if ($actual -ne $expected) &#123; throw 'Checksum mismatch' &#125;
     }
     .platform-grid {
       grid-template-columns: 1fr;
+    }
+    .desktop-platform-grid {
+      grid-template-columns: 1fr;
+    }
+    .surface-grid {
+      grid-template-columns: 1fr;
+    }
+    .surface-chooser {
+      padding: 22px 17px;
+      margin-bottom: 45px;
     }
     .platform-card {
       min-height: 280px;

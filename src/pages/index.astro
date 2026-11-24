@@ -4,11 +4,12 @@ import verifiedRelease from "../data/verified-release.json";
 
 const basePath = import.meta.env.BASE_URL.replace(/\/$/, "");
 const release = verifiedRelease.tag;
+const immutableRelease = verifiedRelease.immutable === true;
 ---
 
 <SiteLayout
   title="Veasel Code — the local coding agent standard"
-  description="Veasel Code is the V-native coding agent: universal skills, graduated sandboxes, MCP with OAuth, and a keyboard-first TUI — on your machine, under your approval."
+  description="Veasel Code is one local coding product with a Desktop for Focus and World, a keyboard-first terminal client, and approval-gated tools on a shared V backend."
 >
   <section class="hero wrap" aria-labelledby="hero-title">
     <div class="hero-copy">
@@ -24,25 +25,32 @@ const release = verifiedRelease.tag;
         <span>coding agent.</span>
       </h1>
       <p class="hero-text">
-        <strong>Veasel Code</strong> is built in V for the people who refuse
-        black-box agents. Sessions stay on loopback SQLite. Skills, sandboxes,
-        MCP, compaction, and a SolidJS + OpenTUI terminal client ship today —
-        mint chrome, pixel splash, Ctrl+P command palette, reviews, and{" "}
-        <code>/</code> <code>@</code> <code>$</code> autocomplete — with
-        approvals before edits, shell, or tool calls. No invented Harbor Index
-        scores. No fake latency charts. Just the product, as it runs.
+        <strong>Veasel Code</strong> is one local coding product with two
+        interfaces: Desktop for Focus and the optional World, and a
+        keyboard-first Terminal client. Both use Veasel's V backend, provider
+        setup, and approval model. Sessions stay local; edits, shell commands,
+        and tool calls wait for review.
       </p>
       <div class="hero-actions">
-        <a class="button button-dark" href={`${basePath}/downloads/`}>
-          Download {release} <span aria-hidden="true">↓</span>
+        <a
+          class="button button-dark"
+          href={basePath + "/downloads/#desktop-installers"}
+        >
+          Get Veasel Desktop <span aria-hidden="true">↓</span>
         </a>
-        <a class="button button-quiet" href={`${basePath}/docs/`}>
-          Read the field guide <span aria-hidden="true">→</span>
+        <a
+          class="button button-quiet"
+          href={basePath + "/downloads/#terminal-downloads"}
+        >
+          Get Veasel Terminal <span aria-hidden="true">↓</span>
         </a>
       </div>
       <div class="hero-meta">
-        <span class="pulse"></span> Verified prerelease · Open source · Built in
-        V
+        <span class="pulse"></span>
+        {immutableRelease
+          ? "Verified immutable prerelease"
+          : "Release downloads paused pending an immutable build"}
+        · Open source · Built in V
       </div>
     </div>
     <div
@@ -196,6 +204,58 @@ const release = verifiedRelease.tag;
     </div>
   </section>
 
+  <section class="welcome wrap section-pad" aria-labelledby="surfaces-title">
+    <div class="section-intro">
+      <p class="kicker">VEASEL CODE / DESKTOP + TERMINAL</p>
+      <h2 id="surfaces-title">
+        One product.
+        <br />
+        <span>Choose your surface.</span>
+      </h2>
+    </div>
+    <p class="section-lede">
+      The interface changes with your workspace; the Veasel runtime and its
+      approval boundary stay the same.
+    </p>
+    <div class="value-grid">
+      <article class="value-card card-lilac">
+        <span class="doodle" aria-hidden="true">
+          ▱
+        </span>
+        <p class="card-label">VEASEL DESKTOP</p>
+        <h3>Focus for the work. World when you want it.</h3>
+        <p>
+          Start conversations, inspect changes, review approvals, and open the
+          optional pixel-art World for real registered projects and sessions.
+        </p>
+      </article>
+      <article class="value-card card-mint">
+        <span class="doodle" aria-hidden="true">
+          ›_
+        </span>
+        <p class="card-label">VEASEL TERMINAL</p>
+        <h3>A complete coding client in your shell.</h3>
+        <p>
+          Use the keyboard-first TUI for sessions, provider setup, approvals,
+          tools, and review. Run <code>veasel serve</code> when you need only
+          the local backend.
+        </p>
+      </article>
+      <article class="value-card card-yellow">
+        <span class="doodle" aria-hidden="true">
+          ↔
+        </span>
+        <p class="card-label">ONE VEASEL RUNTIME</p>
+        <h3>Local sessions. Visible approvals.</h3>
+        <p>
+          Desktop and Terminal connect to Veasel's V backend and use its
+          provider and authorization model. Continue the same session from
+          either client when both target the same local runtime.
+        </p>
+      </article>
+    </div>
+  </section>
+
   <section class="welcome wrap section-pad" aria-labelledby="welcome-title">
     <div class="section-intro">
       <p class="kicker">WHAT SHIPS</p>
@@ -206,9 +266,9 @@ const release = verifiedRelease.tag;
       </h2>
     </div>
     <p class="section-lede">
-      Every headline below maps to code on the <code>{release}</code> verified
-      channel. Footnotes stay honest where platforms differ or conformance is
-      still partial.
+      These capabilities map to the Veasel source and release metadata for
+      <code>{release}</code>. Footnotes stay honest where platforms differ or
+      conformance is still partial.
     </p>
     <div class="value-grid">
       <article class="value-card card-mint">
@@ -269,9 +329,9 @@ const release = verifiedRelease.tag;
           <span>Every surface sharp.</span>
         </h2>
         <p>
-          Plugins, OAuth refresh, and the SolidJS + OpenTUI terminal client sit
-          on the same loopback API — so headless <code>veasel run</code> and the
-          TUI never drift apart.
+          Focus and optional World in Desktop, keyboard-first Terminal, and
+          headless <code>veasel run</code> use the Veasel V backend and the same
+          approval boundary.
         </p>
       </div>
       <div class="provider-orbit" aria-label="Product surfaces that ship today">
@@ -295,7 +355,7 @@ const release = verifiedRelease.tag;
             core
           </small>
         </div>
-        <span class="orbit-caption">SHIPPED ON {release}</span>
+        <span class="orbit-caption">SOURCE SNAPSHOT · {release}</span>
       </div>
     </div>
   </section>
@@ -426,8 +486,9 @@ const release = verifiedRelease.tag;
           <span>is green where it counts.</span>
         </h2>
         <p>
-          Verified prerelease <code>{release}</code>. Packages and docs track
-          this tag — not a future cut that does not exist yet.
+          {immutableRelease
+            ? `Verified immutable prerelease ${release}. Packages and docs track this tag.`
+            : `Release ${release} has matching checksums but is not immutable. Downloads stay paused until a new immutable release is published.`}
         </p>
       </div>
       <div class="status-board">
@@ -501,12 +562,19 @@ const release = verifiedRelease.tag;
         <span>Connect a model.</span>
       </h2>
       <p>
-        Download the verified prerelease, run <code>/connect</code>, and work
-        inside your repository with approvals you can see.
+        {immutableRelease
+          ? "Download the verified prerelease, run /connect, and work inside your repository with approvals you can see."
+          : "Explore the product and security guides. Download links will return after an immutable release is verified."}
       </p>
       <div class="start-actions">
-        <a class="button button-dark" href={`${basePath}/downloads/`}>
-          Download Veasel Code <span aria-hidden="true">→</span>
+        <a
+          class="button button-dark"
+          href={basePath + "/downloads/#desktop-installers"}
+        >
+          Get Veasel Desktop <span aria-hidden="true">→</span>
+        </a>
+        <a class="text-link" href={basePath + "/downloads/#terminal-downloads"}>
+          Get Veasel Terminal <span aria-hidden="true">↗</span>
         </a>
         <a class="text-link" href={`${basePath}/demo/`}>
           Interactive walkthrough <span aria-hidden="true">↗</span>
@@ -521,20 +589,32 @@ const release = verifiedRelease.tag;
     </div>
     <div class="install-card">
       <div class="install-top">
-        <span class="live-dot"></span> VERIFIED PREVIEW · {release}
+        <span class="live-dot"></span>
+        {immutableRelease
+          ? `VERIFIED PREVIEW · ${release}`
+          : `METADATA · ${release} · DOWNLOADS PAUSED`}
       </div>
-      <div class="install-code">
-        <small>01&nbsp; DOWNLOAD FOR YOUR PLATFORM</small>
-        <code>veasel</code>
-        <small>02&nbsp; CONNECT A PROVIDER</small>
-        <code>/connect · paste key · pick model</code>
-        <small>03&nbsp; WORK WITH APPROVALS</small>
-        <code>/patches · /commands · /mcp · /skills</code>
-      </div>
-      <div class="install-foot">
-        V runtime · SolidJS + OpenTUI · local SQLite{" "}
-        <span aria-hidden="true">♥</span>
-      </div>
+      {immutableRelease ? (
+        <>
+          <div class="install-code">
+            <small>01&nbsp; DOWNLOAD FOR YOUR PLATFORM</small>
+            <code>veasel</code>
+            <small>02&nbsp; CONNECT A PROVIDER</small>
+            <code>/connect · paste key · pick model</code>
+            <small>03&nbsp; WORK WITH APPROVALS</small>
+            <code>/patches · /commands · /mcp · /skills</code>
+          </div>
+          <div class="install-foot">
+            V runtime · SolidJS + OpenTUI · local SQLite{" "}
+            <span aria-hidden="true">♥</span>
+          </div>
+        </>
+      ) : (
+        <p class="install-code">
+          The release tag can be inspected, but this site will not distribute
+          mutable assets.
+        </p>
+      )}
     </div>
   </section>
 

@@ -18,6 +18,11 @@ describe("Marketing claims stay declarative and honest", () => {
     assert.match(release.tag, /^v\d+\.\d+\.\d+-next\.\d+$/);
     assert.match(release.source_commit, /^[0-9a-f]{40}$/);
     assert.match(index, /verified-release\.json/);
+    assert.match(
+      index,
+      /immutableRelease = verifiedRelease\.immutable === true/,
+    );
+    assert.match(index, /Release downloads paused pending an immutable build/);
     assert.match(index, /\{release\}/);
     assert.match(index, /The new standard/);
     assert.match(index, /one-shot invoke/i);
@@ -64,6 +69,7 @@ describe("Marketing claims stay declarative and honest", () => {
   });
 
   it("docs hub and trust surfaces cover shipped capabilities", async () => {
+    const readme = await readDoc("README.md");
     const docs = await readDoc("src/pages/docs/index.astro");
     const security = await readDoc("src/pages/docs/security.astro");
     const mcp = await readDoc("src/pages/docs/mcp.astro");
@@ -92,11 +98,23 @@ describe("Marketing claims stay declarative and honest", () => {
     const architecture = await readDoc("src/pages/docs/architecture.astro");
     const faq = await readDoc("src/pages/docs/faq.astro");
     const downloads = await readDoc("src/pages/downloads.astro");
+    assert.match(readme, /backend requires a bearer token/);
+    assert.match(readme, /VEASEL_SHELL_ALLOW_UNSANDBOXED/);
+    assert.doesNotMatch(readme, /local API has no application token/);
+    assert.doesNotMatch(
+      readme,
+      /auto` permits unsandboxed fallback and `off` disables/,
+    );
     assert.match(architecture, /Solid \+ OpenTUI|SolidJS \+ OpenTUI/);
     assert.match(faq, /SolidJS \+ OpenTUI/);
-    assert.match(downloads, /SolidJS \+ OpenTUI/);
-    assert.match(downloads, /0\.43|verified tag|does not invent/);
-    assert.doesNotMatch(downloads, /v0\.44\.0/);
+    assert.match(downloads, /Veasel Desktop/);
+    assert.match(downloads, /Veasel Terminal/);
+    assert.match(downloads, /immutable release/i);
+    assert.match(downloads, /Desktop installers/);
+    assert.match(
+      downloads,
+      /Homebrew and the AUR package install Veasel Terminal[\s\S]*?the graphical Desktop app/,
+    );
     assert.match(skills, /skills\/invoke/);
     assert.match(skills, /VEASEL_MCP_STDIO_SANDBOX/);
     assert.doesNotMatch(skills, /macOS\/Windows stay unsandboxed/i);
