@@ -53,23 +53,31 @@ history stored in a local SQLite database. These are four protocol families;
 endpoint presets do not imply independent native SDK integrations. The agent
 can inspect a selected workspace and propose bounded, single-file edits. In the
 TUI, a user opens the saved diff and explicitly approves it before it is
-applied. Provider responses stream through replayable session events. The local
-API has no application token, so same-user processes can also access its review
-and approval routes.
+applied. Provider responses stream through replayable session events.
+
+The Veasel backend requires a bearer token on every API route except the
+unauthenticated health capability probe. Host and Origin checks also remain in
+force. The token is stored with restrictive permissions in Veasel's data
+directory; same-user processes are within the local trust boundary. See the
+[backend authentication contract](https://github.com/veasel-labs/veasel/blob/main/docs/security/backend-caller-auth.md)
+for token lifecycle and compatibility behavior.
+
 Shell commands require review of the exact command, working directory, and
 timeout before approval. Approved shell defaults to fail-closed OS sandboxing
-with Bubblewrap (Linux), Seatbelt (macOS), or AppContainer+Job (Windows).
-Missing backends refuse execution by default; explicit
-`VEASEL_SHELL_SANDBOX=auto` permits unsandboxed fallback and `off` disables
-wrapping. Every model-requested MCP call pauses for exact-argument review and
-one-time approval. Trusted MCP stdio also defaults to fail-closed OS sandboxing
-(`VEASEL_MCP_STDIO_SANDBOX=require`); explicit `auto` permits unsandboxed
-fallback and `off` disables wrapping. Session messages support opt-in
-asynchronous responses through `Prefer: respond-async`. Their status is
-persisted and can be queried after reconnect; queued async turns resume after
-restart (bounded per session). Mid-flight work interrupted by a restart is
-marked uncertain and never replayed. Operation history management and retention
-policy remain ahead.
+with Bubblewrap (Linux), Seatbelt (macOS), or AppContainer+Job (Windows), and
+missing backends refuse execution. `VEASEL_SHELL_SANDBOX` defaults to `require`;
+`auto` and `off` do not universally permit an unsandboxed fallback. On macOS and
+Windows, unsandboxed execution additionally requires the explicit
+`VEASEL_SHELL_ALLOW_UNSANDBOXED` opt-in. MCP calls also require review and
+one-time approval. Trusted MCP stdio defaults to fail-closed sandboxing via
+`VEASEL_MCP_STDIO_SANDBOX=require`; fallback behavior is platform-dependent and
+documented in the [Veasel sandbox compatibility notes](https://github.com/veasel-labs/veasel/tree/main/docs/compatibility).
+
+Session messages support opt-in asynchronous responses through
+`Prefer: respond-async`. Their status is persisted and can be queried after
+reconnect; queued async turns resume after restart (bounded per session).
+Mid-flight work interrupted by a restart is marked uncertain and never
+replayed. Operation history management and retention policy remain ahead.
 
 ## Community
 

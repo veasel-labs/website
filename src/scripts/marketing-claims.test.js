@@ -69,6 +69,7 @@ describe("Marketing claims stay declarative and honest", () => {
   });
 
   it("docs hub and trust surfaces cover shipped capabilities", async () => {
+    const readme = await readDoc("README.md");
     const docs = await readDoc("src/pages/docs/index.astro");
     const security = await readDoc("src/pages/docs/security.astro");
     const mcp = await readDoc("src/pages/docs/mcp.astro");
@@ -97,6 +98,13 @@ describe("Marketing claims stay declarative and honest", () => {
     const architecture = await readDoc("src/pages/docs/architecture.astro");
     const faq = await readDoc("src/pages/docs/faq.astro");
     const downloads = await readDoc("src/pages/downloads.astro");
+    assert.match(readme, /backend requires a bearer token/);
+    assert.match(readme, /VEASEL_SHELL_ALLOW_UNSANDBOXED/);
+    assert.doesNotMatch(readme, /local API has no application token/);
+    assert.doesNotMatch(
+      readme,
+      /auto` permits unsandboxed fallback and `off` disables/,
+    );
     assert.match(architecture, /Solid \+ OpenTUI|SolidJS \+ OpenTUI/);
     assert.match(faq, /SolidJS \+ OpenTUI/);
     assert.match(downloads, /Veasel Desktop/);
