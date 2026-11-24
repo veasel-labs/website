@@ -105,6 +105,7 @@ test("accepts fallback metadata only when GitHub, checksums, and manifest agree"
   });
 
   assert.equal(verified.tag, "v1.2.3-next.4");
+  assert.equal(verified.immutable, true);
   assert.equal(verified.source_commit, "0123456789".repeat(4));
   assert.equal(
     verified.assets["veasel-Linux.tar.gz"],
@@ -136,5 +137,114 @@ test("rejects mismatched artifact, manifest, and metadata digests", () => {
   assert.equal(verifiedPreviewRelease(candidate, verification), null);
   verification.checksums = `${"a".repeat(64)}  veasel-Linux.tar.gz\n${"a".repeat(64)}  veasel-macOS.tar.gz\n${"a".repeat(64)}  veasel-Windows.zip`;
   verification.metadataDigests["release.json"] = "b".repeat(64);
+  assert.equal(verifiedPreviewRelease(candidate, verification), null);
+});
+
+test("includes desktop installers only when the manifest and both hash indexes agree", () => {
+  const tag = "v0.102.3-next.0";
+  const installerNames = [
+    `veasel-desktop-${tag.slice(1)}-linux-amd64.deb`,
+    `veasel-desktop-${tag.slice(1)}-linux-x86_64.AppImage`,
+    `veasel-desktop-${tag.slice(1)}-mac-arm64.dmg`,
+    `veasel-desktop-${tag.slice(1)}-win-x64.exe`,
+  ];
+  const installerDigest = "b".repeat(64);
+  const candidate = release(tag, {
+    assets: [
+      ...release(tag).assets,
+      ...installerNames.map((name) => ({
+        name,
+        digest: `sha256:${installerDigest}`,
+      })),
+    ],
+  });
+  const manifest = {
+    version: tag.slice(1),
+    tag,
+    source_commit: "0123456789".repeat(4),
+    channel: "next",
+    prerelease: true,
+    assets: [
+      ...assetNames.slice(2).map((name) => ({
+        name,
+        sha256: "a".repeat(64),
+      })),
+      ...installerNames.map((name) => ({
+        name,
+        sha256: installerDigest,
+      })),
+    ],
+    platforms: {
+      linux: {
+        desktop: {
+          status: "published",
+          ci_result: "success",
+          arch: "x86_64",
+          kind: "desktop-installer",
+          signed: false,
+          assets: installerNames.slice(0, 2),
+        },
+      },
+      macos: {
+        desktop: {
+          status: "published",
+          ci_result: "success",
+          arch: "arm64",
+          kind: "desktop-installer",
+          signed: false,
+          assets: installerNames.slice(2, 3),
+        },
+      },
+      windows: {
+        desktop: {
+          status: "published",
+          ci_result: "success",
+          arch: "x86_64",
+          kind: "desktop-installer",
+          signed: false,
+          assets: installerNames.slice(3),
+        },
+      },
+    },
+  };
+  const verification = {
+    checksums: [
+      ...assetNames.slice(2).map((name) => `${"a".repeat(64)}  ${name}`),
+      ...installerNames.map((name) => `${installerDigest}  ${name}`),
+    ].join("\n"),
+    manifest,
+    metadataDigests: {
+      SHA256SUMS: "a".repeat(64),
+      "release.json": "a".repeat(64),
+    },
+  };
+
+  const verified = verifiedPreviewRelease(candidate, verification);
+  assert.deepEqual(verified.desktop, {
+    linux: {
+      arch: "x86_64",
+      signed: false,
+      assets: installerNames.slice(0, 2),
+    },
+    macos: {
+      arch: "arm64",
+      signed: false,
+      assets: installerNames.slice(2, 3),
+    },
+    windows: {
+      arch: "x86_64",
+      signed: false,
+      assets: installerNames.slice(3),
+    },
+  });
+  assert.equal(
+    verified.assets[installerNames[0]],
+    `https://github.com/veasel-labs/veasel/releases/download/${tag}/${installerNames[0]}`,
+  );
+
+  verification.checksums = verification.checksums.replace(
+    installerDigest,
+    "c".repeat(64),
+  );
   assert.equal(verifiedPreviewRelease(candidate, verification), null);
 });

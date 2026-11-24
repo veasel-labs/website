@@ -9,6 +9,29 @@ export const requiredPreviewAssets = [
 ];
 const distributableAssets = requiredPreviewAssets.slice(2);
 const sha256Pattern = /^[a-f0-9]{64}$/;
+const desktopPlatforms = {
+  linux: {
+    arch: "x86_64",
+    names(version) {
+      return [
+        `veasel-desktop-${version}-linux-amd64.deb`,
+        `veasel-desktop-${version}-linux-x86_64.AppImage`,
+      ];
+    },
+  },
+  macos: {
+    arch: "arm64",
+    names(version) {
+      return [`veasel-desktop-${version}-mac-arm64.dmg`];
+    },
+  },
+  windows: {
+    arch: "x86_64",
+    names(version) {
+      return [`veasel-desktop-${version}-win-x64.exe`];
+    },
+  },
+};
 
 function previewVersion(tag) {
   const match = previewTagPattern.exec(tag);
@@ -80,6 +103,50 @@ export function verifiedPreviewRelease(
     }
   }
 
+  const desktop = {};
+  const desktopNames = [];
+  for (const [platform, expected] of Object.entries(desktopPlatforms)) {
+    const installer = manifest.platforms?.[platform]?.desktop;
+    if (!installer || installer.status !== "published") continue;
+    if (
+      installer.ci_result !== "success" ||
+      installer.kind !== "desktop-installer" ||
+      installer.arch !== expected.arch ||
+      typeof installer.signed !== "boolean" ||
+      !Array.isArray(installer.assets) ||
+      installer.assets.length === 0
+    ) {
+      return null;
+    }
+
+    const allowedNames = new Set(expected.names(tag.slice(1)));
+    const names = [...new Set(installer.assets)];
+    if (
+      names.length !== installer.assets.length ||
+      names.some((name) => typeof name !== "string" || !allowedNames.has(name))
+    ) {
+      return null;
+    }
+
+    for (const name of names) {
+      const githubDigest = sha256Digest(assets.get(name)?.digest);
+      if (
+        !githubDigest ||
+        sums.get(name) !== githubDigest ||
+        manifestAssets.get(name) !== githubDigest
+      ) {
+        return null;
+      }
+    }
+
+    desktop[platform] = {
+      arch: installer.arch,
+      signed: installer.signed,
+      assets: names,
+    };
+    desktopNames.push(...names);
+  }
+
   for (const name of ["SHA256SUMS", "release.json"]) {
     if (metadataDigests?.[name] !== sha256Digest(assets.get(name)?.digest)) {
       return null;
@@ -88,11 +155,13 @@ export function verifiedPreviewRelease(
 
   const releaseRoot = "https://github.com/veasel-labs/veasel/releases";
   return {
+    immutable: true,
     tag,
     release_url: `${releaseRoot}/tag/${tag}`,
     source_commit: manifest.source_commit,
+    desktop,
     assets: Object.fromEntries(
-      requiredPreviewAssets.map((name) => [
+      [...requiredPreviewAssets, ...desktopNames].map((name) => [
         name,
         `${releaseRoot}/download/${tag}/${name}`,
       ]),

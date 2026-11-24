@@ -1,5 +1,6 @@
 {
   "tag": "v0.102.1-next.0",
+  "immutable": false,
   "release_url": "https://github.com/veasel-labs/veasel/releases/tag/v0.102.1-next.0",
   "source_commit": "eab88d598b5ab8329dabffcd45d35aa00e2a4cab",
   "assets": {
