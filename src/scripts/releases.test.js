@@ -15,6 +15,7 @@ function release(tag, overrides = {}) {
     tag_name: tag,
     prerelease: true,
     draft: false,
+    immutable: true,
     assets: assetNames.map((name) => ({
       name,
       digest: `sha256:${"a".repeat(64)}`,
@@ -41,6 +42,7 @@ test("ignores stable, draft, malformed, and incomplete releases", () => {
   const incomplete = release("v7.0.0-next.0", {
     assets: [{ name: "veasel-Linux.tar.gz" }],
   });
+  const mutable = release("v8.1.0-next.0", { immutable: false });
 
   assert.equal(
     newestPreviewRelease([
@@ -49,6 +51,7 @@ test("ignores stable, draft, malformed, and incomplete releases", () => {
       malformed,
       undigested,
       incomplete,
+      mutable,
       complete,
     ]),
     complete,
@@ -58,6 +61,21 @@ test("ignores stable, draft, malformed, and incomplete releases", () => {
 test("returns null when no complete preview exists", () => {
   assert.equal(newestPreviewRelease([]), null);
   assert.equal(newestPreviewRelease(undefined), null);
+});
+
+test("refuses mutable releases for preview selection and fallback data", () => {
+  for (const immutable of [false, undefined, null]) {
+    const candidate = release("v1.2.3-next.4", { immutable });
+    assert.equal(newestPreviewRelease([candidate]), null);
+    assert.equal(
+      verifiedPreviewRelease(candidate, {
+        checksums: "",
+        manifest: {},
+        metadataDigests: {},
+      }),
+      null,
+    );
+  }
 });
 
 test("accepts fallback metadata only when GitHub, checksums, and manifest agree", () => {
