@@ -30,7 +30,14 @@ export function verifiedPreviewRelease(
   release,
   { checksums, manifest, metadataDigests },
 ) {
-  if (!release || release.draft || !release.prerelease) return null;
+  if (
+    !release ||
+    release.draft ||
+    !release.prerelease ||
+    release.immutable !== true
+  ) {
+    return null;
+  }
   const tag = release.tag_name;
   const version = previewVersion(tag);
   if (!version || !manifest || !Array.isArray(manifest.assets)) return null;
@@ -97,7 +104,14 @@ export function orderedPreviewReleases(releases) {
   if (!Array.isArray(releases)) return [];
   return releases
     .filter((release) => {
-      if (!release || release.draft || !release.prerelease) return false;
+      if (
+        !release ||
+        release.draft ||
+        !release.prerelease ||
+        release.immutable !== true
+      ) {
+        return false;
+      }
       if (!previewVersion(release.tag_name)) return false;
       const assets = releaseAssetMap(release);
       return requiredPreviewAssets.every(
