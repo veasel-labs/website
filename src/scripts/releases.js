@@ -45,6 +45,15 @@ function compareVersions(left, right) {
   return 0;
 }
 
+export function comparePreviewTags(leftTag, rightTag) {
+  const left = previewVersion(leftTag);
+  const right = previewVersion(rightTag);
+  if (!left || !right) {
+    throw new TypeError("preview tags must use the vX.Y.Z-next.N format");
+  }
+  return Math.sign(compareVersions(left, right));
+}
+
 export function newestPreviewRelease(releases) {
   return orderedPreviewReleases(releases)[0] ?? null;
 }
@@ -193,6 +202,12 @@ export function orderedPreviewReleases(releases) {
         previewVersion(left.tag_name),
       ),
     );
+}
+
+export function newerPreviewReleases(releases, baselineTag) {
+  return orderedPreviewReleases(releases).filter(
+    (release) => comparePreviewTags(release.tag_name, baselineTag) > 0,
+  );
 }
 
 function releaseAssetMap(release) {

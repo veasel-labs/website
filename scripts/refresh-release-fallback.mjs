@@ -2,10 +2,8 @@ import { createHash } from "node:crypto";
 import { readFile, rename, writeFile } from "node:fs/promises";
 import { fileURLToPath } from "node:url";
 import { format } from "prettier";
-import {
-  orderedPreviewReleases,
-  verifiedPreviewRelease,
-} from "../src/scripts/releases.js";
+import { verifiedPreviewRelease } from "../src/scripts/releases.js";
+import { findVerifiedPreviewAdvance } from "../src/scripts/release-refresh.js";
 
 const releasesApi =
   "https://api.github.com/repos/veasel-labs/veasel/releases?per_page=100";
@@ -85,38 +83,30 @@ async function verifiedDataForRelease(release) {
 }
 
 async function main() {
-  try {
-    const releasesBytes = await fetchBytes(releasesApi, 5_000_000);
-    const releases = JSON.parse(releasesBytes.toString("utf8"));
-    for (const release of orderedPreviewReleases(releases).slice(0, 5)) {
-      try {
-        const verified = await verifiedDataForRelease(release);
-        const temporary = `${destination}.tmp`;
-        const formatted = await format(`${JSON.stringify(verified)}\n`, {
-          parser: "json",
-        });
-        await writeFile(temporary, formatted, {
-          encoding: "utf8",
-          mode: 0o644,
-        });
-        await rename(temporary, destination);
-        console.log(`Refreshed verified download fallback to ${verified.tag}.`);
-        return;
-      } catch (error) {
-        console.warn(
-          `Skipped ${release.tag_name}: ${error instanceof Error ? error.message : "verification failed"}.`,
-        );
-      }
-    }
-    throw new Error(
-      "no complete preview release passed integrity verification",
-    );
-  } catch (error) {
-    await readFile(destination, "utf8");
-    console.warn(
-      `Could not refresh the verified download fallback (${error instanceof Error ? error.message : "refresh failed"}); keeping the checked-in release metadata.`,
-    );
+  const baseline = JSON.parse(await readFile(destination, "utf8"));
+  const releasesBytes = await fetchBytes(releasesApi, 5_000_000);
+  const releases = JSON.parse(releasesBytes.toString("utf8"));
+  const verified = await findVerifiedPreviewAdvance(
+    releases,
+    baseline.tag,
+    verifiedDataForRelease,
+    (release, error) =>
+      console.warn(
+        `Skipped ${release.tag_name}: ${error instanceof Error ? error.message : "verification failed"}.`,
+      ),
+  );
+  if (!verified) {
+    console.log(`Verified release fallback remains at ${baseline.tag}.`);
+    return;
   }
+
+  const temporary = `${destination}.tmp`;
+  const formatted = await format(`${JSON.stringify(verified)}\n`, {
+    parser: "json",
+  });
+  await writeFile(temporary, formatted, { encoding: "utf8", mode: 0o644 });
+  await rename(temporary, destination);
+  console.log(`Refreshed verified download fallback to ${verified.tag}.`);
 }
 
 await main();
