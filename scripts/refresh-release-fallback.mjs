@@ -1,5 +1,5 @@
 import { createHash } from "node:crypto";
-import { readFile, rename, writeFile } from "node:fs/promises";
+import { rename, writeFile } from "node:fs/promises";
 import { fileURLToPath } from "node:url";
 import { format } from "prettier";
 import {
@@ -85,38 +85,29 @@ async function verifiedDataForRelease(release) {
 }
 
 async function main() {
-  try {
-    const releasesBytes = await fetchBytes(releasesApi, 5_000_000);
-    const releases = JSON.parse(releasesBytes.toString("utf8"));
-    for (const release of orderedPreviewReleases(releases).slice(0, 5)) {
-      try {
-        const verified = await verifiedDataForRelease(release);
-        const temporary = `${destination}.tmp`;
-        const formatted = await format(`${JSON.stringify(verified)}\n`, {
-          parser: "json",
-        });
-        await writeFile(temporary, formatted, {
-          encoding: "utf8",
-          mode: 0o644,
-        });
-        await rename(temporary, destination);
-        console.log(`Refreshed verified download fallback to ${verified.tag}.`);
-        return;
-      } catch (error) {
-        console.warn(
-          `Skipped ${release.tag_name}: ${error instanceof Error ? error.message : "verification failed"}.`,
-        );
-      }
+  const releasesBytes = await fetchBytes(releasesApi, 5_000_000);
+  const releases = JSON.parse(releasesBytes.toString("utf8"));
+  for (const release of orderedPreviewReleases(releases).slice(0, 5)) {
+    try {
+      const verified = await verifiedDataForRelease(release);
+      const temporary = `${destination}.tmp`;
+      const formatted = await format(`${JSON.stringify(verified)}\n`, {
+        parser: "json",
+      });
+      await writeFile(temporary, formatted, {
+        encoding: "utf8",
+        mode: 0o644,
+      });
+      await rename(temporary, destination);
+      console.log(`Refreshed verified download fallback to ${verified.tag}.`);
+      return;
+    } catch (error) {
+      console.warn(
+        `Skipped ${release.tag_name}: ${error instanceof Error ? error.message : "verification failed"}.`,
+      );
     }
-    throw new Error(
-      "no complete preview release passed integrity verification",
-    );
-  } catch (error) {
-    await readFile(destination, "utf8");
-    console.warn(
-      `Could not refresh the verified download fallback (${error instanceof Error ? error.message : "refresh failed"}); keeping the checked-in release metadata.`,
-    );
   }
+  throw new Error("no complete preview release passed integrity verification");
 }
 
 await main();
