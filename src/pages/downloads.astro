@@ -193,7 +193,10 @@ const desktopAssetLabel = (name: string) => {
                     ? "Signed installer."
                     : "Unsigned preview installer."}
                   {platform === "macos" && !metadata.signed
-                    ? " macOS may ask you to approve opening it."
+                    ? " The macOS disk image is not notarized; Gatekeeper may ask you to approve opening it."
+                    : ""}
+                  {platform === "windows" && !metadata.signed
+                    ? " Windows SmartScreen may display a warning."
                     : ""}
                 </p>
               </article>

@@ -70,6 +70,10 @@ describe("Desktop documentation entry points", () => {
       new URL("src/pages/docs/desktop.astro", root),
       "utf8",
     );
+    const downloads = await readFile(
+      new URL("src/pages/downloads.astro", root),
+      "utf8",
+    );
     assert.match(desktop, /release\.immutable === true/);
     assert.match(desktop, /Object\.entries\(platforms\)/);
     assert.match(desktop, /metadata\.assets\.map/);
@@ -80,6 +84,16 @@ describe("Desktop documentation entry points", () => {
       desktop,
       /does not create sample projects or simulated progress/,
     );
+    assert.match(desktop, /This is an unsigned preview installer\./);
+    assert.match(
+      desktop,
+      /macOS disk image is not notarized; Gatekeeper may ask you to approve opening it\./,
+    );
+    assert.match(
+      downloads,
+      /macOS disk image is not notarized; Gatekeeper may ask you to approve opening it\./,
+    );
+    assert.match(downloads, /Windows SmartScreen may display a warning\./);
     assert.doesNotMatch(desktop, /0\.\d+\.\d+-next\.\d+/);
   });
 });
