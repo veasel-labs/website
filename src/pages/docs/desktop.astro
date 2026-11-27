@@ -1,0 +1,164 @@
+---
+import DocsLayout from "../../layouts/DocsLayout.astro";
+import verifiedRelease from "../../data/verified-release.json";
+
+const basePath = import.meta.env.BASE_URL.replace(/\/$/, "");
+const release = verifiedRelease as typeof verifiedRelease & {
+  immutable?: boolean;
+  assets: Record<string, string>;
+  desktop?: Record<string, { arch: string; signed: boolean; assets: string[] }>;
+};
+const platforms = release.desktop ?? {};
+const platformLabels: Record<string, { name: string }> = {
+  linux: { name: "Linux" },
+  macos: { name: "macOS" },
+  windows: { name: "Windows" },
+};
+const architectureLabel = (architecture: string) =>
+  architecture === "arm64" ? "Apple silicon (arm64)" : architecture;
+const verificationCommand = (platform: string, name: string) => {
+  if (platform === "windows") {
+    return (
+      `$expected = ((Select-String -SimpleMatch '  ${name}' .\\SHA256SUMS).Line -split '\\s+')[0]\n` +
+      `$actual = (Get-FileHash '.\\${name}' -Algorithm SHA256).Hash.ToLowerInvariant()\n` +
+      `if ($actual -ne $expected) { throw 'Checksum mismatch' }\n'Checksum OK'`
+    );
+  }
+  const checker = platform === "macos" ? "shasum -a 256" : "sha256sum";
+  return `grep -F '  ${name}' SHA256SUMS | ${checker} --check`;
+};
+const assetLabels = (name: string) => {
+  if (name.endsWith(".deb")) return "Debian package (.deb)";
+  if (name.endsWith(".AppImage")) return "AppImage";
+  if (name.endsWith(".dmg")) return "Disk image (.dmg)";
+  if (name.endsWith(".exe")) return "Windows installer (.exe)";
+  return name;
+};
+---
+
+<DocsLayout
+  title="Veasel Desktop"
+  description="Install Veasel Desktop on Linux, macOS, or Windows and start a local coding session in Focus."
+>
+  <section class="doc-page">
+    <p class="kicker">FIELD GUIDE / DESKTOP</p>
+    <h1>
+      Your workspace,
+      <br />
+      <em>in Focus.</em>
+    </h1>
+    <p class="lede">
+      Veasel Desktop is the graphical interface to the local Veasel runtime.
+      Start and review coding sessions in Focus, then open the optional World to
+      see real projects and session activity.
+    </p>
+
+    <div class="compatibility-banner">
+      <span class="compatibility-mark" aria-hidden="true">
+        ⌂
+      </span>
+      <div>
+        <strong>One local runtime</strong>
+        <p>
+          Desktop and Terminal use the same Veasel backend, sessions, settings,
+          and permission model. The World reflects actual workspaces and agent
+          activity; it does not create sample projects or simulated progress.
+        </p>
+      </div>
+    </div>
+
+    <div class="doc-panel">
+      <h2>Choose a verified installer</h2>
+      {release.immutable === true && Object.keys(platforms).length > 0 ? (
+        <>
+          <p>
+            These links come from the site's immutable release record for{" "}
+            <code>{release.tag}</code>. Choose the installer matching your
+            platform and architecture.
+          </p>
+          <div class="guide-list">
+            {Object.entries(platforms).map(([platform, metadata]) => {
+              const label = platformLabels[platform];
+              if (!label) return null;
+              return (
+                <section>
+                  <h3>
+                    {label.name} · {architectureLabel(metadata.arch)}
+                  </h3>
+                  <ul>
+                    {metadata.assets.map((name) => (
+                      <li>
+                        <a href={release.assets[name]}>{assetLabels(name)}</a> —{" "}
+                        <code>{name}</code>
+                        <pre><code>{verificationCommand(platform, name)}</code></pre>
+                      </li>
+                    ))}
+                  </ul>
+                  <p>
+                    {metadata.signed
+                      ? "This installer is signed."
+                      : "This is an unsigned preview installer."}
+                    {platform === "macos" && !metadata.signed
+                      ? " macOS may ask you to approve opening it."
+                      : ""}
+                  </p>
+                </section>
+              );
+            })}
+          </div>
+          <p>
+            Each command compares the downloaded installer with its exact entry
+            in <a href={release.assets["SHA256SUMS"]}>SHA256SUMS</a>. Review the{" "}
+            <a href={release.assets["release.json"]}>release manifest</a> and{" "}
+            <a href={release.release_url}>{release.tag}</a> before installing.
+          </p>
+        </>
+      ) : (
+        <p>
+          Desktop download links are paused until an immutable release with
+          verified installer metadata is available. Check the{" "}
+          <a href={`${basePath}/downloads/`}>downloads page</a> for the current
+          verified channel.
+        </p>
+      )}
+    </div>
+
+    <div class="doc-panel">
+      <h2>Start with a real project</h2>
+      <ol class="guide-list">
+        <li>Open Veasel Desktop and choose a repository or project folder.</li>
+        <li>
+          Choose an available coding agent or provider in the session setup.
+        </li>
+        <li>Review the requested permissions before starting work.</li>
+        <li>Use Focus to follow the session and review proposed changes.</li>
+        <li>
+          Open World when you want a map of the real projects and sessions in
+          use.
+        </li>
+      </ol>
+      <p>
+        For provider setup and the current supported authentication paths, see
+        the <a href={`${basePath}/docs/providers/`}>providers guide</a>. For the
+        Terminal interface, see the{" "}
+        <a href={`${basePath}/docs/tui/`}>TUI guide</a>.
+      </p>
+    </div>
+
+    <aside class="callout">
+      <strong>Terminal packages are separate.</strong> Homebrew and the AUR
+      package currently install Veasel Terminal, not the graphical Desktop app.
+      Use the <a href={`${basePath}/downloads/`}>downloads page</a> for the
+      latest installer list.
+    </aside>
+
+    <p class="doc-next">
+      <a class="text-link" href={`${basePath}/docs/install/`}>
+        Terminal installation <span aria-hidden="true">→</span>
+      </a>
+      <a class="text-link" href={`${basePath}/docs/quickstart/`}>
+        Next: first session <span aria-hidden="true">→</span>
+      </a>
+    </p>
+  </section>
+</DocsLayout>

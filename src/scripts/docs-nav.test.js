@@ -54,3 +54,32 @@ describe("responsive docs navigation", () => {
     );
   });
 });
+
+describe("Desktop documentation entry points", () => {
+  it("exposes the Desktop guide in the docs navigation and overview", async () => {
+    const overview = await readFile(
+      new URL("src/pages/docs/index.astro", root),
+      "utf8",
+    );
+    assert.match(layout, /href: "\/docs\/desktop\/",[\s\S]*?label: "Desktop"/);
+    assert.match(overview, /\/docs\/desktop\//);
+  });
+
+  it("renders only installers from the immutable verified release record", async () => {
+    const desktop = await readFile(
+      new URL("src/pages/docs/desktop.astro", root),
+      "utf8",
+    );
+    assert.match(desktop, /release\.immutable === true/);
+    assert.match(desktop, /Object\.entries\(platforms\)/);
+    assert.match(desktop, /metadata\.assets\.map/);
+    assert.match(desktop, /release\.assets\[name\]/);
+    assert.match(desktop, /release\.assets\["SHA256SUMS"\]/);
+    assert.match(desktop, /release\.assets\["release\.json"\]/);
+    assert.match(
+      desktop,
+      /does not create sample projects or simulated progress/,
+    );
+    assert.doesNotMatch(desktop, /0\.\d+\.\d+-next\.\d+/);
+  });
+});
