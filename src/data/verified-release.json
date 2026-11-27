@@ -1,37 +1,37 @@
 {
   "immutable": true,
-  "tag": "v0.111.0-next.0",
-  "release_url": "https://github.com/veasel-labs/veasel/releases/tag/v0.111.0-next.0",
-  "source_commit": "cef313fe59fd34a7597259b4733d7506aa92d10a",
+  "tag": "v0.112.0-next.0",
+  "release_url": "https://github.com/veasel-labs/veasel/releases/tag/v0.112.0-next.0",
+  "source_commit": "375645f0d2f641c9cbc535210db6d88a711db099",
   "desktop": {
     "linux": {
       "arch": "x86_64",
       "signed": false,
       "assets": [
-        "veasel-desktop-0.111.0-next.0-linux-amd64.deb",
-        "veasel-desktop-0.111.0-next.0-linux-x86_64.AppImage"
+        "veasel-desktop-0.112.0-next.0-linux-amd64.deb",
+        "veasel-desktop-0.112.0-next.0-linux-x86_64.AppImage"
       ]
     },
     "macos": {
       "arch": "arm64",
       "signed": false,
-      "assets": ["veasel-desktop-0.111.0-next.0-mac-arm64.dmg"]
+      "assets": ["veasel-desktop-0.112.0-next.0-mac-arm64.dmg"]
     },
     "windows": {
       "arch": "x86_64",
       "signed": false,
-      "assets": ["veasel-desktop-0.111.0-next.0-win-x64.exe"]
+      "assets": ["veasel-desktop-0.112.0-next.0-win-x64.exe"]
     }
   },
   "assets": {
-    "SHA256SUMS": "https://github.com/veasel-labs/veasel/releases/download/v0.111.0-next.0/SHA256SUMS",
-    "release.json": "https://github.com/veasel-labs/veasel/releases/download/v0.111.0-next.0/release.json",
-    "veasel-Linux.tar.gz": "https://github.com/veasel-labs/veasel/releases/download/v0.111.0-next.0/veasel-Linux.tar.gz",
-    "veasel-macOS.tar.gz": "https://github.com/veasel-labs/veasel/releases/download/v0.111.0-next.0/veasel-macOS.tar.gz",
-    "veasel-Windows.zip": "https://github.com/veasel-labs/veasel/releases/download/v0.111.0-next.0/veasel-Windows.zip",
-    "veasel-desktop-0.111.0-next.0-linux-amd64.deb": "https://github.com/veasel-labs/veasel/releases/download/v0.111.0-next.0/veasel-desktop-0.111.0-next.0-linux-amd64.deb",
-    "veasel-desktop-0.111.0-next.0-linux-x86_64.AppImage": "https://github.com/veasel-labs/veasel/releases/download/v0.111.0-next.0/veasel-desktop-0.111.0-next.0-linux-x86_64.AppImage",
-    "veasel-desktop-0.111.0-next.0-mac-arm64.dmg": "https://github.com/veasel-labs/veasel/releases/download/v0.111.0-next.0/veasel-desktop-0.111.0-next.0-mac-arm64.dmg",
-    "veasel-desktop-0.111.0-next.0-win-x64.exe": "https://github.com/veasel-labs/veasel/releases/download/v0.111.0-next.0/veasel-desktop-0.111.0-next.0-win-x64.exe"
+    "SHA256SUMS": "https://github.com/veasel-labs/veasel/releases/download/v0.112.0-next.0/SHA256SUMS",
+    "release.json": "https://github.com/veasel-labs/veasel/releases/download/v0.112.0-next.0/release.json",
+    "veasel-Linux.tar.gz": "https://github.com/veasel-labs/veasel/releases/download/v0.112.0-next.0/veasel-Linux.tar.gz",
+    "veasel-macOS.tar.gz": "https://github.com/veasel-labs/veasel/releases/download/v0.112.0-next.0/veasel-macOS.tar.gz",
+    "veasel-Windows.zip": "https://github.com/veasel-labs/veasel/releases/download/v0.112.0-next.0/veasel-Windows.zip",
+    "veasel-desktop-0.112.0-next.0-linux-amd64.deb": "https://github.com/veasel-labs/veasel/releases/download/v0.112.0-next.0/veasel-desktop-0.112.0-next.0-linux-amd64.deb",
+    "veasel-desktop-0.112.0-next.0-linux-x86_64.AppImage": "https://github.com/veasel-labs/veasel/releases/download/v0.112.0-next.0/veasel-desktop-0.112.0-next.0-linux-x86_64.AppImage",
+    "veasel-desktop-0.112.0-next.0-mac-arm64.dmg": "https://github.com/veasel-labs/veasel/releases/download/v0.112.0-next.0/veasel-desktop-0.112.0-next.0-mac-arm64.dmg",
+    "veasel-desktop-0.112.0-next.0-win-x64.exe": "https://github.com/veasel-labs/veasel/releases/download/v0.112.0-next.0/veasel-desktop-0.112.0-next.0-win-x64.exe"
   }
 }
